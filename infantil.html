@@ -1,0 +1,2819 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#173a5e">
+<meta name="description" content="ComunicA — aplicativo de Comunicação Alternativa e Aumentativa (CAA) para tablet e celular">
+<title>ComunicA</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@500;600;700;800&display=swap');
+
+:root {
+  --sky-top: #5ec8f0;
+  --sky-bottom: #a6e0f7;
+  --yellow: #ffcf4d;
+  --yellow-dark: #e0a527;
+  --navy: #173a5e;
+  --navy-soft: #2f5a82;
+  --card: rgba(234, 246, 255, 0.95);
+  --card-border: #cfe9f7;
+  --green: #4caf7d;
+  --red: #c0392b;
+  --white: #ffffff;
+  --radius: 16px;
+  --font: 'Nunito', sans-serif;
+  --font-title: 'Baloo 2', cursive;
+  --focus-ring: #ff5da2;
+
+  /* accessibility scale: multiplies base font/target sizes app-wide */
+  --a11y-scale: 1;
+  --tap-min: 48px;
+}
+
+/* ---------- High contrast theme ---------- */
+body[data-contrast="high"] {
+  --sky-top: #000000;
+  --sky-bottom: #000000;
+  --yellow: #ffe600;
+  --yellow-dark: #cbb700;
+  --navy: #ffffff;
+  --navy-soft: #ffffff;
+  --card: #000000;
+  --card-border: #ffe600;
+  --green: #00e676;
+  --red: #ff5252;
+  --white: #000000;
+}
+
+body[data-contrast="high"] .word-card,
+body[data-contrast="high"] .cat-card,
+body[data-contrast="high"] .form-block,
+body[data-contrast="high"] .info-block,
+body[data-contrast="high"] .fav-item,
+body[data-contrast="high"] .challenge-card,
+body[data-contrast="high"] .carousel-card {
+  color: #ffe600;
+  border-width: 3px;
+}
+
+body[data-contrast="high"] .phrase-bar {
+  background: #000;
+  border-color: #ffe600;
+  color: #ffe600;
+}
+
+body[data-contrast="high"] .menu-btn,
+body[data-contrast="high"] .card {
+  color: #ffe600;
+}
+
+body[data-contrast="high"] .word-card .label,
+body[data-contrast="high"] .word-card .description,
+body[data-contrast="high"] .cat-card .label,
+body[data-contrast="high"] .cat-card .count,
+body[data-contrast="high"] .menu-title,
+body[data-contrast="high"] .menu-sub {
+  color: #ffe600 !important;
+}
+
+body[data-contrast="high"] {
+  background: #000 !important;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: calc(100% * var(--a11y-scale));
+}
+
+body {
+  font-family: var(--font);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.12) 0%, rgba(23,58,94,0.35) 100%),
+    linear-gradient(180deg, var(--sky-top), var(--sky-bottom));
+  background-color: #7bc562;
+  color: var(--navy);
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Fundo da tela inicial ocupando toda a viewport */
+body:not(.bg-outras) {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.16) 0%, rgba(23,58,94,0.28) 100%),
+    url('assets/imagens/plano-inicio.png') center center / cover no-repeat fixed;
+}
+
+body[data-contrast="high"]:not(.bg-outras) {
+  background: #000 !important;
+}
+
+body.bg-outras {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.16) 0%, rgba(23,58,94,0.28) 100%),
+    url('assets/imagens/plano-inicio.png') center center / cover no-repeat fixed !important;
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Visible focus ring everywhere — essential for switch/keyboard/tablet stylus users */
+:focus {
+  outline: none;
+}
+:focus-visible,
+.word-card:focus-visible,
+.cat-card:focus-visible,
+.menu-btn:focus-visible,
+.carousel-card:focus-visible,
+.icon-btn:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 4px solid var(--focus-ring);
+  outline-offset: 3px;
+  border-radius: 10px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 8px;
+  top: -60px;
+  background: var(--navy);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: 800;
+  z-index: 200;
+  transition: top 0.15s ease;
+}
+.skip-link:focus {
+  top: 8px;
+}
+
+#app, .app {
+  width: 100%;
+  max-width: 900px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(12px, 3vw, 32px);
+  padding-top: max(clamp(12px, 3vw, 32px), env(safe-area-inset-top));
+  padding-bottom: max(clamp(12px, 3vw, 32px), env(safe-area-inset-bottom));
+}
+
+.topbar, .app-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0 14px;
+  gap: 8px;
+}
+
+.topbar-title {
+  font-family: var(--font-title);
+  font-size: 18px;
+  font-weight: 800;
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  text-align: center;
+  flex: 1;
+}
+
+.icon-btn, .profile-btn {
+  width: var(--tap-min);
+  height: var(--tap-min);
+  min-width: 44px;
+  min-height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  cursor: pointer;
+  color: var(--navy);
+  box-shadow: 0 4px 8px rgba(23,58,94,0.2);
+  backdrop-filter: blur(5px);
+  transition: transform 0.15s ease;
+  flex: 0 0 auto;
+}
+.icon-btn:hover, .profile-btn:hover { transform: scale(1.05); }
+.icon-btn:active, .profile-btn:active { transform: scale(0.94); }
+
+/* ---------- Mascot ---------- */
+.mascot-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 4px 0 14px;
+  text-align: center;
+}
+.mascot-svg-wrap {
+  width: clamp(96px, 26vw, 150px);
+  height: clamp(96px, 26vw, 150px);
+  cursor: pointer;
+  filter: drop-shadow(0 6px 10px rgba(23,58,94,0.35));
+  transition: transform 0.2s ease;
+}
+.mascot-svg-wrap:hover { transform: translateY(-3px) scale(1.03); }
+.mascot-svg-wrap:active { transform: scale(0.96); }
+
+.mascot-img { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+.home-logo {
+  display: block;
+  width: min(78vw, 320px);
+  max-height: 180px;
+  margin: 4px auto 14px;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 10px rgba(23,58,94,0.25));
+}
+
+.mascot-static-wrap { width: 90px; height: 90px; margin: 0 auto; }
+.mascot-static-wrap .mascot-img { width: 100%; height: 100%; object-fit: contain; }
+.mascot-bounce { animation: mascotBounce 2.6s ease-in-out infinite; }
+@keyframes mascotBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.speech-bubble {
+  background: #ffffff;
+  border: 3px solid var(--yellow-dark);
+  border-radius: 20px;
+  padding: 10px 16px;
+  font-weight: 800;
+  font-family: var(--font-title);
+  font-size: clamp(13px, 3vw, 16px);
+  color: var(--navy);
+  max-width: 320px;
+  box-shadow: 0 4px 10px rgba(23,58,94,0.18);
+  position: relative;
+}
+
+.mascot-float {
+  position: fixed;
+  right: max(16px, env(safe-area-inset-right));
+  bottom: max(16px, env(safe-area-inset-bottom));
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(180deg, #ffe08a, var(--yellow));
+  box-shadow: 0 6px 14px rgba(23,58,94,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 60;
+  padding: 8px;
+}
+.mascot-float:active { transform: scale(0.93); }
+.mascot-float { transition: opacity 0.5s ease, transform 0.15s ease; }
+.mascot-float svg { width: 100%; height: 100%; }
+
+.mascot-tip-toast {
+  position: fixed;
+  right: max(16px, env(safe-area-inset-right));
+  bottom: 86px;
+  max-width: min(80vw, 300px);
+  background: #ffffff;
+  border: 3px solid var(--yellow-dark);
+  border-radius: 18px;
+  padding: 12px 16px;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--navy);
+  box-shadow: 0 6px 16px rgba(23,58,94,0.3);
+  z-index: 61;
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.mascot-tip-toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.mascot-tip-toast::after {
+  content: '';
+  position: absolute;
+  right: 22px;
+  bottom: -9px;
+  width: 16px;
+  height: 16px;
+  background: #ffffff;
+  border-right: 3px solid var(--yellow-dark);
+  border-bottom: 3px solid var(--yellow-dark);
+  transform: rotate(45deg);
+}
+
+/* ---------- Splash / tela de abertura ---------- */
+.splash-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: linear-gradient(180deg, #fefefe 0%, #eaf6ff 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(18px, 4vh, 32px);
+  padding: 24px;
+  cursor: pointer;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.splash-screen.splash-hidden {
+  opacity: 0;
+  transform: translateY(-6%);
+  pointer-events: none;
+}
+
+.splash-mascot-wrap {
+  width: clamp(160px, 42vw, 260px);
+  height: clamp(160px, 42vw, 260px);
+  opacity: 0;
+  transform: scale(0.15);
+}
+.splash-mascot-wrap.pop-in {
+  animation:
+    splashPop 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
+    splashGlow 1.2s ease forwards;
+}
+.splash-mascot-wrap.to-corner {
+  position: fixed;
+  transition: left 0.7s cubic-bezier(0.65, 0, 0.35, 1),
+              top 0.7s cubic-bezier(0.65, 0, 0.35, 1),
+              width 0.7s cubic-bezier(0.65, 0, 0.35, 1),
+              height 0.7s cubic-bezier(0.65, 0, 0.35, 1),
+              opacity 0.35s ease 0.4s;
+  z-index: 501;
+  animation: none;
+}
+@keyframes splashPop {
+  0% { opacity: 0; transform: scale(0.15); }
+  60% { opacity: 1; transform: scale(1.08); }
+  80% { transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes splashGlow {
+  0% { filter: drop-shadow(0 0 0 rgba(23,58,94,0)); }
+  100% { filter: drop-shadow(0 12px 22px rgba(23,58,94,0.35)); }
+}
+
+.splash-hint {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.splash-hint.show {
+  opacity: 1;
+  animation: splashBlink 1.6s ease-in-out infinite;
+}
+@keyframes splashBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+.splash-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  padding: 0 10px;
+  border-radius: 8px;
+  background: #ffffff;
+  border: 2px solid var(--navy);
+  color: var(--navy);
+  font-weight: 800;
+  font-size: 18px;
+  box-shadow: 0 3px 0 var(--navy);
+}
+.splash-hint-text {
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: clamp(14px, 3.4vw, 18px);
+  color: var(--navy);
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash-mascot-wrap.pop-in { animation: none !important; opacity: 1; transform: scale(1); }
+  .splash-hint.show { animation: none !important; }
+}
+
+.home-screen {
+  position: relative;
+  min-height: 100%;
+  padding: 8px clamp(10px, 2vw, 20px) clamp(16px, 3vw, 28px);
+  border-radius: 24px;
+  overflow: hidden;
+  background: transparent;
+}
+
+.menu {
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.menu-btn, .card {
+  width: 100%;
+  min-height: var(--tap-min);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--card);
+  border: 1.5px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  cursor: pointer;
+  text-align: left;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 3px 8px rgba(23,58,94,0.12);
+  font-family: var(--font);
+  backdrop-filter: blur(6px);
+  transition: transform 0.1s ease, border-color 0.15s ease;
+}
+.menu-btn:hover, .card:hover { transform: translateY(-2px); }
+.menu-btn:active, .card:active { transform: scale(0.98); }
+
+.menu-btn.primary, .card.yellow {
+  background: linear-gradient(180deg, #ffe08a, var(--yellow));
+  border-color: var(--yellow-dark);
+}
+
+.menu-emoji, .card-icon {
+  width: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  text-align: center;
+  flex: 0 0 auto;
+}
+
+.menu-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  display: block;
+  flex: 0 0 40px;
+  filter: drop-shadow(0 2px 2px rgba(23,58,94,0.16));
+}
+
+.word-icon,
+.action-icon {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 4px;
+  filter: drop-shadow(0 2px 2px rgba(23,58,94,0.16));
+}
+
+.action-icon {
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 3px 0 0;
+}
+
+.topbar .menu-icon {
+  width: 30px;
+  height: 30px;
+  flex-basis: 30px;
+}
+
+.icon-btn[data-go="home"],
+.icon-btn[data-go="categories"] {
+  font-size: 0;
+}
+
+.icon-btn[data-go="home"]::before,
+.icon-btn[data-go="categories"]::before {
+  content: '';
+  width: 30px;
+  height: 30px;
+  display: block;
+  background: url('assets/imagens/icone-seta-topo.png') center / contain no-repeat;
+}
+
+.menu-text, .card-text { flex: 1; min-width: 0; }
+
+.menu-title, .card-text h3 {
+  font-family: var(--font-title);
+  font-size: 15px;
+  line-height: 1.15;
+  color: var(--navy);
+  font-weight: 800;
+  margin: 0 0 2px;
+}
+
+.menu-sub, .card-text p {
+  font-size: 12px;
+  line-height: 1.25;
+  color: var(--navy-soft);
+  font-weight: 600;
+  margin: 0;
+}
+
+.menu-arrow, .chevron {
+  font-size: 22px;
+  color: var(--navy-soft);
+  margin-left: 6px;
+  flex: 0 0 auto;
+}
+
+.about-link {
+  text-align: center;
+  margin-top: 14px;
+  font-size: 13px;
+  font-weight: 800;
+  color: #ffffff;
+  cursor: pointer;
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.about-link:hover { text-decoration: underline; }
+
+.screen {
+  width: 100%;
+  padding: 4px 0 90px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.section-label {
+  font-family: var(--font-title);
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--navy);
+  margin: 4px 0 10px;
+  text-shadow: 0 1px 2px rgba(255,255,255,0.6);
+}
+
+.phrase-bar {
+  width: 100%;
+  background: #ffffff;
+  border: 2px solid var(--card-border);
+  border-radius: 16px;
+  min-height: 64px;
+  height: auto;
+  padding: 10px 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  align-content: center;
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 3px 8px rgba(23,58,94,0.08);
+}
+
+.phrase-chip {
+  background: #fff3d6;
+  border: 1.5px solid var(--yellow-dark);
+  border-radius: 10px;
+  padding: 8px 13px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  line-height: 1;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.phrase-placeholder {
+  color: #6f88a0;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.3;
+}
+
+.layer-label {
+  text-align: center;
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: 14px;
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  margin-bottom: 14px;
+  letter-spacing: 0.5px;
+}
+
+.carousel-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 18px;
+  min-height: 190px;
+}
+
+.carousel-track {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  overflow: visible;
+}
+
+.carousel-arrow {
+  width: var(--tap-min);
+  height: var(--tap-min);
+  flex: 0 0 auto;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.92);
+  color: var(--navy);
+  font-size: 26px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(23,58,94,0.2);
+  transition: transform 0.1s ease;
+}
+.carousel-arrow:active { transform: scale(0.9); }
+.carousel-arrow:disabled { opacity: 0.35; cursor: default; }
+.carousel-arrow img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  display: block;
+}
+
+.carousel-card {
+  flex: 0 0 auto;
+  background: var(--card);
+  border: 2px solid var(--card-border);
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: transform 0.18s ease, opacity 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+  backdrop-filter: blur(4px);
+  user-select: none;
+}
+.carousel-card.side { width: 78px; height: 110px; opacity: 0.6; transform: scale(0.82); }
+.carousel-card.side .emoji { font-size: 26px; }
+.carousel-card.side .label { font-size: 11px; }
+.carousel-card.center {
+  width: 130px;
+  height: 158px;
+  opacity: 1;
+  transform: scale(1);
+  border-color: var(--yellow-dark);
+  background: linear-gradient(180deg, #ffe08a, var(--yellow));
+  box-shadow: 0 6px 16px rgba(23,58,94,0.25);
+}
+.carousel-card.center .emoji { font-size: 44px; }
+.carousel-card.center .label { font-size: 16px; }
+.carousel-card .emoji { line-height: 1; }
+.carousel-card .label {
+  font-family: var(--font-title);
+  font-weight: 800;
+  text-align: center;
+  color: var(--navy);
+  padding: 0 4px;
+}
+.carousel-card:hover { transform: scale(0.9); }
+.carousel-card.center:hover { transform: scale(1.04); }
+.carousel-card.empty { visibility: hidden; }
+
+.confirm-btn {
+  width: 100%;
+  min-height: 56px;
+  background: linear-gradient(180deg, #6fe0a0, var(--green));
+  color: #ffffff;
+  border: none;
+  border-radius: 16px;
+  padding: 14px;
+  font-family: var(--font);
+  font-weight: 800;
+  font-size: 17px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 10px rgba(76,175,125,0.35);
+  transition: transform 0.1s ease, opacity 0.15s ease;
+}
+.confirm-btn:active { transform: scale(0.98); }
+.confirm-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.action-row {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.action-row button {
+  flex: 1 1 calc(25% - 8px);
+  min-width: 74px;
+  min-height: 64px;
+  border: 2px solid rgba(23,58,94,0.18);
+  border-radius: 18px;
+  padding: 8px 6px;
+  font-family: var(--font);
+  font-weight: 800;
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--navy);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  box-shadow: 0 5px 0 rgba(23,58,94,0.18), 0 8px 14px rgba(23,58,94,0.16);
+  text-shadow: 0 1px 0 rgba(255,255,255,0.45);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+}
+.action-row button:hover {
+  transform: translateY(-2px);
+  filter: saturate(1.08) brightness(1.03);
+  box-shadow: 0 7px 0 rgba(23,58,94,0.18), 0 11px 16px rgba(23,58,94,0.18);
+}
+.action-row button:active {
+  transform: translateY(3px) scale(0.97);
+  box-shadow: 0 2px 0 rgba(23,58,94,0.18), 0 4px 8px rgba(23,58,94,0.14);
+}
+.action-row button:disabled {
+  opacity: 0.48;
+  filter: grayscale(0.25);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 3px 0 rgba(23,58,94,0.12);
+}
+.btn-erase {
+  background: linear-gradient(180deg, #ffd9c7, #ffb995);
+  border-color: #e79a75 !important;
+}
+.btn-clear {
+  background: linear-gradient(180deg, #ffd6dc, #f3a8b4);
+  border-color: #d98696 !important;
+}
+.btn-speak {
+  background: linear-gradient(180deg, #bff4d3, #72d99b);
+  border-color: #4caf7d !important;
+}
+.btn-fav {
+  background: linear-gradient(180deg, #fff0a8, #ffcf4d);
+  border-color: var(--yellow-dark) !important;
+}
+.action-row .action-icon {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  margin: 0;
+}
+
+.word-card { position: relative; }
+
+.favorite-toggle {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  background: transparent;
+  color: var(--navy);
+  font-size: 20px;
+  line-height: 1;
+  padding: 2px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.favorite-toggle.is-favorite { color: #e0a527; }
+
+.speak-btn {
+  width: 100%;
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(180deg, #6fe0a0, var(--green));
+  color: #ffffff;
+  border: none;
+  border-radius: 16px;
+  padding: 14px;
+  font-family: var(--font);
+  font-weight: 800;
+  font-size: 18px;
+  cursor: pointer;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 10px rgba(76,175,125,0.35);
+  transition: transform 0.1s ease, opacity 0.15s ease;
+}
+.speak-btn:active { transform: scale(0.98); }
+.speak-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.hint {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  margin-top: auto;
+  padding-top: 10px;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  min-height: 44px;
+}
+.back-link:hover { text-decoration: underline; }
+
+.cat-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.cat-card {
+  background: var(--card);
+  border: 2px solid var(--card-border);
+  border-radius: 18px;
+  padding: 16px 10px;
+  min-height: 108px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(23,58,94,0.1);
+  backdrop-filter: blur(4px);
+  transition: transform 0.1s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.cat-card:hover { transform: translateY(-2px); }
+.cat-card:active { transform: scale(0.97); }
+.cat-card .emoji { font-size: 36px; display: block; margin-bottom: 6px; }
+.cat-card .label { font-family: var(--font-title); font-weight: 800; font-size: 15px; color: var(--navy); }
+.cat-card .count { font-size: 12px; color: var(--navy-soft); font-weight: 600; }
+
+.word-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.word-card {
+  min-height: 150px;
+  background: var(--card);
+  border: 2px solid var(--card-border);
+  border-radius: 16px;
+  padding: 14px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  cursor: pointer;
+  font-family: var(--font);
+  box-shadow: 0 3px 8px rgba(23,58,94,0.1);
+  backdrop-filter: blur(4px);
+  transition: transform 0.1s ease, background 0.1s ease;
+}
+.word-card:hover { transform: translateY(-2px); }
+.word-card:active { transform: scale(0.95); }
+.word-card .emoji { font-size: 32px; line-height: 1; }
+.word-card .label { font-family: var(--font-title); font-weight: 800; font-size: 15px; text-align: center; color: var(--navy); }
+.word-card .description { font-size: 10.5px; color: var(--navy-soft); text-align: center; line-height: 1.2; padding: 0 4px; }
+.word-card.selected { background: linear-gradient(180deg, #ffe08a, var(--yellow)); border-color: var(--yellow-dark); }
+
+.fav-item {
+  width: 100%;
+  background: var(--card);
+  border: 2px solid var(--card-border);
+  border-radius: 16px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  backdrop-filter: blur(4px);
+}
+.fav-item .txt { flex: 1; font-weight: 700; color: var(--navy); min-width: 0; }
+.fav-item button {
+  background: var(--yellow);
+  border: none;
+  border-radius: 10px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 8px 10px;
+  font-weight: 800;
+  cursor: pointer;
+  color: var(--navy);
+}
+.fav-remove { background: none !important; color: var(--red) !important; font-size: 18px; }
+
+.empty-state {
+  text-align: center;
+  color: #ffffff;
+  font-weight: 700;
+  padding: 40px 20px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+.form-block {
+  width: 100%;
+  background: var(--card);
+  border: 2px solid var(--card-border);
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 16px;
+  backdrop-filter: blur(4px);
+}
+.form-block h3 { margin: 0 0 10px; font-family: var(--font-title); font-size: 16px; font-weight: 800; color: var(--navy); }
+
+.form-row { width: 100%; display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+.form-row input, .form-row select {
+  min-width: 0;
+  flex: 1;
+  min-height: 48px;
+  border: 2px solid var(--card-border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-family: var(--font);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--navy);
+  background: #ffffff;
+}
+.form-row input:focus, .form-row select:focus { outline: none; border-color: var(--yellow-dark); }
+
+.field-label {
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--navy);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.emoji-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.emoji-pick {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  background: #ffffff;
+  border: 2px solid var(--card-border);
+  border-radius: 10px;
+  padding: 4px;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+.emoji-pick:hover { transform: scale(1.05); }
+.emoji-pick.chosen { border-color: var(--yellow-dark); background: #fff3d6; }
+
+.submit-btn {
+  width: 100%;
+  min-height: 52px;
+  background: var(--navy);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 12px;
+  font-family: var(--font);
+  font-weight: 800;
+  font-size: 15px;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+.submit-btn:active { transform: scale(0.98); }
+
+.custom-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.custom-chip {
+  background: #ffffff;
+  border: 1.5px solid var(--card-border);
+  border-radius: 20px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.custom-chip span.x { color: var(--red); cursor: pointer; font-weight: 800; padding: 4px; }
+
+.challenge-card {
+  width: 100%;
+  background: var(--card);
+  border: 2px solid var(--card-border);
+  border-radius: 18px;
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 16px;
+  backdrop-filter: blur(4px);
+}
+.challenge-card .emoji { font-size: 46px; line-height: 1; }
+.challenge-card p { font-weight: 700; font-size: 17px; color: var(--navy); margin-bottom: 0; }
+
+.stars {
+  text-align: center;
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: var(--yellow);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+.info-block {
+  width: 100%;
+  background: var(--card);
+  border: 2px solid var(--card-border);
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 12px;
+  font-weight: 600;
+  line-height: 1.55;
+  font-size: 14.5px;
+  color: var(--navy);
+  backdrop-filter: blur(4px);
+}
+
+.profile-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--card-border);
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--card-border);
+}
+.settings-row:last-child { border-bottom: none; }
+.settings-label { font-weight: 800; color: var(--navy); font-size: 14.5px; }
+.settings-desc { font-weight: 600; color: var(--navy-soft); font-size: 12px; margin-top: 2px; }
+
+.stepper { display: flex; align-items: center; gap: 8px; }
+.stepper button {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--card-border);
+  background: #fff;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--navy);
+  cursor: pointer;
+}
+.stepper span { min-width: 64px; text-align: center; font-weight: 800; color: var(--navy); }
+
+.switch {
+  position: relative;
+  width: 58px;
+  height: 32px;
+  flex: 0 0 auto;
+}
+.switch input { opacity: 0; width: 0; height: 0; }
+.switch-track {
+  position: absolute;
+  inset: 0;
+  background: #cfe9f7;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.switch-track::before {
+  content: '';
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  left: 3px;
+  top: 3px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.15s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+.switch input:checked + .switch-track { background: var(--green); }
+.switch input:checked + .switch-track::before { transform: translateX(26px); }
+.switch input:focus-visible + .switch-track { outline: 4px solid var(--focus-ring); outline-offset: 2px; }
+
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--navy);
+  color: #ffffff;
+  padding: 12px 20px;
+  border-radius: 14px;
+  font-weight: 700;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+  z-index: 70;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  max-width: 90%;
+  text-align: center;
+  pointer-events: none;
+}
+.toast.show { opacity: 1; }
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 420px) {
+  #app, .app { padding: 12px; }
+  .word-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .word-card { min-height: 140px; padding: 10px 4px; }
+  .word-card .emoji { font-size: 27px; }
+  .word-card .label { font-size: 13px; }
+  .word-card .description { font-size: 9.5px; }
+  .action-row { gap: 7px; }
+  .action-row button { font-size: 12px; padding: 10px 4px; }
+  .carousel-card.center { width: 112px; height: 140px; }
+  .carousel-card.center .emoji { font-size: 36px; }
+  .carousel-card.side { width: 68px; height: 98px; }
+  .carousel-card.side .emoji { font-size: 23px; }
+  .carousel-card.side .label { font-size: 10px; }
+  .carousel-arrow { width: 44px; height: 44px; }
+}
+
+@media (max-width: 350px) {
+  .word-card { min-height: 130px; }
+  .word-card .emoji { font-size: 25px; }
+  .word-card .label { font-size: 12px; }
+  .phrase-bar { min-height: 56px; padding: 7px 10px; }
+  .carousel-card.center { width: 100px; height: 130px; }
+  .carousel-card.side { width: 60px; height: 90px; }
+  .carousel-track { gap: 5px; }
+  .carousel-wrap { gap: 4px; }
+}
+
+/* ---------- Tablet (portrait and landscape) ---------- */
+@media (min-width: 600px) {
+  .home-screen { padding-top: clamp(8px, 4vh, 40px); }
+  .topbar-title { font-size: 22px; }
+  .menu { max-width: 760px; margin-left: auto; margin-right: auto; gap: 14px; }
+  .menu-btn { padding: 18px 22px; }
+  .menu-title { font-size: 18px; }
+  .menu-sub { font-size: 13.5px; }
+  .cat-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .word-grid { grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .word-card { min-height: 168px; }
+  .screen { max-width: 820px; width: 100%; margin-left: auto; margin-right: auto; }
+}
+
+@media (min-width: 900px) {
+  .word-grid { grid-template-columns: repeat(5, 1fr); }
+}
+
+/* Tablets in landscape benefit from a wider, shorter layout for the sentence builder */
+@media (min-width: 700px) and (orientation: landscape) {
+  #app, .app { max-width: 1100px; }
+  .screen { max-width: 980px; }
+  .carousel-card.center { width: 150px; height: 176px; }
+  .carousel-card.center .emoji { font-size: 50px; }
+  .carousel-card.side { width: 92px; height: 128px; }
+  .word-grid { grid-template-columns: repeat(6, 1fr); }
+  .cat-grid { grid-template-columns: repeat(4, 1fr); }
+}
+</style>
+</head>
+
+<body>
+
+<a href="#app" class="skip-link">Pular para o conteúdo</a>
+
+<div id="splashScreen" class="splash-screen" role="dialog" aria-modal="true" aria-label="Tela de abertura do ComunicA" tabindex="-1">
+  <div class="splash-mascot-wrap" id="splashMascotWrap">
+    <img src="assets/imagens/mascote-inicio.png" alt="Mascote Guri" class="mascot-img" id="splashMascotImg"
+      data-size="220" data-mood="happy">
+  </div>
+  <div class="splash-hint" id="splashHint">
+    <span class="splash-hint-text">Pressione ENTER ou toque na tela para começar</span>
+  </div>
+</div>
+
+<div id="app" role="main" aria-live="off" aria-hidden="true"></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<div id="mascotTip" class="mascot-tip-toast" role="status" aria-live="polite"></div>
+
+<button class="mascot-float" id="mascotFloatBtn" type="button" aria-label="Chamar o mascote Guri para uma dica"></button>
+
+<script>
+
+/* =========================================================
+   ComunicA — App de Comunicação Alternativa e Aumentativa
+   Melhorias: mascote "Guri", acessibilidade (WCAG),
+   responsividade para tablet/celular, ajustes de fonte e
+   alto contraste.
+   ========================================================= */
+
+const DEFAULT_CATEGORIES = [
+  { id: 'pessoas', label: 'Pessoas', emoji: '👥', custom: false },
+  { id: 'necessidades', label: 'Necessidades', emoji: '🍎', custom: false },
+  { id: 'sentimentos', label: 'Sentimentos', emoji: '❤️', custom: false },
+  { id: 'atividades', label: 'Atividades', emoji: '🎮', custom: false },
+  { id: 'lugares', label: 'Lugares', emoji: '🏠', custom: false },
+  { id: 'acoes', label: 'Ações', emoji: '⚡', custom: false }
+];
+
+const DEFAULT_WORDS = [
+  { id: 'eu', label: 'Eu', emoji: '👤', description: 'Quem está falando', cat: 'pessoas' },
+  { id: 'voce', label: 'Você', emoji: '👤', description: 'A pessoa com quem falo', cat: 'pessoas' },
+  { id: 'mae', label: 'Mãe', emoji: '👩', description: 'Minha mãe', cat: 'pessoas' },
+  { id: 'pai', label: 'Pai', emoji: '👨', description: 'Meu pai', cat: 'pessoas' },
+  { id: 'professor', label: 'Professor', emoji: '🧑‍🏫', description: 'Meu professor', cat: 'pessoas' },
+  { id: 'amigo', label: 'Amigo', emoji: '🧑‍🤝‍🧑', description: 'Meu amigo', cat: 'pessoas' },
+
+  { id: 'quero', label: 'Quero', emoji: '🙋', description: 'Eu desejo algo', cat: 'acoes' },
+  { id: 'preciso', label: 'Preciso', emoji: '❗', description: 'Eu preciso de algo', cat: 'acoes' },
+  { id: 'estou', label: 'Estou', emoji: '💭', description: 'Como eu estou', cat: 'acoes' },
+  { id: 'gosto', label: 'Gosto', emoji: '😊', description: 'Eu gosto de algo', cat: 'acoes' },
+  { id: 'vou', label: 'Vou', emoji: '➡️', description: 'Eu vou para algum lugar', cat: 'acoes' },
+
+  { id: 'agua', label: 'Água', emoji: '💧', description: 'Quero beber', cat: 'necessidades' },
+  { id: 'comida', label: 'Comida', emoji: '🍎', description: 'Quero comer', cat: 'necessidades' },
+  { id: 'banheiro', label: 'Banheiro', emoji: '🚽', description: 'Preciso ir ao banheiro', cat: 'necessidades' },
+  { id: 'dormir', label: 'Dormir', emoji: '😴', description: 'Quero dormir', cat: 'necessidades' },
+  { id: 'descansar', label: 'Descansar', emoji: '🛌', description: 'Quero descansar', cat: 'necessidades' },
+  { id: 'ajuda', label: 'Ajuda', emoji: '🆘', description: 'Preciso de ajuda', cat: 'necessidades' },
+
+  { id: 'feliz', label: 'Feliz', emoji: '😄', description: 'Estou feliz', cat: 'sentimentos' },
+  { id: 'triste', label: 'Triste', emoji: '😢', description: 'Estou triste', cat: 'sentimentos' },
+  { id: 'cansado', label: 'Cansado', emoji: '😩', description: 'Estou cansado', cat: 'sentimentos' },
+  { id: 'commedo', label: 'Com medo', emoji: '😨', description: 'Estou com medo', cat: 'sentimentos' },
+  { id: 'comdor', label: 'Com dor', emoji: '🤕', description: 'Estou com dor', cat: 'sentimentos' },
+  { id: 'bem', label: 'Bem', emoji: '🙂', description: 'Estou bem', cat: 'sentimentos' },
+
+  { id: 'brincar', label: 'Brincar', emoji: '🧸', description: 'Quero brincar', cat: 'atividades' },
+  { id: 'jogar', label: 'Jogar', emoji: '🎮', description: 'Quero jogar', cat: 'atividades' },
+  { id: 'assistir', label: 'Assistir', emoji: '📺', description: 'Quero assistir', cat: 'atividades' },
+  { id: 'desenhar', label: 'Desenhar', emoji: '🎨', description: 'Quero desenhar', cat: 'atividades' },
+  { id: 'passear', label: 'Passear', emoji: '🚶', description: 'Quero passear', cat: 'atividades' },
+  { id: 'musica', label: 'Música', emoji: '🎵', description: 'Quero ouvir música', cat: 'atividades' },
+
+  { id: 'casa', label: 'Casa', emoji: '🏠', description: 'Minha casa', cat: 'lugares' },
+  { id: 'escola', label: 'Escola', emoji: '🏫', description: 'Minha escola', cat: 'lugares' },
+  { id: 'quarto', label: 'Quarto', emoji: '🛏️', description: 'Meu quarto', cat: 'lugares' },
+  { id: 'hospital', label: 'Hospital', emoji: '🏥', description: 'Preciso ir ao hospital', cat: 'lugares' },
+  { id: 'sair', label: 'Sair', emoji: '🚪', description: 'Quero sair', cat: 'lugares' }
+];
+
+const SUGGESTIONS = {
+  __start__: ['eu', 'voce', 'mae', 'pai', 'professor', 'amigo'],
+  eu: ['quero', 'preciso', 'estou', 'gosto', 'vou'],
+  voce: ['quero', 'preciso', 'estou', 'gosto', 'vou'],
+  mae: ['quero', 'preciso', 'estou', 'gosto', 'vou'],
+  pai: ['quero', 'preciso', 'estou', 'gosto', 'vou'],
+  professor: ['quero', 'preciso', 'estou', 'gosto', 'vou'],
+  amigo: ['quero', 'preciso', 'estou', 'gosto', 'vou'],
+  quero: ['agua', 'comida', 'brincar', 'jogar', 'assistir', 'desenhar', 'passear', 'musica', 'dormir', 'sair', 'casa'],
+  preciso: ['agua', 'comida', 'banheiro', 'dormir', 'descansar', 'ajuda', 'hospital'],
+  estou: ['feliz', 'triste', 'cansado', 'comdor', 'commedo', 'bem'],
+  gosto: ['brincar', 'jogar', 'desenhar', 'assistir', 'passear', 'musica'],
+  vou: ['casa', 'escola', 'passear', 'dormir', 'banheiro', 'hospital'],
+  agua: ['quero', 'gosto', 'preciso'],
+  comida: ['quero', 'gosto', 'preciso'],
+  banheiro: ['preciso', 'quero'],
+  dormir: ['quero', 'preciso', 'estou'],
+  descansar: ['quero', 'preciso', 'estou'],
+  ajuda: ['preciso', 'quero'],
+  feliz: ['eu', 'gosto', 'quero'],
+  triste: ['eu', 'preciso', 'quero'],
+  cansado: ['eu', 'quero', 'preciso'],
+  commedo: ['eu', 'preciso', 'ajuda'],
+  comdor: ['eu', 'preciso', 'ajuda'],
+  bem: ['eu', 'gosto', 'quero'],
+  brincar: ['eu', 'quero', 'gosto'],
+  jogar: ['eu', 'quero', 'gosto'],
+  assistir: ['eu', 'quero', 'gosto'],
+  desenhar: ['eu', 'quero', 'gosto'],
+  passear: ['eu', 'quero', 'vou'],
+  musica: ['eu', 'quero', 'gosto'],
+  casa: ['eu', 'vou', 'quero'],
+  escola: ['eu', 'vou', 'quero'],
+  quarto: ['eu', 'vou', 'quero'],
+  hospital: ['eu', 'vou', 'preciso'],
+  sair: ['eu', 'quero', 'vou']
+};
+
+const CHALLENGES = [
+  { emoji: '💧', prompt: 'Você está com sede. O que você quer dizer?', target: ['eu', 'quero', 'agua'] },
+  { emoji: '🍎', prompt: 'Você está com fome.', target: ['eu', 'quero', 'comida'] },
+  { emoji: '😴', prompt: 'Você está cansado e quer descansar.', target: ['eu', 'estou', 'cansado'] },
+  { emoji: '🚽', prompt: 'Você precisa ir ao banheiro.', target: ['eu', 'preciso', 'banheiro'] },
+  { emoji: '🧸', prompt: 'Você quer se divertir um pouco.', target: ['eu', 'quero', 'brincar'] }
+];
+
+/* Dicas do mascote por tela — usadas quando o botão flutuante é tocado */
+const MASCOT_TIPS = {
+  home: 'Oi! Eu sou o Guri. Toque em "Começar a comunicar" para montar sua frase comigo.',
+  build: 'Escolha as palavras no carrossel e toque em Selecionar. Quando terminar, toque em Falar.',
+  categories: 'Aqui você encontra as palavras organizadas por assunto. Toque em uma categoria para abrir.',
+  categoryDetail: 'Toque em uma palavra para adicionar na sua frase.',
+  favorites: 'Aqui ficam suas frases e palavras favoritas, prontas para usar rapidinho.',
+  personalize: 'Você pode criar novas palavras e categorias, do seu jeito.',
+  challenge: 'Vamos brincar! Monte a frase certa para ganhar uma estrela.',
+  profile: 'Aqui você vê seu nome e suas conquistas.',
+  settings: 'Aqui você ajusta o tamanho da letra, o contraste e a voz.',
+  about: 'O ComunicA ajuda você a se comunicar com frases montadas por toque.'
+};
+
+const MASCOT_NAME = 'Guri';
+const MASCOT_IMG_SRC = 'assets/imagens/mascote-inicio.png';
+const MASCOT_AUDIO_SRC = 'assets/audio/fala-guri.mp3';
+const MENU_AUDIO_SRC = {
+  categories: 'assets/audio/categorias.mp3',
+  build: 'assets/audio/começar-comunicar.mp3',
+  settings: 'assets/audio/configurações.mp3',
+  challenge: 'assets/audio/desafio-comunicação.mp3',
+  favorites: 'assets/audio/favoritos.mp3',
+  profile: 'assets/audio/meu-comunica.mp3',
+  personalize: 'assets/audio/personalizar.mp3',
+  about: 'assets/audio/sobre o comunica.mp3'
+};
+const WORD_ICON_SRC = {
+  mae: 'assets/imagens/icone-mae.png',
+  pai: 'assets/imagens/icone-pai.png',
+  professor: 'assets/imagens/icone-professor.png',
+  amigo: 'assets/imagens/icone-amigo.png',
+  eu: 'assets/imagens/icone-eu.png',
+  voce: 'assets/imagens/icone-voce.png',
+  quero: 'assets/imagens/icone-quero.png',
+  preciso: 'assets/imagens/icone-preciso.png',
+  estou: 'assets/imagens/icone-estou.png',
+  gosto: 'assets/imagens/icone-gosto.png',
+  vou: 'assets/imagens/icone-vou.png'
+};
+let mascotAudio = null;
+const menuAudios = {};
+
+let STATE = {
+  screen: 'home',
+  phrase: [],
+  categoryOpen: null,
+  challenge: null,
+  toastTimer: null,
+  tipTimer: null,
+  options: [],
+  carouselIndex: 0,
+
+  data: {
+    favWords: [],
+    favPhrases: [],
+    customWords: [],
+    customCategories: [],
+    profile: { name: '', stars: 0 },
+    settings: {
+      fontStep: 2,        // 1..4 -> pequeno, médio, grande, extra grande
+      highContrast: false,
+      voiceRate: 1,
+      mascotVoiceEnabled: true
+    }
+  }
+};
+
+const FONT_SCALES = [0.9, 1, 1.15, 1.35];
+const STORAGE_KEY = 'comunica:data';
+
+function allCategories() {
+  return DEFAULT_CATEGORIES.concat(STATE.data.customCategories);
+}
+
+function allWords() {
+  return DEFAULT_WORDS.concat(STATE.data.customWords);
+}
+
+function wordById(id) {
+  return allWords().find(word => word.id === id);
+}
+
+function wordVisualHtml(word, className = 'word-icon') {
+  const source = WORD_ICON_SRC[word.id];
+  return source
+    ? `<img class="${className}" src="${source}" alt="" aria-hidden="true">`
+    : `<div class="emoji" aria-hidden="true">${word.emoji}</div>`;
+}
+
+function loadData() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      STATE.data = {
+        ...STATE.data,
+        ...parsed,
+        profile: { ...STATE.data.profile, ...(parsed.profile || {}) },
+        settings: { ...STATE.data.settings, ...(parsed.settings || {}) }
+      };
+    }
+  } catch (error) {
+    console.error('Erro ao carregar os dados:', error);
+  }
+
+  applySettings();
+  loadLayer();
+  render();
+}
+
+function saveData() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE.data));
+  } catch (error) {
+    console.error('Erro ao salvar os dados:', error);
+  }
+}
+
+function applySettings() {
+  const scale = FONT_SCALES[(STATE.data.settings.fontStep || 2) - 1] || 1;
+  document.documentElement.style.setProperty('--a11y-scale', scale);
+  document.body.dataset.contrast = STATE.data.settings.highContrast ? 'high' : 'normal';
+}
+
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  if (!toast) return;
+  toast.textContent = message;
+  toast.classList.add('show');
+  clearTimeout(STATE.toastTimer);
+  STATE.toastTimer = setTimeout(() => {
+    toast.classList.remove('show');
+  }, 1800);
+}
+
+function showMascotTip(text) {
+  const el = document.getElementById('mascotTip');
+  if (!el) return;
+  el.textContent = text;
+  el.classList.add('show');
+  clearTimeout(STATE.tipTimer);
+  STATE.tipTimer = setTimeout(() => {
+    el.classList.remove('show');
+  }, 5000);
+}
+
+function speak(text) {
+  if (!('speechSynthesis' in window)) {
+    showToast('A voz não é suportada neste navegador.');
+    return;
+  }
+  if (!text) return;
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'pt-BR';
+  utterance.rate = STATE.data.settings.voiceRate || 1;
+
+  const voices = window.speechSynthesis.getVoices();
+  const ptVoice = voices.find(voice => voice.lang && voice.lang.toLowerCase().startsWith('pt'));
+  if (ptVoice) utterance.voice = ptVoice;
+
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(utterance);
+}
+
+function playMascotVoice(text) {
+  if (!mascotAudio) {
+    mascotAudio = new Audio(MASCOT_AUDIO_SRC);
+    mascotAudio.preload = 'auto';
+  }
+
+  mascotAudio.currentTime = 0;
+  const playPromise = mascotAudio.play();
+
+  if (playPromise && typeof playPromise.catch === 'function') {
+    playPromise.catch(() => {
+      /* Se o navegador bloquear o áudio ou o arquivo não carregar, usa TTS. */
+      speak(text);
+    });
+  }
+}
+
+function playMenuVoice(target, fallbackText) {
+  const source = MENU_AUDIO_SRC[target];
+  if (!source) {
+    if (fallbackText) speak(fallbackText);
+    return;
+  }
+
+  if (!menuAudios[target]) {
+    menuAudios[target] = new Audio(source);
+    menuAudios[target].preload = 'auto';
+  }
+
+  const audio = menuAudios[target];
+  audio.currentTime = 0;
+  const playPromise = audio.play();
+
+  if (playPromise && typeof playPromise.catch === 'function') {
+    playPromise.catch(() => {
+      if (fallbackText) speak(fallbackText);
+    });
+  }
+}
+
+function speakMascot(text) {
+  showMascotTip(text);
+  if (STATE.data.settings.mascotVoiceEnabled) {
+    playMascotVoice(text);
+  }
+}
+
+/* ---------- Mascote "Guri" em SVG ---------- */
+function mascotSVG(options = {}) {
+  const size = options.size || 120;
+  const mood = options.mood || 'happy'; // happy | idle | excited
+  const eyeH = mood === 'excited' ? 16 : 13;
+
+  return `
+    <svg viewBox="0 0 200 200" width="${size}" height="${size}" role="img" aria-hidden="true" focusable="false">
+      <ellipse cx="100" cy="180" rx="55" ry="10" fill="rgba(23,58,94,0.18)"/>
+      <path d="M60 60 C60 20 140 20 140 60 L150 130 C150 165 50 165 50 130 Z" fill="#ffcf4d" stroke="#173a5e" stroke-width="5"/>
+      <circle cx="45" cy="95" r="20" fill="#ffcf4d" stroke="#173a5e" stroke-width="5"/>
+      <circle cx="155" cy="95" r="20" fill="#ffcf4d" stroke="#173a5e" stroke-width="5"/>
+      <circle cx="76" cy="82" r="26" fill="#ffffff" stroke="#173a5e" stroke-width="5"/>
+      <circle cx="124" cy="82" r="26" fill="#ffffff" stroke="#173a5e" stroke-width="5"/>
+      <circle cx="76" cy="84" r="${eyeH}" fill="#173a5e"/>
+      <circle cx="124" cy="84" r="${eyeH}" fill="#173a5e"/>
+      <circle cx="80" cy="78" r="4" fill="#ffffff"/>
+      <circle cx="128" cy="78" r="4" fill="#ffffff"/>
+      <path d="M92 108 L108 108 L100 122 Z" fill="#e0a527" stroke="#173a5e" stroke-width="4" stroke-linejoin="round"/>
+      <path d="${mood === 'happy' || mood === 'excited' ? 'M82 128 Q100 142 118 128' : 'M85 132 Q100 128 115 132'}" stroke="#173a5e" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <path d="M50 135 C30 140 20 155 28 168 C40 168 55 158 58 142 Z" fill="#4caf7d" stroke="#173a5e" stroke-width="4"/>
+      <path d="M150 135 C170 140 180 155 172 168 C160 168 145 158 142 142 Z" fill="#4caf7d" stroke="#173a5e" stroke-width="4"/>
+    </svg>
+  `;
+}
+
+/* Imagem real do mascote */
+function mascotImgHtml(options = {}) {
+  const size = options.size || 100;
+  const mood = options.mood || 'happy';
+  const alt = options.alt || `Mascote ${MASCOT_NAME}`;
+  return `<img src="${MASCOT_IMG_SRC}" alt="${alt}" class="mascot-img" data-size="${size}" data-mood="${mood}">`;
+}
+
+function handleMascotImgError(imgEl) {
+  const size = Number(imgEl.dataset.size) || 100;
+  const mood = imgEl.dataset.mood || 'happy';
+  const wrapper = document.createElement('span');
+  wrapper.style.display = 'contents';
+  wrapper.innerHTML = mascotSVG({ size, mood });
+  imgEl.replaceWith(wrapper.firstElementChild);
+}
+
+function mascotHeroHtml() {
+  return `
+    <img class="home-logo" src="assets/imagens/comunica-logo.png"
+      alt="Logo ComunicA" onerror="this.style.display='none'">
+  `;
+}
+
+/* ---------- Navegação ---------- */
+function go(screen, extra = {}) {
+  STATE.screen = screen;
+  Object.assign(STATE, extra);
+  if (screen !== 'challenge') STATE.challenge = null;
+  render();
+  window.scrollTo(0, 0);
+}
+
+function addWordToPhrase(word) {
+  if (!word) return;
+  STATE.phrase.push(word);
+  loadLayer();
+  render();
+  announcePhrase();
+}
+
+function eraseLast() {
+  if (STATE.phrase.length === 0) {
+    showToast('Não há palavras para apagar.');
+    return;
+  }
+  speak('Apagar');
+  STATE.phrase.pop();
+  loadLayer();
+  render();
+  announcePhrase();
+}
+
+function clearPhrase() {
+  if (STATE.phrase.length > 0) speak('Limpar frase');
+  STATE.phrase = [];
+  loadLayer();
+  render();
+  announcePhrase();
+}
+
+function currentPhraseText() {
+  return STATE.phrase.map(word => word.label).join(' ');
+}
+
+function announcePhrase() {
+  const live = document.getElementById('phraseLive');
+  if (live) live.textContent = currentPhraseText() || 'Frase vazia';
+}
+
+function favoritePhrase() {
+  if (STATE.phrase.length === 0) {
+    showToast('Monte uma frase primeiro.');
+    return;
+  }
+  const text = currentPhraseText();
+  if (!STATE.data.favPhrases.includes(text)) {
+    STATE.data.favPhrases.push(text);
+    saveData();
+    showToast('Frase adicionada aos favoritos ⭐');
+  } else {
+    showToast('Essa frase já está nos favoritos.');
+  }
+  render();
+}
+
+function currentLayerKey() {
+  const last = STATE.phrase[STATE.phrase.length - 1];
+  return last ? last.id : '__start__';
+}
+
+function loadLayer() {
+  const key = currentLayerKey();
+  let suggestions = SUGGESTIONS[key] || [];
+
+  const customWords = STATE.data.customWords
+    .filter(word => !suggestions.includes(word.id))
+    .map(word => word.id);
+
+  const combined = suggestions.concat(customWords);
+  STATE.options = combined.filter(id => wordById(id));
+
+  if (STATE.carouselIndex >= STATE.options.length) {
+    STATE.carouselIndex = 0;
+  }
+}
+
+function moveCarousel(delta) {
+  if (STATE.options.length === 0) return;
+  const total = STATE.options.length;
+  STATE.carouselIndex = (STATE.carouselIndex + delta + total) % total;
+  render();
+}
+
+function confirmSelection() {
+  if (STATE.options.length === 0) {
+    showToast('Não há mais opções.');
+    return;
+  }
+  const id = STATE.options[STATE.carouselIndex];
+  const word = wordById(id);
+  if (!word) return;
+
+  STATE.phrase.push(word);
+
+  if (STATE.phrase.length === 3) {
+    setTimeout(() => { speak(currentPhraseText()); }, 250);
+  } else {
+    speak(word.label);
+  }
+
+  STATE.carouselIndex = 0;
+  loadLayer();
+  render();
+  announcePhrase();
+}
+
+function speakPhrase() {
+  const text = currentPhraseText();
+  if (text) speak(text);
+}
+
+function isFavoriteWord(wordId) {
+  return STATE.data.favWords.includes(wordId);
+}
+
+function toggleFavoriteWord(wordId) {
+  const index = STATE.data.favWords.indexOf(wordId);
+  if (index >= 0) {
+    STATE.data.favWords.splice(index, 1);
+    showToast('Palavra removida dos favoritos.');
+  } else {
+    STATE.data.favWords.push(wordId);
+    showToast('Palavra adicionada aos favoritos ⭐');
+  }
+  saveData();
+  render();
+}
+
+function wordCardHtml(word) {
+  const favorite = isFavoriteWord(word.id);
+  return `
+    <div class="word-card" data-word="${word.id}" role="button" tabindex="0"
+      aria-label="Adicionar palavra ${word.label} à frase. ${word.description || ''}">
+      <button type="button" class="favorite-toggle ${favorite ? 'is-favorite' : ''}"
+        data-fav-word="${word.id}"
+        aria-label="${favorite ? `Remover ${word.label} dos favoritos` : `Adicionar ${word.label} aos favoritos`}"
+        aria-pressed="${favorite}">
+        ${favorite ? '★' : '☆'}
+      </button>
+      ${wordVisualHtml(word)}
+      <div class="label">${word.label}</div>
+      <div class="description">${word.description || 'Toque para adicionar'}</div>
+    </div>
+  `;
+}
+
+/* ---------- Render ---------- */
+function render() {
+  const app = document.getElementById('app');
+  if (!app) return;
+
+  let html = '';
+  switch (STATE.screen) {
+    case 'home': html = renderHome(); break;
+    case 'build': html = renderBuild(); break;
+    case 'categories': html = renderCategories(); break;
+    case 'categoryDetail': html = renderCategoryDetail(); break;
+    case 'favorites': html = renderFavorites(); break;
+    case 'personalize': html = renderPersonalize(); break;
+    case 'challenge': html = renderChallenge(); break;
+    case 'profile': html = renderProfile(); break;
+    case 'settings': html = renderSettings(); break;
+    case 'about': html = renderAbout(); break;
+    default: html = renderHome();
+  }
+
+  app.innerHTML = html;
+
+  if (STATE.screen === 'home') {
+    document.body.classList.remove('bg-outras');
+  } else {
+    document.body.classList.add('bg-outras');
+  }
+
+  attachHandlers();
+  announcePhrase();
+}
+
+function renderHome() {
+  return `
+    <div class="home-screen">
+      <div class="topbar">
+        <button class="icon-btn" data-go="settings" title="Configurações" aria-label="Configurações de acessibilidade">
+          <img class="menu-icon" src="assets/imagens/icone-configuracoes.png" alt="">
+        </button>
+        <button class="icon-btn" data-go="profile" title="Perfil" aria-label="Meu perfil">
+          <img class="menu-icon" src="assets/imagens/icone-pessoa.png" alt="">
+        </button>
+      </div>
+
+      ${mascotHeroHtml()}
+
+      <nav class="menu" aria-label="Menu principal">
+        <div class="menu-btn primary" data-go="build" role="button" tabindex="0">
+          <img class="menu-icon" src="assets/imagens/icone-balao.png" alt="" aria-hidden="true">
+          <div class="menu-text">
+            <div class="menu-title">COMEÇAR A COMUNICAR</div>
+            <div class="menu-sub">Monte sua frase</div>
+          </div>
+          <div class="menu-arrow" aria-hidden="true">›</div>
+        </div>
+
+        <div class="menu-btn" data-go="favorites" role="button" tabindex="0">
+          <img class="menu-icon" src="assets/imagens/icone-estrela.png" alt="" aria-hidden="true">
+          <div class="menu-text">
+            <div class="menu-title">FAVORITOS</div>
+            <div class="menu-sub">Frases e palavras favoritas</div>
+          </div>
+          <div class="menu-arrow" aria-hidden="true">›</div>
+        </div>
+
+        <div class="menu-btn" data-go="categories" role="button" tabindex="0">
+          <img class="menu-icon" src="assets/imagens/icone-livros.png" alt="" aria-hidden="true">
+          <div class="menu-text">
+            <div class="menu-title">CATEGORIAS</div>
+            <div class="menu-sub">Palavras organizadas por temas</div>
+          </div>
+          <div class="menu-arrow" aria-hidden="true">›</div>
+        </div>
+
+        <div class="menu-btn" data-go="personalize" role="button" tabindex="0">
+          <img class="menu-icon" src="assets/imagens/icone-configuracoes.png" alt="" aria-hidden="true">
+          <div class="menu-text">
+            <div class="menu-title">PERSONALIZAR</div>
+            <div class="menu-sub">Adicione suas próprias palavras</div>
+          </div>
+          <div class="menu-arrow" aria-hidden="true">›</div>
+        </div>
+
+        <div class="menu-btn" data-go="challenge" role="button" tabindex="0">
+          <img class="menu-icon" src="assets/imagens/icone-alvo.png" alt="" aria-hidden="true">
+          <div class="menu-text">
+            <div class="menu-title">DESAFIO DA COMUNICAÇÃO</div>
+            <div class="menu-sub">Aprenda brincando</div>
+          </div>
+          <div class="menu-arrow" aria-hidden="true">›</div>
+        </div>
+      </nav>
+
+      <div class="about-link" data-go="about" role="button" tabindex="0">SOBRE O COMUNICA</div>
+    </div>
+  `;
+}
+
+function renderBuild() {
+  const chipHtml = STATE.phrase.length
+    ? STATE.phrase.map(word => `<span class="phrase-chip">${word.emoji} ${word.label}</span>`).join('')
+    : `<span class="phrase-placeholder">Escolha uma palavra no carrossel...</span>`;
+
+  const n = STATE.options.length;
+  let cardsHtml = '';
+
+  if (n === 0) {
+    cardsHtml = `
+      <div style="color:#fff;font-weight:700;text-align:center;padding:20px;">
+        🎉 Você chegou ao fim da frase!<br><br>
+        Toque em <strong>Falar</strong> ou limpe para começar novamente.
+      </div>
+    `;
+  } else {
+    const prevId = n > 1 ? STATE.options[(STATE.carouselIndex - 1 + n) % n] : null;
+    const nextId = n > 1 ? STATE.options[(STATE.carouselIndex + 1) % n] : null;
+    const curId = STATE.options[STATE.carouselIndex];
+
+    const sideCard = id => {
+      if (!id) return `<div class="carousel-card side empty"></div>`;
+      const word = wordById(id);
+      if (!word) return `<div class="carousel-card side empty"></div>`;
+      return `
+        <div class="carousel-card side" data-pick="${id}" role="button" tabindex="-1" aria-label="${word.label}">
+          ${wordVisualHtml(word)}
+          <div class="label">${word.label}</div>
+        </div>
+      `;
+    };
+
+    const centerCard = id => {
+      const word = wordById(id);
+      if (!word) return '';
+      return `
+        <div class="carousel-card center" data-pick="${id}" role="button" tabindex="0"
+          aria-label="Palavra selecionada: ${word.label}. Toque para confirmar.">
+          ${wordVisualHtml(word)}
+          <div class="label">${word.label}</div>
+        </div>
+      `;
+    };
+
+    cardsHtml = `
+      <button class="carousel-arrow" id="prevBtn" ${n < 2 ? 'disabled' : ''} aria-label="Palavra anterior"><img src="assets/imagens/icone-seta-voltar.png" alt=""></button>
+      <div class="carousel-track">
+        ${sideCard(prevId)}
+        ${centerCard(curId)}
+        ${sideCard(nextId)}
+      </div>
+      <button class="carousel-arrow" id="nextBtn" ${n < 2 ? 'disabled' : ''} aria-label="Próxima palavra"><img src="assets/imagens/icone-seta-ir.png" alt=""></button>
+    `;
+  }
+
+  const layerLabel = STATE.phrase.length === 0
+    ? 'QUEM ESTÁ FALANDO?'
+    : STATE.phrase.length === 1
+      ? 'O QUE VOCÊ QUER DIZER?'
+      : 'COMPLETE A FRASE';
+
+  return `
+    <div class="topbar">
+      <button class="icon-btn" data-go="home" title="Voltar ao início" aria-label="Voltar ao início">←</button>
+      <div class="topbar-title">Comunicar</div>
+      <button class="icon-btn" data-go="personalize" aria-label="Personalizar palavras">
+        <img class="menu-icon" src="assets/imagens/icone-configuracoes.png" alt="">
+      </button>
+    </div>
+
+    <div class="screen">
+      <h2 class="section-label" id="phraseSectionLabel">MINHA FRASE</h2>
+
+      <div class="phrase-bar" role="group" aria-labelledby="phraseSectionLabel">
+        ${chipHtml}
+      </div>
+      <p id="phraseLive" class="visually-hidden" aria-live="polite"></p>
+
+      <div class="layer-label">${layerLabel}</div>
+
+      <div class="carousel-wrap">${cardsHtml}</div>
+
+      <button class="confirm-btn" id="confirmBtn" ${n === 0 ? 'disabled' : ''}>✓ Selecionar</button>
+
+      <div class="action-row" role="toolbar" aria-label="Ações da frase">
+        <button class="btn-erase" id="eraseBtn" aria-label="Apagar última palavra"><img class="action-icon" src="assets/imagens/icone-apagar.png" alt="">Apagar</button>
+        <button class="btn-clear" id="clearBtn" aria-label="Limpar toda a frase"><img class="action-icon" src="assets/imagens/icone-limpar.png" alt="">Limpar</button>
+        <button class="btn-speak" id="speakBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Falar a frase em voz alta"><img class="action-icon" src="assets/imagens/icone-falar.png" alt="">Falar</button>
+        <button class="btn-fav" id="favPhraseBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Favoritar esta frase"><img class="action-icon" src="assets/imagens/icone-estrela.png" alt="">Favoritar</button>
+      </div>
+
+      <div class="back-link" data-go="categories" role="button" tabindex="0" style="margin-top:4px;">
+        <img class="action-icon" src="assets/imagens/icone-livros.png" alt="">Ver todas as categorias
+      </div>
+
+      <div class="hint">← → navega · Enter/Espaço seleciona · toque também funciona</div>
+    </div>
+  `;
+}
+
+function renderCategories() {
+  const categories = allCategories();
+  return `
+    <div class="topbar">
+      <button class="icon-btn" data-go="home" aria-label="Voltar para o início">←</button>
+      <div class="topbar-title">Categorias</div>
+      <div style="width:var(--tap-min)"></div>
+    </div>
+
+    <div class="screen">
+      <div class="cat-grid" role="list">
+        ${categories.map(category => {
+          const count = allWords().filter(word => word.cat === category.id).length;
+          return `
+            <div class="cat-card" data-category="${category.id}" role="button" tabindex="0"
+              aria-label="Categoria ${category.label}, ${count} palavras">
+              <span class="emoji" aria-hidden="true">${category.emoji}</span>
+              <div class="label">${category.label}</div>
+              <div class="count">${count} palavras</div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function renderCategoryDetail() {
+  const category = allCategories().find(item => item.id === STATE.categoryOpen);
+  const words = allWords().filter(word => word.cat === STATE.categoryOpen);
+
+  return `
+    <div class="topbar">
+      <button class="icon-btn" data-go="categories" aria-label="Voltar para categorias">←</button>
+      <div class="topbar-title">${category ? `${category.emoji} ${category.label}` : 'Categoria'}</div>
+      <div style="width:var(--tap-min)"></div>
+    </div>
+
+    <div class="screen">
+      <h2 class="section-label">TOQUE PARA ADICIONAR À FRASE</h2>
+
+      <div class="word-grid" role="list">
+        ${words.map(word => wordCardHtml(word)).join('')}
+      </div>
+
+      ${STATE.phrase.length ? `
+        <div style="margin-top:18px;">
+          <h2 class="section-label">MINHA FRASE</h2>
+          <div class="phrase-bar">
+            ${STATE.phrase.map(word => `<span class="phrase-chip">${word.emoji} ${word.label}</span>`).join('')}
+          </div>
+          <button class="speak-btn" id="speakBtn" aria-label="Falar a frase em voz alta">🔊 FALAR</button>
+        </div>
+      ` : ''}
+    </div>
+  `;
+}
+
+function renderFavorites() {
+  const favWordObjects = STATE.data.favWords.map(wordById).filter(Boolean);
+
+  return `
+    <div class="topbar">
+      <button class="icon-btn" data-go="home" aria-label="Voltar para o início">←</button>
+      <div class="topbar-title">Favoritos</div>
+      <div style="width:var(--tap-min)"></div>
+    </div>
+
+    <div class="screen">
+      <h2 class="section-label">FRASES FAVORITAS</h2>
+
+      ${STATE.data.favPhrases.length === 0 ? `
+        <div class="empty-state">Nenhuma frase favoritada ainda.<br><br>Monte uma frase e toque em ⭐ Favoritar.</div>
+      ` : STATE.data.favPhrases.map((phrase, index) => `
+          <div class="fav-item">
+            <div class="txt">🗣️ ${phrase}</div>
+            <button data-speak="${phrase}" aria-label="Falar frase: ${phrase}">🔊</button>
+            <button class="fav-remove" data-remove-phrase="${index}" aria-label="Remover frase dos favoritos: ${phrase}">✕</button>
+          </div>
+        `).join('')}
+
+      <h2 class="section-label" style="margin-top:18px;">PALAVRAS FAVORITAS</h2>
+
+      ${favWordObjects.length === 0 ? `
+        <div class="empty-state">Nenhuma palavra favorita ainda.</div>
+      ` : `
+        <div class="word-grid" role="list">
+          ${favWordObjects.map(word => wordCardHtml(word)).join('')}
+        </div>
+      `}
+    </div>
+  `;
+}
+
+function renderPersonalize() {
+  const customWordsHtml = STATE.data.customWords.map(word => `
+      <span class="custom-chip">
+        ${word.emoji} ${word.label}
+        <span class="x" data-del-word="${word.id}" role="button" tabindex="0" aria-label="Excluir palavra ${word.label}">✕</span>
+      </span>
+    `).join('') || `<span style="color:var(--navy-soft);font-weight:600;font-size:13px;">Nenhuma palavra personalizada ainda.</span>`;
+
+  const customCategoriesHtml = STATE.data.customCategories.map(category => `
+      <span class="custom-chip">
+        ${category.emoji} ${category.label}
+        <span class="x" data-del-cat="${category.id}" role="button" tabindex="0" aria-label="Excluir categoria ${category.label}">✕</span>
+      </span>
+    `).join('') || `<span style="color:var(--navy-soft);font-weight:600;font-size:13px;">Nenhuma categoria personalizada ainda.</span>`;
+
+  const categoryOptions = allCategories().map(category => `
+      <option value="${category.id}">${category.emoji} ${category.label}</option>
+    `).join('');
+
+  const emojiChoices = ['⭐','🎈','⚽','📱','🧦','🧴','🚗','🐶','🐱','📖','🍰','🎧','🧩','🛁'];
+
+  return `
+    <div class="topbar">
+      <button class="icon-btn" data-go="home" aria-label="Voltar para o início">←</button>
+      <div class="topbar-title">Personalizar</div>
+      <div style="width:var(--tap-min)"></div>
+    </div>
+
+    <div class="screen">
+      <div class="form-block">
+        <h3>➕ Adicionar palavra</h3>
+
+        <label class="field-label" for="newWordLabel">Nome da palavra</label>
+        <div class="form-row">
+          <input type="text" id="newWordLabel" placeholder="Ex: Bola" aria-label="Nome da nova palavra">
+          <label class="visually-hidden" for="newWordCat">Categoria da palavra</label>
+          <select id="newWordCat" aria-label="Categoria da nova palavra">${categoryOptions}</select>
+        </div>
+
+        <span class="field-label">Escolha um ícone</span>
+        <div class="emoji-row" id="emojiRowWord" role="radiogroup" aria-label="Ícone da palavra">
+          ${emojiChoices.map((emoji, index) => `
+            <div class="emoji-pick ${index === 0 ? 'chosen' : ''}" data-emoji="${emoji}"
+              role="radio" tabindex="0" aria-checked="${index === 0}" aria-label="Ícone ${emoji}">${emoji}</div>
+          `).join('')}
+        </div>
+
+        <button class="submit-btn" id="addWordBtn">Adicionar palavra</button>
+        <div class="custom-list">${customWordsHtml}</div>
+      </div>
+
+      <div class="form-block">
+        <h3>📁 Criar categoria</h3>
+
+        <label class="field-label" for="newCatLabel">Nome da categoria</label>
+        <div class="form-row">
+          <input type="text" id="newCatLabel" placeholder="Ex: Minhas coisas" aria-label="Nome da nova categoria">
+        </div>
+
+        <span class="field-label">Escolha um ícone</span>
+        <div class="emoji-row" id="emojiRowCat" role="radiogroup" aria-label="Ícone da categoria">
+          ${emojiChoices.map((emoji, index) => `
+            <div class="emoji-pick ${index === 0 ? 'chosen' : ''}" data-emoji="${emoji}"
+              role="radio" tabindex="0" aria-checked="${index === 0}" aria-label="Ícone ${emoji}">${emoji}</div>
+          `).join('')}
+        </div>
+
+        <button class="submit-btn" id="addCatBtn">Criar categoria</button>
+        <div class="custom-list">${customCategoriesHtml}</div>
+      </div>
+    </div>
+  `;
+}
+
+function renderChallenge() {
+  if (!STATE.challenge) {
+    STATE.challenge = CHALLENGES[Math.floor(Math.random() * CHALLENGES.length)];
+    STATE.phrase = [];
+  }
+
+  const challenge = STATE.challenge;
+  const done = STATE.phrase.length > 0 &&
+    STATE.phrase.map(word => word.id).join(',') === challenge.target.join(',');
+
+  const targetWords = allWords().filter(word => challenge.target.includes(word.id));
+  const targetCategories = new Set(targetWords.map(word => word.cat));
+
+  const distractors = allWords()
+    .filter(word => targetCategories.has(word.cat) && !challenge.target.includes(word.id))
+    .slice(0, 5);
+
+  let options = targetWords.concat(distractors);
+  options = options.sort(() => Math.random() - 0.5);
+
+  return `
+    <div class="topbar">
+      <button class="icon-btn" data-go="home" aria-label="Voltar para o início">←</button>
+      <div class="topbar-title">Desafio</div>
+      <div style="width:var(--tap-min)"></div>
+    </div>
+
+    <div class="screen">
+      <div class="stars" role="status">⭐ ${STATE.data.profile.stars} estrelas</div>
+
+      <div class="challenge-card">
+        <div class="emoji" aria-hidden="true">${challenge.emoji}</div>
+        <p>${challenge.prompt}</p>
+      </div>
+
+      <h2 class="section-label">MINHA FRASE</h2>
+      <div class="phrase-bar">
+        ${STATE.phrase.length
+          ? STATE.phrase.map(word => `<span class="phrase-chip">${word.emoji} ${word.label}</span>`).join('')
+          : `<span class="phrase-placeholder">Monte a frase certa...</span>`}
+      </div>
+
+      <div class="action-row" role="toolbar" aria-label="Ações do desafio">
+        <button class="btn-erase" id="eraseBtn" aria-label="Apagar última palavra">⌫ Apagar</button>
+        <button class="btn-clear" id="clearBtn" aria-label="Limpar frase">🗑️ Limpar</button>
+      </div>
+
+      <h2 class="section-label">MONTE A RESPOSTA</h2>
+      <div class="word-grid" role="list">
+        ${options.map(word => wordCardHtml(word)).join('')}
+      </div>
+
+      ${done
+        ? `<button class="speak-btn" id="challengeWinBtn">🎉 Muito bem! Ganhar estrela</button>`
+        : `<button class="speak-btn" id="speakBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Ouvir minha frase">🔊 Ouvir minha frase</button>`}
+
+      <div class="back-link" style="margin-top:14px;" id="skipChallenge" role="button" tabindex="0">↻ Tentar outro desafio</div>
+    </div>
+  `;
+}
+
+function renderProfile() {
+  const profile = STATE.data.profile;
+  return `
+    <div class="topbar">
+      <button class="icon-btn" data-go="home" aria-label="Voltar para o início">←</button>
+      <div class="topbar-title">Meu ComunicA</div>
+      <div style="width:var(--tap-min)"></div>
+    </div>
+
+    <div class="screen">
+      <div class="form-block">
+        <h3>Nome</h3>
+        <label class="visually-hidden" for="profileName">Como você se chama?</label>
+        <div class="form-row">
+          <input type="text" id="profileName" placeholder="Como você se chama?" value="${profile.name || ''}">
+        </div>
+        <button class="submit-btn" id="saveNameBtn">Salvar nome</button>
+      </div>
+
+      <div class="info-block">
+        <div class="profile-stat"><span>⭐ Estrelas conquistadas</span><span>${profile.stars}</span></div>
+        <div class="profile-stat"><span>🗣️ Frases favoritas</span><span>${STATE.data.favPhrases.length}</span></div>
+        <div class="profile-stat"><span>💛 Palavras favoritas</span><span>${STATE.data.favWords.length}</span></div>
+        <div class="profile-stat" style="border-bottom:none;"><span>📁 Categorias criadas</span><span>${STATE.data.customCategories.length}</span></div>
+      </div>
+    </div>
+  `;
+}
+
+function renderSettings() {
+  const s = STATE.data.settings;
+  const fontLabels = ['Pequena', 'Média', 'Grande', 'Extra grande'];
+
+  return `
+    <div class="topbar">
+      <button class="icon-btn" data-go="home" aria-label="Voltar para o início">←</button>
+      <div class="topbar-title">Configurações</div>
+      <div style="width:var(--tap-min)"></div>
+    </div>
+
+    <div class="screen">
+      <div class="form-block">
+        <div class="settings-row">
+          <div>
+            <div class="settings-label">Tamanho da letra e dos botões</div>
+            <div class="settings-desc">Deixa tudo maior ou menor na tela</div>
+          </div>
+          <div class="stepper">
+            <button id="fontDownBtn" aria-label="Diminuir tamanho da letra" ${s.fontStep <= 1 ? 'disabled' : ''}>−</button>
+            <span aria-live="polite">${fontLabels[s.fontStep - 1]}</span>
+            <button id="fontUpBtn" aria-label="Aumentar tamanho da letra" ${s.fontStep >= 4 ? 'disabled' : ''}>+</button>
+          </div>
+        </div>
+
+        <div class="settings-row">
+          <div>
+            <div class="settings-label">Alto contraste</div>
+            <div class="settings-desc">Fundo preto e texto amarelo para melhor leitura</div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="contrastToggle" ${s.highContrast ? 'checked' : ''}>
+            <span class="switch-track"></span>
+          </label>
+        </div>
+
+        <div class="settings-row">
+          <div>
+            <div class="settings-label">Velocidade da voz</div>
+            <div class="settings-desc">Ajusta a rapidez da fala</div>
+          </div>
+          <div class="stepper">
+            <button id="rateDownBtn" aria-label="Diminuir velocidade da voz">−</button>
+            <span aria-live="polite">${Math.round((s.voiceRate || 1) * 100)}%</span>
+            <button id="rateUpBtn" aria-label="Aumentar velocidade da voz">+</button>
+          </div>
+        </div>
+
+        <div class="settings-row">
+          <div>
+            <div class="settings-label">Voz do mascote ${MASCOT_NAME}</div>
+            <div class="settings-desc">Liga ou desliga a fala das dicas</div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="mascotVoiceToggle" ${s.mascotVoiceEnabled ? 'checked' : ''}>
+            <span class="switch-track"></span>
+          </label>
+        </div>
+      </div>
+
+      <button class="submit-btn" id="testVoiceBtn">🔊 Testar a voz</button>
+    </div>
+  `;
+}
+
+function renderAbout() {
+  return `
+    <div class="topbar">
+      <button class="icon-btn" data-go="home" aria-label="Voltar para o início">←</button>
+      <div class="topbar-title">Sobre</div>
+      <div style="width:var(--tap-min)"></div>
+    </div>
+
+    <div class="screen">
+      <div class="info-block">
+        <strong>ComunicA</strong> é um aplicativo de Comunicação Alternativa e Aumentativa (CAA).
+        Ele ajuda pessoas a montar frases usando o carrossel de palavras e depois ouvir a frase em voz alta.
+      </div>
+      <div class="info-block">
+        Toque em <strong>Começar a comunicar</strong> para montar frases usando o carrossel.
+        Explore as <strong>Categorias</strong> para encontrar palavras por tema.
+        Guarde o que mais usa em <strong>Favoritos</strong> e crie suas próprias palavras em <strong>Personalizar</strong>.
+        Em <strong>Configurações</strong> você ajusta o tamanho da letra, o contraste e a voz.
+      </div>
+    </div>
+  `;
+}
+
+/* ---------- Handlers ---------- */
+function activateOnEnterSpace(handler) {
+  return event => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      handler(event);
+    }
+  };
+}
+
+function attachHandlers() {
+
+  document.querySelectorAll('[data-go]').forEach(element => {
+    const activate = () => {
+      const target = element.getAttribute('data-go');
+      const menuTexts = {
+        build: 'Começar a comunicar',
+        favorites: 'Favoritos',
+        categories: 'Categorias',
+        personalize: 'Personalizar',
+        challenge: 'Desafio da comunicação',
+        profile: 'Perfil',
+        settings: 'Configurações',
+        about: 'Sobre o ComunicA'
+      };
+      if (menuTexts[target]) playMenuVoice(target, menuTexts[target]);
+      if (target === 'challenge') STATE.challenge = null;
+      go(target);
+    };
+    element.addEventListener('click', activate);
+    element.addEventListener('keydown', activateOnEnterSpace(activate));
+  });
+
+  document.querySelectorAll('[data-word]').forEach(element => {
+    const activate = () => {
+      const word = wordById(element.getAttribute('data-word'));
+      if (!word) return;
+      speak(word.label);
+      addWordToPhrase(word);
+    };
+    element.addEventListener('click', activate);
+    element.addEventListener('keydown', activateOnEnterSpace(activate));
+  });
+
+  document.querySelectorAll('[data-fav-word]').forEach(element => {
+    element.addEventListener('click', event => {
+      event.stopPropagation();
+      toggleFavoriteWord(element.getAttribute('data-fav-word'));
+    });
+  });
+
+  document.querySelectorAll('[data-category]').forEach(element => {
+    const activate = () => {
+      const categoryId = element.getAttribute('data-category');
+      const category = allCategories().find(item => item.id === categoryId);
+      if (category) speak(category.label);
+      go('categoryDetail', { categoryOpen: categoryId });
+    };
+    element.addEventListener('click', activate);
+    element.addEventListener('keydown', activateOnEnterSpace(activate));
+  });
+
+  const prevBtn = document.getElementById('prevBtn');
+  if (prevBtn) prevBtn.onclick = () => moveCarousel(-1);
+
+  const nextBtn = document.getElementById('nextBtn');
+  if (nextBtn) nextBtn.onclick = () => moveCarousel(1);
+
+  document.querySelectorAll('.carousel-card[data-pick]').forEach(element => {
+    const activate = () => {
+      const id = element.getAttribute('data-pick');
+      const index = STATE.options.indexOf(id);
+      if (index === -1) return;
+      if (index === STATE.carouselIndex) {
+        confirmSelection();
+      } else {
+        STATE.carouselIndex = index;
+        render();
+      }
+    };
+    element.addEventListener('click', activate);
+    element.addEventListener('keydown', activateOnEnterSpace(activate));
+  });
+
+  const confirmBtn = document.getElementById('confirmBtn');
+  if (confirmBtn) confirmBtn.onclick = confirmSelection;
+
+  const speakBtn = document.getElementById('speakBtn');
+  if (speakBtn) speakBtn.addEventListener('click', () => {
+    const text = currentPhraseText();
+    if (text) speak(text);
+  });
+
+  const eraseBtn = document.getElementById('eraseBtn');
+  if (eraseBtn) eraseBtn.addEventListener('click', eraseLast);
+
+  const clearBtn = document.getElementById('clearBtn');
+  if (clearBtn) clearBtn.addEventListener('click', clearPhrase);
+
+  const favPhraseBtn = document.getElementById('favPhraseBtn');
+  if (favPhraseBtn) favPhraseBtn.addEventListener('click', favoritePhrase);
+
+  document.querySelectorAll('[data-speak]').forEach(element => {
+    element.addEventListener('click', event => {
+      event.stopPropagation();
+      speak(element.getAttribute('data-speak'));
+    });
+  });
+
+  document.querySelectorAll('[data-remove-phrase]').forEach(element => {
+    element.addEventListener('click', event => {
+      event.stopPropagation();
+      const index = parseInt(element.getAttribute('data-remove-phrase'), 10);
+      if (Number.isNaN(index)) return;
+      STATE.data.favPhrases.splice(index, 1);
+      saveData();
+      render();
+    });
+  });
+
+  function wireEmojiRow(selector) {
+    document.querySelectorAll(selector).forEach(element => {
+      const activate = () => {
+        document.querySelectorAll(selector).forEach(item => {
+          item.classList.remove('chosen');
+          item.setAttribute('aria-checked', 'false');
+        });
+        element.classList.add('chosen');
+        element.setAttribute('aria-checked', 'true');
+      };
+      element.addEventListener('click', activate);
+      element.addEventListener('keydown', activateOnEnterSpace(activate));
+    });
+  }
+  wireEmojiRow('#emojiRowWord .emoji-pick');
+  wireEmojiRow('#emojiRowCat .emoji-pick');
+
+  const addWordBtn = document.getElementById('addWordBtn');
+  if (addWordBtn) {
+    addWordBtn.addEventListener('click', () => {
+      const input = document.getElementById('newWordLabel');
+      const category = document.getElementById('newWordCat');
+      if (!input || !category) return;
+
+      const label = input.value.trim();
+      const cat = category.value;
+      const chosen = document.querySelector('#emojiRowWord .chosen');
+      const emoji = chosen ? chosen.getAttribute('data-emoji') : '⭐';
+
+      if (!label) {
+        showToast('Digite uma palavra');
+        speak('Digite uma palavra');
+        return;
+      }
+
+      const id = 'c_' + label.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '_') + '_' + Date.now();
+
+      STATE.data.customWords.push({ id, label, emoji, description: `Toque para usar "${label}"`, cat });
+      saveData();
+      showToast('Palavra adicionada!');
+      speak(label);
+      loadLayer();
+      render();
+    });
+  }
+
+  const addCatBtn = document.getElementById('addCatBtn');
+  if (addCatBtn) {
+    addCatBtn.addEventListener('click', () => {
+      const input = document.getElementById('newCatLabel');
+      if (!input) return;
+
+      const label = input.value.trim();
+      const chosen = document.querySelector('#emojiRowCat .chosen');
+      const emoji = chosen ? chosen.getAttribute('data-emoji') : '📁';
+
+      if (!label) {
+        showToast('Digite um nome de categoria');
+        speak('Digite uma categoria');
+        return;
+      }
+
+      const id = 'cc_' + label.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '_') + '_' + Date.now();
+
+      STATE.data.customCategories.push({ id, label, emoji, custom: true });
+      saveData();
+      showToast('Categoria criada!');
+      speak(label);
+      render();
+    });
+  }
+
+  document.querySelectorAll('[data-del-word]').forEach(element => {
+    const activate = event => {
+      event.stopPropagation();
+      const id = element.getAttribute('data-del-word');
+      STATE.data.customWords = STATE.data.customWords.filter(word => word.id !== id);
+      STATE.data.favWords = STATE.data.favWords.filter(wordId => wordId !== id);
+      saveData();
+      loadLayer();
+      render();
+    };
+    element.addEventListener('click', activate);
+    element.addEventListener('keydown', activateOnEnterSpace(activate));
+  });
+
+  document.querySelectorAll('[data-del-cat]').forEach(element => {
+    const activate = event => {
+      event.stopPropagation();
+      const id = element.getAttribute('data-del-cat');
+      STATE.data.customCategories = STATE.data.customCategories.filter(category => category.id !== id);
+      STATE.data.customWords = STATE.data.customWords.filter(word => word.cat !== id);
+      saveData();
+      loadLayer();
+      render();
+    };
+    element.addEventListener('click', activate);
+    element.addEventListener('keydown', activateOnEnterSpace(activate));
+  });
+
+  const saveNameBtn = document.getElementById('saveNameBtn');
+  if (saveNameBtn) {
+    saveNameBtn.addEventListener('click', () => {
+      const input = document.getElementById('profileName');
+      if (!input) return;
+      STATE.data.profile.name = input.value.trim();
+      saveData();
+      showToast('Nome salvo!');
+      speak('Nome salvo');
+    });
+  }
+
+  const challengeWinBtn = document.getElementById('challengeWinBtn');
+  if (challengeWinBtn) {
+    challengeWinBtn.addEventListener('click', () => {
+      STATE.data.profile.stars += 1;
+      saveData();
+      speak('Muito bem! Você ganhou uma estrela!');
+      showToast('🎉 Muito bem! +1 estrela');
+      STATE.challenge = null;
+      STATE.phrase = [];
+      loadLayer();
+      render();
+    });
+  }
+
+  const skipChallenge = document.getElementById('skipChallenge');
+  if (skipChallenge) {
+    const activate = () => {
+      STATE.challenge = null;
+      STATE.phrase = [];
+      loadLayer();
+      render();
+    };
+    skipChallenge.addEventListener('click', activate);
+    skipChallenge.addEventListener('keydown', activateOnEnterSpace(activate));
+  }
+
+  /* Configurações */
+  const fontDownBtn = document.getElementById('fontDownBtn');
+  if (fontDownBtn) fontDownBtn.addEventListener('click', () => {
+    STATE.data.settings.fontStep = Math.max(1, STATE.data.settings.fontStep - 1);
+    applySettings();
+    saveData();
+    render();
+  });
+
+  const fontUpBtn = document.getElementById('fontUpBtn');
+  if (fontUpBtn) fontUpBtn.addEventListener('click', () => {
+    STATE.data.settings.fontStep = Math.min(4, STATE.data.settings.fontStep + 1);
+    applySettings();
+    saveData();
+    render();
+  });
+
+  const contrastToggle = document.getElementById('contrastToggle');
+  if (contrastToggle) contrastToggle.addEventListener('change', event => {
+    STATE.data.settings.highContrast = event.target.checked;
+    applySettings();
+    saveData();
+  });
+
+  const rateDownBtn = document.getElementById('rateDownBtn');
+  if (rateDownBtn) rateDownBtn.addEventListener('click', () => {
+    STATE.data.settings.voiceRate = Math.max(0.5, +(STATE.data.settings.voiceRate - 0.1).toFixed(1));
+    saveData();
+    render();
+  });
+
+  const rateUpBtn = document.getElementById('rateUpBtn');
+  if (rateUpBtn) rateUpBtn.addEventListener('click', () => {
+    STATE.data.settings.voiceRate = Math.min(1.6, +(STATE.data.settings.voiceRate + 0.1).toFixed(1));
+    saveData();
+    render();
+  });
+
+  const mascotVoiceToggle = document.getElementById('mascotVoiceToggle');
+  if (mascotVoiceToggle) mascotVoiceToggle.addEventListener('change', event => {
+    STATE.data.settings.mascotVoiceEnabled = event.target.checked;
+    saveData();
+  });
+
+  const testVoiceBtn = document.getElementById('testVoiceBtn');
+  if (testVoiceBtn) testVoiceBtn.addEventListener('click', () => {
+    playMascotVoice('Oi! Esta é a minha voz no ComunicA.');
+  });
+
+  /* Mascote na tela inicial */
+  const mascotHeroBtn = document.getElementById('mascotHeroBtn');
+  if (mascotHeroBtn) {
+    const activate = () => speakMascot(MASCOT_TIPS[STATE.screen] || MASCOT_TIPS.home);
+    mascotHeroBtn.addEventListener('click', activate);
+    mascotHeroBtn.addEventListener('keydown', activateOnEnterSpace(activate));
+  }
+}
+
+/* Botão flutuante do mascote — disponível em todas as telas */
+document.getElementById('mascotFloatBtn').innerHTML = mascotImgHtml({ size: 46, mood: 'idle' });
+document.getElementById('mascotFloatBtn').addEventListener('click', () => {
+  speakMascot(MASCOT_TIPS[STATE.screen] || MASCOT_TIPS.home);
+});
+
+/* Navegação por teclado/switch na tela de montagem de frase */
+document.addEventListener('keydown', event => {
+  if (STATE.screen !== 'build') return;
+
+  const tag = document.activeElement?.tagName;
+  if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+
+  if (event.key === 'ArrowLeft') {
+    event.preventDefault();
+    moveCarousel(-1);
+  } else if (event.key === 'ArrowRight') {
+    event.preventDefault();
+    moveCarousel(1);
+  } else if (event.key === 'Enter' || event.key === ' ') {
+    if (document.activeElement && document.activeElement.hasAttribute('data-pick')) return;
+    event.preventDefault();
+    confirmSelection();
+  } else if (event.key === 'Backspace') {
+    event.preventDefault();
+    eraseLast();
+  } else if (event.key === 'Escape') {
+    event.preventDefault();
+    clearPhrase();
+  }
+});
+
+/* =========================================================
+   Tela de abertura (splash) com o mascote Guri
+   ========================================================= */
+function typeWelcomeBubble() {
+  const el = document.getElementById('mascotTip');
+  if (!el) return;
+  const text = `Oi! Eu sou o ${MASCOT_NAME}. Vamos comunicar juntos?`;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  el.textContent = '';
+  el.classList.add('show');
+
+  clearTimeout(STATE.tipTimer);
+
+  if (reduceMotion) {
+    el.textContent = text;
+    STATE.tipTimer = setTimeout(() => el.classList.remove('show'), 4200);
+    if (STATE.data.settings.mascotVoiceEnabled) playMascotVoice(text);
+    return;
+  }
+
+  let i = 0;
+  const speed = 32;
+  const timer = setInterval(() => {
+    el.textContent = text.slice(0, i + 1);
+    i++;
+    if (i >= text.length) {
+      clearInterval(timer);
+      STATE.tipTimer = setTimeout(() => el.classList.remove('show'), 4200);
+    }
+  }, speed);
+
+  if (STATE.data.settings.mascotVoiceEnabled) playMascotVoice(text);
+}
+
+function initSplash() {
+  const splash = document.getElementById('splashScreen');
+  const mascotWrap = document.getElementById('splashMascotWrap');
+  const hint = document.getElementById('splashHint');
+  const app = document.getElementById('app');
+  const floatBtn = document.getElementById('mascotFloatBtn');
+
+  if (!splash || !mascotWrap || !floatBtn) return;
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  floatBtn.style.opacity = '0';
+  floatBtn.style.pointerEvents = 'none';
+
+  splash.focus();
+
+  function showHint() {
+    hint.classList.add('show');
+  }
+
+  requestAnimationFrame(() => {
+    mascotWrap.classList.add('pop-in');
+  });
+
+  if (reduceMotion) {
+    showHint();
+  } else {
+    mascotWrap.addEventListener('animationend', showHint, { once: true });
+  }
+
+  let started = false;
+
+  function beginApp() {
+    if (started) return;
+    started = true;
+
+    document.removeEventListener('keydown', onKeydown);
+    splash.removeEventListener('click', beginApp);
+    hint.classList.remove('show');
+
+    if (reduceMotion) {
+      splash.style.display = 'none';
+      app.removeAttribute('aria-hidden');
+      floatBtn.style.opacity = '1';
+      floatBtn.style.pointerEvents = 'auto';
+      typeWelcomeBubble();
+      return;
+    }
+
+    /* Move o mascote até a posição exata do botão flutuante, de forma responsiva */
+    const targetRect = floatBtn.getBoundingClientRect();
+    const startRect = mascotWrap.getBoundingClientRect();
+
+    mascotWrap.style.left = startRect.left + 'px';
+    mascotWrap.style.top = startRect.top + 'px';
+    mascotWrap.style.width = startRect.width + 'px';
+    mascotWrap.style.height = startRect.height + 'px';
+    mascotWrap.classList.add('to-corner');
+
+    void mascotWrap.offsetWidth; /* força o reflow antes de animar */
+
+    requestAnimationFrame(() => {
+      mascotWrap.style.left = targetRect.left + 'px';
+      mascotWrap.style.top = targetRect.top + 'px';
+      mascotWrap.style.width = targetRect.width + 'px';
+      mascotWrap.style.height = targetRect.height + 'px';
+      mascotWrap.style.opacity = '0';
+    });
+
+    splash.classList.add('splash-hidden');
+    app.removeAttribute('aria-hidden');
+
+    setTimeout(() => {
+      splash.style.display = 'none';
+      floatBtn.style.opacity = '1';
+      floatBtn.style.pointerEvents = 'auto';
+      floatBtn.focus();
+      typeWelcomeBubble();
+    }, 720);
+  }
+
+  function onKeydown(event) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      beginApp();
+    }
+  }
+
+  document.addEventListener('keydown', onKeydown);
+  splash.addEventListener('click', beginApp);
+}
+
+loadData();
+initSplash();
+</script>
+
+</body>
+</html>

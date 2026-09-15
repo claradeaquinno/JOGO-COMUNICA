@@ -1,0 +1,5682 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+
+<title>Comunica</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --sky-top: #d4eafb;
+  --sky-bottom: #f7fbff;
+  --yellow: #dca707;
+  --yellow-dark: #ae8100;
+  --navy: #092B3B;
+  --navy-soft: #ffffff;
+  --card: #123b4d;
+  --card-border: rgba(212, 234, 251, 0.32);
+  --green: #1c5873;
+  --red: #1c5873;
+  --white: #ffffff;
+  --radius: 10px;
+  --font: 'Manrope', sans-serif;
+  --font-title: 'Manrope', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+   width: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #1B364A !important;
+    color: var(--white);
+}
+#app {
+    width: 100%;
+    max-width: none;
+    min-height: 100vh;
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+
+body,.bg-outras{
+    font-family: var(--font);
+    background-image: none !important;
+    background-size: auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    
+    color: #F7FBFC;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    overflow-x: hidden;
+}
+
+
+
+#app,
+.app {
+  width: 100%;
+  max-width: 900px;
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(12px, 3vw, 32px);
+}
+.topbar{
+  display: flex;
+  gap: 0.5rem;
+}
+
+.topbar,
+.app-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0 14px;
+}
+
+.topbar-title {
+  font-family: var(--font-title);
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--white);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+.icon-btn,
+.profile-btn {
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--navy);
+  box-shadow: 0 4px 8px rgba(23, 58, 94, 0.15);
+  backdrop-filter: blur(5px);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.icon-btn:hover,
+.profile-btn:hover {
+  transform: scale(1.05);
+}
+
+.icon-btn:active,
+.profile-btn:active {
+  transform: scale(0.94);
+}
+
+
+.home-hero {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+  margin-bottom: 12px;
+}
+
+
+.hero-cover-img {
+  width: 100%;
+  max-width: 430px;
+  height: auto;
+  display: block;
+  border-radius: 18px;
+  object-fit: contain;
+}
+
+.menu {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.home-screen {
+  
+  display: grid;
+  justify-content: center;
+  text-align: left;
+  gap:2rem
+}
+
+.brand-intro {
+  margin: 12px 0 26px;
+}
+
+.brand-intro h1 {
+  margin: 0;
+  color: var(--white);
+  font-family: var(--font-title);
+  font-size: clamp(30px, 7vw, 42px);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+}
+
+.brand-intro p {
+  margin: 7px 0 0;
+  color: var(--white);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.menu-btn.primary,
+.card.yellow,
+.action-btn.primary {
+  background: transparent;
+  border-color: var(--card-border);
+}
+
+.menu-btn,
+.card,
+.word-card,
+.phrase-card,
+.profile-card,
+.history-card {
+  box-shadow: 0 4px 14px rgba(28, 88, 115, 0.09);
+  
+}
+
+.topbar-title {
+  color: var(--white);
+  text-shadow: none;
+}
+
+
+.menu-btn,
+.card {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  border: 1.5px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  cursor: pointer;
+  text-align: left;
+  text-decoration: none;
+  color: inherit;
+  
+ 
+  font-family: var(--font);
+  backdrop-filter: blur(6px);
+  transition: transform 0.1s ease, border-color 0.15s ease;
+}
+
+.menu-btn:hover,
+.card:hover {
+  transform: translateY(-2px);
+}
+
+.menu-btn:active,
+.card:active {
+  transform: scale(0.98);
+}
+
+
+
+.menu-emoji,
+.card-icon {
+  width: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  text-align: center;
+}
+
+.line-menu-icon {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+}
+
+.line-menu-icon::before,
+.line-menu-icon::after {
+  position: absolute;
+  box-sizing: border-box;
+  content: '';
+}
+
+.icon-message::before { inset: 4px 3px 7px; border: 2px solid var(--white); border-radius: 7px; }
+.icon-message::after { bottom: 4px; left: 8px; width: 7px; height: 7px; border-bottom: 2px solid var(--white); border-left: 2px solid var(--white); transform: rotate(-45deg); }
+.icon-favorite::before { inset: 0; color: var(--white); font-size: 31px; line-height: 28px; text-align: center; content: '☆'; }
+.icon-library::before { top: 3px; left: 5px; width: 20px; height: 24px; border: 2px solid var(--white); border-radius: 3px; }
+.icon-library::after { top: 9px; left: 10px; width: 10px; height: 2px; background: var(--white); box-shadow: 0 5px 0 var(--white), 0 10px 0 var(--white); }
+.icon-settings::before { top: 7px; left: 7px; width: 16px; height: 16px; border: 2px solid var(--white); border-radius: 50%; box-shadow: 0 -6px 0 -4px var(--white), 0 6px 0 -4px var(--white), 6px 0 0 -4px var(--white), -6px 0 0 -4px var(--white); }
+.icon-challenge::before { inset: 3px; border: 2px solid var(--white); border-radius: 50%; }
+.icon-challenge::after { top: 12px; left: 12px; width: 6px; height: 6px; background: var(--white); border-radius: 50%; }
+
+.profile-outline { position: relative; display: block; width: 20px; height: 20px; border: 2px solid var(--white); border-radius: 50%; }
+.profile-outline::before, .profile-outline::after { position: absolute; left: 50%; box-sizing: border-box; content: ''; transform: translateX(-50%); }
+.profile-outline::before { top: 3px; width: 6px; height: 6px; border: 1.5px solid var(--white); border-radius: 50%; }
+.profile-outline::after { bottom: 2px; width: 11px; height: 6px; border: 1.5px solid var(--white); border-radius: 7px 7px 3px 3px; }
+
+.app-line-icon {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: var(--white);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.menu-text,
+.card-text {
+  flex: 1;
+}
+
+.menu-title,
+.card-text h3 {
+  font-family: var(--font-title);
+  font-size: 14px;
+  line-height: 1.1;
+  color: var(--white);
+  font-weight: 800;
+  margin: 0 0 2px;
+}
+
+.menu-sub,
+.card-text p {
+  font-size: 11px;
+  line-height: 1.2;
+  color: var(--navy-soft);
+  font-weight: 600;
+  margin: 0;
+}
+
+.menu-arrow,
+.chevron {
+  font-size: 20px;
+  color: var(--navy-soft);
+  margin-left: 6px;
+}
+
+.about-link {
+  text-align: center;
+  margin-top: 14px;
+  font-size: 13px;
+  font-weight: 800;
+  color: #ffffff;
+  cursor: pointer;
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+.about-link:hover {
+  text-decoration: underline;
+}
+
+
+
+.screen {
+  width: 100%;
+  padding: 4px 0 18px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.section-label {
+  font-family: var(--font-title);
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--white);
+  margin: 4px 0 10px;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
+}
+
+
+
+.phrase-bar {
+  width: 100%;
+  background: #ffffff;
+  border: 2px solid var(--card-border);
+  border-radius: 16px;
+  min-height: 60px;
+  height: auto;
+  padding: 8px 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  align-content: center;
+  font-weight: 700;
+  font-size: 17px;
+  margin-bottom: 16px;
+  box-shadow: 0 3px 8px rgba(23, 58, 94, 0.08);
+}
+
+.phrase-chip {
+ 
+ 
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  line-height: 1;
+  font-weight: 800;
+  white-space: nowrap;
+
+}
+.phrase-chip span{
+  color: #092B3B;
+}
+
+.phrase-placeholder {
+  color: #123b4d6c;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 1.3;
+}
+
+
+.layer-label {
+  text-align: center;
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: 13px;
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  margin-bottom: 14px;
+  letter-spacing: 0.5px;
+}
+
+.carousel-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 18px;
+  min-height: 190px;
+}
+
+.carousel-track {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  overflow: visible;
+}
+
+.carousel-arrow {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  border: 1px solid #dca707;
+  border-radius: 50%;
+  background: transparent;
+  color: white;
+  font-size: 24px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(23, 58, 94, 0.18);
+  transition: transform 0.1s ease;
+}
+
+.carousel-arrow:active {
+  transform: scale(0.9);
+}
+
+.carousel-arrow:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.carousel-card {
+  flex: 0 0 auto;
+  background: var(--card);
+  border: 2px solid var(--card-border);
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  transition:
+    transform 0.18s ease,
+    opacity 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+  backdrop-filter: blur(4px);
+  user-select: none;
+}
+
+.carousel-card.side {
+  width: 78px;
+  height: 110px;
+  opacity: 0.55;
+  transform: scale(0.82);
+}
+
+.carousel-card.side .emoji {
+  font-size: 26px;
+}
+
+.carousel-card.side .label {
+  font-size: 11px;
+}
+
+.carousel-card.center {
+  width: 120px;
+  height: 150px;
+  opacity: 1;
+  transform: scale(1);
+  border-color: var(--yellow-dark);
+  background: var(--yellow);
+  box-shadow: 0 6px 16px rgba(23, 58, 94, 0.25);
+}
+
+.carousel-card.center .emoji {
+  font-size: 42px;
+}
+
+.carousel-card.center .label {
+  font-size: 15px;
+}
+
+.carousel-card .emoji {
+  line-height: 1;
+}
+
+.carousel-card .label {
+  font-family: var(--font-title);
+  font-weight: 800;
+  text-align: center;
+  color: var(--white);
+  padding: 0 4px;
+}
+
+.carousel-card:hover {
+  transform: scale(0.9);
+}
+
+.carousel-card.center:hover {
+  transform: scale(1.04);
+}
+
+.carousel-card.empty {
+  visibility: hidden;
+}
+
+
+.confirm-btn {
+  width: 100%;
+  background: var(--yellow);
+  color: #ffffff;
+  border: none;
+  border-radius: 16px;
+  padding: 14px;
+  font-family: var(--font);
+  font-weight: 800;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 10px;
+ border: 1px solid #ae8100;
+  transition: transform 0.1s ease, opacity 0.15s ease;
+}
+
+.confirm-btn:active {
+  transform: scale(0.98);
+}
+
+.confirm-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+
+.action-row {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+ 
+}
+
+.action-row button {
+  flex: 1;
+  border:1px solid var(--card-border);
+  background: transparent;
+  color: white;
+  border-radius: 12px;
+  padding: 10px 6px;
+  font-family: var(--font);
+  font-weight: 800;
+  font-size: 13px;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.action-row button:active {
+  transform: scale(0.96);
+}
+
+
+
+.word-card {
+  position: relative;
+}
+
+.favorite-toggle {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  border: 0;
+  background: transparent;
+  color: var(--navy);
+  font-size: 18px;
+  line-height: 1;
+  padding: 2px;
+  cursor: pointer;
+}
+
+.favorite-toggle.is-favorite {
+  color: var(--yellow-dark);
+}
+
+.speak-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--navy);
+  color: #ffffff;
+  border: none;
+  border-radius: 16px;
+  padding: 14px;
+  font-family: var(--font);
+  font-weight: 800;
+  font-size: 17px;
+  cursor: pointer;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 10px rgba(76, 175, 125, 0.35);
+  transition: transform 0.1s ease, opacity 0.15s ease;
+}
+
+.speak-btn:active {
+  transform: scale(0.98);
+}
+
+.speak-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.hint {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  margin-top: auto;
+  padding-top: 10px;
+}
+
+
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  width: max-content;
+  padding: 5px;
+  border-radius: 20px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.cat-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.cat-card {
+  background: transparent;
+  border: 2px solid var(--card-border);
+  border-radius: 18px;
+  padding: 16px 10px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(23, 58, 94, 0.1);
+  backdrop-filter: blur(4px);
+  transition: transform 0.1s ease;
+}
+
+.cat-card:hover {
+  transform: translateY(-2px);
+}
+
+.cat-card:active {
+  transform: scale(0.97);
+}
+
+.cat-card .emoji {
+  font-size: 34px;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.cat-card .label {
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: 14px;
+  color: var(--white);
+}
+
+.cat-card .count {
+  font-size: 11.5px;
+  color: var(--navy-soft);
+  font-weight: 600;
+}
+
+
+
+.word-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.word-card {
+  min-height: 150px;
+  background: var(--card);
+  border: 2px solid var(--card-border);
+  border-radius: 16px;
+  padding: 12px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  cursor: pointer;
+  font-family: var(--font);
+  box-shadow: 0 3px 8px rgba(23, 58, 94, 0.1);
+  backdrop-filter: blur(4px);
+  transition:
+    transform 0.1s ease,
+    background 0.1s ease;
+}
+
+.word-card:hover {
+  transform: translateY(-2px);
+}
+
+.word-card:active {
+  transform: scale(0.95);
+}
+
+.word-card .emoji {
+  font-size: 30px;
+  line-height: 1;
+}
+
+.word-card .label {
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: 14px;
+  text-align: center;
+  color: var(--white);
+}
+
+.word-card .description {
+  font-size: 10px;
+  color: var(--navy-soft);
+  text-align: center;
+  line-height: 1.15;
+  padding: 0 4px;
+}
+
+.word-card.selected {
+  background: var(--yellow);
+  border-color: var(--yellow-dark);
+}
+
+.word-card::after {
+  content: '☆';
+  font-size: 18px;
+  color: var(--navy);
+  margin-top: 2px;
+}
+
+
+
+.fav-item {
+  width: 100%;
+  background: var(--card);
+  border: 2px solid var(--card-border);
+  border-radius: 16px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  backdrop-filter: blur(4px);
+}
+
+.fav-item .txt {
+  flex: 1;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.fav-item button {
+  background: var(--yellow);
+  border: none;
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-weight: 800;
+  cursor: pointer;
+  color: var(--navy);
+}
+
+.fav-remove {
+  background: none !important;
+  color: var(--red) !important;
+  font-size: 16px;
+}
+
+.empty-state {
+  text-align: center;
+  color: #ffffff;
+  font-weight: 700;
+  padding: 40px 20px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+
+
+.form-block {
+  width: 100%;
+  background: var(--card);
+  border: 2px solid var(--card-border);
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 16px;
+  backdrop-filter: blur(4px);
+}
+
+.form-block h3 {
+  margin: 0 0 10px;
+  font-family: var(--font-title);
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--white);
+}
+
+.form-row {
+  width: 100%;
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.form-row input,
+.form-row select {
+  min-width: 0;
+  flex: 1;
+  border: 2px solid var(--card-border);
+  border-radius: 10px;
+  padding: 10px;
+  font-family: var(--font);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--white);
+  background: #ffffff;
+}
+
+.form-row input:focus,
+.form-row select:focus {
+  outline: none;
+  border-color: var(--yellow-dark);
+}
+
+.emoji-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.emoji-pick {
+  font-size: 22px;
+  background: #ffffff;
+  border: 2px solid var(--card-border);
+  border-radius: 10px;
+  padding: 6px 8px;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.emoji-pick:hover {
+  transform: scale(1.05);
+}
+
+.emoji-pick.chosen {
+  border-color: var(--yellow-dark);
+  background: var(--sky-top);
+}
+
+.submit-btn {
+  width: 100%;
+  background: var(--navy);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 12px;
+  font-family: var(--font);
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.submit-btn:active {
+  transform: scale(0.98);
+}
+
+.custom-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.custom-chip {
+  background: #ffffff;
+  border: 1.5px solid var(--card-border);
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.custom-chip span.x {
+  color: var(--red);
+  cursor: pointer;
+  font-weight: 800;
+}
+
+
+
+.challenge-card {
+  width: 100%;
+  background: var(--card);
+  border: 2px solid var(--card-border);
+  border-radius: 18px;
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 16px;
+  backdrop-filter: blur(4px);
+}
+
+.challenge-card .emoji {
+  font-size: 44px;
+  line-height: 1;
+}
+
+.challenge-card p {
+  font-weight: 700;
+  font-size: 16px;
+  color:white;
+  margin-bottom: 0;
+}
+
+.stars {
+  text-align: center;
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: var(--yellow);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+
+
+.info-block {
+  width: 100%;
+  background: var(--card);
+  border: 2px solid var(--card-border);
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 12px;
+  font-weight: 600;
+  line-height: 1.5;
+  font-size: 14px;
+  color: var(--navy);
+  backdrop-filter: blur(4px);
+}
+
+.profile-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--card-border);
+  font-weight: 700;
+  color: var(--white);
+}
+
+
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--navy);
+  color: #ffffff;
+  padding: 12px 20px;
+  border-radius: 14px;
+  font-weight: 700;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  z-index: 50;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  max-width: 90%;
+  text-align: center;
+  pointer-events: none;
+}
+
+.toast.show {
+  opacity: 1;
+}
+
+
+@media (max-width: 420px) {
+
+  #app,
+  .app {
+    padding: 12px;
+  }
+
+  .word-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .word-card {
+    min-height: 140px;
+    padding: 10px 4px;
+  }
+
+  .word-card .emoji {
+    font-size: 27px;
+  }
+
+  .word-card .label {
+    font-size: 12px;
+  }
+
+  .word-card .description {
+    font-size: 9px;
+  }
+
+  .action-row {
+    gap: 7px;
+  }
+
+  .action-row button {
+    font-size: 12px;
+    padding: 10px 4px;
+  }
+
+  .carousel-card.center {
+    width: 108px;
+    height: 138px;
+  }
+
+  .carousel-card.center .emoji {
+    font-size: 36px;
+  }
+
+  .carousel-card.side {
+    width: 68px;
+    height: 98px;
+  }
+
+  .carousel-card.side .emoji {
+    font-size: 23px;
+  }
+
+  .carousel-card.side .label {
+    font-size: 10px;
+  }
+
+  .carousel-arrow {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@media (max-width: 350px) {
+
+  .word-card {
+    min-height: 130px;
+  }
+
+  .word-card .emoji {
+    font-size: 25px;
+  }
+
+  .word-card .label {
+    font-size: 11px;
+  }
+
+  .phrase-bar {
+    min-height: 56px;
+    padding: 7px 10px;
+  }
+
+  .carousel-card.center {
+    width: 96px;
+    height: 128px;
+  }
+
+  .carousel-card.side {
+    width: 60px;
+    height: 90px;
+  }
+
+  .carousel-track {
+    gap: 5px;
+  }
+
+  .carousel-wrap {
+    gap: 4px;
+  }
+}
+
+
+
+@media (min-width: 600px) {
+  .home-screen {
+    padding-top: clamp(48px, 8vh, 100px);
+  }
+
+  .topbar-title {
+    font-size: 22px;
+  }
+
+  .menu {
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+    gap: 14px;
+  }
+
+  .menu-btn {
+    padding: 16px 20px;
+  }
+
+  .menu-title {
+    font-size: 17px;
+  }
+
+  .menu-sub {
+    font-size: 13px;
+  }
+
+  .cat-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .word-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+
+  .word-card {
+    min-height: 160px;
+  }
+
+  .screen {
+    max-width: 820px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (min-width: 900px) {
+  .word-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* Acabamento da identidade: fundo azul-claro, superfícies brancas e relevo suave. */
+.icon-btn,
+.profile-btn,
+.menu-btn,
+.card,
+.word-card,
+.phrase-card,
+.category-card,
+.profile-card,
+.history-card,
+.action-btn {
+  box-shadow: 0 8px 20px rgba(28, 88, 115, 0.16);
+}
+
+.menu-btn.primary,
+.card.yellow,
+.action-btn.primary {
+  color: var(--white);
+  box-shadow: 0 10px 22px rgba(174, 129, 0, 0.22);
+}
+
+
+
+#app input,
+#app select,
+#app textarea,
+#app .word-card,
+#app .phrase-card,
+#app .category-card,
+#app .profile-card,
+#app .history-card {
+  background: #123b4d;
+  border-color: rgba(212, 234, 251, 0.32);
+}
+
+#app .icon-btn,
+#app .profile-btn {
+  background: #123b4d;
+  border: 1px solid rgba(212, 234, 251, 0.5);
+}
+
+#app :is(button, [role="button"], input, select, textarea):focus-visible {
+  outline: 3px solid var(--yellow);
+  outline-offset: 3px;
+}
+
+
+/* ===== Layout Infantil ===== */
+/* Ativado quando STATE.data.profile.layout === 'infantil'
+   (automaticamente ao salvar idade de 0 a 14 anos, ou
+   manualmente pelo botão na página de perfil). Deixa a
+   interface maior, mais colorida e mais arredondada. */
+
+body.layout-infantil {
+  --radius: 22px;
+  --yellow: #ffb703;
+  --yellow-dark: #d98c00;
+  --card: #1f5c78;
+}
+
+body.layout-infantil .menu-btn,
+body.layout-infantil .card,
+body.layout-infantil .word-card,
+body.layout-infantil .cat-card,
+body.layout-infantil .form-block,
+body.layout-infantil .info-block,
+body.layout-infantil .challenge-card,
+body.layout-infantil .fav-item {
+  border-width: 3px;
+  border-radius: 22px;
+}
+
+body.layout-infantil .topbar-title {
+  font-size: 21px;
+}
+
+body.layout-infantil .icon-btn,
+body.layout-infantil .profile-btn {
+  width: 52px;
+  height: 52px;
+  font-size: 24px;
+}
+
+body.layout-infantil .menu-title,
+body.layout-infantil .card-text h3 {
+  font-size: 16px;
+}
+
+body.layout-infantil .menu-sub,
+body.layout-infantil .card-text p {
+  font-size: 12.5px;
+}
+
+body.layout-infantil .word-card .emoji,
+body.layout-infantil .cat-card .emoji {
+  font-size: 40px;
+}
+
+body.layout-infantil .word-card .label,
+body.layout-infantil .cat-card .label {
+  font-size: 16px;
+}
+
+body.layout-infantil .carousel-card.center .emoji {
+  font-size: 54px;
+}
+
+body.layout-infantil .carousel-card.center .label {
+  font-size: 17px;
+}
+
+body.layout-infantil .carousel-card.side .emoji {
+  font-size: 32px;
+}
+
+body.layout-infantil .challenge-card .emoji {
+  font-size: 54px;
+}
+
+body.layout-infantil .speak-btn,
+body.layout-infantil .submit-btn,
+body.layout-infantil .confirm-btn {
+  border-radius: 24px;
+  font-size: 19px;
+  padding: 16px;
+}
+
+body.layout-infantil .action-row button {
+  border-radius: 16px;
+  font-size: 14px;
+  padding: 12px 6px;
+}
+
+body.layout-infantil .stars {
+  font-size: 21px;
+}
+
+
+/* ===== Onboarding (login + escolha de perfil) ===== */
+
+.onboard-wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-top: 30px;
+}
+
+.onboard-title {
+  font-family: var(--font-title);
+  font-size: 30px;
+  font-weight: 800;
+  color: #ffffff;
+  text-align: center;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  margin-bottom: 6px;
+}
+
+.onboard-subtitle {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 22px;
+}
+
+.onboard-panel {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1.5px solid var(--card-border);
+  border-radius: 22px;
+  padding: 20px 16px;
+  backdrop-filter: blur(4px);
+}
+
+.onboard-panel h2 {
+  text-align: center;
+  font-family: var(--font-title);
+  font-size: 19px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 6px;
+}
+
+.onboard-panel > p {
+  text-align: center;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.75);
+  margin: 0 0 18px;
+  line-height: 1.4;
+}
+
+.profile-choice-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.profile-choice-card {
+  border-radius: 16px;
+  padding: 14px 12px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  text-align: left;
+  transition:
+    transform 0.1s ease,
+    border-color 0.15s ease;
+}
+
+.profile-choice-card:hover {
+  transform: translateY(-2px);
+}
+
+.profile-choice-card:active {
+  transform: scale(0.97);
+}
+
+.profile-choice-card.kids {
+  background: linear-gradient(180deg, #ffe08a, var(--yellow));
+}
+
+.profile-choice-card.adult {
+  background: #dfeeff;
+}
+
+.profile-choice-card.selected {
+  border-color: #ffffff;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+}
+
+.profile-choice-card .emoji {
+  font-size: 22px;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.profile-choice-card .tag {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--navy);
+  opacity: 0.65;
+  margin-bottom: 4px;
+}
+
+.profile-choice-card .title {
+  font-family: var(--font-title);
+  font-size: 14.5px;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 6px;
+  line-height: 1.15;
+}
+
+.profile-choice-card .desc {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--navy);
+  opacity: 0.85;
+  line-height: 1.3;
+  margin-bottom: 10px;
+}
+
+.profile-choice-card .foot {
+  font-size: 9.5px;
+  font-weight: 800;
+  color: var(--navy);
+  opacity: 0.7;
+}
+
+.onboard-continue-bar {
+  width: 100%;
+  text-align: center;
+  padding: 13px;
+  border: none;
+  border-radius: 14px;
+  font-family: var(--font);
+  font-weight: 800;
+  font-size: 12.5px;
+  margin-top: 4px;
+  background: rgba(155, 140, 40, 0.5);
+  color: rgba(255, 255, 255, 0.65);
+  cursor: not-allowed;
+}
+
+.onboard-continue-bar.enabled {
+  background: var(--navy);
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.onboard-continue-bar:disabled {
+  opacity: 1;
+}
+
+.onboard-hint {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 12px;
+}
+
+
+/* Fundo liso solicitado: sem imagem/desenho. */
+html,
+body,
+body.bg-outras {
+  background: #1B364A !important;
+  background-image: none !important;
+}
+
+
+
+/* Remove a sombra amarela apenas do item Começar a comunicar. */
+.menu-btn.primary {
+  box-shadow: 0 8px 20px rgba(28, 88, 115, 0.16) !important;
+}
+
+
+
+
+
+/* Menu principal usando apenas emojis. */
+.menu-image {
+  width: 50px;
+  height: 50px;
+  flex: 0 0 50px;
+  object-fit: contain;
+  display: block;
+}
+
+
+
+/* Emojis em todo o conteúdo das listas e cards. */
+.word-card .emoji,
+.cat-card .emoji,
+.category-card .emoji,
+.challenge-card .emoji,
+.fav-item .emoji,
+.phrase-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.word-card .emoji,
+.cat-card .emoji,
+.category-card .emoji,
+.challenge-card .emoji,
+.fav-item .emoji {
+  font-size: 28px;
+  line-height: 1;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="app"></div>
+<div id="toast" class="toast"></div>
+
+<script>
+
+
+const DEFAULT_CATEGORIES = [
+  { id: 'pessoas', label: 'Pessoas', emoji: '👥', custom: false },
+  { id: 'necessidades', label: 'Necessidades', emoji: '🧩', custom: false },
+  { id: 'sentimentos', label: 'Sentimentos', emoji: '💛', custom: false },
+  { id: 'atividades', label: 'Atividades', emoji: '🎨', custom: false },
+  { id: 'lugares', label: 'Lugares', emoji: '📍', custom: false },
+  { id: 'acoes', label: 'Ações', emoji: '✅', custom: false }
+];
+
+const DEFAULT_WORDS = [
+
+  /* Pessoas */
+  {
+    id: 'eu',
+    label: 'Eu',
+    emoji: '🙋',
+    description: 'Quem está falando',
+    cat: 'pessoas'
+  },
+
+  {
+    id: 'voce',
+    label: 'Você',
+    emoji: '🫵',
+    description: 'A pessoa com quem falo',
+    cat: 'pessoas'
+  },
+
+  {
+    id: 'mae',
+    label: 'Mãe',
+    emoji: '👩',
+    description: 'Minha mãe',
+    cat: 'pessoas'
+  },
+
+  {
+    id: 'pai',
+    label: 'Pai',
+    emoji: '👨',
+    description: 'Meu pai',
+    cat: 'pessoas'
+  },
+
+  {
+    id: 'professor',
+    label: 'Professor',
+    emoji: '👩‍🏫',
+    description: 'Meu professor',
+    cat: 'pessoas'
+  },
+
+  {
+    id: 'amigo',
+    label: 'Amigo',
+    emoji: '🤝',
+    description: 'Meu amigo',
+    cat: 'pessoas'
+  },
+
+  /* Ações */
+  {
+    id: 'quero',
+    label: 'Quero',
+    emoji: '🙋',
+    description: 'Eu desejo algo',
+    cat: 'acoes'
+  },
+
+  {
+    id: 'preciso',
+    label: 'Preciso',
+    emoji: '❗',
+    description: 'Eu preciso de algo',
+    cat: 'acoes'
+  },
+
+  {
+    id: 'estou',
+    label: 'Estou',
+    emoji: '💭',
+    description: 'Como eu estou',
+    cat: 'acoes'
+  },
+
+  {
+    id: 'gosto',
+    label: 'Gosto',
+    emoji: '❤️',
+    description: 'Eu gosto de algo',
+    cat: 'acoes'
+  },
+
+  {
+    id: 'vou',
+    label: 'Vou',
+    emoji: '➡️',
+    description: 'Eu vou para algum lugar',
+    cat: 'acoes'
+  },
+
+
+  {
+    id: 'agua',
+    label: 'Água',
+    emoji: '💧',
+    description: 'Quero beber',
+    cat: 'necessidades'
+  },
+
+  {
+    id: 'comida',
+    label: 'Comida',
+    emoji: '🍽️',
+    description: 'Quero comer',
+    cat: 'necessidades'
+  },
+
+  {
+    id: 'banheiro',
+    label: 'Banheiro',
+    emoji: '🚻',
+    description: 'Preciso ir ao banheiro',
+    cat: 'necessidades'
+  },
+
+  {
+    id: 'dormir',
+    label: 'Dormir',
+    emoji: '😴',
+    description: 'Quero dormir',
+    cat: 'necessidades'
+  },
+
+  {
+    id: 'descansar',
+    label: 'Descansar',
+    emoji: '🛋️',
+    description: 'Quero descansar',
+    cat: 'necessidades'
+  },
+
+  {
+    id: 'ajuda',
+    label: 'Ajuda',
+    emoji: '🆘',
+    description: 'Preciso de ajuda',
+    cat: 'necessidades'
+  },
+
+ 
+  {
+    id: 'feliz',
+    label: 'Feliz',
+    emoji: '😊',
+    description: 'Estou feliz',
+    cat: 'sentimentos'
+  },
+
+  {
+    id: 'triste',
+    label: 'Triste',
+    emoji: '😢',
+    description: 'Estou triste',
+    cat: 'sentimentos'
+  },
+
+  {
+    id: 'cansado',
+    label: 'Cansado',
+    emoji: '😴',
+    description: 'Estou cansado',
+    cat: 'sentimentos'
+  },
+
+  {
+    id: 'commedo',
+    label: 'Com medo',
+    emoji: '😨',
+    description: 'Estou com medo',
+    cat: 'sentimentos'
+  },
+
+  {
+    id: 'comdor',
+    label: 'Com dor',
+    emoji: '🤕',
+    description: 'Estou com dor',
+    cat: 'sentimentos'
+  },
+
+  {
+    id: 'bem',
+    label: 'Bem',
+    emoji: '🙂',
+    description: 'Estou bem',
+    cat: 'sentimentos'
+  },
+
+  
+  {
+    id: 'brincar',
+    label: 'Brincar',
+    emoji: '🧸',
+    description: 'Quero brincar',
+    cat: 'atividades'
+  },
+
+  {
+    id: 'jogar',
+    label: 'Jogar',
+    emoji: '🎮',
+    description: 'Quero jogar',
+    cat: 'atividades'
+  },
+
+  {
+    id: 'assistir',
+    label: 'Assistir',
+    emoji: '📺',
+    description: 'Quero assistir',
+    cat: 'atividades'
+  },
+
+  {
+    id: 'desenhar',
+    label: 'Desenhar',
+    emoji: '🖍️',
+    description: 'Quero desenhar',
+    cat: 'atividades'
+  },
+
+  {
+    id: 'passear',
+    label: 'Passear',
+    emoji: '🚶',
+    description: 'Quero passear',
+    cat: 'atividades'
+  },
+
+  {
+    id: 'musica',
+    label: 'Música',
+    emoji: '🎵',
+    description: 'Quero ouvir música',
+    cat: 'atividades'
+  },
+
+  
+  {
+    id: 'casa',
+    label: 'Casa',
+    emoji: '🏠',
+    description: 'Minha casa',
+    cat: 'lugares'
+  },
+
+  {
+    id: 'escola',
+    label: 'Escola',
+    emoji: '🏫',
+    description: 'Minha escola',
+    cat: 'lugares'
+  },
+
+  {
+    id: 'quarto',
+    label: 'Quarto',
+    emoji: '🛏️',
+    description: 'Meu quarto',
+    cat: 'lugares'
+  },
+
+  {
+    id: 'hospital',
+    label: 'Hospital',
+    emoji: '🏥',
+    description: 'Preciso ir ao hospital',
+    cat: 'lugares'
+  },
+
+  {
+    id: 'sair',
+    label: 'Sair',
+    emoji: '🚪',
+    description: 'Quero sair',
+    cat: 'lugares'
+  }
+];
+
+
+
+const SUGGESTIONS = {
+
+  __start__: [
+    'eu',
+    'voce',
+    'mae',
+    'pai',
+    'professor',
+    'amigo'
+  ],
+
+  eu: [
+    'quero',
+    'preciso',
+    'estou',
+    'gosto',
+    'vou'
+  ],
+
+  voce: [
+    'quero',
+    'preciso',
+    'estou',
+    'gosto',
+    'vou'
+  ],
+
+  mae: [
+    'quero',
+    'preciso',
+    'estou',
+    'gosto',
+    'vou'
+  ],
+
+  pai: [
+    'quero',
+    'preciso',
+    'estou',
+    'gosto',
+    'vou'
+  ],
+
+  professor: [
+    'quero',
+    'preciso',
+    'estou',
+    'gosto',
+    'vou'
+  ],
+
+  amigo: [
+    'quero',
+    'preciso',
+    'estou',
+    'gosto',
+    'vou'
+  ],
+
+  quero: [
+    'agua',
+    'comida',
+    'brincar',
+    'jogar',
+    'assistir',
+    'desenhar',
+    'passear',
+    'musica',
+    'dormir',
+    'sair',
+    'casa'
+  ],
+
+  preciso: [
+    'agua',
+    'comida',
+    'banheiro',
+    'dormir',
+    'descansar',
+    'ajuda',
+    'hospital'
+  ],
+
+  estou: [
+    'feliz',
+    'triste',
+    'cansado',
+    'comdor',
+    'commedo',
+    'bem'
+  ],
+
+  gosto: [
+    'brincar',
+    'jogar',
+    'desenhar',
+    'assistir',
+    'passear',
+    'musica'
+  ],
+
+  vou: [
+    'casa',
+    'escola',
+    'passear',
+    'dormir',
+    'banheiro',
+    'hospital'
+  ],
+
+  agua: [
+    'quero',
+    'gosto',
+    'preciso'
+  ],
+
+  comida: [
+    'quero',
+    'gosto',
+    'preciso'
+  ],
+
+  banheiro: [
+    'preciso',
+    'quero'
+  ],
+
+  dormir: [
+    'quero',
+    'preciso',
+    'estou'
+  ],
+
+  descansar: [
+    'quero',
+    'preciso',
+    'estou'
+  ],
+
+  ajuda: [
+    'preciso',
+    'quero'
+  ],
+
+  feliz: [
+    'eu',
+    'gosto',
+    'quero'
+  ],
+
+  triste: [
+    'eu',
+    'preciso',
+    'quero'
+  ],
+
+  cansado: [
+    'eu',
+    'quero',
+    'preciso'
+  ],
+
+  commedo: [
+    'eu',
+    'preciso',
+    'ajuda'
+  ],
+
+  comdor: [
+    'eu',
+    'preciso',
+    'ajuda'
+  ],
+
+  bem: [
+    'eu',
+    'gosto',
+    'quero'
+  ],
+
+  brincar: [
+    'eu',
+    'quero',
+    'gosto'
+  ],
+
+  jogar: [
+    'eu',
+    'quero',
+    'gosto'
+  ],
+
+  assistir: [
+    'eu',
+    'quero',
+    'gosto'
+  ],
+
+  desenhar: [
+    'eu',
+    'quero',
+    'gosto'
+  ],
+
+  passear: [
+    'eu',
+    'quero',
+    'vou'
+  ],
+
+  musica: [
+    'eu',
+    'quero',
+    'gosto'
+  ],
+
+  casa: [
+    'eu',
+    'vou',
+    'quero'
+  ],
+
+  escola: [
+    'eu',
+    'vou',
+    'quero'
+  ],
+
+  quarto: [
+    'eu',
+    'vou',
+    'quero'
+  ],
+
+  hospital: [
+    'eu',
+    'vou',
+    'preciso'
+  ],
+
+  sair: [
+    'eu',
+    'quero',
+    'vou'
+  ]
+};
+
+
+
+const CHALLENGES = [
+
+  {
+    emoji: '💧',
+    prompt: 'Você está com sede. O que você quer dizer?',
+    target: ['eu', 'quero', 'agua']
+  },
+
+  {
+    emoji: '🍽️',
+    prompt: 'Você está com fome.',
+    target: ['eu', 'quero', 'comida']
+  },
+
+  {
+    emoji: '😴',
+    prompt: 'Você está cansado e quer descansar.',
+    target: ['eu', 'estou', 'cansado']
+  },
+
+  {
+    emoji: '🚻',
+    prompt: 'Você precisa ir ao banheiro.',
+    target: ['eu', 'preciso', 'banheiro']
+  },
+
+  {
+    emoji: '🧸',
+    prompt: 'Você quer se divertir um pouco.',
+    target: ['eu', 'quero', 'brincar']
+  }
+];
+
+
+
+let STATE = {
+
+  screen: 'home',
+
+  phrase: [],
+
+  categoryOpen: null,
+
+  challenge: null,
+
+  toastTimer: null,
+
+  
+  options: [],
+
+  carouselIndex: 0,
+
+  layoutPromptVisible: false,
+
+  onboardSelectedType: null,
+
+  editingProfileName: false,
+
+  data: {
+
+    favWords: [],
+
+    favPhrases: [],
+
+    customWords: [],
+
+    customCategories: [],
+
+    profile: {
+      name: '',
+      stars: 0,
+      age: null,
+      layout: 'neutro',
+      onboarded: false
+    }
+
+  }
+
+};
+
+const STORAGE_KEY = 'comunica:data';
+
+
+
+function allCategories() {
+
+  return DEFAULT_CATEGORIES.concat(
+    STATE.data.customCategories
+  );
+
+}
+
+function allWords() {
+
+  return DEFAULT_WORDS.concat(
+    STATE.data.customWords
+  );
+
+}
+
+function wordById(id) {
+
+  return allWords().find(
+    word => word.id === id
+  );
+
+}
+
+
+
+function loadData() {
+
+  try {
+
+    const raw = localStorage.getItem(STORAGE_KEY);
+
+    if (raw) {
+
+      const parsed = JSON.parse(raw);
+
+      STATE.data = {
+
+        ...STATE.data,
+
+        ...parsed,
+
+        profile: {
+          ...STATE.data.profile,
+          ...(parsed.profile || {})
+        }
+
+      };
+
+    }
+
+  } catch (error) {
+
+    console.error(
+      'Erro ao carregar os dados:',
+      error
+    );
+
+  }
+
+  if (!STATE.data.profile.onboarded) {
+
+    STATE.screen = 'login';
+
+  }
+
+  loadLayer();
+
+  render();
+
+}
+
+function saveData() {
+
+  try {
+
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(STATE.data)
+    );
+
+  } catch (error) {
+
+    console.error(
+      'Erro ao salvar os dados:',
+      error
+    );
+
+  }
+
+}
+
+
+
+function showToast(message) {
+
+  const toast = document.getElementById('toast');
+
+  if (!toast) return;
+
+  toast.textContent = message;
+
+  toast.classList.add('show');
+
+  clearTimeout(STATE.toastTimer);
+
+  STATE.toastTimer = setTimeout(() => {
+
+    toast.classList.remove('show');
+
+  }, 1800);
+
+}
+
+
+function speak(text) {
+
+  if (!('speechSynthesis' in window)) {
+
+    showToast(
+      'A voz não é suportada neste navegador.'
+    );
+
+    return;
+
+  }
+
+  if (!text) return;
+
+  const utterance =
+    new SpeechSynthesisUtterance(text);
+
+  utterance.lang = 'pt-BR';
+
+  const voices =
+    window.speechSynthesis.getVoices();
+
+  const ptVoice =
+    voices.find(
+      voice =>
+        voice.lang &&
+        voice.lang
+          .toLowerCase()
+          .startsWith('pt')
+    );
+
+  if (ptVoice) {
+
+    utterance.voice = ptVoice;
+
+  }
+
+  window.speechSynthesis.cancel();
+
+  window.speechSynthesis.speak(
+    utterance
+  );
+
+}
+
+
+
+function go(screen, extra = {}) {
+
+  STATE.screen = screen;
+
+  Object.assign(
+    STATE,
+    extra
+  );
+
+  if (screen !== 'challenge') {
+
+    STATE.challenge = null;
+
+  }
+
+  if (screen !== 'profile') {
+
+    STATE.layoutPromptVisible = false;
+
+    STATE.editingProfileName = false;
+
+  }
+
+  render();
+
+  window.scrollTo(
+    0,
+    0
+  );
+
+}
+
+
+
+function addWordToPhrase(word) {
+
+  if (!word) return;
+
+  STATE.phrase.push(word);
+
+  loadLayer();
+
+  render();
+
+}
+
+function eraseLast() {
+
+  if (STATE.phrase.length === 0) {
+
+    showToast('Não há palavras para apagar.');
+
+    return;
+
+  }
+
+  speak('Apagar');
+
+  STATE.phrase.pop();
+
+  loadLayer();
+
+  render();
+
+}
+
+function clearPhrase() {
+
+  if (STATE.phrase.length > 0) {
+
+    speak('Limpar frase');
+
+  }
+
+  STATE.phrase = [];
+
+  loadLayer();
+
+  render();
+
+}
+
+function currentPhraseText() {
+
+  return STATE.phrase
+    .map(word => word.label)
+    .join(' ');
+
+}
+
+
+
+function favoritePhrase() {
+
+  if (STATE.phrase.length === 0) {
+
+    showToast(
+      'Monte uma frase primeiro.'
+    );
+
+    return;
+
+  }
+
+  const text =
+    currentPhraseText();
+
+  if (
+    !STATE.data.favPhrases.includes(text)
+  ) {
+
+    STATE.data.favPhrases.push(text);
+
+    saveData();
+
+    showToast(
+      'Frase adicionada aos favoritos '
+    );
+
+  } else {
+
+    showToast(
+      'Essa frase já está nos favoritos.'
+    );
+
+  }
+
+  render();
+
+}
+
+
+
+function currentLayerKey() {
+
+  const last =
+    STATE.phrase[
+      STATE.phrase.length - 1
+    ];
+
+  return last
+    ? last.id
+    : '__start__';
+
+}
+
+function loadLayer() {
+
+  const key =
+    currentLayerKey();
+
+  let suggestions =
+    SUGGESTIONS[key] || [];
+
+  
+
+  const customWords =
+    STATE.data.customWords
+      .filter(word =>
+        !suggestions.includes(word.id)
+      )
+      .map(word => word.id);
+
+  const combined =
+    suggestions.concat(customWords);
+
+  STATE.options =
+    combined.filter(
+      id => wordById(id)
+    );
+
+  if (
+    STATE.carouselIndex >=
+    STATE.options.length
+  ) {
+
+    STATE.carouselIndex = 0;
+
+  }
+
+}
+
+function moveCarousel(delta) {
+
+  if (
+    STATE.options.length === 0
+  ) {
+
+    return;
+
+  }
+
+  const total =
+    STATE.options.length;
+
+  STATE.carouselIndex =
+    (
+      STATE.carouselIndex +
+      delta +
+      total
+    ) % total;
+
+  render();
+
+}
+
+function confirmSelection() {
+
+  if (
+    STATE.options.length === 0
+  ) {
+
+    showToast(
+      'Não há mais opções.'
+    );
+
+    return;
+
+  }
+
+  const id =
+    STATE.options[
+      STATE.carouselIndex
+    ];
+
+  const word =
+    wordById(id);
+
+  if (!word) return;
+
+  STATE.phrase.push(word);
+
+  if (STATE.phrase.length === 3) {
+    setTimeout(() => {
+      speak(currentPhraseText());
+    }, 250);
+  } else {
+    speak(word.label);
+  }
+
+  STATE.carouselIndex = 0;
+
+  loadLayer();
+
+  render();
+
+}
+
+function speakPhrase() {
+
+  const text =
+    currentPhraseText();
+
+  if (text) {
+
+    speak(text);
+
+  }
+
+}
+
+
+
+function isFavoriteWord(wordId) {
+  return STATE.data.favWords.includes(wordId);
+}
+
+function toggleFavoriteWord(wordId) {
+  const index = STATE.data.favWords.indexOf(wordId);
+
+  if (index >= 0) {
+    STATE.data.favWords.splice(index, 1);
+    showToast('Palavra removida dos favoritos.');
+  } else {
+    STATE.data.favWords.push(wordId);
+    showToast('Palavra adicionada aos favoritos ⭐');
+  }
+
+  saveData();
+  render();
+}
+
+function wordCardHtml(word, selected = false) {
+  const favorite = isFavoriteWord(word.id);
+
+  return `
+    <div class="word-card ${selected ? 'selected' : ''}" data-word="${word.id}">
+      <button type="button" class="favorite-toggle ${favorite ? 'is-favorite' : ''}"
+        data-fav-word="${word.id}"
+        aria-label="${favorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}"
+        title="${favorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}">
+        ${favorite ? '★' : '☆'}
+      </button>
+      <div class="emoji">${word.emoji}</div>
+      <div class="label">${word.label}</div>
+      <div class="description">${word.description || 'Toque para adicionar'}</div>
+    </div>
+  `;
+}
+
+
+function render() {
+
+  const app =
+    document.getElementById('app');
+
+  if (!app) return;
+
+  let html = '';
+
+  switch (STATE.screen) {
+
+    case 'login':
+      html = renderLogin();
+      break;
+
+    case 'chooseProfile':
+      html = renderChooseProfile();
+      break;
+
+    case 'home':
+      html = renderHome();
+      break;
+
+    case 'build':
+      html = renderBuild();
+      break;
+
+    case 'categories':
+      html = renderCategories();
+      break;
+
+    case 'categoryDetail':
+      html = renderCategoryDetail();
+      break;
+
+    case 'favorites':
+      html = renderFavorites();
+      break;
+
+    case 'personalize':
+      html = renderPersonalize();
+      break;
+
+    case 'challenge':
+      html = renderChallenge();
+      break;
+
+    case 'profile':
+      html = renderProfile();
+      break;
+
+    case 'about':
+      html = renderAbout();
+      break;
+
+    default:
+      html = renderHome();
+
+  }
+
+  app.innerHTML = html;
+
+  renderLineIcons();
+
+
+
+  if (
+    STATE.screen === 'home'
+  ) {
+
+    document.body.classList.remove(
+      'bg-outras'
+    );
+
+  } else {
+
+    document.body.classList.add(
+      'bg-outras'
+    );
+
+  }
+
+  applyLayoutClass();
+
+  attachHandlers();
+
+}
+
+
+
+function applyLayoutClass() {
+
+  const layout =
+    STATE.data.profile.layout === 'infantil'
+      ? 'infantil'
+      : 'neutro';
+
+  document.body.classList.toggle(
+    'layout-infantil',
+    layout === 'infantil'
+  );
+
+  document.body.classList.toggle(
+    'layout-neutro',
+    layout === 'neutro'
+  );
+
+}
+
+
+
+function setLayout(layout) {
+
+  STATE.data.profile.layout =
+    layout === 'infantil' ? 'infantil' : 'neutro';
+
+  saveData();
+
+  render();
+
+}
+
+
+
+function toggleLayout() {
+
+  const current =
+    STATE.data.profile.layout === 'infantil'
+      ? 'infantil'
+      : 'neutro';
+
+  setLayout(
+    current === 'infantil' ? 'neutro' : 'infantil'
+  );
+
+}
+
+
+
+function renderLineIcons() {
+
+  const icons = {
+    back: '<svg class="app-line-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>',
+    profile: '<svg class="app-line-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.25"/><path d="M5.5 20c.7-3.4 3.1-5.25 6.5-5.25s5.8 1.85 6.5 5.25"/></svg>',
+    settings: '<svg class="app-line-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.2 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.1 2.1-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.03 1.56v.1h-3v-.1a1.7 1.7 0 0 0-1.03-1.56 1.7 1.7 0 0 0-1.88.34l-.06.06-2.1-2.1.06-.06A1.7 1.7 0 0 0 6.86 15 1.7 1.7 0 0 0 5.3 14H5.2v-3h.1a1.7 1.7 0 0 0 1.56-1.03 1.7 1.7 0 0 0-.34-1.88l-.06-.06 2.1-2.1.06.06a1.7 1.7 0 0 0 1.88.34A1.7 1.7 0 0 0 11.5 4.8v-.1h3v.1a1.7 1.7 0 0 0 1.03 1.56 1.7 1.7 0 0 0 1.88-.34l.06-.06 2.1 2.1-.06.06A1.7 1.7 0 0 0 19.17 10a1.7 1.7 0 0 0 1.56 1h.1v3h-.1A1.7 1.7 0 0 0 19.2 15Z"/></svg>'
+  };
+
+  document.querySelectorAll('.icon-btn').forEach(button => {
+    const destination = button.dataset.go;
+    const iconName = destination === 'profile'
+      ? 'profile'
+      : destination === 'personalize'
+        ? 'settings'
+        : 'back';
+
+    button.innerHTML = icons[iconName];
+
+    if (!button.getAttribute('aria-label')) {
+      button.setAttribute(
+        'aria-label',
+        iconName === 'profile'
+          ? 'Perfil'
+          : iconName === 'settings'
+            ? 'Personalizar'
+            : 'Voltar'
+      );
+    }
+  });
+}
+
+
+
+function renderLogin() {
+
+  const profile =
+    STATE.data.profile;
+
+  return `
+
+    <div class="onboard-wrap">
+
+      <div class="onboard-title">
+        Comunica
+      </div>
+
+      <div class="onboard-subtitle">
+        Comunicação simples, clara e no seu ritmo.
+      </div>
+
+      <div class="onboard-panel">
+
+        <h2>
+          Bem-vindo(a)!
+        </h2>
+
+        <p>
+          Antes de começar, como você se chama?
+        </p>
+
+        <div class="form-row">
+
+          <input
+            type="text"
+            id="loginName"
+            placeholder="Digite seu nome"
+            value="${profile.name || ''}"
+          >
+
+        </div>
+
+        <button
+          class="submit-btn"
+          id="loginContinueBtn"
+        >
+          Continuar
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+
+function renderChooseProfile() {
+
+  return `
+
+    <div class="onboard-wrap">
+
+      <div class="onboard-title">
+        Comunica
+      </div>
+
+      <div class="onboard-subtitle">
+        Comunicação simples, clara e no seu ritmo.
+      </div>
+
+      <div class="onboard-panel">
+
+        <h2>
+          Quem vai usar o Comunica?
+        </h2>
+
+        <p>
+          Escolha o tipo de perfil para continuar com o
+          cadastro certo para cada jornada.
+        </p>
+
+        <div class="profile-choice-grid">
+
+          <div
+            class="profile-choice-card kids"
+            data-profile-type="infantil"
+          >
+
+            <div class="tag">
+              Para a criança
+            </div>
+
+            <div class="title">
+              Perfil Júnior
+            </div>
+
+            <div class="desc">
+              Uma experiência visual, simples e segura
+              para aprender a se comunicar.
+            </div>
+
+            <div class="foot">
+              Cadastro feito por um adulto responsável →
+            </div>
+
+          </div>
+
+          <div
+            class="profile-choice-card adult"
+            data-profile-type="adulto"
+          >
+
+            <div class="tag">
+              Para você
+            </div>
+
+            <div class="title">
+              Perfil Sênior
+            </div>
+
+            <div class="desc">
+              Acompanhe o desenvolvimento, organize
+              recursos e personalize a jornada.
+            </div>
+
+            <div class="foot">
+              Ideal para familiares, educadores e terapeutas →
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="onboard-hint">
+          Você poderá ajustar essa escolha depois.
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+
+function renderHome() {
+
+  return `
+
+    <div class="home-screen">
+
+    <div class="topbar">
+
+       <section class="brand-intro" aria-labelledby="home-title">
+      <h1 id="home-title">Comunica</h1>
+      <p>Comunicação simples, clara e no seu ritmo.</p>
+    </section>
+
+      <div></div>
+
+      <button
+        class="icon-btn"
+        data-go="profile"
+        title="Perfil"
+      >
+        <span class="profile-outline" aria-hidden="true"></span>
+      </button>
+
+    </div>
+
+   
+
+    <div class="menu">
+
+      <div
+        class="menu-btn primary"
+        data-go="build"
+      >
+
+        <img class="menu-image" src="img/comecar-comunicar.png" alt="" aria-hidden="true">
+
+        <div class="menu-text">
+
+          <div class="menu-title">
+            COMEÇAR A COMUNICAR
+          </div>
+
+          <div class="menu-sub">
+            Monte sua frase
+          </div>
+
+        </div>
+
+        <div class="menu-arrow">
+          ›
+        </div>
+
+      </div>
+
+      <div
+        class="menu-btn"
+        data-go="favorites"
+      >
+
+        <img class="menu-image" src="img/favoritos.png" alt="" aria-hidden="true">
+
+        <div class="menu-text">
+
+          <div class="menu-title">
+            FAVORITOS
+          </div>
+
+          <div class="menu-sub">
+            Frases e palavras favoritas
+          </div>
+
+        </div>
+
+        <div class="menu-arrow">
+          ›
+        </div>
+
+      </div>
+
+      <div
+        class="menu-btn"
+        data-go="categories"
+      >
+
+        <img class="menu-image" src="img/categorias.png" alt="" aria-hidden="true">
+
+        <div class="menu-text">
+
+          <div class="menu-title">
+            CATEGORIAS
+          </div>
+
+          <div class="menu-sub">
+            Palavras organizadas por temas
+          </div>
+
+        </div>
+
+        <div class="menu-arrow">
+          ›
+        </div>
+
+      </div>
+
+      <div
+        class="menu-btn"
+        data-go="personalize"
+      >
+
+        <img class="menu-image" src="img/personalizar.png" alt="" aria-hidden="true">
+
+        <div class="menu-text">
+
+          <div class="menu-title">
+            PERSONALIZAR
+          </div>
+
+          <div class="menu-sub">
+            Adicione suas próprias palavras
+          </div>
+
+        </div>
+
+        <div class="menu-arrow">
+          ›
+        </div>
+
+      </div>
+
+      <div
+        class="menu-btn"
+        data-go="challenge"
+      >
+
+        <img class="menu-image" src="img/desafio-comunicacao.png" alt="" aria-hidden="true">
+
+        <div class="menu-text">
+
+          <div class="menu-title">
+            DESAFIO DA COMUNICAÇÃO
+          </div>
+
+          <div class="menu-sub">
+            Aprenda brincando
+          </div>
+
+        </div>
+
+        <div class="menu-arrow">
+          ›
+        </div>
+
+      </div>
+
+    </div>
+
+    <div
+      class="about-link"
+      data-go="about"
+    >
+      Sobre o Comunica
+    </div>
+
+    </div>
+
+  `;
+
+}
+
+
+
+function renderBuild() {
+
+  const chipHtml =
+    STATE.phrase.length
+
+      ? STATE.phrase
+          .map(
+            word => `
+              <span class="phrase-chip">
+                ${word.emoji} ${word.label}
+              </span>
+            `
+          )
+          .join('')
+
+      : `
+          <span class="phrase-placeholder">
+            Escolha uma palavra no carrossel...
+          </span>
+        `;
+
+  const n =
+    STATE.options.length;
+
+  let cardsHtml = '';
+
+  if (n === 0) {
+
+    cardsHtml = `
+
+      <div
+        style="
+          color:#fff;
+          font-weight:700;
+          text-align:center;
+          padding:20px;
+        "
+      >
+         Você chegou ao fim da frase!
+        <br><br>
+        Toque em <strong>Falar</strong>
+        ou limpe para começar novamente.
+      </div>
+
+    `;
+
+  } else {
+
+    const prevId =
+      n > 1
+        ? STATE.options[
+            (
+              STATE.carouselIndex -
+              1 +
+              n
+            ) % n
+          ]
+        : null;
+
+    const nextId =
+      n > 1
+        ? STATE.options[
+            (
+              STATE.carouselIndex +
+              1
+            ) % n
+          ]
+        : null;
+
+    const curId =
+      STATE.options[
+        STATE.carouselIndex
+      ];
+
+    const sideCard =
+      id => {
+
+        if (!id) {
+
+          return `
+            <div
+              class="carousel-card side empty"
+            ></div>
+          `;
+
+        }
+
+        const word =
+          wordById(id);
+
+        if (!word) {
+
+          return `
+            <div
+              class="carousel-card side empty"
+            ></div>
+          `;
+
+        }
+
+        return `
+
+          <div
+            class="carousel-card side"
+            data-pick="${id}"
+          >
+
+            <div class="emoji">
+              ${word.emoji}
+            </div>
+
+            <div class="label">
+              ${word.label}
+            </div>
+
+          </div>
+
+        `;
+
+      };
+
+    const centerCard =
+      id => {
+
+        const word =
+          wordById(id);
+
+        if (!word) return '';
+
+        return `
+
+          <div
+            class="carousel-card center"
+            data-pick="${id}"
+          >
+
+            <div class="emoji">
+              ${word.emoji}
+            </div>
+
+            <div class="label">
+              ${word.label}
+            </div>
+
+          </div>
+
+        `;
+
+      };
+
+    cardsHtml = `
+
+      <button
+        class="carousel-arrow"
+        id="prevBtn"
+        ${n < 2 ? 'disabled' : ''}
+        aria-label="Palavra anterior"
+      >
+        ‹
+      </button>
+
+      <div class="carousel-track">
+
+        ${sideCard(prevId)}
+
+        ${centerCard(curId)}
+
+        ${sideCard(nextId)}
+
+      </div>
+
+      <button
+        class="carousel-arrow"
+        id="nextBtn"
+        ${n < 2 ? 'disabled' : ''}
+        aria-label="Próxima palavra"
+      >
+        ›
+      </button>
+
+    `;
+
+  }
+
+  const layerLabel =
+    STATE.phrase.length === 0
+
+      ? 'QUEM ESTÁ FALANDO?'
+
+      : STATE.phrase.length === 1
+
+        ? 'O QUE VOCÊ QUER DIZER?'
+
+        : 'COMPLETE A FRASE';
+
+  return `
+
+    <div class="topbar">
+
+      <button
+        class="icon-btn"
+        data-go="home"
+        aria-label="Voltar"
+      >
+        ←
+      </button>
+
+      <div class="topbar-title">
+        Comunicar
+      </div>
+
+      <button
+        class="icon-btn"
+        data-go="personalize"
+        aria-label="Personalizar"
+      >
+        ⚙︎
+      </button>
+
+    </div>
+
+    <div class="screen">
+
+      <div class="section-label">
+        MINHA FRASE
+      </div>
+
+      <div class="phrase-bar">
+        ${chipHtml}
+      </div>
+
+      <div class="layer-label">
+        ${layerLabel}
+      </div>
+
+      <div class="carousel-wrap">
+        ${cardsHtml}
+      </div>
+
+      <button
+        class="confirm-btn"
+        id="confirmBtn"
+        ${n === 0 ? 'disabled' : ''}
+      >
+        ✓ Selecionar
+      </button>
+
+      <div class="action-row">
+
+        <button
+          class="btn-erase"
+          id="eraseBtn"
+        >
+           Apagar
+        </button>
+
+        <button
+          class="btn-clear"
+          id="clearBtn"
+        >
+           Limpar
+        </button>
+
+        <button
+          class="btn-speak"
+          id="speakBtn"
+          ${STATE.phrase.length ? '' : 'disabled'}
+        >
+           Falar
+        </button>
+        <button
+          class="btn-fav"
+          id="favPhraseBtn"
+          ${STATE.phrase.length ? '' : 'disabled'}
+        >
+           Favoritar
+        </button>
+
+      </div>
+
+      <div
+        class="back-link"
+        data-go="categories"
+        style="margin-top:4px;"
+      >
+         Ver todas as categorias
+      </div>
+
+      <div class="hint">
+        ← → navega · Enter/Espaço seleciona · toque também funciona
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+
+function renderCategories() {
+
+  const categories =
+    allCategories();
+
+  return `
+
+    <div class="topbar">
+
+      <button
+        class="icon-btn"
+        data-go="home"
+      >
+        ←
+      </button>
+
+      <div class="topbar-title">
+        Categorias
+      </div>
+
+      <div style="width:44px"></div>
+
+    </div>
+
+    <div class="screen">
+
+      <div class="cat-grid">
+
+        ${categories
+          .map(category => {
+
+            const count =
+              allWords()
+                .filter(
+                  word =>
+                    word.cat ===
+                    category.id
+                )
+                .length;
+
+            return `
+
+              <div
+                class="cat-card"
+                data-category="${category.id}"
+              >
+
+                <span class="emoji">
+                  ${category.emoji}
+                </span>
+
+                <div class="label">
+                  ${category.label}
+                </div>
+
+                <div class="count">
+                  ${count} palavras
+                </div>
+
+              </div>
+
+            `;
+
+          })
+          .join('')}
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+
+function renderCategoryDetail() {
+
+  const category =
+    allCategories().find(
+      item =>
+        item.id ===
+        STATE.categoryOpen
+    );
+
+  const words =
+    allWords().filter(
+      word =>
+        word.cat ===
+        STATE.categoryOpen
+    );
+
+  return `
+
+    <div class="topbar">
+
+      <button
+        class="icon-btn"
+        data-go="categories"
+      >
+        ←
+      </button>
+
+      <div class="topbar-title">
+        ${
+          category
+            ? `${category.emoji} ${category.label}`
+            : 'Categoria'
+        }
+      </div>
+
+      <div style="width:44px"></div>
+
+    </div>
+
+    <div class="screen">
+
+      <div class="section-label">
+        TOQUE PARA ADICIONAR À FRASE
+      </div>
+
+      <div class="word-grid">
+
+        ${words
+          .map(
+            word =>
+              wordCardHtml(
+                word,
+                false
+              )
+          )
+          .join('')}
+
+      </div>
+
+      ${
+        STATE.phrase.length
+
+          ? `
+
+            <div style="margin-top:18px;">
+
+              <div class="section-label">
+                MINHA FRASE
+              </div>
+
+              <div class="phrase-bar">
+
+                ${STATE.phrase
+                  .map(
+                    word => `
+                      <span class="phrase-chip">
+                        ${word.emoji}
+                        ${word.label}
+                      </span>
+                    `
+                  )
+                  .join('')}
+
+              </div>
+
+              <button
+                class="speak-btn"
+                id="speakBtn"
+              >
+                 FALAR
+              </button>
+
+            </div>
+
+          `
+
+          : ''
+
+      }
+
+    </div>
+
+  `;
+
+}
+
+
+function renderFavorites() {
+
+  const favWordObjects =
+    STATE.data.favWords
+      .map(wordById)
+      .filter(Boolean);
+
+  return `
+
+    <div class="topbar">
+
+      <button
+        class="icon-btn"
+        data-go="home"
+      >
+        ←
+      </button>
+
+      <div class="topbar-title">
+        Favoritos
+      </div>
+
+      <div style="width:44px"></div>
+
+    </div>
+
+    <div class="screen">
+
+      <div class="section-label">
+        FRASES FAVORITAS
+      </div>
+
+      ${
+        STATE.data.favPhrases.length === 0
+
+          ? `
+
+            <div class="empty-state">
+
+              Nenhuma frase favoritada ainda.
+
+              <br><br>
+
+              Monte uma frase e toque em  Favoritar.
+
+            </div>
+
+          `
+
+          : STATE.data.favPhrases
+              .map(
+                (phrase, index) => `
+
+                  <div class="fav-item">
+
+                    <div class="txt">
+                       ${phrase}
+                    </div>
+
+                `
+              )
+              .join('')
+
+      }
+
+      <div
+        class="section-label"
+        style="margin-top:18px;"
+      >
+        PALAVRAS FAVORITAS
+      </div>
+
+      ${
+        favWordObjects.length === 0
+
+          ? `
+
+            <div class="empty-state">
+              Nenhuma palavra favorita ainda.
+            </div>
+
+          `
+
+          : `
+
+            <div class="word-grid">
+
+              ${favWordObjects
+                .map(
+                  word =>
+                    wordCardHtml(
+                      word,
+                      false
+                    )
+                )
+                .join('')}
+
+            </div>
+
+          `
+
+      }
+
+    </div>
+
+  `;
+
+}
+
+
+function renderPersonalize() {
+
+  const customWordsHtml =
+    STATE.data.customWords
+      .map(
+        word => `
+
+          <span class="custom-chip">
+
+            ${word.emoji}
+            ${word.label}
+
+            <span
+              class="x"
+              data-del-word="${word.id}"
+            >
+              ✕
+            </span>
+
+          </span>
+
+        `
+      )
+      .join('')
+
+      ||
+
+      `
+        <span
+          style="
+            color:var(--navy-soft);
+            font-weight:600;
+            font-size:13px;
+          "
+        >
+          Nenhuma palavra personalizada ainda.
+        </span>
+      `;
+
+  const customCategoriesHtml =
+    STATE.data.customCategories
+      .map(
+        category => `
+
+          <span class="custom-chip">
+
+            ${category.emoji}
+            ${category.label}
+
+            <span
+              class="x"
+              data-del-cat="${category.id}"
+            >
+              ✕
+            </span>
+
+          </span>
+
+        `
+      )
+      .join('')
+
+      ||
+
+      `
+        <span
+          style="
+            color:var(--navy-soft);
+            font-weight:600;
+            font-size:13px;
+          "
+        >
+          Nenhuma categoria personalizada ainda.
+        </span>
+      `;
+
+  const categoryOptions =
+    allCategories()
+      .map(
+        category => `
+
+          <option value="${category.id}">
+            ${category.emoji}
+            ${category.label}
+          </option>
+
+        `
+      )
+      .join('');
+
+  const emojiChoices = [
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    ''
+  ];
+
+  return `
+
+    <div class="topbar">
+
+      <button
+        class="icon-btn"
+        data-go="home"
+      >
+        ←
+      </button>
+
+      <div class="topbar-title">
+        Personalizar
+      </div>
+
+      <div style="width:44px"></div>
+
+    </div>
+
+    <div class="screen">
+
+      <div class="form-block">
+
+        <h3>
+           Adicionar palavra
+        </h3>
+
+        <div class="form-row">
+
+          <input
+            type="text"
+            id="newWordLabel"
+            placeholder="Ex: Bola"
+          >
+
+          <select id="newWordCat">
+            ${categoryOptions}
+          </select>
+
+        </div>
+
+       
+
+        <button
+          class="submit-btn"
+          id="addWordBtn"
+        >
+          Adicionar palavra
+        </button>
+
+        <div class="custom-list">
+          ${customWordsHtml}
+        </div>
+
+      </div>
+
+      <div class="form-block">
+
+        <h3>
+           Criar categoria
+        </h3>
+
+        <div class="form-row">
+
+          <input
+            type="text"
+            id="newCatLabel"
+            placeholder="Ex: Minhas coisas"
+          >
+
+        </div>
+
+       
+        <button
+          class="submit-btn"
+          id="addCatBtn"
+        >
+          Criar categoria
+        </button>
+
+        <div class="custom-list">
+          ${customCategoriesHtml}
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+
+function renderChallenge() {
+
+  if (!STATE.challenge) {
+
+    STATE.challenge =
+      CHALLENGES[
+        Math.floor(
+          Math.random() *
+          CHALLENGES.length
+        )
+      ];
+
+    STATE.phrase = [];
+
+  }
+
+  const challenge =
+    STATE.challenge;
+
+  const done =
+    STATE.phrase.length > 0 &&
+    STATE.phrase
+      .map(
+        word => word.id
+      )
+      .join(',') ===
+      challenge.target.join(',');
+
+  const targetWords =
+    allWords().filter(
+      word =>
+        challenge.target.includes(
+          word.id
+        )
+    );
+
+  const targetCategories =
+    new Set(
+      targetWords.map(
+        word => word.cat
+      )
+    );
+
+  const distractors =
+    allWords()
+      .filter(
+        word =>
+          targetCategories.has(
+            word.cat
+          ) &&
+          !challenge.target.includes(
+            word.id
+          )
+      )
+      .slice(0, 5);
+
+  let options =
+    targetWords.concat(
+      distractors
+    );
+
+  options =
+    options.sort(
+      () =>
+        Math.random() - 0.5
+    );
+
+  return `
+
+    <div class="topbar">
+
+      <button
+        class="icon-btn"
+        data-go="home"
+      >
+        ←
+      </button>
+
+      <div class="topbar-title">
+        Desafio
+      </div>
+
+      <div style="width:44px"></div>
+
+    </div>
+
+    <div class="screen">
+
+      <div class="stars">
+        
+        ${STATE.data.profile.stars}
+        estrelas
+      </div>
+
+      <div class="challenge-card">
+
+        <div class="emoji">
+          ${challenge.emoji}
+        </div>
+
+        <p>
+          ${challenge.prompt}
+        </p>
+
+      </div>
+
+      <div class="section-label">
+        MINHA FRASE
+      </div>
+
+      <div class="phrase-bar">
+
+        ${
+          STATE.phrase.length
+
+            ? STATE.phrase
+                .map(
+                  word => `
+
+                    <span class="phrase-chip">
+                      ${word.emoji}
+                      ${word.label}
+                    </span>
+
+                  `
+                )
+                .join('')
+
+            : `
+
+              <span class="phrase-placeholder">
+                Monte a frase certa...
+              </span>
+
+            `
+        }
+
+      </div>
+
+      <div class="action-row">
+
+        <button
+          class="btn-erase"
+          id="eraseBtn"
+        >
+          ⌫ Apagar
+        </button>
+
+        <button
+          class="btn-clear"
+          id="clearBtn"
+        >
+           Limpar
+        </button>
+
+      </div>
+
+      <div class="section-label">
+        MONTE A RESPOSTA
+      </div>
+
+      <div class="word-grid">
+
+        ${options
+          .map(
+            word =>
+              wordCardHtml(
+                word,
+                false
+              )
+          )
+          .join('')}
+
+      </div>
+
+      ${
+        done
+
+          ? `
+
+            <button
+              class="speak-btn"
+              id="challengeWinBtn"
+            >
+               Muito bem! Ganhar estrela
+            </button>
+
+          `
+
+          : `
+
+            <button
+              class="speak-btn"
+              id="speakBtn"
+              ${
+                STATE.phrase.length
+                  ? ''
+                  : 'disabled'
+              }
+            >
+               Ouvir minha frase
+            </button>
+
+          `
+      }
+
+      <div
+        class="back-link"
+        style="margin-top:14px;"
+        id="skipChallenge"
+      >
+        ↻ Tentar outro desafio
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+function renderProfile() {
+
+  const profile =
+    STATE.data.profile;
+
+  const hasName =
+    !!(profile.name && profile.name.trim() !== '');
+
+  const isEditingName =
+    STATE.editingProfileName;
+
+  const showRegisterBtn =
+    !hasName || isEditingName;
+
+  return `
+
+    <div class="topbar">
+
+      <button
+        class="icon-btn"
+        data-go="home"
+      >
+        ←
+      </button>
+
+      <div class="topbar-title">
+        Meu ComunicA
+      </div>
+
+      <div style="width:44px"></div>
+
+    </div>
+
+    <div class="screen">
+
+      <div class="form-block">
+
+        <h3>
+          Cadastro do perfil
+        </h3>
+
+        <div class="form-row">
+
+          <input
+            type="text"
+            id="profileName"
+            placeholder="Como você se chama?"
+            value="${profile.name || ''}"
+            ${hasName && !isEditingName ? 'disabled' : ''}
+          >
+
+        </div>
+
+        ${
+          showRegisterBtn
+            ? `
+              <button
+                class="submit-btn"
+                id="registerProfileBtn"
+              >
+                Cadastrar perfil
+              </button>
+            `
+            : `
+              <button
+                class="submit-btn"
+                id="editProfileBtn"
+              >
+                Editar
+              </button>
+            `
+        }
+
+      </div>
+
+      <div class="info-block">
+
+        <div class="profile-stat">
+
+          <span>
+             Estrelas conquistadas
+          </span>
+
+          <span>
+            ${profile.stars}
+          </span>
+
+        </div>
+
+        <div class="profile-stat">
+
+          <span>
+             Frases favoritas
+          </span>
+
+          <span>
+            ${STATE.data.favPhrases.length}
+          </span>
+
+        </div>
+
+        <div class="profile-stat">
+
+          <span>
+             Palavras favoritas
+          </span>
+
+          <span>
+            ${STATE.data.favWords.length}
+          </span>
+
+        </div>
+
+        <div
+          class="profile-stat"
+          style="border-bottom:none;"
+        >
+
+          <span>
+             Categorias criadas
+          </span>
+
+          <span>
+            ${STATE.data.customCategories.length}
+          </span>
+
+        </div>
+
+      </div>
+
+      <div class="form-block">
+
+        <h3>
+          Aparência
+        </h3>
+
+        <p style="margin:0 0 12px;font-size:12px;font-weight:600;color:var(--white);opacity:.85;">
+          Troque para o perfil Júnior a qualquer momento.
+        </p>
+
+        <button
+          class="submit-btn"
+          id="switchJuniorBtn"
+        >
+          Trocar para perfil Júnior
+        </button>
+
+      </div>
+
+      <div class="form-block">
+
+        <h3>
+          Conta
+        </h3>
+
+        <p style="margin:0 0 12px;font-size:12px;font-weight:600;color:var(--white);opacity:.85;">
+          Ao sair, você precisará entrar novamente com
+          seu nome na próxima vez que abrir o app.
+        </p>
+
+        <button
+          class="submit-btn"
+          id="logoutBtn"
+          style="background:#c0392b;"
+        >
+          Sair desta conta
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+
+function renderAbout() {
+
+  return `
+
+    <div class="topbar">
+
+      <button
+        class="icon-btn"
+        data-go="home"
+      >
+        ←
+      </button>
+
+      <div class="topbar-title">
+        Sobre
+      </div>
+
+      <div style="width:44px"></div>
+
+    </div>
+
+    <div class="screen">
+
+      <div class="info-block">
+
+        <strong>ComunicA</strong>
+        é um aplicativo de
+        Comunicação Alternativa e Aumentativa
+        (CAA).
+
+        Ele ajuda pessoas a montar frases
+        usando o carrossel de palavras
+        e depois ouvir a frase em voz alta.
+
+      </div>
+
+      <div class="info-block">
+
+        Toque em
+        <strong>Começar a comunicar</strong>
+        para montar frases usando o carrossel.
+
+        Explore as
+        <strong>Categorias</strong>
+        para encontrar palavras por tema.
+
+        Guarde o que mais usa em
+        <strong>Favoritos</strong>
+
+        e crie suas próprias palavras em
+        <strong>Personalizar</strong>.
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+
+function attachHandlers() {
+
+
+  prepareKeyboardNavigation();
+
+
+  const loginContinueBtn =
+    document.getElementById(
+      'loginContinueBtn'
+    );
+
+  if (loginContinueBtn) {
+
+    loginContinueBtn.addEventListener(
+      'click',
+      () => {
+
+        const input =
+          document.getElementById(
+            'loginName'
+          );
+
+        const name =
+          input
+            ? input.value.trim()
+            : '';
+
+        if (name === '') {
+
+          showToast(
+            'Digite seu nome para continuar'
+          );
+
+          return;
+
+        }
+
+        STATE.data.profile.name = name;
+
+        saveData();
+
+        speak(
+          'Olá, ' + name
+        );
+
+        go('chooseProfile');
+
+      }
+    );
+
+  }
+
+
+  const adultProfileCard =
+    document.querySelector(
+      '[data-profile-type="adulto"]'
+    );
+
+  if (adultProfileCard) {
+
+    adultProfileCard.addEventListener(
+      'click',
+      () => {
+
+        STATE.data.profile.layout = 'neutro';
+
+        STATE.data.profile.onboarded = true;
+
+        saveData();
+
+        go('home');
+
+      }
+    );
+
+  }
+
+
+  const kidsProfileCard =
+    document.querySelector(
+      '[data-profile-type="infantil"]'
+    );
+
+  if (kidsProfileCard) {
+
+    kidsProfileCard.addEventListener(
+      'click',
+      () => {
+
+        STATE.data.profile.layout = 'infantil';
+
+        STATE.data.profile.onboarded = true;
+
+        saveData();
+
+         window.location.href = 'infantil.html';
+
+      }
+    );
+
+  }
+
+
+
+  document
+    .querySelectorAll('[data-go]')
+    .forEach(element => {
+
+      element.addEventListener(
+        'click',
+        () => {
+
+          const target =
+            element.getAttribute(
+              'data-go'
+            );
+
+          const menuTexts = {
+
+            build:
+              'Começar a comunicar',
+
+            favorites:
+              'Favoritos',
+
+            categories:
+              'Categorias',
+
+            personalize:
+              'Personalizar',
+
+            challenge:
+              'Desafio da comunicação',
+
+            profile:
+              'Perfil',
+
+            about:
+              'Sobre o Comunica'
+
+          };
+
+          if (
+            menuTexts[target]
+          ) {
+
+            speak(
+              menuTexts[target]
+            );
+
+          }
+
+          if (
+            target === 'challenge'
+          ) {
+
+            STATE.challenge = null;
+
+          }
+
+          go(target);
+
+        }
+      );
+
+    });
+
+
+
+  document
+    .querySelectorAll('[data-word]')
+    .forEach(element => {
+
+      element.addEventListener(
+        'click',
+        () => {
+
+          const word =
+            wordById(
+              element.getAttribute(
+                'data-word'
+              )
+            );
+
+          if (!word) return;
+
+          speak(word.label);
+
+          addWordToPhrase(word);
+
+        }
+      );
+
+    });
+
+
+
+  document.querySelectorAll('[data-fav-word]').forEach(element => {
+    element.addEventListener('click', event => {
+      event.stopPropagation();
+      toggleFavoriteWord(element.getAttribute('data-fav-word'));
+    });
+  });
+
+  
+
+  document
+    .querySelectorAll('[data-category]')
+    .forEach(element => {
+
+      element.addEventListener(
+        'click',
+        () => {
+
+          const categoryId =
+            element.getAttribute(
+              'data-category'
+            );
+
+          const category =
+            allCategories().find(
+              item =>
+                item.id ===
+                categoryId
+            );
+
+          if (category) {
+
+            speak(
+              category.label
+            );
+
+          }
+
+          go(
+            'categoryDetail',
+            {
+              categoryOpen:
+                categoryId
+            }
+          );
+
+        }
+      );
+
+    });
+
+  
+
+  const prevBtn =
+    document.getElementById(
+      'prevBtn'
+    );
+
+  if (prevBtn) {
+
+    prevBtn.onclick = () => {
+
+      moveCarousel(-1);
+
+    };
+
+  }
+
+  const nextBtn =
+    document.getElementById(
+      'nextBtn'
+    );
+
+  if (nextBtn) {
+
+    nextBtn.onclick = () => {
+
+      moveCarousel(1);
+
+    };
+
+  }
+
+  document
+    .querySelectorAll(
+      '.carousel-card[data-pick]'
+    )
+    .forEach(element => {
+
+      element.addEventListener(
+        'click',
+        () => {
+
+          const id =
+            element.getAttribute(
+              'data-pick'
+            );
+
+          const index =
+            STATE.options.indexOf(
+              id
+            );
+
+          if (index === -1) return;
+
+          if (
+            index ===
+            STATE.carouselIndex
+          ) {
+
+            confirmSelection();
+
+          } else {
+
+            STATE.carouselIndex =
+              index;
+
+            render();
+
+          }
+
+        }
+      );
+
+    });
+
+  const confirmBtn =
+    document.getElementById(
+      'confirmBtn'
+    );
+
+  if (confirmBtn) {
+
+    confirmBtn.onclick =
+      confirmSelection;
+
+  }
+
+  
+
+  const speakBtn =
+    document.getElementById(
+      'speakBtn'
+    );
+
+  if (speakBtn) {
+
+    speakBtn.addEventListener(
+      'click',
+      () => {
+
+        const text =
+          currentPhraseText();
+
+        if (text) {
+
+          speak(text);
+
+        }
+
+      }
+    );
+
+  }
+
+  
+
+  const eraseBtn =
+    document.getElementById(
+      'eraseBtn'
+    );
+
+  if (eraseBtn) {
+
+    eraseBtn.addEventListener(
+      'click',
+      eraseLast
+    );
+
+  }
+
+  
+  const clearBtn =
+    document.getElementById(
+      'clearBtn'
+    );
+
+  if (clearBtn) {
+
+    clearBtn.addEventListener(
+      'click',
+      clearPhrase
+    );
+
+  }
+
+  
+
+  const favPhraseBtn =
+    document.getElementById(
+      'favPhraseBtn'
+    );
+
+  if (favPhraseBtn) {
+
+    favPhraseBtn.addEventListener(
+      'click',
+      () => {
+
+        favoritePhrase();
+
+      }
+    );
+
+  }
+
+  
+
+  document
+    .querySelectorAll(
+      '[data-speak]'
+    )
+    .forEach(element => {
+
+      element.addEventListener(
+        'click',
+        event => {
+
+          event.stopPropagation();
+
+          speak(
+            element.getAttribute(
+              'data-speak'
+            )
+          );
+
+        }
+      );
+
+    });
+
+  
+
+  document
+    .querySelectorAll(
+      '[data-remove-phrase]'
+    )
+    .forEach(element => {
+
+      element.addEventListener(
+        'click',
+        event => {
+
+          event.stopPropagation();
+
+          const index =
+            parseInt(
+              element.getAttribute(
+                'data-remove-phrase'
+              ),
+              10
+            );
+
+          if (
+            Number.isNaN(index)
+          ) return;
+
+          STATE.data.favPhrases.splice(
+            index,
+            1
+          );
+
+          saveData();
+
+          render();
+
+        }
+      );
+
+    });
+
+  
+
+  document
+    .querySelectorAll(
+      '#emojiRowWord .emoji-pick'
+    )
+    .forEach(element => {
+
+      element.addEventListener(
+        'click',
+        () => {
+
+          document
+            .querySelectorAll(
+              '#emojiRowWord .emoji-pick'
+            )
+            .forEach(item =>
+              item.classList.remove(
+                'chosen'
+              )
+            );
+
+          element.classList.add(
+            'chosen'
+          );
+
+        }
+      );
+
+    });
+    
+
+  document
+    .querySelectorAll(
+      '#emojiRowCat .emoji-pick'
+    )
+    .forEach(element => {
+
+      element.addEventListener(
+        'click',
+        () => {
+
+          document
+            .querySelectorAll(
+              '#emojiRowCat .emoji-pick'
+            )
+            .forEach(item =>
+              item.classList.remove(
+                'chosen'
+              )
+            );
+
+          element.classList.add(
+            'chosen'
+          );
+
+        }
+      );
+
+    });
+
+
+
+  const addWordBtn =
+    document.getElementById(
+      'addWordBtn'
+    );
+
+  if (addWordBtn) {
+
+    addWordBtn.addEventListener(
+      'click',
+      () => {
+
+        const input =
+          document.getElementById(
+            'newWordLabel'
+          );
+
+        const category =
+          document.getElementById(
+            'newWordCat'
+          );
+
+        if (!input || !category)
+          return;
+
+        const label =
+          input.value.trim();
+
+        const cat =
+          category.value;
+
+        const chosen =
+          document.querySelector(
+            '#emojiRowWord .chosen'
+          );
+
+        const emoji =
+          chosen
+            ? chosen.getAttribute(
+                'data-emoji'
+              )
+            : '';
+
+        if (!label) {
+
+          showToast(
+            'Digite uma palavra'
+          );
+
+          speak(
+            'Digite uma palavra'
+          );
+
+          return;
+
+        }
+
+        const id =
+          'c_' +
+          label
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(
+              /[\u0300-\u036f]/g,
+              ''
+            )
+            .replace(
+              /[^a-z0-9]+/g,
+              '_'
+            ) +
+          '_' +
+          Date.now();
+
+        STATE.data.customWords.push({
+
+          id,
+
+          label,
+
+          emoji,
+
+          description:
+            `Toque para usar "${label}"`,
+
+          cat
+
+        });
+
+        saveData();
+
+        showToast(
+          'Palavra adicionada!'
+        );
+
+        speak(label);
+
+        loadLayer();
+
+        render();
+
+      }
+    );
+
+  }
+
+  
+
+  const addCatBtn =
+    document.getElementById(
+      'addCatBtn'
+    );
+
+  if (addCatBtn) {
+
+    addCatBtn.addEventListener(
+      'click',
+      () => {
+
+        const input =
+          document.getElementById(
+            'newCatLabel'
+          );
+
+        if (!input) return;
+
+        const label =
+          input.value.trim();
+
+        const chosen =
+          document.querySelector(
+            '#emojiRowCat .chosen'
+          );
+
+        const emoji =
+          chosen
+            ? chosen.getAttribute(
+                'data-emoji'
+              )
+            : '';
+
+        if (!label) {
+
+          showToast(
+            'Digite um nome de categoria'
+          );
+
+          speak(
+            'Digite uma categoria'
+          );
+
+          return;
+
+        }
+
+        const id =
+          'cc_' +
+          label
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(
+              /[\u0300-\u036f]/g,
+              ''
+            )
+            .replace(
+              /[^a-z0-9]+/g,
+              '_'
+            ) +
+          '_' +
+          Date.now();
+
+        STATE.data.customCategories.push({
+
+          id,
+
+          label,
+
+          emoji,
+
+          custom: true
+
+        });
+
+        saveData();
+
+        showToast(
+          'Categoria criada!'
+        );
+
+        speak(label);
+
+        render();
+
+      }
+    );
+
+  }
+
+  
+
+  document
+    .querySelectorAll(
+      '[data-del-word]'
+    )
+    .forEach(element => {
+
+      element.addEventListener(
+        'click',
+        event => {
+
+          event.stopPropagation();
+
+          const id =
+            element.getAttribute(
+              'data-del-word'
+            );
+
+          STATE.data.customWords =
+            STATE.data.customWords.filter(
+              word =>
+                word.id !== id
+            );
+
+          STATE.data.favWords =
+            STATE.data.favWords.filter(
+              wordId =>
+                wordId !== id
+            );
+
+          saveData();
+
+          loadLayer();
+
+          render();
+
+        }
+      );
+
+    });
+
+ 
+
+  document
+    .querySelectorAll(
+      '[data-del-cat]'
+    )
+    .forEach(element => {
+
+      element.addEventListener(
+        'click',
+        event => {
+
+          event.stopPropagation();
+
+          const id =
+            element.getAttribute(
+              'data-del-cat'
+            );
+
+          STATE.data.customCategories =
+            STATE.data.customCategories.filter(
+              category =>
+                category.id !== id
+            );
+
+          STATE.data.customWords =
+            STATE.data.customWords.filter(
+              word =>
+                word.cat !== id
+            );
+
+          saveData();
+
+          loadLayer();
+
+          render();
+
+        }
+      );
+
+    });
+
+  
+  const registerProfileBtn =
+    document.getElementById(
+      'registerProfileBtn'
+    );
+
+  if (registerProfileBtn) {
+
+    registerProfileBtn.addEventListener(
+      'click',
+      () => {
+
+        const nameInput =
+          document.getElementById(
+            'profileName'
+          );
+
+        if (nameInput) {
+
+          STATE.data.profile.name =
+            nameInput.value.trim();
+
+        }
+
+        STATE.editingProfileName = false;
+
+        saveData();
+
+        showToast(
+          'Perfil cadastrado!'
+        );
+
+        speak(
+          'Perfil cadastrado'
+        );
+
+        render();
+
+      }
+    );
+
+  }
+
+
+  const editProfileBtn =
+    document.getElementById(
+      'editProfileBtn'
+    );
+
+  if (editProfileBtn) {
+
+    editProfileBtn.addEventListener(
+      'click',
+      () => {
+
+        STATE.editingProfileName = true;
+
+        render();
+
+        const nameInput =
+          document.getElementById(
+            'profileName'
+          );
+
+        if (nameInput) {
+
+          nameInput.focus();
+
+        }
+
+      }
+    );
+
+  }
+
+
+  const switchJuniorBtn =
+    document.getElementById(
+      'switchJuniorBtn'
+    );
+
+  if (switchJuniorBtn) {
+
+    switchJuniorBtn.addEventListener(
+      'click',
+      () => {
+
+        STATE.data.profile.layout = 'infantil';
+
+        saveData();
+
+        showToast(
+          'Perfil Júnior ativado'
+        );
+
+         window.location.href = 'infantil.html';
+
+      }
+    );
+
+  }
+
+
+  const logoutBtn =
+    document.getElementById(
+      'logoutBtn'
+    );
+
+  if (logoutBtn) {
+
+    logoutBtn.addEventListener(
+      'click',
+      () => {
+
+        STATE.data.profile.onboarded = false;
+
+        STATE.data.profile.name = '';
+
+        saveData();
+
+        showToast(
+          'Você saiu da conta'
+        );
+
+        go('login');
+
+      }
+    );
+
+  }
+
+
+  const challengeWinBtn =
+    document.getElementById(
+      'challengeWinBtn'
+    );
+
+  if (challengeWinBtn) {
+
+    challengeWinBtn.addEventListener(
+      'click',
+      () => {
+
+        STATE.data.profile.stars += 1;
+
+        saveData();
+
+        speak(
+          'Muito bem! Você ganhou uma estrela!'
+        );
+
+        showToast(
+          ' Muito bem! +1 estrela'
+        );
+
+        STATE.challenge = null;
+
+        STATE.phrase = [];
+
+        loadLayer();
+
+        render();
+
+      }
+    );
+
+  }
+
+  
+
+  const skipChallenge =
+    document.getElementById(
+      'skipChallenge'
+    );
+
+  if (skipChallenge) {
+
+    skipChallenge.addEventListener(
+      'click',
+      () => {
+
+        STATE.challenge = null;
+
+        STATE.phrase = [];
+
+        loadLayer();
+
+        render();
+
+      }
+    );
+
+  }
+
+}
+
+
+
+function prepareKeyboardNavigation() {
+
+  const selector = [
+    'button:not([disabled])',
+    '[data-go]',
+    '[data-word]',
+    '[data-category]',
+    '[data-pick]',
+    '[data-fav-word]',
+    '[data-del-word]',
+    '[data-del-cat]',
+    '[data-profile-type]',
+    '.emoji-pick'
+  ].join(',');
+
+  document.querySelectorAll(selector).forEach(element => {
+    if (element.matches('button, input, select, textarea')) return;
+
+    if (!element.hasAttribute('tabindex')) {
+      element.setAttribute('tabindex', '0');
+    }
+
+    if (!element.hasAttribute('role')) {
+      element.setAttribute('role', 'button');
+    }
+  });
+}
+
+
+function keyboardTargets() {
+
+  const selector = [
+    'button:not([disabled])',
+    '[data-go]',
+    '[data-word]',
+    '[data-category]',
+    '[data-pick]',
+    '[data-fav-word]',
+    '[data-del-word]',
+    '[data-del-cat]',
+    '[data-profile-type]',
+    '.emoji-pick',
+    'input:not([disabled])',
+    'select:not([disabled])',
+    'textarea:not([disabled])'
+  ].join(',');
+
+  return [...document.querySelectorAll(selector)].filter(element => {
+    const rect = element.getBoundingClientRect();
+    return rect.width > 0 && rect.height > 0 && !element.closest('[hidden]');
+  });
+}
+
+
+function moveKeyboardFocus(direction) {
+
+  const targets = keyboardTargets();
+  const current = document.activeElement;
+
+  if (!targets.length) return;
+
+  if (!targets.includes(current)) {
+    targets[0].focus();
+    return;
+  }
+
+  const index = targets.indexOf(current);
+
+  if (index === -1) {
+    targets[0].focus();
+    return;
+  }
+
+  const goingForward =
+    direction === 'ArrowRight' ||
+    direction === 'ArrowDown';
+
+  const nextIndex =
+    (
+      index +
+      (goingForward ? 1 : -1) +
+      targets.length
+    ) % targets.length;
+
+  targets[nextIndex].focus();
+
+}
+
+
+document.addEventListener('keydown', event => {
+
+  const active = document.activeElement;
+  const tag = active?.tagName;
+
+  const isArrow =
+    ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown']
+      .includes(event.key);
+
+  if (tag === 'INPUT' || tag === 'TEXTAREA') {
+
+    if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+      event.preventDefault();
+      moveKeyboardFocus(event.key);
+      return;
+    }
+
+    if (isArrow) {
+
+      const atStart =
+        active.selectionStart === 0 &&
+        active.selectionEnd === 0;
+
+      const atEnd =
+        active.selectionStart === active.value.length &&
+        active.selectionEnd === active.value.length;
+
+      const canLeave =
+        (event.key === 'ArrowLeft' && atStart) ||
+        (event.key === 'ArrowRight' && atEnd);
+
+      if (canLeave) {
+        event.preventDefault();
+        moveKeyboardFocus(event.key);
+      }
+
+      return;
+
+    }
+
+    return;
+
+  }
+
+  if (tag === 'SELECT') {
+
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+      event.preventDefault();
+      moveKeyboardFocus(event.key);
+    }
+
+    return;
+
+  }
+
+  if (event.defaultPrevented) return;
+
+  if (isArrow) {
+    event.preventDefault();
+    moveKeyboardFocus(event.key);
+    return;
+  }
+
+  if (
+    (event.key === 'Enter' || event.key === ' ') &&
+    document.activeElement?.matches('[role="button"]:not(button)')
+  ) {
+    event.preventDefault();
+    document.activeElement.click();
+  }
+});
+
+
+
+document.addEventListener(
+  'keydown',
+  event => {
+
+    if (event.defaultPrevented) {
+      return;
+    }
+
+    
+
+    if (
+      STATE.screen !== 'build'
+    ) {
+
+      return;
+
+    }
+
+   
+
+    const tag =
+      document.activeElement
+        ?.tagName;
+
+    if (
+      tag === 'INPUT' ||
+      tag === 'TEXTAREA' ||
+      tag === 'SELECT'
+    ) {
+
+      return;
+
+    }
+
+    if (
+      event.key === 'ArrowLeft'
+    ) {
+
+      event.preventDefault();
+
+      moveCarousel(-1);
+
+    }
+
+    else if (
+      event.key === 'ArrowRight'
+    ) {
+
+      event.preventDefault();
+
+      moveCarousel(1);
+
+    }
+
+    else if (
+      event.key === 'Enter' ||
+      event.key === ' '
+    ) {
+
+      const focused =
+        document.activeElement;
+
+   
+      if (
+        focused &&
+        focused.tagName === 'BUTTON'
+      ) {
+
+        return;
+
+      }
+
+      event.preventDefault();
+
+      confirmSelection();
+
+    }
+
+    else if (
+      event.key === 'Backspace'
+    ) {
+
+      event.preventDefault();
+
+      eraseLast();
+
+    }
+
+    else if (
+      event.key === 'Escape'
+    ) {
+
+      event.preventDefault();
+
+      clearPhrase();
+
+    }
+
+  }
+);
+
+
+loadData();
+
+</script>
+
+</body>
+</html>
