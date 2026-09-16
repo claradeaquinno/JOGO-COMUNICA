@@ -1429,6 +1429,8 @@ const WORD_ICON_SRC = {
   vou: 'assets/imagens/icone-vou.png'
 };
 let mascotAudio = null;
+let refreshVoiceTimer = null;
+let refreshVoiceCancelled = false;
 const menuAudios = {};
 
 let STATE = {
@@ -1576,6 +1578,8 @@ function playMascotVoiceAfterRefresh() {
 
   if (!mascotAudio) return;
 
+  refreshVoiceCancelled = false;
+  clearTimeout(refreshVoiceTimer);
   mascotAudio.pause();
   mascotAudio.currentTime = 0;
   mascotAudio.load();
@@ -1583,7 +1587,7 @@ function playMascotVoiceAfterRefresh() {
   let attempts = 0;
   let started = false;
   const tryToPlay = () => {
-    if (started) return;
+    if (started || refreshVoiceCancelled) return;
 
     attempts += 1;
     started = true;
@@ -1594,14 +1598,24 @@ function playMascotVoiceAfterRefresh() {
       playPromise.catch(() => {
         started = false;
         if (attempts < 4) {
-          setTimeout(tryToPlay, 250);
+          refreshVoiceTimer = setTimeout(tryToPlay, 250);
         }
       });
     }
   };
 
   mascotAudio.addEventListener('canplay', tryToPlay, { once: true });
-  setTimeout(tryToPlay, 150);
+  refreshVoiceTimer = setTimeout(tryToPlay, 150);
+}
+
+function cancelRefreshVoice() {
+  refreshVoiceCancelled = true;
+  clearTimeout(refreshVoiceTimer);
+  refreshVoiceTimer = null;
+  if (mascotAudio) {
+    mascotAudio.pause();
+    mascotAudio.currentTime = 0;
+  }
 }
 
 function playMenuVoice(target, fallbackText) {
@@ -1686,6 +1700,7 @@ function mascotHeroHtml() {
 
 /* ---------- Navegação ---------- */
 function go(screen, extra = {}) {
+  cancelRefreshVoice();
   STATE.screen = screen;
   Object.assign(STATE, extra);
   if (screen !== 'challenge') STATE.challenge = null;
@@ -2930,8 +2945,10 @@ function initSplash() {
   };
 
   const manualSplash =
+    localStorage.getItem('comunica:juniorEntryMode') === '1' ||
     sessionStorage.getItem('comunica:manualJuniorSplash') === '1';
 
+  localStorage.removeItem('comunica:juniorEntryMode');
   sessionStorage.removeItem('comunica:manualJuniorSplash');
 
   const shouldAutoStart =

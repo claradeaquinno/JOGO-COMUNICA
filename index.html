@@ -3293,10 +3293,7 @@ function render() {
 
 function applyLayoutClass() {
 
-  const layout =
-    STATE.data.profile.layout === 'infantil'
-      ? 'infantil'
-      : 'neutro';
+  const layout = 'neutro';
 
   document.body.classList.toggle(
     'layout-infantil',
@@ -5040,8 +5037,8 @@ function attachHandlers() {
 
         saveData();
 
-        sessionStorage.setItem(
-          'comunica:manualJuniorSplash',
+        localStorage.setItem(
+          'comunica:juniorEntryMode',
           '1'
         );
 
