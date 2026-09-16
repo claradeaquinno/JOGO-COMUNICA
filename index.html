@@ -2909,14 +2909,25 @@ function speak(text) {
   const voices =
     window.speechSynthesis.getVoices();
 
+  // Prioriza a voz tradicional do Google em português do Brasil.
+  // O nome pode variar ligeiramente entre Chrome, Android e desktop.
+  const normalizedVoices = voices.map(voice => ({
+    voice,
+    name: (voice.name || '').toLowerCase(),
+    lang: (voice.lang || '').toLowerCase()
+  }));
+
   const ptVoice =
-    voices.find(
-      voice =>
-        voice.lang &&
-        voice.lang
-          .toLowerCase()
-          .startsWith('pt')
-    );
+    normalizedVoices.find(({ name, lang }) =>
+      lang === 'pt-br' &&
+      name.includes('google') &&
+      (name.includes('portugu') || name.includes('brazil') || name.includes('brasil'))
+    )?.voice ||
+    normalizedVoices.find(({ name, lang }) =>
+      lang === 'pt-br' && name.includes('google')
+    )?.voice ||
+    normalizedVoices.find(({ lang }) => lang === 'pt-br')?.voice ||
+    normalizedVoices.find(({ lang }) => lang.startsWith('pt'))?.voice;
 
   if (ptVoice) {
 
