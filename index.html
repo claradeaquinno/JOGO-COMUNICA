@@ -8,7 +8,7 @@
 <title>Comunica</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Nunito:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 :root {
   --sky-top: #d4eafb;
@@ -1540,24 +1540,63 @@ body.layout-infantil .stars {
   margin-top: 18px;
   text-align: center;
   color: #ffffff;
-  font-family: var(--font-title);
-  font-size: 34px;
-  font-weight: 800;
+  font-family: 'Nunito', var(--font-title);
+  font-size: clamp(32px, 9vw, 42px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  text-shadow: 0 3px 14px rgba(0, 0, 0, 0.22);
+  opacity: 0;
+  animation: splashFadeUp 0.8s ease-out 0.1s both;
 }
 .splash-hint {
-  margin-top: 4px;
+  margin-top: 10px;
   text-align: center;
   color: #d4eafb;
-  font-size: 14px;
+  font-family: 'Nunito', var(--font);
+  font-size: 15px;
   font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.025em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  animation:
+    splashFadeUp 0.8s ease-out 0.28s both,
+    splashHintPulse 1.8s ease-in-out 1.2s infinite;
 }
 @keyframes splashLogoIn {
   from { opacity: 0; transform: scale(0.92); }
   to { opacity: 1; transform: scale(1); }
 }
+@keyframes splashFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes splashHintPulse {
+  0%, 100% {
+    transform: scale(1);
+    text-shadow: 0 0 0 rgba(212, 234, 251, 0);
+  }
+  50% {
+    transform: scale(1.06);
+    text-shadow: 0 0 12px rgba(212, 234, 251, 0.7);
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   .splash-logo { animation: none; }
   .splash-screen { transition: none; }
+  .splash-welcome,
+  .splash-hint {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
 }
 
 
@@ -1784,7 +1823,13 @@ body {
 }
 
 .onboard-subtitle {
-  color: #31576a !important;
+  color: rgba(255, 255, 255, 0.96) !important;
+  font-family: 'Plus Jakarta Sans', 'Inter', var(--font) !important;
+  font-size: clamp(12px, 2.2vw, 14px);
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.28) !important;
 }
 
 .onboard-panel {
