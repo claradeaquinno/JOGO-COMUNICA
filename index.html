@@ -1943,9 +1943,14 @@ textarea,
 
 
 
-/* Fundo ilustrado da interface adulta */
+/* Fundo exclusivo do perfil Sênior */
 html,
 body {
+  background-color: #1b364a !important;
+  background-image: none !important;
+}
+
+body.layout-neutro {
   background-color: #1b364a !important;
   background-image:
     linear-gradient(rgba(9, 43, 59, 0.58), rgba(9, 43, 59, 0.58)),
@@ -1956,9 +1961,49 @@ body {
   background-attachment: fixed;
 }
 
-#app,
-.app {
+body.layout-infantil {
+  background-color: #d4eafb !important;
+  background-image: none !important;
+}
+
+body.layout-neutro #app,
+body.layout-neutro .app,
+body.layout-infantil #app,
+body.layout-infantil .app {
   background: transparent !important;
+}
+
+
+
+/* Ícones das listas na cor principal do site */
+.home-screen .menu-btn,
+.home-screen .menu-btn.primary {
+  background: #ffffff !important;
+  color: #092b3b !important;
+  border-color: #c5d7df !important;
+}
+
+.home-screen .menu-image {
+  filter: brightness(0) saturate(100%) invert(17%) sepia(20%) saturate(1250%) hue-rotate(153deg) brightness(88%) contrast(96%);
+}
+
+.home-screen .menu-title,
+.home-screen .menu-sub,
+.home-screen .menu-arrow {
+  color: #092b3b !important;
+  text-shadow: none !important;
+}
+
+.home-screen .menu-btn:hover {
+  border-color: #092b3b !important;
+  box-shadow: 0 7px 16px rgba(9, 43, 59, 0.18) !important;
+}
+
+
+
+/* Ícones gerados do menu: arquivos PNG já estão em azul */
+.home-screen .menu-image {
+  filter: none !important;
 }
 
 </style>
@@ -3442,7 +3487,7 @@ function renderHome() {
         data-go="build"
       >
 
-        <img class="menu-image" src="img/comecar-comunicar.png" alt="" aria-hidden="true">
+        <img class="menu-image" src="img/comunica-icon-comecar.png" alt="" aria-hidden="true">
 
         <div class="menu-text">
 
@@ -3467,7 +3512,7 @@ function renderHome() {
         data-go="favorites"
       >
 
-        <img class="menu-image" src="img/favoritos.png" alt="" aria-hidden="true">
+        <img class="menu-image" src="img/comunica-icon-favoritos.png" alt="" aria-hidden="true">
 
         <div class="menu-text">
 
@@ -3492,7 +3537,7 @@ function renderHome() {
         data-go="categories"
       >
 
-        <img class="menu-image" src="img/categorias.png" alt="" aria-hidden="true">
+        <img class="menu-image" src="img/comunica-icon-categorias.png" alt="" aria-hidden="true">
 
         <div class="menu-text">
 
@@ -3517,7 +3562,7 @@ function renderHome() {
         data-go="personalize"
       >
 
-        <img class="menu-image" src="img/personalizar.png" alt="" aria-hidden="true">
+        <img class="menu-image" src="img/comunica-icon-personalizar.png" alt="" aria-hidden="true">
 
         <div class="menu-text">
 
@@ -3542,7 +3587,7 @@ function renderHome() {
         data-go="challenge"
       >
 
-        <img class="menu-image" src="img/desafio-comunicacao.png" alt="" aria-hidden="true">
+        <img class="menu-image" src="img/comunica-icon-desafio.png" alt="" aria-hidden="true">
 
         <div class="menu-text">
 
