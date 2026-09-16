@@ -746,6 +746,11 @@ function render() {
 
   app.innerHTML = html;
 
+  // Para a música assim que a tela Júnior/Sênior aparece.
+  if (STATE.screen === 'chooseProfile') {
+    pararMusica();
+  }
+
   attachHandlers();
 
 }
@@ -2997,42 +3002,39 @@ function attachHandlers() {
 
 }
 
-loadData();
-
-/* ---------- Música somente no primeiro clique do cadastro ---------- */
-function iniciarMusicaNoCadastro() {
+/* ---------- Música da abertura: toca uma única vez ---------- */
+function iniciarMusicaDaAbertura() {
   const musica = document.getElementById('appMusic');
-
   if (!musica) {
-    console.error('Áudio #appMusic não encontrado no HTML.');
+    console.warn('Elemento #appMusic não encontrado no HTML.');
     return;
   }
 
-  musica.loop = true;
+  musica.autoplay = true;
+  musica.loop = false;
+  musica.playsInline = true;
   musica.volume = 0.35;
 
-  musica.play()
-    .then(() => {
-      console.log('Música iniciada no cadastro.');
-    })
-    .catch((erro) => {
-      console.error('Não foi possível iniciar a música:', erro);
+  const tocar = () => {
+    musica.play().catch((erro) => {
+      console.warn('O navegador bloqueou o autoplay:', erro);
     });
-}
+  };
 
-function configurarMusicaNoCadastro() {
-  const botaoCadastro = document.getElementById('saveNameBtn');
-
-  if (!botaoCadastro) {
-    console.warn('Botão #saveNameBtn não encontrado.');
-    return;
+  if (musica.readyState >= 2) {
+    tocar();
+  } else {
+    musica.addEventListener('canplay', tocar, { once: true });
   }
-
-  botaoCadastro.addEventListener(
-    'click',
-    iniciarMusicaNoCadastro,
-    { once: true }
-  );
 }
 
-configurarMusicaNoCadastro();
+function pararMusica() {
+  const musica = document.getElementById('appMusic');
+  if (!musica) return;
+
+  musica.pause();
+  musica.currentTime = 0;
+}
+
+loadData();
+iniciarMusicaDaAbertura();

@@ -1608,11 +1608,11 @@ body.bg-outras {
 <div id="app"></div>
 <div id="toast" class="toast"></div>
 
-<audio id="appMusic" loop preload="auto" aria-label="Música do aplicativo">
+<audio id="appMusic" autoplay preload="auto" playsinline>
   <source src="assets/audio/musica-app.mp3" type="audio/mpeg">
 </audio>
-
 <script>
+  
 
 
 const DEFAULT_CATEGORIES = [
@@ -2777,6 +2777,10 @@ function render() {
   }
 
   app.innerHTML = html;
+
+  if (STATE.screen === 'chooseProfile') {
+    pararMusica();
+  }
 
   renderLineIcons();
 
@@ -5726,13 +5730,8 @@ document.addEventListener(
 function initSeniorSplash() {
   const splash = document.getElementById('splashScreen');
   const app = document.getElementById('app');
-  const appMusic = document.getElementById('appMusic');
 
   if (!splash || !app) return;
-
-  if (appMusic) {
-    appMusic.volume = 0.35;
-  }
 
   let encerrado = false;
   app.setAttribute('aria-hidden', 'true');
@@ -5740,13 +5739,6 @@ function initSeniorSplash() {
   const entrarNoAplicativo = () => {
     if (encerrado) return;
     encerrado = true;
-
-    if (appMusic) {
-      appMusic.play().catch(() => {
-        console.warn('O navegador bloqueou a reprodução automática da música.');
-      });
-    }
-
     splash.classList.add('splash-hidden');
     app.removeAttribute('aria-hidden');
 
@@ -5761,7 +5753,36 @@ function initSeniorSplash() {
   setTimeout(entrarNoAplicativo, 2000);
 }
 
+function iniciarMusicaUmaVez() {
+  const musica = document.getElementById('appMusic');
+  if (!musica) return;
+
+  musica.removeAttribute('loop');
+  musica.loop = false;
+  musica.autoplay = true;
+  musica.playsInline = true;
+  musica.volume = 0.35;
+  musica.onended = () => {
+    musica.pause();
+  };
+
+  musica.play().catch((erro) => {
+    console.warn('O navegador bloqueou o autoplay:', erro);
+  });
+}
+
+function pararMusica() {
+  const musica = document.getElementById('appMusic');
+  if (!musica) return;
+
+  musica.removeAttribute('loop');
+  musica.loop = false;
+  musica.pause();
+  musica.currentTime = 0;
+}
+
 loadData();
+iniciarMusicaUmaVez();
 initSeniorSplash();
 
 </script>
