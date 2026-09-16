@@ -1496,73 +1496,47 @@ body.layout-infantil .stars {
   margin-top: 12px;
 }
 
-/* ---------- Tela de abertura do perfil Sênior ---------- */
+/* ---------- Tela de abertura do aplicativo ---------- */
 .splash-screen {
   position: fixed;
   inset: 0;
-  z-index: 500;
-  background: linear-gradient(180deg, #123b4d 0%, #1b364a 100%);
+  z-index: 9999;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 28px;
-  padding: 24px;
+  background: #ffffff;
+  opacity: 1;
+  transition: opacity 0.7s ease;
   cursor: pointer;
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  touch-action: manipulation;
 }
 .splash-screen.splash-hidden {
   opacity: 0;
-  transform: translateY(-6%);
   pointer-events: none;
 }
-.splash-welcome {
-  color: #ffffff;
-  font-family: var(--font-title);
-  font-size: clamp(28px, 7vw, 46px);
-  font-weight: 800;
-  text-align: center;
-}
-.splash-mascot-wrap {
-  width: clamp(160px, 42vw, 260px);
-  height: clamp(160px, 42vw, 260px);
-  opacity: 0;
-  transform: scale(0.15);
-}
-.splash-mascot-wrap.pop-in {
-  animation: splashPop 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
-@keyframes splashPop {
-  0% { opacity: 0; transform: scale(0.15); }
-  60% { opacity: 1; transform: scale(1.08); }
-  80% { transform: scale(0.95); }
-  100% { opacity: 1; transform: scale(1); }
-}
-.splash-mascot-img {
-  width: 100%;
-  height: 100%;
+.splash-logo {
+  width: min(72vw, 300px);
+  height: auto;
   object-fit: contain;
-  filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.35));
+  animation: splashLogoIn 0.9s ease-out both;
 }
-.splash-hint {
-  opacity: 0;
-  color: #ffffff;
-  font-weight: 800;
-  font-size: clamp(15px, 3.8vw, 20px);
-  text-align: center;
-  transition: opacity 0.4s ease;
+.splash-enter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  touch-action: manipulation;
 }
-.splash-hint.show {
-  opacity: 1;
-  animation: splashBlink 1.6s ease-in-out infinite;
-}
-@keyframes splashBlink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.35; }
+@keyframes splashLogoIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .splash-mascot-wrap.pop-in { animation: none; opacity: 1; transform: scale(1); }
-  .splash-hint.show { animation: none; }
+  .splash-logo { animation: none; }
+  .splash-screen { transition: none; }
 }
 
 
@@ -1623,13 +1597,20 @@ body.bg-outras {
 <body>
 
 <div id="splashScreen" class="splash-screen" role="dialog" aria-modal="true"
-  aria-label="Tela de abertura do perfil Sênior" tabindex="-1" style="display:none;">
-  <div class="splash-welcome">Seja bem-vindo!</div>
-  <div class="splash-hint" id="splashHint">Toque para continuar</div>
+  aria-label="Tela de abertura do Comunica"
+  onclick="this.classList.add('splash-hidden'); setTimeout(() => this.style.display='none', 700);"
+  onpointerdown="this.classList.add('splash-hidden'); setTimeout(() => this.style.display='none', 700);">
+  <button class="splash-enter" type="button" aria-label="Entrar no Comunica">
+    <img class="splash-logo" src="img/comunica-tela.png" alt="ComuniCA">
+  </button>
 </div>
 
 <div id="app"></div>
 <div id="toast" class="toast"></div>
+
+<audio id="appMusic" loop preload="auto" aria-label="Música do aplicativo">
+  <source src="assets/audio/musica-app.mp3" type="audio/mpeg">
+</audio>
 
 <script>
 
@@ -4538,7 +4519,6 @@ function attachHandlers() {
         saveData();
 
         go('home');
-        initSeniorSplash();
 
       }
     );
@@ -5745,59 +5725,44 @@ document.addEventListener(
 
 function initSeniorSplash() {
   const splash = document.getElementById('splashScreen');
-  const hint = document.getElementById('splashHint');
   const app = document.getElementById('app');
+  const appMusic = document.getElementById('appMusic');
 
-  if (!splash || !hint || !app) return;
+  if (!splash || !app) return;
 
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let started = false;
-
-  splash.style.display = 'flex';
-  splash.classList.remove('splash-hidden');
-  hint.classList.remove('show');
-  app.setAttribute('aria-hidden', 'true');
-  splash.focus();
-
-  const showHint = () => hint.classList.add('show');
-  if (reduceMotion) {
-    showHint();
-  } else {
-    setTimeout(showHint, 300);
+  if (appMusic) {
+    appMusic.volume = 0.35;
   }
 
-  const begin = () => {
-    if (started) return;
-    started = true;
-    document.removeEventListener('keydown', onKeydown);
-    splash.removeEventListener('click', begin);
-    hint.classList.remove('show');
-    app.removeAttribute('aria-hidden');
+  let encerrado = false;
+  app.setAttribute('aria-hidden', 'true');
 
-    if (reduceMotion) {
-      splash.style.display = 'none';
-      return;
+  const entrarNoAplicativo = () => {
+    if (encerrado) return;
+    encerrado = true;
+
+    if (appMusic) {
+      appMusic.play().catch(() => {
+        console.warn('O navegador bloqueou a reprodução automática da música.');
+      });
     }
 
     splash.classList.add('splash-hidden');
+    app.removeAttribute('aria-hidden');
+
     setTimeout(() => {
       splash.style.display = 'none';
-    }, 620);
+    }, 700);
   };
 
-  const onKeydown = event => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      begin();
-    }
-  };
-
-  document.addEventListener('keydown', onKeydown);
-  splash.addEventListener('click', begin);
+  splash.addEventListener('pointerdown', entrarNoAplicativo, { once: true });
+  splash.addEventListener('click', entrarNoAplicativo, { once: true });
+  splash.addEventListener('touchend', entrarNoAplicativo, { once: true });
+  setTimeout(entrarNoAplicativo, 2000);
 }
 
 loadData();
-loadData();
+initSeniorSplash();
 
 </script>
 

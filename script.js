@@ -2997,7 +2997,42 @@ function attachHandlers() {
 
 }
 
-
-
-
 loadData();
+
+/* ---------- Música somente no primeiro clique do cadastro ---------- */
+function iniciarMusicaNoCadastro() {
+  const musica = document.getElementById('appMusic');
+
+  if (!musica) {
+    console.error('Áudio #appMusic não encontrado no HTML.');
+    return;
+  }
+
+  musica.loop = true;
+  musica.volume = 0.35;
+
+  musica.play()
+    .then(() => {
+      console.log('Música iniciada no cadastro.');
+    })
+    .catch((erro) => {
+      console.error('Não foi possível iniciar a música:', erro);
+    });
+}
+
+function configurarMusicaNoCadastro() {
+  const botaoCadastro = document.getElementById('saveNameBtn');
+
+  if (!botaoCadastro) {
+    console.warn('Botão #saveNameBtn não encontrado.');
+    return;
+  }
+
+  botaoCadastro.addEventListener(
+    'click',
+    iniciarMusicaNoCadastro,
+    { once: true }
+  );
+}
+
+configurarMusicaNoCadastro();
