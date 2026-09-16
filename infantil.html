@@ -1277,7 +1277,8 @@ button:focus-visible,
 <div id="app" role="main" aria-live="off" aria-hidden="true"></div>
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 <div id="mascotTip" class="mascot-tip-toast" role="status" aria-live="polite"></div>
-<audio id="mascotAudio" preload="auto" src="assets/audio/fala-guri.mp3"></audio>
+<audio id="mascotAudio" preload="auto" playsinline src="assets/audio/fala-guri.mp3"></audio>
+<audio id="appMusic" preload="auto" playsinline src="assets/audio/musica-app.mp3"></audio>
 
 <button class="mascot-float" id="mascotFloatBtn" type="button" aria-label="Chamar o mascote Guri para uma dica"></button>
 
@@ -1566,6 +1567,41 @@ function playMascotVoice() {
   if (playPromise && typeof playPromise.catch === 'function') {
     playPromise.catch(() => {});
   }
+}
+
+function playMascotVoiceAfterRefresh() {
+  if (!mascotAudio) {
+    mascotAudio = document.getElementById('mascotAudio');
+  }
+
+  if (!mascotAudio) return;
+
+  mascotAudio.pause();
+  mascotAudio.currentTime = 0;
+  mascotAudio.load();
+
+  let attempts = 0;
+  let started = false;
+  const tryToPlay = () => {
+    if (started) return;
+
+    attempts += 1;
+    started = true;
+    mascotAudio.currentTime = 0;
+    const playPromise = mascotAudio.play();
+
+    if (playPromise && typeof playPromise.catch === 'function') {
+      playPromise.catch(() => {
+        started = false;
+        if (attempts < 4) {
+          setTimeout(tryToPlay, 250);
+        }
+      });
+    }
+  };
+
+  mascotAudio.addEventListener('canplay', tryToPlay, { once: true });
+  setTimeout(tryToPlay, 150);
 }
 
 function playMenuVoice(target, fallbackText) {
@@ -2256,8 +2292,8 @@ function renderProfile() {
 
       <div class="form-block">
         <h3>Conta</h3>
-        <p style="margin:0 0 12px;font-size:12px;font-weight:600;color:var(--white);opacity:.85;">
-          Volte para o menu de escolha de perfil ou saia da conta.
+        <p style="margin:0 0 12px;font-size:12px;font-weight:600;color:#173a5e !important;opacity:.9;">
+          Volte para o menu e escolha entre os perfis Sênior e Júnior, ou saia da conta.
         </p>
         <button class="submit-btn" id="switchProfileBtn">
           Voltar para o menu
@@ -2605,6 +2641,8 @@ function attachHandlers() {
       STATE.data.profile.name = '';
       STATE.data.profile.layout = 'neutro';
       localStorage.removeItem('comunica:goToProfileSelection');
+      localStorage.setItem('comunica:logoutLoading', '1');
+      localStorage.setItem('comunica:onboardingStep', 'login');
       saveData();
       showToast('Você saiu da conta');
       window.location.href = 'index.html';
@@ -2730,7 +2768,7 @@ document.addEventListener('keydown', event => {
 /* =========================================================
    Tela de abertura (splash) com o mascote Guri
    ========================================================= */
-function typeWelcomeBubble() {
+function typeWelcomeBubble(playVoice = true) {
   const el = document.getElementById('mascotTip');
   if (!el) return;
   const text = `Oi! Eu sou o ${MASCOT_NAME}. Vamos comunicar juntos?`;
@@ -2744,7 +2782,9 @@ function typeWelcomeBubble() {
   if (reduceMotion) {
     el.textContent = text;
     STATE.tipTimer = setTimeout(() => el.classList.remove('show'), 4200);
-    if (STATE.data.settings.mascotVoiceEnabled) playMascotVoice(text);
+    if (playVoice && STATE.data.settings.mascotVoiceEnabled) {
+      playMascotVoice();
+    }
     return;
   }
 
@@ -2759,7 +2799,9 @@ function typeWelcomeBubble() {
     }
   }, speed);
 
-  if (STATE.data.settings.mascotVoiceEnabled) playMascotVoice(text);
+  if (playVoice && STATE.data.settings.mascotVoiceEnabled) {
+    playMascotVoice();
+  }
 }
 
 function initSplash() {
@@ -2793,6 +2835,7 @@ function initSplash() {
   }
 
   let started = false;
+  let automaticStart = false;
 
   function beginApp() {
     if (started) return;
@@ -2801,6 +2844,23 @@ function initSplash() {
     document.removeEventListener('keydown', onKeydown);
     splash.removeEventListener('click', beginApp);
     hint.classList.remove('show');
+
+    if (automaticStart) {
+      splash.classList.add('splash-hidden');
+      splash.style.display = 'none';
+      app.removeAttribute('aria-hidden');
+      floatBtn.style.opacity = '1';
+      floatBtn.style.pointerEvents = 'auto';
+      const audio = document.getElementById('mascotAudio');
+      if (audio) {
+        audio.preload = 'auto';
+      }
+      typeWelcomeBubble(false);
+      if (STATE.data.settings.mascotVoiceEnabled) {
+        setTimeout(playMascotVoiceAfterRefresh, 50);
+      }
+      return;
+    }
 
     if (reduceMotion) {
       splash.style.display = 'none';
@@ -2851,6 +2911,49 @@ function initSplash() {
 
   document.addEventListener('keydown', onKeydown);
   splash.addEventListener('click', beginApp);
+
+  window.showLoadingSplash = () => {
+    started = true;
+    splash.style.display = 'flex';
+    splash.classList.remove('splash-hidden');
+    app.setAttribute('aria-hidden', 'true');
+    mascotWrap.classList.remove('to-corner');
+    mascotWrap.style.opacity = '1';
+
+    setTimeout(() => {
+      splash.classList.add('splash-hidden');
+      app.removeAttribute('aria-hidden');
+      setTimeout(() => {
+        splash.style.display = 'none';
+      }, 600);
+    }, 300);
+  };
+
+  const manualSplash =
+    sessionStorage.getItem('comunica:manualJuniorSplash') === '1';
+
+  sessionStorage.removeItem('comunica:manualJuniorSplash');
+
+  const shouldAutoStart =
+    !manualSplash &&
+    (STATE.data.profile.onboarded ||
+      localStorage.getItem('comunica:goToProfileSelection') === '1');
+
+  if (shouldAutoStart) {
+    automaticStart = true;
+    setTimeout(beginApp, 300);
+  }
+}
+
+function iniciarMusicaDoLogout() {
+  const musica = document.getElementById('appMusic');
+  if (!musica) return;
+
+  musica.currentTime = 0;
+  musica.volume = 0.35;
+  musica.play().catch((erro) => {
+    console.warn('O navegador bloqueou o autoplay:', erro);
+  });
 }
 
 loadData();

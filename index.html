@@ -1386,13 +1386,13 @@ body.layout-infantil .stars {
 .profile-choice-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 8px;
   margin-bottom: 14px;
 }
 
 .profile-choice-card {
   border-radius: 16px;
-  padding: 14px 12px;
+  padding: 10px;
   border: 2px solid transparent;
   cursor: pointer;
   text-align: left;
@@ -1440,20 +1440,20 @@ body.layout-infantil .stars {
 
 .profile-choice-card .title {
   font-family: var(--font-title);
-  font-size: 14.5px;
+  font-size: 14px;
   font-weight: 800;
   color: var(--navy);
-  margin-bottom: 6px;
+  margin-bottom: 4px;
   line-height: 1.15;
 }
 
 .profile-choice-card .desc {
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 600;
   color: var(--navy);
   opacity: 0.85;
   line-height: 1.3;
-  margin-bottom: 10px;
+  margin-bottom: 7px;
 }
 
 .profile-choice-card .foot {
@@ -1510,9 +1510,15 @@ body.layout-infantil .stars {
   cursor: pointer;
   touch-action: manipulation;
 }
+.senior-splash-screen {
+  flex-direction: column;
+  gap: 0;
+  background: #1b364a;
+}
 .splash-screen.splash-hidden {
   opacity: 0;
   pointer-events: none;
+  display: none;
 }
 .splash-logo {
   width: min(72vw, 300px);
@@ -1529,6 +1535,21 @@ body.layout-infantil .stars {
   background: transparent;
   cursor: pointer;
   touch-action: manipulation;
+}
+.splash-welcome {
+  margin-top: 18px;
+  text-align: center;
+  color: #ffffff;
+  font-family: var(--font-title);
+  font-size: 34px;
+  font-weight: 800;
+}
+.splash-hint {
+  margin-top: 4px;
+  text-align: center;
+  color: #d4eafb;
+  font-size: 14px;
+  font-weight: 700;
 }
 @keyframes splashLogoIn {
   from { opacity: 0; transform: scale(0.92); }
@@ -1966,6 +1987,27 @@ body.layout-infantil {
   background-image: none !important;
 }
 
+body.profile-selection {
+  background-color: #1b364a !important;
+  background-image: none !important;
+}
+
+body.profile-selection #app,
+body.layout-neutro #app {
+  width: min(100% - 32px, 640px) !important;
+  min-width: 0 !important;
+  margin: 0 auto;
+}
+
+body.profile-selection .onboard-wrap {
+  width: min(100%, 580px);
+  margin: 0 auto;
+}
+
+body.profile-selection .onboard-panel {
+  padding: 18px 14px;
+}
+
 body.layout-neutro #app,
 body.layout-neutro .app,
 body.layout-infantil #app,
@@ -2018,6 +2060,12 @@ body.layout-infantil .app {
   <button class="splash-enter" type="button" aria-label="Entrar no Comunica">
     <img class="splash-logo" src="img/comunica-tela.png" alt="ComuniCA">
   </button>
+</div>
+
+<div id="seniorSplashScreen" class="splash-screen senior-splash-screen splash-hidden"
+  role="dialog" aria-modal="true" aria-label="Boas-vindas ao perfil Senior">
+  <div class="splash-welcome">Seja bem-vindo</div>
+  <div class="splash-hint">Toque para continuar</div>
 </div>
 
 <div id="app"></div>
@@ -2720,13 +2768,24 @@ function loadData() {
       'comunica:goToProfileSelection'
     ) === '1';
 
-  if (shouldGoToProfileSelection) {
+  const isLogoutLoading =
+    localStorage.getItem('comunica:logoutLoading') === '1';
+
+  localStorage.removeItem('comunica:logoutLoading');
+
+  window.autoDismissSplash =
+    isLogoutLoading ||
+    shouldGoToProfileSelection ||
+    STATE.data.profile.onboarded;
+
+  window.playLogoutMusic = isLogoutLoading;
+
+  if (isLogoutLoading) {
+    STATE.screen = 'login';
+
+  } else if (shouldGoToProfileSelection) {
 
     STATE.screen = 'chooseProfile';
-
-    localStorage.removeItem(
-      'comunica:goToProfileSelection'
-    );
 
   } else if (!STATE.data.profile.onboarded) {
 
@@ -3202,7 +3261,9 @@ function render() {
 
 
   if (
-    STATE.screen === 'home'
+    STATE.screen === 'home' ||
+    STATE.screen === 'login' ||
+    STATE.screen === 'chooseProfile'
   ) {
 
     document.body.classList.remove(
@@ -3218,6 +3279,11 @@ function render() {
   }
 
   applyLayoutClass();
+
+  document.body.classList.toggle(
+    'profile-selection',
+    STATE.screen === 'chooseProfile'
+  );
 
   attachHandlers();
 
@@ -4931,11 +4997,19 @@ function attachHandlers() {
       'click',
       () => {
 
+        localStorage.removeItem(
+          'comunica:goToProfileSelection'
+        );
+
         STATE.data.profile.layout = 'neutro';
 
         STATE.data.profile.onboarded = true;
 
         saveData();
+
+        if (typeof window.showSeniorSplash === 'function') {
+          window.showSeniorSplash();
+        }
 
         go('home');
 
@@ -4956,11 +5030,20 @@ function attachHandlers() {
       'click',
       () => {
 
+        localStorage.removeItem(
+          'comunica:goToProfileSelection'
+        );
+
         STATE.data.profile.layout = 'infantil';
 
         STATE.data.profile.onboarded = true;
 
         saveData();
+
+        sessionStorage.setItem(
+          'comunica:manualJuniorSplash',
+          '1'
+        );
 
          window.location.href = 'infantil.html';
 
@@ -5774,6 +5857,11 @@ function attachHandlers() {
       'click',
       () => {
 
+        localStorage.setItem(
+          'comunica:goToProfileSelection',
+          '1'
+        );
+
         STATE.screen = 'chooseProfile';
         render();
 
@@ -5798,11 +5886,20 @@ function attachHandlers() {
 
         STATE.data.profile.name = '';
 
+        localStorage.setItem(
+          'comunica:logoutLoading',
+          '1'
+        );
+
         saveData();
 
         showToast(
           'Você saiu da conta'
         );
+
+        if (typeof window.showLogoutSplash === 'function') {
+          window.showLogoutSplash();
+        }
 
         go('login');
 
@@ -6143,13 +6240,12 @@ document.addEventListener(
 );
 
 function initSeniorSplash() {
-  const splash = document.getElementById('splashScreen');
+  const splash = document.getElementById('seniorSplashScreen');
   const app = document.getElementById('app');
 
   if (!splash || !app) return;
 
-  let encerrado = false;
-  app.setAttribute('aria-hidden', 'true');
+  let encerrado = true;
 
   const entrarNoAplicativo = () => {
     if (encerrado) return;
@@ -6162,28 +6258,109 @@ function initSeniorSplash() {
     }, 700);
   };
 
-  splash.addEventListener('pointerdown', entrarNoAplicativo, { once: true });
-  splash.addEventListener('click', entrarNoAplicativo, { once: true });
-  splash.addEventListener('touchend', entrarNoAplicativo, { once: true });
-  setTimeout(entrarNoAplicativo, 2000);
+  window.showSeniorSplash = () => {
+    encerrado = false;
+    splash.style.display = 'flex';
+    splash.classList.remove('splash-hidden');
+    app.setAttribute('aria-hidden', 'true');
+    splash.addEventListener('pointerdown', entrarNoAplicativo, { once: true });
+    splash.addEventListener('click', entrarNoAplicativo, { once: true });
+    splash.addEventListener('touchend', entrarNoAplicativo, { once: true });
+  };
 }
+
+function initInitialSplash() {
+  const splash = document.getElementById('splashScreen');
+
+  if (!splash) return;
+
+  window.showLogoutSplash = () => {
+    const app = document.getElementById('app');
+    const musica = document.getElementById('appMusic');
+
+    splash.style.display = 'flex';
+    splash.classList.remove('splash-hidden');
+
+    if (app) {
+      app.setAttribute('aria-hidden', 'true');
+    }
+
+    if (musica) {
+      musica.currentTime = 0;
+      musica.volume = 0.35;
+      musica.play().catch((erro) => {
+        console.warn('O navegador bloqueou o autoplay:', erro);
+      });
+    }
+
+    setTimeout(() => {
+      splash.classList.add('splash-hidden');
+
+      if (app) {
+        app.removeAttribute('aria-hidden');
+      }
+
+      setTimeout(() => {
+        splash.style.display = 'none';
+      }, 700);
+    }, 300);
+  };
+
+  if (!window.autoDismissSplash) return;
+
+  setTimeout(() => {
+    splash.classList.add('splash-hidden');
+    setTimeout(() => {
+      splash.style.display = 'none';
+    }, 700);
+  }, 300);
+}
+
+const FIRST_OPEN_MUSIC_KEY = 'comunica:firstOpenMusicPlayed:v4';
 
 function iniciarMusicaUmaVez() {
   const musica = document.getElementById('appMusic');
   if (!musica) return;
+
+  if (window.playLogoutMusic) {
+    musica.removeAttribute('loop');
+    musica.loop = false;
+    musica.autoplay = true;
+    musica.playsInline = true;
+    musica.volume = 0.35;
+    musica.play().catch((erro) => {
+      console.warn('O navegador bloqueou o autoplay:', erro);
+    });
+    return;
+  }
+
+  if (window.autoDismissSplash) {
+    musica.pause();
+    return;
+  }
+
+  if (localStorage.getItem(FIRST_OPEN_MUSIC_KEY) === '1') {
+    musica.pause();
+    return;
+  }
 
   musica.removeAttribute('loop');
   musica.loop = false;
   musica.autoplay = true;
   musica.playsInline = true;
   musica.volume = 0.35;
-  musica.onended = () => {
-    musica.pause();
-  };
+  musica.addEventListener('timeupdate', () => {
+    if (musica.currentTime > 0.1) {
+      localStorage.setItem(FIRST_OPEN_MUSIC_KEY, '1');
+    }
+  }, { once: true });
 
-  musica.play().catch((erro) => {
-    console.warn('O navegador bloqueou o autoplay:', erro);
-  });
+  const tocarMusica = () => musica.play()
+    .catch((erro) => {
+      console.warn('O navegador bloqueou o autoplay:', erro);
+    });
+
+  tocarMusica();
 }
 
 function pararMusica() {
@@ -6197,8 +6374,9 @@ function pararMusica() {
 }
 
 loadData();
-iniciarMusicaUmaVez();
 initSeniorSplash();
+initInitialSplash();
+iniciarMusicaUmaVez();
 
 </script>
 
