@@ -1496,6 +1496,75 @@ body.layout-infantil .stars {
   margin-top: 12px;
 }
 
+/* ---------- Tela de abertura do perfil Sênior ---------- */
+.splash-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: linear-gradient(180deg, #123b4d 0%, #1b364a 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  padding: 24px;
+  cursor: pointer;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.splash-screen.splash-hidden {
+  opacity: 0;
+  transform: translateY(-6%);
+  pointer-events: none;
+}
+.splash-welcome {
+  color: #ffffff;
+  font-family: var(--font-title);
+  font-size: clamp(28px, 7vw, 46px);
+  font-weight: 800;
+  text-align: center;
+}
+.splash-mascot-wrap {
+  width: clamp(160px, 42vw, 260px);
+  height: clamp(160px, 42vw, 260px);
+  opacity: 0;
+  transform: scale(0.15);
+}
+.splash-mascot-wrap.pop-in {
+  animation: splashPop 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+@keyframes splashPop {
+  0% { opacity: 0; transform: scale(0.15); }
+  60% { opacity: 1; transform: scale(1.08); }
+  80% { transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.splash-mascot-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.35));
+}
+.splash-hint {
+  opacity: 0;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: clamp(15px, 3.8vw, 20px);
+  text-align: center;
+  transition: opacity 0.4s ease;
+}
+.splash-hint.show {
+  opacity: 1;
+  animation: splashBlink 1.6s ease-in-out infinite;
+}
+@keyframes splashBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .splash-mascot-wrap.pop-in { animation: none; opacity: 1; transform: scale(1); }
+  .splash-hint.show { animation: none; }
+}
+
 
 /* Fundo liso solicitado: sem imagem/desenho. */
 html,
@@ -1552,6 +1621,12 @@ body.bg-outras {
 </head>
 
 <body>
+
+<div id="splashScreen" class="splash-screen" role="dialog" aria-modal="true"
+  aria-label="Tela de abertura do perfil Sênior" tabindex="-1" style="display:none;">
+  <div class="splash-welcome">Seja bem-vindo!</div>
+  <div class="splash-hint" id="splashHint">Toque para continuar</div>
+</div>
 
 <div id="app"></div>
 <div id="toast" class="toast"></div>
@@ -2244,7 +2319,20 @@ function loadData() {
 
   }
 
-  if (!STATE.data.profile.onboarded) {
+  const shouldGoToProfileSelection =
+    localStorage.getItem(
+      'comunica:goToProfileSelection'
+    ) === '1';
+
+  if (shouldGoToProfileSelection) {
+
+    STATE.screen = 'chooseProfile';
+
+    localStorage.removeItem(
+      'comunica:goToProfileSelection'
+    );
+
+  } else if (!STATE.data.profile.onboarded) {
 
     STATE.screen = 'login';
 
@@ -4284,37 +4372,25 @@ function renderProfile() {
       <div class="form-block">
 
         <h3>
-          Aparência
-        </h3>
-
-        <p style="margin:0 0 12px;font-size:12px;font-weight:600;color:var(--white);opacity:.85;">
-          Troque para o perfil Júnior a qualquer momento.
-        </p>
-
-        <button
-          class="submit-btn"
-          id="switchJuniorBtn"
-        >
-          Trocar para perfil Júnior
-        </button>
-
-      </div>
-
-      <div class="form-block">
-
-        <h3>
           Conta
         </h3>
 
         <p style="margin:0 0 12px;font-size:12px;font-weight:600;color:var(--white);opacity:.85;">
-          Ao sair, você precisará entrar novamente com
-          seu nome na próxima vez que abrir o app.
+          Volte para o menu e escolha entre os perfis Sênior e Júnior,
+          ou saia da conta.
         </p>
 
         <button
           class="submit-btn"
+          id="switchProfileBtn"
+        >
+          Voltar para o menu
+        </button>
+
+        <button
+          class="submit-btn"
           id="logoutBtn"
-          style="background:#c0392b;"
+          style="background:#c0392b; margin-top:12px;"
         >
           Sair desta conta
         </button>
@@ -4462,6 +4538,7 @@ function attachHandlers() {
         saveData();
 
         go('home');
+        initSeniorSplash();
 
       }
     );
@@ -5287,26 +5364,19 @@ function attachHandlers() {
   }
 
 
-  const switchJuniorBtn =
+  const switchProfileBtn =
     document.getElementById(
-      'switchJuniorBtn'
+      'switchProfileBtn'
     );
 
-  if (switchJuniorBtn) {
+  if (switchProfileBtn) {
 
-    switchJuniorBtn.addEventListener(
+    switchProfileBtn.addEventListener(
       'click',
       () => {
 
-        STATE.data.profile.layout = 'infantil';
-
-        saveData();
-
-        showToast(
-          'Perfil Júnior ativado'
-        );
-
-         window.location.href = 'infantil.html';
+        STATE.screen = 'chooseProfile';
+        render();
 
       }
     );
@@ -5673,7 +5743,60 @@ document.addEventListener(
   }
 );
 
+function initSeniorSplash() {
+  const splash = document.getElementById('splashScreen');
+  const hint = document.getElementById('splashHint');
+  const app = document.getElementById('app');
 
+  if (!splash || !hint || !app) return;
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let started = false;
+
+  splash.style.display = 'flex';
+  splash.classList.remove('splash-hidden');
+  hint.classList.remove('show');
+  app.setAttribute('aria-hidden', 'true');
+  splash.focus();
+
+  const showHint = () => hint.classList.add('show');
+  if (reduceMotion) {
+    showHint();
+  } else {
+    setTimeout(showHint, 300);
+  }
+
+  const begin = () => {
+    if (started) return;
+    started = true;
+    document.removeEventListener('keydown', onKeydown);
+    splash.removeEventListener('click', begin);
+    hint.classList.remove('show');
+    app.removeAttribute('aria-hidden');
+
+    if (reduceMotion) {
+      splash.style.display = 'none';
+      return;
+    }
+
+    splash.classList.add('splash-hidden');
+    setTimeout(() => {
+      splash.style.display = 'none';
+    }, 620);
+  };
+
+  const onKeydown = event => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      begin();
+    }
+  };
+
+  document.addEventListener('keydown', onKeydown);
+  splash.addEventListener('click', begin);
+}
+
+loadData();
 loadData();
 
 </script>
