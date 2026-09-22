@@ -663,6 +663,261 @@ button:focus-visible,
   min-height: 190px;
 }
 
+.input-mode-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  width: min(100%, 720px);
+  margin: 18px auto 20px;
+}
+
+.input-mode-tab {
+  min-height: 76px;
+  border: 3px solid rgba(255, 255, 255, 0.8);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--navy);
+  font: 800 clamp(17px, 3vw, 24px) var(--font);
+  cursor: pointer;
+  transition: transform 0.1s ease, background 0.15s ease, border-color 0.15s ease;
+}
+
+.input-mode-tab:hover { transform: translateY(-1px); }
+.input-mode-tab:active { transform: scale(0.98); }
+.input-mode-tab.active {
+  background: var(--yellow);
+  border-color: var(--yellow-dark);
+  box-shadow: 0 8px 18px rgba(23, 58, 94, 0.22);
+}
+
+.input-mode-placeholder {
+  min-height: 190px;
+  width: 100%;
+  margin-bottom: 18px;
+  border: 2px dashed rgba(255, 255, 255, 0.75);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.22);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.input-mode-placeholder-icon {
+  font-size: 56px;
+  line-height: 1;
+  opacity: 0.9;
+}
+
+.input-mode-placeholder strong { font-size: 17px; }
+.input-mode-placeholder span { font-size: 12px; font-weight: 700; opacity: 0.9; }
+
+.mode-choice-hint {
+  margin: 0 auto 18px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.mode-choice-screen { min-height: 100vh; width: 100%; padding: 24px; display: flex; flex-direction: column; }
+.mode-choice-back { align-self: flex-start; border: 0; border-radius: 999px; padding: 14px 20px; background: rgba(255,255,255,.94); color: var(--navy); font: 800 16px var(--font); cursor: pointer; }
+.mode-choice-content { width: min(100%, 760px); margin: auto; display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; }
+.mode-choice-content h1 { margin: 0 0 10px; color: #fff; font-size: clamp(28px,5vw,48px); text-shadow: 0 2px 5px rgba(23,58,94,.4); }
+.mode-choice-button { width: min(100%, 680px); min-height: 120px; border: 4px solid rgba(255,255,255,.9); border-radius: 28px; background: #fff; color: var(--navy); font: 900 clamp(24px,5vw,42px) var(--font); box-shadow: 0 10px 24px rgba(23,58,94,.2); cursor: pointer; transition: transform .15s ease, background .15s ease; }
+.mode-choice-button:hover { transform: scale(1.02); background: #fff4c9; }
+.mode-choice-button:active { transform: scale(.98); }
+
+.mode-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  min-height: 100vh;
+  width: 100%;
+  padding: 24px;
+  background: #ffffff;
+  color: var(--navy);
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.mode-screen-back {
+  align-self: flex-start;
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 18px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--navy);
+  font: 800 15px var(--font);
+  cursor: pointer;
+}
+
+.mode-screen-content {
+  margin: auto;
+  width: min(100%, 760px);
+  min-height: 360px;
+  border: 2px solid rgba(255, 255, 255, 0.22);
+  border-radius: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
+  background: #234b61;
+}
+
+.mode-screen-content .input-mode-placeholder-icon { font-size: 86px; }
+.mode-screen-content h1 { margin: 0; font-size: clamp(28px, 5vw, 48px); }
+.mode-screen-content p { margin: 0; font-size: 16px; font-weight: 700; opacity: 0.9; }
+
+.carousel-full-screen { position: fixed; inset: 0; z-index: 100; overflow: auto; min-height: 100vh; padding: 18px 24px 28px; background: linear-gradient(180deg, rgba(255,255,255,.1), rgba(23,58,94,.3)), url('assets/imagens/imagens-outrastelas.png') center / cover no-repeat; }
+.carousel-full-topbar { width: min(100%, 1100px); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+.carousel-full-content { width: min(100%, 1020px); margin: 12px auto 0; }
+.carousel-full-content .section-label, .carousel-full-content .layer-label { color: #fff; }
+.carousel-full-content .phrase-bar { margin-bottom: 18px; }
+.carousel-full-content .carousel-wrap { min-height: 250px; margin-bottom: 18px; }
+.carousel-full-content .carousel-card.center { width: 170px; height: 190px; }
+.carousel-full-content .carousel-card.side { width: 110px; height: 140px; }
+.carousel-full-content .confirm-btn { margin-bottom: 14px; }
+
+.circular-mode-screen { background: #ffffff; }
+
+.circular-keyboard-screen {
+  width: min(100%, 900px);
+  margin: auto;
+  text-align: center;
+}
+
+.circular-keyboard-screen h1 {
+  margin: 0;
+  color: var(--navy);
+  font-size: clamp(30px, 5vw, 52px);
+}
+
+.circular-keyboard-screen p {
+  margin: 6px 0 18px;
+  color: var(--navy-soft);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.circular-keyboard-reserved {
+  width: min(100%, 900px);
+  min-height: 420px;
+  margin: auto;
+  border: 3px dashed #cfe9f7;
+  border-radius: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: #ffffff;
+}
+
+.circular-keyboard-reserved h1 {
+  margin: 0;
+  color: var(--navy);
+  font-size: clamp(30px, 5vw, 52px);
+}
+
+.circular-keyboard-reserved p {
+  margin: 10px 0 0;
+  color: var(--navy-soft);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.circular-keyboard {
+  position: relative;
+  width: min(78vw, 560px);
+  aspect-ratio: 1;
+  margin: 0 auto;
+  border-radius: 50%;
+  background: #f4f9fc;
+  border: 4px solid #cfe9f7;
+  box-shadow: 0 12px 30px rgba(23, 58, 94, 0.16);
+}
+
+.circular-keyboard-ring {
+  position: absolute;
+  inset: 18%;
+  border: 3px dashed #8bcbe5;
+  border-radius: 50%;
+}
+
+.circular-key {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: clamp(72px, 13vw, 112px);
+  min-height: clamp(72px, 11vw, 104px);
+  padding: 8px 5px;
+  border: 3px solid #ffffff;
+  border-radius: 22px;
+  background: var(--yellow);
+  color: var(--navy);
+  font: 800 clamp(12px, 2vw, 17px) var(--font);
+  box-shadow: 0 5px 12px rgba(23, 58, 94, 0.2);
+  cursor: pointer;
+  transform: translate(-50%, -50%) rotate(var(--key-angle)) translateY(calc(min(31vw, 220px) * -1)) rotate(var(--key-inverse-angle));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.circular-key:hover { transform: translate(-50%, -50%) rotate(var(--key-angle)) translateY(calc(min(31vw, 220px) * -1)) rotate(var(--key-inverse-angle)) scale(1.06); }
+.circular-key:active { transform: translate(-50%, -50%) rotate(var(--key-angle)) translateY(calc(min(31vw, 220px) * -1)) rotate(var(--key-inverse-angle)) scale(0.96); }
+.circular-key-emoji { font-size: clamp(22px, 4vw, 34px); line-height: 1; }
+
+.circular-keyboard-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 30%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 50%;
+  background: var(--navy);
+  color: #ffffff;
+  font-size: clamp(12px, 2vw, 18px);
+  font-weight: 900;
+}
+
+.carousel-mode-screen { background: #ffffff; }
+
+.carousel-mode-content {
+  width: min(100%, 900px);
+  margin: auto;
+  text-align: center;
+}
+
+.carousel-mode-content h1 {
+  margin: 0 0 12px;
+  color: var(--navy);
+  font-size: clamp(30px, 5vw, 52px);
+}
+
+.carousel-mode-content .phrase-bar {
+  color: var(--navy);
+  margin-bottom: 18px;
+}
+
+.carousel-mode-content .layer-label { color: var(--navy); text-shadow: none; }
+.carousel-mode-content .carousel-wrap { margin-bottom: 18px; }
+.carousel-empty { color: var(--navy); font-weight: 800; padding: 40px 20px; }
+
 .carousel-track {
   display: flex;
   align-items: center;
@@ -1442,6 +1697,7 @@ let STATE = {
   tipTimer: null,
   options: [],
   carouselIndex: 0,
+  inputMode: 'carousel',
 
   data: {
     favWords: [],
@@ -1861,6 +2117,8 @@ function render() {
   switch (STATE.screen) {
     case 'home': html = renderHome(); break;
     case 'build': html = renderBuild(); break;
+    case 'circularMode': html = renderModeScreen('circular'); break;
+    case 'carouselMode': html = renderModeScreen('carousel'); break;
     case 'categories': html = renderCategories(); break;
     case 'categoryDetail': html = renderCategoryDetail(); break;
     case 'favorites': html = renderFavorites(); break;
@@ -1951,101 +2209,74 @@ function renderHome() {
 }
 
 function renderBuild() {
+  return `
+    <div class="mode-choice-screen">
+      <button class="mode-choice-back" data-go="home" aria-label="Voltar ao início">← Voltar</button>
+      <div class="mode-choice-content">
+        <h1>Como você quer se comunicar?</h1>
+        <button class="mode-choice-button" type="button" data-mode-screen="circularMode">Teclado circular</button>
+        <button class="mode-choice-button" type="button" data-mode-screen="carouselMode">Carrossel</button>
+      </div>
+    </div>
+  `;
+}
+
+function renderModeScreen(mode) {
+  if (mode === 'circular') return renderCircularKeyboard();
+  return renderCarouselMode();
+}
+
+function renderCarouselMode() {
   const chipHtml = STATE.phrase.length
     ? STATE.phrase.map(word => `<span class="phrase-chip">${word.emoji} ${word.label}</span>`).join('')
     : `<span class="phrase-placeholder">Escolha uma palavra no carrossel...</span>`;
-
   const n = STATE.options.length;
   let cardsHtml = '';
 
   if (n === 0) {
-    cardsHtml = `
-      <div style="color:#fff;font-weight:700;text-align:center;padding:20px;">
-        🎉 Você chegou ao fim da frase!<br><br>
-        Toque em <strong>Falar</strong> ou limpe para começar novamente.
-      </div>
-    `;
+    cardsHtml = `<div class="carousel-empty">Você chegou ao fim da frase.<br><br>Toque em <strong>Limpar</strong> para começar novamente.</div>`;
   } else {
     const prevId = n > 1 ? STATE.options[(STATE.carouselIndex - 1 + n) % n] : null;
     const nextId = n > 1 ? STATE.options[(STATE.carouselIndex + 1) % n] : null;
     const curId = STATE.options[STATE.carouselIndex];
-
-    const sideCard = id => {
-      if (!id) return `<div class="carousel-card side empty"></div>`;
+    const card = (id, type) => {
+      if (!id) return `<div class="carousel-card ${type} empty"></div>`;
       const word = wordById(id);
-      if (!word) return `<div class="carousel-card side empty"></div>`;
-      return `
-        <div class="carousel-card side" data-pick="${id}" role="button" tabindex="-1" aria-label="${word.label}">
-          ${wordVisualHtml(word)}
-          <div class="label">${word.label}</div>
-        </div>
-      `;
+      if (!word) return `<div class="carousel-card ${type} empty"></div>`;
+      return `<div class="carousel-card ${type}" data-pick="${id}" role="button" tabindex="${type === 'center' ? '0' : '-1'}" aria-label="${word.label}">${wordVisualHtml(word)}<div class="label">${word.label}</div></div>`;
     };
-
-    const centerCard = id => {
-      const word = wordById(id);
-      if (!word) return '';
-      return `
-        <div class="carousel-card center" data-pick="${id}" role="button" tabindex="0"
-          aria-label="Palavra selecionada: ${word.label}. Toque para confirmar.">
-          ${wordVisualHtml(word)}
-          <div class="label">${word.label}</div>
-        </div>
-      `;
-    };
-
-    cardsHtml = `
-      <button class="carousel-arrow" id="prevBtn" ${n < 2 ? 'disabled' : ''} aria-label="Palavra anterior"><img src="assets/imagens/icone-seta-voltar.png" alt=""></button>
-      <div class="carousel-track">
-        ${sideCard(prevId)}
-        ${centerCard(curId)}
-        ${sideCard(nextId)}
-      </div>
-      <button class="carousel-arrow" id="nextBtn" ${n < 2 ? 'disabled' : ''} aria-label="Próxima palavra"><img src="assets/imagens/icone-seta-ir.png" alt=""></button>
-    `;
+    cardsHtml = `<button class="carousel-arrow" id="prevBtn" ${n < 2 ? 'disabled' : ''} aria-label="Palavra anterior"><img src="assets/imagens/icone-seta-voltar.png" alt=""></button><div class="carousel-track">${card(prevId, 'side')}${card(curId, 'center')}${card(nextId, 'side')}</div><button class="carousel-arrow" id="nextBtn" ${n < 2 ? 'disabled' : ''} aria-label="Próxima palavra"><img src="assets/imagens/icone-seta-ir.png" alt=""></button>`;
   }
 
-  const layerLabel = STATE.phrase.length === 0
-    ? 'QUEM ESTÁ FALANDO?'
-    : STATE.phrase.length === 1
-      ? 'O QUE VOCÊ QUER DIZER?'
-      : 'COMPLETE A FRASE';
+  const layerLabel = STATE.phrase.length === 0 ? 'QUEM ESTÁ FALANDO?' : STATE.phrase.length === 1 ? 'O QUE VOCÊ QUER DIZER?' : 'COMPLETE A FRASE';
+  return `<div class="carousel-full-screen"><div class="carousel-full-topbar"><button class="icon-btn" data-go="build" aria-label="Voltar para escolha do modo">←</button><div class="topbar-title">Comunicar</div><button class="icon-btn" data-go="personalize" aria-label="Personalizar palavras"><img class="menu-icon" src="assets/imagens/icone-configuracoes.png" alt=""></button></div><div class="carousel-full-content"><div class="section-label">MINHA FRASE</div><div class="phrase-bar" role="group" aria-label="Minha frase">${chipHtml}</div><div class="layer-label">${layerLabel}</div><div class="carousel-wrap">${cardsHtml}</div><button class="confirm-btn" id="confirmBtn" ${n === 0 ? 'disabled' : ''}>✓ Selecionar</button><div class="action-row" role="toolbar" aria-label="Ações da frase"><button class="btn-erase" id="eraseBtn" aria-label="Apagar última palavra"><img class="action-icon" src="assets/imagens/icone-apagar.png" alt="">Apagar</button><button class="btn-clear" id="clearBtn" aria-label="Limpar toda a frase"><img class="action-icon" src="assets/imagens/icone-limpar.png" alt="">Limpar</button><button class="btn-speak" id="speakBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Falar a frase em voz alta"><img class="action-icon" src="assets/imagens/icone-falar.png" alt="">Falar</button><button class="btn-fav" id="favPhraseBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Favoritar esta frase"><img class="action-icon" src="assets/imagens/icone-estrela.png" alt="">Favoritar</button></div><div class="back-link" data-go="categories" role="button" tabindex="0" style="margin-top:4px;"><img class="action-icon" src="assets/imagens/icone-livros.png" alt="">Ver todas as categorias</div><div class="hint">← → navega · Enter/Espaço seleciona · toque também funciona</div></div></div>`;
+}
 
+function renderCircularKeyboard() {
+  return `<div class="mode-screen circular-mode-screen"><button class="mode-screen-back" data-go="build" aria-label="Voltar para escolha do modo">← Voltar</button><div class="circular-keyboard-reserved"><h1>Teclado circular</h1><p>Área reservada para adicionar o teclado circular.</p></div></div>`;
+}
+
+function renderModeScreenLegacy(mode) {
   return `
-    <div class="topbar">
-      <button class="icon-btn" data-go="home" title="Voltar ao início" aria-label="Voltar ao início">←</button>
-      <div class="topbar-title">Comunicar</div>
-      <button class="icon-btn" data-go="personalize" aria-label="Personalizar palavras">
-        <img class="menu-icon" src="assets/imagens/icone-configuracoes.png" alt="">
-      </button>
+    <div class="mode-screen">
+      <button class="mode-screen-back" data-go="build" aria-label="Voltar para escolha do modo">← Voltar</button>
+      <div class="mode-screen-content">
+        <div class="input-mode-placeholder-icon" aria-hidden="true">${isCircular ? '◌' : '◈'}</div>
+        <h1>${title}</h1>
+        <p>${description}</p>
+      </div>
     </div>
+  `;
+}
 
-    <div class="screen">
-      <h2 class="section-label" id="phraseSectionLabel">MINHA FRASE</h2>
-
-      <div class="phrase-bar" role="group" aria-labelledby="phraseSectionLabel">
-        ${chipHtml}
+function renderCircularKeyboard() {
+  return `
+    <div class="mode-screen circular-mode-screen">
+      <button class="mode-screen-back" data-go="build" aria-label="Voltar para escolha do modo">← Voltar</button>
+      <div class="circular-keyboard-reserved">
+        <h1>Teclado circular</h1>
+        <p>Área reservada para adicionar o teclado circular.</p>
       </div>
-      <p id="phraseLive" class="visually-hidden" aria-live="polite"></p>
-
-      <div class="layer-label">${layerLabel}</div>
-
-      <div class="carousel-wrap">${cardsHtml}</div>
-
-      <button class="confirm-btn" id="confirmBtn" ${n === 0 ? 'disabled' : ''}>✓ Selecionar</button>
-
-      <div class="action-row" role="toolbar" aria-label="Ações da frase">
-        <button class="btn-erase" id="eraseBtn" aria-label="Apagar última palavra"><img class="action-icon" src="assets/imagens/icone-apagar.png" alt="">Apagar</button>
-        <button class="btn-clear" id="clearBtn" aria-label="Limpar toda a frase"><img class="action-icon" src="assets/imagens/icone-limpar.png" alt="">Limpar</button>
-        <button class="btn-speak" id="speakBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Falar a frase em voz alta"><img class="action-icon" src="assets/imagens/icone-falar.png" alt="">Falar</button>
-        <button class="btn-fav" id="favPhraseBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Favoritar esta frase"><img class="action-icon" src="assets/imagens/icone-estrela.png" alt="">Favoritar</button>
-      </div>
-
-      <div class="back-link" data-go="categories" role="button" tabindex="0" style="margin-top:4px;">
-        <img class="action-icon" src="assets/imagens/icone-livros.png" alt="">Ver todas as categorias
-      </div>
-
-      <div class="hint">← → navega · Enter/Espaço seleciona · toque também funciona</div>
     </div>
   `;
 }
@@ -2420,6 +2651,14 @@ function activateOnEnterSpace(handler) {
 }
 
 function attachHandlers() {
+
+  document.querySelectorAll('[data-mode-screen]').forEach(element => {
+    const activate = () => {
+      go(element.getAttribute('data-mode-screen'));
+    };
+    element.addEventListener('click', activate);
+    element.addEventListener('keydown', activateOnEnterSpace(activate));
+  });
 
   document.querySelectorAll('[data-go]').forEach(element => {
     const activate = () => {

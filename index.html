@@ -420,6 +420,127 @@ body,.bg-outras{
   min-height: 190px;
 }
 
+.input-mode-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  width: min(100%, 720px);
+  margin: 18px auto 20px;
+}
+
+.input-mode-tab {
+  min-height: 76px;
+  border: 3px solid rgba(255, 255, 255, 0.8);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--navy);
+  font: 800 clamp(17px, 3vw, 24px) var(--font);
+  cursor: pointer;
+  transition: transform 0.1s ease, background 0.15s ease, border-color 0.15s ease;
+}
+
+.input-mode-tab:hover { transform: translateY(-1px); }
+.input-mode-tab:active { transform: scale(0.98); }
+.input-mode-tab.active {
+  background: var(--yellow);
+  border-color: var(--yellow-dark);
+  box-shadow: 0 8px 18px rgba(23, 58, 94, 0.22);
+}
+
+.input-mode-placeholder {
+  min-height: 190px;
+  width: 100%;
+  margin-bottom: 18px;
+  border: 2px dashed rgba(255, 255, 255, 0.75);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.22);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.input-mode-placeholder-icon { font-size: 56px; line-height: 1; opacity: 0.9; }
+.input-mode-placeholder strong { font-size: 17px; }
+.input-mode-placeholder span { font-size: 12px; font-weight: 700; opacity: 0.9; }
+
+.mode-choice-hint {
+  margin: 0 auto 18px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.mode-choice-screen { min-height: 100vh; width: 100%; padding: 24px; display: flex; flex-direction: column; }
+.mode-choice-back { align-self: flex-start; border: 0; border-radius: 999px; padding: 14px 20px; background: rgba(255,255,255,.94); color: var(--navy); font: 800 16px var(--font); cursor: pointer; }
+.mode-choice-content { width: min(100%, 760px); margin: auto; display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; }
+.mode-choice-content h1 { margin: 0 0 10px; color: #fff; font-size: clamp(28px,5vw,48px); text-shadow: 0 2px 5px rgba(23,58,94,.4); }
+.mode-choice-button { width: min(100%, 680px); min-height: 120px; border: 4px solid rgba(255,255,255,.9); border-radius: 28px; background: #fff; color: var(--navy); font: 900 clamp(24px,5vw,42px) var(--font); box-shadow: 0 10px 24px rgba(23,58,94,.2); cursor: pointer; transition: transform .15s ease, background .15s ease; }
+.mode-choice-button:hover { transform: scale(1.02); background: #fff4c9; }
+.mode-choice-button:active { transform: scale(.98); }
+
+.mode-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  min-height: 100vh;
+  width: 100%;
+  padding: 24px;
+  background: #1b364a;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.mode-screen-back {
+  align-self: flex-start;
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 18px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--navy);
+  font: 800 15px var(--font);
+  cursor: pointer;
+}
+
+.mode-screen-content {
+  margin: auto;
+  width: min(100%, 760px);
+  min-height: 360px;
+  border: 2px solid rgba(255, 255, 255, 0.22);
+  border-radius: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
+  background: #234b61;
+}
+
+.mode-screen-content .input-mode-placeholder-icon { font-size: 86px; }
+.mode-screen-content h1 { margin: 0; font-size: clamp(28px, 5vw, 48px); }
+.mode-screen-content p { margin: 0; font-size: 16px; font-weight: 700; opacity: 0.9; }
+
+.circular-keyboard-reserved { width: min(100%, 900px); min-height: 420px; margin: auto; border: 3px dashed #cfe9f7; border-radius: 28px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: #fff; color: var(--navy); }
+.circular-keyboard-reserved h1 { margin: 0; font-size: clamp(30px,5vw,52px); }
+.circular-keyboard-reserved p { margin: 10px 0 0; color: var(--navy-soft); font-size: 16px; font-weight: 700; }
+
+.carousel-full-screen { position: fixed; inset: 0; z-index: 100; overflow: auto; min-height: 100vh; padding: 18px 24px 28px; background: linear-gradient(180deg, rgba(255,255,255,.1), rgba(23,58,94,.3)), url('assets/imagens/imagem-adulto.png') center / cover no-repeat; }
+.carousel-full-topbar { width: min(100%, 1100px); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+.carousel-full-content { width: min(100%, 1020px); margin: 12px auto 0; }
+.carousel-full-content .section-label, .carousel-full-content .layer-label { color: #fff; }
+.carousel-full-content .phrase-bar { margin-bottom: 18px; }
+.carousel-full-content .carousel-wrap { min-height: 250px; margin-bottom: 18px; }
+.carousel-full-content .carousel-card.center { width: 170px; height: 190px; }
+.carousel-full-content .carousel-card.side { width: 110px; height: 140px; }
+.carousel-full-content .confirm-btn { margin-bottom: 14px; }
+
 .carousel-track {
   display: flex;
   align-items: center;
@@ -2716,6 +2837,8 @@ let STATE = {
 
   carouselIndex: 0,
 
+  inputMode: 'carousel',
+
   layoutPromptVisible: false,
 
   onboardSelectedType: null,
@@ -3273,6 +3396,14 @@ function render() {
       html = renderBuild();
       break;
 
+    case 'circularMode':
+      html = renderModeScreen('circular');
+      break;
+
+    case 'carouselMode':
+      html = renderModeScreen('carousel');
+      break;
+
     case 'categories':
       html = renderCategories();
       break;
@@ -3744,304 +3875,52 @@ function renderHome() {
 
 
 function renderBuild() {
+  return `
+    <div class="mode-choice-screen">
+      <button class="mode-choice-back" data-go="home" aria-label="Voltar ao início">← Voltar</button>
+      <div class="mode-choice-content">
+        <h1>Como você quer se comunicar?</h1>
+        <button class="mode-choice-button" type="button" data-mode-screen="circularMode">Teclado circular</button>
+        <button class="mode-choice-button" type="button" data-mode-screen="carouselMode">Carrossel</button>
+      </div>
+    </div>
+  `;
+}
 
-  const chipHtml =
-    STATE.phrase.length
+function renderModeScreen(mode) {
+  if (mode === 'circular') return renderCircularKeyboard();
+  return renderCarouselMode();
+}
 
-      ? STATE.phrase
-          .map(
-            word => `
-              <span class="phrase-chip">
-                ${word.emoji} ${word.label}
-              </span>
-            `
-          )
-          .join('')
-
-      : `
-          <span class="phrase-placeholder">
-            Escolha uma palavra no carrossel...
-          </span>
-        `;
-
-  const n =
-    STATE.options.length;
-
+function renderCarouselMode() {
+  const chipHtml = STATE.phrase.length
+    ? STATE.phrase.map(word => `<span class="phrase-chip">${word.emoji} ${word.label}</span>`).join('')
+    : `<span class="phrase-placeholder">Escolha uma palavra no carrossel...</span>`;
+  const n = STATE.options.length;
   let cardsHtml = '';
 
   if (n === 0) {
-
-    cardsHtml = `
-
-      <div
-        style="
-          color:#fff;
-          font-weight:700;
-          text-align:center;
-          padding:20px;
-        "
-      >
-         Você chegou ao fim da frase!
-        <br><br>
-        Toque em <strong>Falar</strong>
-        ou limpe para começar novamente.
-      </div>
-
-    `;
-
+    cardsHtml = `<div class="carousel-empty">Você chegou ao fim da frase.<br><br>Toque em <strong>Limpar</strong> para começar novamente.</div>`;
   } else {
-
-    const prevId =
-      n > 1
-        ? STATE.options[
-            (
-              STATE.carouselIndex -
-              1 +
-              n
-            ) % n
-          ]
-        : null;
-
-    const nextId =
-      n > 1
-        ? STATE.options[
-            (
-              STATE.carouselIndex +
-              1
-            ) % n
-          ]
-        : null;
-
-    const curId =
-      STATE.options[
-        STATE.carouselIndex
-      ];
-
-    const sideCard =
-      id => {
-
-        if (!id) {
-
-          return `
-            <div
-              class="carousel-card side empty"
-            ></div>
-          `;
-
-        }
-
-        const word =
-          wordById(id);
-
-        if (!word) {
-
-          return `
-            <div
-              class="carousel-card side empty"
-            ></div>
-          `;
-
-        }
-
-        return `
-
-          <div
-            class="carousel-card side"
-            data-pick="${id}"
-          >
-
-            <div class="emoji">
-              ${word.emoji}
-            </div>
-
-            <div class="label">
-              ${word.label}
-            </div>
-
-          </div>
-
-        `;
-
-      };
-
-    const centerCard =
-      id => {
-
-        const word =
-          wordById(id);
-
-        if (!word) return '';
-
-        return `
-
-          <div
-            class="carousel-card center"
-            data-pick="${id}"
-          >
-
-            <div class="emoji">
-              ${word.emoji}
-            </div>
-
-            <div class="label">
-              ${word.label}
-            </div>
-
-          </div>
-
-        `;
-
-      };
-
-    cardsHtml = `
-
-      <button
-        class="carousel-arrow"
-        id="prevBtn"
-        ${n < 2 ? 'disabled' : ''}
-        aria-label="Palavra anterior"
-      >
-        ‹
-      </button>
-
-      <div class="carousel-track">
-
-        ${sideCard(prevId)}
-
-        ${centerCard(curId)}
-
-        ${sideCard(nextId)}
-
-      </div>
-
-      <button
-        class="carousel-arrow"
-        id="nextBtn"
-        ${n < 2 ? 'disabled' : ''}
-        aria-label="Próxima palavra"
-      >
-        ›
-      </button>
-
-    `;
-
+    const prevId = n > 1 ? STATE.options[(STATE.carouselIndex - 1 + n) % n] : null;
+    const nextId = n > 1 ? STATE.options[(STATE.carouselIndex + 1) % n] : null;
+    const curId = STATE.options[STATE.carouselIndex];
+    const card = (id, type) => {
+      if (!id) return `<div class="carousel-card ${type} empty"></div>`;
+      const word = wordById(id);
+      if (!word) return `<div class="carousel-card ${type} empty"></div>`;
+      return `<div class="carousel-card ${type}" data-pick="${id}" role="button" tabindex="${type === 'center' ? '0' : '-1'}" aria-label="${word.label}"><div class="emoji">${word.emoji}</div><div class="label">${word.label}</div></div>`;
+    };
+    cardsHtml = `<button class="carousel-arrow" id="prevBtn" ${n < 2 ? 'disabled' : ''} aria-label="Palavra anterior">‹</button><div class="carousel-track">${card(prevId, 'side')}${card(curId, 'center')}${card(nextId, 'side')}</div><button class="carousel-arrow" id="nextBtn" ${n < 2 ? 'disabled' : ''} aria-label="Próxima palavra">›</button>`;
   }
 
-  const layerLabel =
-    STATE.phrase.length === 0
-
-      ? 'QUEM ESTÁ FALANDO?'
-
-      : STATE.phrase.length === 1
-
-        ? 'O QUE VOCÊ QUER DIZER?'
-
-        : 'COMPLETE A FRASE';
-
-  return `
-
-    <div class="topbar">
-
-      <button
-        class="icon-btn"
-        data-go="home"
-        aria-label="Voltar"
-      >
-        ←
-      </button>
-
-      <div class="topbar-title">
-        Comunicar
-      </div>
-
-      <button
-        class="icon-btn"
-        data-go="personalize"
-        aria-label="Personalizar"
-      >
-        ⚙︎
-      </button>
-
-    </div>
-
-    <div class="screen">
-
-      <div class="section-label">
-        MINHA FRASE
-      </div>
-
-      <div class="phrase-bar">
-        ${chipHtml}
-      </div>
-
-      <div class="layer-label">
-        ${layerLabel}
-      </div>
-
-      <div class="carousel-wrap">
-        ${cardsHtml}
-      </div>
-
-      <button
-        class="confirm-btn"
-        id="confirmBtn"
-        ${n === 0 ? 'disabled' : ''}
-      >
-        ✓ Selecionar
-      </button>
-
-      <div class="action-row">
-
-        <button
-          class="btn-erase"
-          id="eraseBtn"
-        >
-           Apagar
-        </button>
-
-        <button
-          class="btn-clear"
-          id="clearBtn"
-        >
-           Limpar
-        </button>
-
-        <button
-          class="btn-speak"
-          id="speakBtn"
-          ${STATE.phrase.length ? '' : 'disabled'}
-        >
-           Falar
-        </button>
-        <button
-          class="btn-fav"
-          id="favPhraseBtn"
-          ${STATE.phrase.length ? '' : 'disabled'}
-        >
-           Favoritar
-        </button>
-
-      </div>
-
-      <div
-        class="back-link"
-        data-go="categories"
-        style="margin-top:4px;"
-      >
-         Ver todas as categorias
-      </div>
-
-      <div class="hint">
-        ← → navega · Enter/Espaço seleciona · toque também funciona
-      </div>
-
-    </div>
-
-  `;
-
+  const layerLabel = STATE.phrase.length === 0 ? 'QUEM ESTÁ FALANDO?' : STATE.phrase.length === 1 ? 'O QUE VOCÊ QUER DIZER?' : 'COMPLETE A FRASE';
+  return `<div class="carousel-full-screen"><div class="carousel-full-topbar"><button class="icon-btn" data-go="build" aria-label="Voltar para escolha do modo">←</button><div class="topbar-title">Comunicar</div><button class="icon-btn" data-go="personalize" aria-label="Personalizar">⚙︎</button></div><div class="carousel-full-content"><div class="section-label">MINHA FRASE</div><div class="phrase-bar" role="group" aria-label="Minha frase">${chipHtml}</div><div class="layer-label">${layerLabel}</div><div class="carousel-wrap">${cardsHtml}</div><button class="confirm-btn" id="confirmBtn" ${n === 0 ? 'disabled' : ''}>✓ Selecionar</button><div class="action-row"><button class="btn-erase" id="eraseBtn">Apagar</button><button class="btn-clear" id="clearBtn">Limpar</button><button class="btn-speak" id="speakBtn" ${STATE.phrase.length ? '' : 'disabled'}>Falar</button><button class="btn-fav" id="favPhraseBtn" ${STATE.phrase.length ? '' : 'disabled'}>Favoritar</button></div><div class="back-link" data-go="categories" style="margin-top:4px;">Ver todas as categorias</div><div class="hint">← → navega · Enter/Espaço seleciona · toque também funciona</div></div></div>`;
 }
 
-
+function renderCircularKeyboard() {
+  return `<div class="mode-screen circular-mode-screen"><button class="mode-screen-back" data-go="build" aria-label="Voltar para escolha do modo">← Voltar</button><div class="circular-keyboard-reserved"><h1>Teclado circular</h1><p>Área reservada para adicionar o teclado circular.</p></div></div>`;
+}
 
 function renderCategories() {
 
@@ -4991,6 +4870,11 @@ function attachHandlers() {
 
   prepareKeyboardNavigation();
 
+  document.querySelectorAll('[data-mode-screen]').forEach(element => {
+    element.addEventListener('click', () => {
+      go(element.getAttribute('data-mode-screen'));
+    });
+  });
 
   const loginContinueBtn =
     document.getElementById(
