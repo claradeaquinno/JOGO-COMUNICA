@@ -440,7 +440,7 @@ body,.bg-outras{
 }
 
 .favorites-screen {
-  overflow-x: hidden;
+  overflow-x: visible;
 }
 
 .favorites-heading {
@@ -845,19 +845,22 @@ body,.bg-outras{
 
 .word-favorite-remove {
   position: absolute;
-  top: 6px;
-  left: 6px;
+  top: 8px;
+  right: 8px;
   z-index: 2;
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   border: 0;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.92);
   color: #c0392b;
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 900;
   line-height: 1;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .speak-btn {
@@ -1209,10 +1212,27 @@ body,.bg-outras{
   gap: 6px;
 }
 
-.custom-chip span.x {
+.custom-chip .x {
+  appearance: none;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
   color: var(--red);
   cursor: pointer;
-  font-weight: 800;
+  font: inherit;
+  font-weight: 900;
+  line-height: 1;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.custom-chip .x:hover,
+.custom-chip .x:focus-visible {
+  background: #ffe5e5;
+  color: #a6261d;
 }
 
 
@@ -1298,6 +1318,13 @@ body,.bg-outras{
 
 .toast.show {
   opacity: 1;
+}
+
+body[data-theme="dark"] .toast {
+  background: #10283d !important;
+  color: #f1f7ff !important;
+  border: 2px solid #8ddff0 !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, .45) !important;
 }
 
 
@@ -1786,6 +1813,30 @@ body.layout-infantil .stars {
   flex-direction: column;
   gap: 0;
   background: #1b364a;
+}
+body[data-theme="light"] .senior-splash-screen {
+  background: #eaf4fb;
+}
+body[data-theme="light"] .senior-splash-screen .splash-welcome {
+  color: #123b4d;
+  text-shadow: none;
+}
+body[data-theme="light"] .senior-splash-screen .splash-hint {
+  color: #456678;
+  text-shadow: none;
+}
+body[data-theme="dark"] .senior-splash-screen {
+  background: #1b364a;
+}
+body[data-theme="dark"] .senior-splash-screen .splash-welcome {
+  color: #eff7ff;
+}
+body[data-theme="dark"] .senior-splash-screen .splash-hint {
+  color: #d4eafb;
+}
+.senior-splash-screen:focus-visible {
+  outline: 4px solid #f7c94d;
+  outline-offset: -10px;
 }
 .splash-screen.splash-hidden {
   opacity: 0;
@@ -2558,8 +2609,8 @@ body[data-theme="light"] .cat-card .count {
 }
 
 body[data-theme="dark"] .home-screen .menu-btn.primary {
-  background: #ffffff !important;
-  border-color: #c5d7df !important;
+  background: #17344d !important;
+  border-color: #3f6685 !important;
 }
 
 body[data-theme="dark"] .home-screen .menu-btn.primary .menu-title,
@@ -2570,6 +2621,16 @@ body[data-theme="light"] .home-screen .menu-btn .menu-sub,
 body[data-theme="light"] .home-screen .menu-btn .menu-arrow {
   color: #123b4d !important;
   text-shadow: none !important;
+}
+
+body[data-theme="dark"] .home-screen .menu-btn.primary .menu-title,
+body[data-theme="dark"] .home-screen .menu-btn.primary .menu-sub,
+body[data-theme="dark"] .home-screen .menu-btn.primary .menu-arrow {
+  color: #eff7ff !important;
+}
+
+body[data-theme="dark"] .home-screen .menu-btn.primary .menu-image {
+  filter: brightness(0) invert(1) !important;
 }
 
 body[data-theme="dark"] .home-screen .menu-btn:not(.primary) .menu-title,
@@ -2747,6 +2808,19 @@ body[data-theme="dark"] .word-card::after {
   color: #123b4d !important;
 }
 
+body[data-theme="dark"] .fav-item .fav-remove {
+  background: #ffffff !important;
+  color: #123b4d !important;
+  border: 2px solid #8fb5c8 !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .35) !important;
+}
+
+body[data-theme="dark"] .fav-item .fav-remove:hover,
+body[data-theme="dark"] .fav-item .fav-remove:focus-visible {
+  background: #dceaf1 !important;
+  color: #092b3b !important;
+}
+
 .form-row input,
 .form-row select,
 .custom-chip {
@@ -2820,17 +2894,64 @@ body[data-theme="light"] .form-block > p {
   transform: translateX(22px);
 }
 
-#app .scan-active {
-  outline: 4px solid #ffe600 !important;
+#app .scan-active,
+#app button:hover,
+#app [role="button"]:hover,
+#app input:hover,
+#app select:hover,
+#app textarea:hover,
+#app .switch:hover {
+  outline: 4px solid #ffd400 !important;
   outline-offset: 4px !important;
   box-shadow: 0 0 0 6px rgba(255, 230, 0, .28), 0 8px 20px rgba(0, 0, 0, .28) !important;
+  background: #ffd400 !important;
+  color: #123b4d !important;
   position: relative;
   z-index: 3;
 }
 
-body[data-theme="light"] #app .scan-active {
-  outline-color: #8a5d00 !important;
-  box-shadow: 0 0 0 6px rgba(138, 93, 0, .2), 0 8px 20px rgba(18, 59, 77, .24) !important;
+#app .accessibility-focus {
+  outline: 4px solid #ffd400 !important;
+  outline-offset: 4px !important;
+  box-shadow: 0 0 0 6px rgba(255, 230, 0, .28), 0 8px 20px rgba(0, 0, 0, .28) !important;
+  background: #ffd400 !important;
+  color: #123b4d !important;
+  position: relative;
+  z-index: 3;
+}
+
+#app .scan-active *,
+#app .accessibility-focus *,
+#app button:hover *,
+#app [role="button"]:hover *,
+#app .switch:hover * {
+  color: #123b4d !important;
+  text-shadow: none !important;
+}
+
+body[data-theme="light"] #app .scan-active,
+body[data-theme="light"] #app .accessibility-focus,
+body[data-theme="light"] #app button:hover,
+body[data-theme="light"] #app [role="button"]:hover,
+body[data-theme="light"] #app input:hover,
+body[data-theme="light"] #app select:hover,
+body[data-theme="light"] #app textarea:hover,
+body[data-theme="light"] #app .switch:hover {
+  outline-color: #ffd400 !important;
+  box-shadow: 0 0 0 2px #123b4d, 0 0 0 8px rgba(255, 212, 0, .9), 0 8px 20px rgba(18, 59, 77, .24) !important;
+}
+
+body[data-theme="dark"] #app .scan-active,
+body[data-theme="dark"] #app .accessibility-focus,
+body[data-theme="dark"] #app button:hover,
+body[data-theme="dark"] #app [role="button"]:hover,
+body[data-theme="dark"] #app input:hover,
+body[data-theme="dark"] #app select:hover,
+body[data-theme="dark"] #app textarea:hover,
+body[data-theme="dark"] #app .switch:hover {
+  outline: 5px solid #ffd400 !important;
+  outline-offset: 5px !important;
+  box-shadow: 0 0 0 2px #071521, 0 0 0 9px rgba(255, 212, 0, .95), 0 8px 22px rgba(0, 0, 0, .55) !important;
 }
 
 /* Contraste do cadastro e da escolha de perfil. */
@@ -2934,6 +3055,30 @@ body[data-theme="dark"] .action-row .btn-speak {
   background: #f7c94d !important;
   color: #123b4d !important;
   border-color: #b98200 !important;
+}
+
+/* Ações da tela Comunicar: alto contraste nos dois temas. */
+.carousel-full-content .confirm-btn,
+.carousel-full-content .action-row button {
+  background: #ffffff !important;
+  color: #123b4d !important;
+  border: 2px solid #8fb5c8 !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+
+.carousel-full-content .confirm-btn:disabled,
+.carousel-full-content .action-row button:disabled {
+  background: #dceaf1 !important;
+  color: #123b4d !important;
+  border-color: #8fb5c8 !important;
+  opacity: 1 !important;
+}
+
+.carousel-full-content .confirm-btn:hover,
+.carousel-full-content .action-row button:hover {
+  background: #e3f1f7 !important;
+  color: #123b4d !important;
 }
 
 /* Perfil infantil: Conta e feedback usam cartões claros com texto escuro. */
@@ -3050,6 +3195,135 @@ body[data-theme="light"] #feedbackText::placeholder {
   opacity: 1 !important;
 }
 
+/* Carrossel sênior: texto e cartões com contraste estável nos dois temas. */
+body[data-theme="light"] .carousel-card.side {
+  background: #e3eef4 !important;
+  border-color: #8aafc0 !important;
+}
+
+body[data-theme="light"] .carousel-card.side .label {
+  color: #123b4d !important;
+  text-shadow: none !important;
+}
+
+body[data-theme="dark"] .carousel-card.side {
+  background: #17344d !important;
+  border-color: #4f7898 !important;
+}
+
+body[data-theme="dark"] .carousel-card.side .label {
+  color: #eff7ff !important;
+  text-shadow: none !important;
+}
+
+body[data-theme="light"] .carousel-card.center,
+body[data-theme="dark"] .carousel-card.center {
+  background: #f7c94d !important;
+  border-color: #b98200 !important;
+}
+
+body[data-theme="light"] .carousel-card.center .label,
+body[data-theme="dark"] .carousel-card.center .label {
+  color: #123b4d !important;
+  text-shadow: none !important;
+}
+
+body[data-theme="light"] .carousel-full-content .action-row button,
+body[data-theme="dark"] .carousel-full-content .action-row button {
+  color: #123b4d !important;
+  text-shadow: none !important;
+}
+
+body[data-theme="light"] .carousel-full-content .phrase-placeholder {
+  color: #456678 !important;
+  opacity: 1 !important;
+}
+
+body[data-theme="dark"] .carousel-full-content .phrase-placeholder {
+  color: #dbeaf3 !important;
+  opacity: 1 !important;
+}
+
+/* O X dos favoritos não deve herdar o hover gigante da navegação acessível. */
+#app .favorite-toggle:hover,
+#app .favorite-toggle:focus-visible,
+#app .favorite-toggle.accessibility-focus,
+#app .favorite-toggle.scan-active {
+  position: absolute !important;
+  top: 6px !important;
+  right: 6px !important;
+  width: 28px !important;
+  height: 28px !important;
+  margin: 0 !important;
+  padding: 2px !important;
+  transform: scale(1.05) !important;
+  outline: 3px solid var(--focus-ring) !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 2px 6px rgba(23, 58, 94, .22) !important;
+  background: rgba(255, 255, 255, .94) !important;
+  color: var(--yellow-dark) !important;
+  z-index: 4 !important;
+}
+
+#app .word-favorite-remove:focus-visible,
+#app .word-favorite-remove.accessibility-focus,
+#app .word-favorite-remove.scan-active {
+  position: absolute !important;
+  top: 8px !important;
+  right: 8px !important;
+  margin: 0 !important;
+}
+
+#app .word-favorite-remove:hover {
+  position: absolute !important;
+  z-index: 4 !important;
+  outline: none !important;
+  outline-offset: 0 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .22) !important;
+  background: rgba(255, 255, 255, .98) !important;
+  color: #c0392b !important;
+  transform: scale(1.06) !important;
+}
+
+.confirm-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(5, 20, 32, .72);
+}
+.confirm-dialog[hidden] { display: none; }
+.confirm-dialog-panel {
+  width: min(420px, 100%);
+  padding: 24px;
+  border: 2px solid #8ddff0;
+  border-radius: 20px;
+  background: #17344d;
+  color: #f1f7ff;
+  text-align: center;
+  box-shadow: 0 12px 32px rgba(0,0,0,.45);
+}
+.confirm-dialog-message { margin: 0 0 20px; font-size: 18px; font-weight: 800; }
+.confirm-dialog-actions { display: flex; justify-content: center; gap: 12px; }
+.confirm-dialog-actions button {
+  min-width: 120px;
+  min-height: 48px;
+  border: 2px solid #8ddff0;
+  border-radius: 12px;
+  background: #e8f6fb;
+  color: #10283d;
+  font: inherit;
+  font-weight: 900;
+  cursor: pointer;
+}
+.confirm-dialog-actions .confirm-dialog-cancel { background: #dbe5eb; }
+.confirm-dialog-actions button:focus-visible,
+.confirm-dialog-actions button.accessibility-focus {
+  outline: 4px solid #ffd400;
+  outline-offset: 3px;
+}
 </style>
 </head>
 
@@ -3065,9 +3339,9 @@ body[data-theme="light"] #feedbackText::placeholder {
 </div>
 
 <div id="seniorSplashScreen" class="splash-screen senior-splash-screen splash-hidden"
-  role="dialog" aria-modal="true" aria-label="Boas-vindas ao perfil Senior">
+  role="button" tabindex="0" aria-label="Boas-vindas ao perfil Sênior. Ative para continuar.">
   <div class="splash-welcome">Seja bem-vindo</div>
-  <div class="splash-hint">Toque para continuar</div>
+  <div class="splash-hint">Clique, toque ou pressione Enter para continuar</div>
 </div>
 
 <div id="app"></div>
@@ -3768,6 +4042,7 @@ function scheduleScan() {
   scanIndex = (scanIndex + 1) % targets.length;
   const target = targets[scanIndex];
   target.classList.add('scan-active');
+  target.closest('.switch')?.classList.add('scan-active');
   target.focus({ preventScroll: true });
 
   const scanSpeed = Math.min(5000, Math.max(600, Number(settings.scanSpeed) || 1800));
@@ -3912,6 +4187,40 @@ function showToast(message) {
 
 }
 
+function showAccessibleConfirm(message, onConfirm) {
+  document.querySelector('.confirm-dialog')?.remove();
+  const dialog = document.createElement('div');
+  dialog.className = 'confirm-dialog';
+  dialog.setAttribute('role', 'alertdialog');
+  dialog.setAttribute('aria-modal', 'true');
+  dialog.innerHTML = `<div class="confirm-dialog-panel" role="document">
+    <p class="confirm-dialog-message">${message}</p>
+    <div class="confirm-dialog-actions">
+      <button type="button" class="confirm-dialog-confirm">Confirmar</button>
+      <button type="button" class="confirm-dialog-cancel">Cancelar</button>
+    </div>
+  </div>`;
+  document.body.appendChild(dialog);
+  const confirmButton = dialog.querySelector('.confirm-dialog-confirm');
+  const cancelButton = dialog.querySelector('.confirm-dialog-cancel');
+  const close = () => dialog.remove();
+  confirmButton.addEventListener('click', () => { close(); onConfirm(); });
+  cancelButton.addEventListener('click', close);
+  dialog.addEventListener('keydown', event => {
+    if (event.key === 'Escape') { event.preventDefault(); close(); return; }
+    if (['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown'].includes(event.key)) {
+      event.preventDefault();
+      (document.activeElement === confirmButton ? cancelButton : confirmButton).focus();
+      return;
+    }
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      document.activeElement?.click();
+    }
+  });
+  confirmButton.focus();
+}
+
 
 let speechRequestId = 0;
 
@@ -4044,15 +4353,15 @@ function eraseLast() {
 }
 
 function clearPhrase() {
-
   if (STATE.phrase.length > 0) {
-
-    if (!window.confirm('Deseja limpar toda a frase?')) return;
-
-    speak('Limpar frase');
-
+    showAccessibleConfirm('Deseja limpar toda a frase?', clearPhraseConfirmed);
+    return;
   }
+  clearPhraseConfirmed();
+}
 
+function clearPhraseConfirmed() {
+  if (STATE.phrase.length > 0) speak('Limpar frase');
   STATE.phrase = [];
 
   loadLayer();
@@ -4261,11 +4570,13 @@ function toggleFavoriteWord(wordId) {
   const index = STATE.data.favWords.indexOf(wordId);
 
   if (index >= 0) {
-
-    if (!window.confirm('Remover esta palavra dos favoritos?')) return;
-
-    STATE.data.favWords.splice(index, 1);
-    showToast('Palavra removida dos favoritos.');
+    showAccessibleConfirm('Remover esta palavra dos favoritos?', () => {
+      STATE.data.favWords.splice(index, 1);
+      showToast('Palavra removida dos favoritos.');
+      saveData();
+      render();
+    });
+    return;
   } else {
     STATE.data.favWords.push(wordId);
     showToast('Palavra adicionada aos favoritos ⭐');
@@ -4283,6 +4594,11 @@ function favoriteLastWord() {
     return;
   }
 
+  if (isFavoriteWord(word.id)) {
+    showToast('Palavra já adicionada aos favoritos.');
+    return;
+  }
+
   toggleFavoriteWord(word.id);
 }
 
@@ -4291,17 +4607,20 @@ function wordCardHtml(word, selected = false, inFavorites = false) {
 
   return `
     <div class="word-card ${selected ? 'selected' : ''}" data-word="${word.id}" ${inFavorites ? 'data-favorite-word-card' : ''}>
-      <button type="button" class="favorite-toggle ${favorite ? 'is-favorite' : ''}"
-        data-fav-word="${word.id}"
-        aria-label="${favorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}"
-        title="${favorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}">
-        ${favorite ? '★' : '☆'}
-      </button>
+      ${!inFavorites ? `
+        <button type="button" class="favorite-toggle ${favorite ? 'is-favorite' : ''}"
+          data-fav-word="${word.id}"
+          aria-label="${favorite ? 'Palavra já adicionada aos favoritos' : 'Adicionar aos favoritos'}"
+          title="${favorite ? 'Palavra já adicionada' : 'Adicionar aos favoritos'}">
+          ${favorite ? '★' : '☆'}
+        </button>
+      ` : ''}
       ${inFavorites ? `
         <button type="button" class="word-favorite-remove"
           data-remove-word="${word.id}"
           aria-label="Remover ${word.label} dos favoritos"
-          title="Remover dos favoritos">✕</button>
+          title="Remover dos favoritos"
+          data-delete-action="favorite-word">✕</button>
       ` : ''}
       <div class="emoji">${word.emoji}</div>
       <div class="label">${word.label}</div>
@@ -5202,12 +5521,15 @@ function renderPersonalize() {
             ${word.emoji}
             ${word.label}
 
-            <span
+            <button
+              type="button"
               class="x"
               data-del-word="${word.id}"
+              aria-label="Excluir palavra ${word.label}"
+              title="Excluir palavra"
             >
               ✕
-            </span>
+            </button>
 
           </span>
 
@@ -5239,12 +5561,15 @@ function renderPersonalize() {
             ${category.emoji}
             ${category.label}
 
-            <span
+            <button
+              type="button"
               class="x"
               data-del-cat="${category.id}"
+              aria-label="Excluir categoria ${category.label}"
+              title="Excluir categoria"
             >
               ✕
-            </span>
+            </button>
 
           </span>
 
@@ -5635,7 +5960,7 @@ function renderProfile() {
     <div class="info-block">
       <h3 style="margin:0 0 12px; color:#ffffff; font-weight:900; letter-spacing:0.02em;">Feedback</h3>
       <div style="display:grid; gap:10px;">
-        <textarea id="feedbackText" rows="4" placeholder="Como podemos melhorar?" style="width:100%; border-radius:12px; border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.08); color:#ffffff; padding:12px; resize:vertical; font-weight:600; opacity:0.92;">${profile.feedback || ''}</textarea>
+        <textarea id="feedbackText" rows="4" placeholder="Como podemos melhorar?" style="width:100%; border-radius:12px; border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.08); color:#ffffff; padding:12px; resize:vertical; font-weight:600; opacity:0.92;">${profile.feedback && profile.feedback.trim().toLowerCase() !== 'fe' ? profile.feedback : ''}</textarea>
         <button class="submit-btn" id="saveFeedbackBtn">Salvar feedback</button>
       </div>
     </div>
@@ -6050,7 +6375,12 @@ function attachHandlers() {
   document.querySelectorAll('[data-fav-word]').forEach(element => {
     element.addEventListener('click', event => {
       event.stopPropagation();
-      toggleFavoriteWord(element.getAttribute('data-fav-word'));
+      const wordId = element.getAttribute('data-fav-word');
+      if (isFavoriteWord(wordId)) {
+        showToast('Palavra já adicionada aos favoritos.');
+        return;
+      }
+      toggleFavoriteWord(wordId);
     });
   });
 
@@ -6058,6 +6388,11 @@ function attachHandlers() {
     element.addEventListener('click', event => {
       event.stopPropagation();
       toggleFavoriteWord(element.getAttribute('data-remove-word'));
+    });
+    element.addEventListener('keydown', event => {
+      if (!['Enter', ' ', 'Backspace', 'Delete'].includes(event.key) || event.repeat) return;
+      event.preventDefault();
+      element.click();
     });
   });
 
@@ -6331,16 +6666,11 @@ function attachHandlers() {
             Number.isNaN(index)
           ) return;
 
-          if (!window.confirm('Remover esta frase dos favoritos?')) return;
-
-          STATE.data.favPhrases.splice(
-            index,
-            1
-          );
-
-          saveData();
-
-          render();
+          showAccessibleConfirm('Remover esta frase dos favoritos?', () => {
+            STATE.data.favPhrases.splice(index, 1);
+            saveData();
+            render();
+          });
 
         }
       );
@@ -6625,23 +6955,25 @@ function attachHandlers() {
               'data-del-word'
             );
 
-          STATE.data.customWords =
-            STATE.data.customWords.filter(
-              word =>
-                word.id !== id
-            );
+          showAccessibleConfirm('Remover esta palavra personalizada?', () => {
+            STATE.data.customWords =
+              STATE.data.customWords.filter(
+                word =>
+                  word.id !== id
+              );
 
-          STATE.data.favWords =
-            STATE.data.favWords.filter(
-              wordId =>
-                wordId !== id
-            );
+            STATE.data.favWords =
+              STATE.data.favWords.filter(
+                wordId =>
+                  wordId !== id
+              );
 
-          saveData();
+            saveData();
 
-          loadLayer();
+            loadLayer();
 
-          render();
+            render();
+          });
 
         }
       );
@@ -6667,23 +6999,25 @@ function attachHandlers() {
               'data-del-cat'
             );
 
-          STATE.data.customCategories =
-            STATE.data.customCategories.filter(
-              category =>
-                category.id !== id
-            );
+          showAccessibleConfirm('Remover esta categoria personalizada?', () => {
+            STATE.data.customCategories =
+              STATE.data.customCategories.filter(
+                category =>
+                  category.id !== id
+              );
 
-          STATE.data.customWords =
-            STATE.data.customWords.filter(
-              word =>
-                word.cat !== id
-            );
+            STATE.data.customWords =
+              STATE.data.customWords.filter(
+                word =>
+                  word.cat !== id
+              );
 
-          saveData();
+            saveData();
 
-          loadLayer();
+            loadLayer();
 
-          render();
+            render();
+          });
 
         }
       );
@@ -6820,6 +7154,14 @@ function attachHandlers() {
 
 
 
+document.addEventListener('keydown', event => {
+  if (event.defaultPrevented || !['Backspace', 'Delete'].includes(event.key) || event.repeat) return;
+  const active = document.activeElement;
+  if (!active?.matches('[data-del-word], [data-del-cat], [data-remove-word], [data-remove-phrase]')) return;
+  event.preventDefault();
+  active.click();
+});
+
 function prepareKeyboardNavigation() {
 
   const selector = [
@@ -6851,6 +7193,9 @@ function prepareKeyboardNavigation() {
 
 function keyboardTargets() {
 
+  const dialog = document.querySelector('.confirm-dialog');
+  if (dialog) return [...dialog.querySelectorAll('button:not([disabled])')];
+
   const selector = [
     'button:not([disabled])',
     '[data-go]',
@@ -6879,10 +7224,17 @@ function moveKeyboardFocus(direction) {
   const targets = keyboardTargets();
   const current = document.activeElement;
 
+  const markControlFocus = element => {
+    document.querySelectorAll('.accessibility-focus').forEach(item => item.classList.remove('accessibility-focus'));
+    element?.classList.add('accessibility-focus');
+    element?.closest('.switch')?.classList.add('accessibility-focus');
+  };
+
   if (!targets.length) return;
 
   if (!targets.includes(current)) {
     targets[0].focus();
+    markControlFocus(targets[0]);
     return;
   }
 
@@ -6890,6 +7242,7 @@ function moveKeyboardFocus(direction) {
 
   if (index === -1) {
     targets[0].focus();
+    markControlFocus(targets[0]);
     return;
   }
 
@@ -6905,6 +7258,7 @@ function moveKeyboardFocus(direction) {
     ) % targets.length;
 
   targets[nextIndex].focus();
+  markControlFocus(targets[nextIndex]);
 
 }
 
@@ -7118,10 +7472,18 @@ function initSeniorSplash() {
     splash.style.display = 'flex';
     splash.classList.remove('splash-hidden');
     app.setAttribute('aria-hidden', 'true');
+    splash.focus({ preventScroll: true });
     splash.addEventListener('pointerdown', entrarNoAplicativo, { once: true });
     splash.addEventListener('click', entrarNoAplicativo, { once: true });
     splash.addEventListener('touchend', entrarNoAplicativo, { once: true });
   };
+
+  splash.addEventListener('keydown', event => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      entrarNoAplicativo();
+    }
+  });
 }
 
 function initInitialSplash() {
@@ -7236,24 +7598,50 @@ function initGamepadControls() {
 
   const press = (pad, index) => Boolean(pad.buttons[index]?.pressed);
   const rising = (pad, index) => press(pad, index) && !previous[index];
+  const markGamepadFocus = element => {
+    document.querySelectorAll('.accessibility-focus').forEach(item => item.classList.remove('accessibility-focus'));
+    element?.classList.add('accessibility-focus');
+    element?.closest('.switch')?.classList.add('accessibility-focus');
+  };
 
   const poll = timestamp => {
     const pad = [...(navigator.getGamepads?.() || [])].find(Boolean);
     if (pad) {
-      if (rising(pad, 10) || rising(pad, 0)) {
+      if (rising(pad, 0) || rising(pad, 10)) {
+        const seniorSplash = document.getElementById('seniorSplashScreen');
+        const splashVisible = seniorSplash && !seniorSplash.classList.contains('splash-hidden')
+          && seniorSplash.style.display !== 'none';
+        if (splashVisible) {
+          seniorSplash.click();
+          previous = pad.buttons.map(button => Boolean(button.pressed));
+          requestAnimationFrame(poll);
+          return;
+        }
         const active = document.activeElement;
-        if (active && active !== document.body && typeof active.click === 'function') active.click();
-        else document.querySelector('#app button:not([disabled]), #app [role="button"]')?.focus();
+        if (active && active !== document.body && typeof active.click === 'function') {
+          markGamepadFocus(active);
+          active.click();
+        } else {
+          const firstTarget = document.querySelector('#app button:not([disabled]), #app [role="button"]');
+          firstTarget?.focus();
+          markGamepadFocus(firstTarget);
+        }
       }
       if (rising(pad, 1)) {
-        if (STATE.screen !== 'home' && STATE.screen !== 'login' && STATE.screen !== 'chooseProfile') go('home');
+        const dialogCancel = document.querySelector('.confirm-dialog-cancel');
+        if (dialogCancel) {
+          dialogCancel.click();
+        } else if (STATE.screen !== 'home' && STATE.screen !== 'login' && STATE.screen !== 'chooseProfile') {
+          go('home');
+        }
       }
       if (timestamp - lastAxisMove > 180) {
         const x = pad.axes[0] || 0;
         const y = pad.axes[1] || 0;
-        const direction = Math.abs(x) > 0.4 ? (x > 0 ? 'ArrowRight' : 'ArrowLeft') : Math.abs(y) > 0.4 ? (y > 0 ? 'ArrowDown' : 'ArrowUp') : null;
+          const direction = Math.abs(x) > 0.4 ? (x > 0 ? 'ArrowRight' : 'ArrowLeft') : Math.abs(y) > 0.4 ? (y > 0 ? 'ArrowDown' : 'ArrowUp') : null;
         if (direction) {
           moveKeyboardFocus(direction);
+          markGamepadFocus(document.activeElement);
           lastAxisMove = timestamp;
         }
       }

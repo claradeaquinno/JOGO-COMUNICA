@@ -25,7 +25,7 @@
   --radius: 16px;
   --font: 'Nunito', sans-serif;
   --font-title: 'Baloo 2', cursive;
-  --focus-ring: #ff5da2;
+  --focus-ring: #ffd400;
 
   /* accessibility scale: multiplies base font/target sizes app-wide */
   --a11y-scale: 1;
@@ -87,6 +87,45 @@ body[data-theme="dark"] textarea {
 
 body[data-theme="dark"] .splash-screen {
   background: #10283d !important;
+}
+
+body[data-theme="dark"] .circular-mode-screen {
+  background: #10283d !important;
+  color: #f1f7ff !important;
+}
+
+body[data-theme="dark"] .circular-mode-screen .mode-screen-back {
+  background: #f1f7ff !important;
+  color: #10283d !important;
+  border: 2px solid #8ddff0 !important;
+}
+
+body[data-theme="dark"] .circular-keyboard-reserved {
+  background: #1b344d !important;
+  color: #f1f7ff !important;
+  border-color: #8ddff0 !important;
+  box-shadow: 0 0 0 4px rgba(141, 223, 240, .18), 0 10px 24px rgba(0, 0, 0, .4) !important;
+}
+
+body[data-theme="dark"] .circular-keyboard-reserved h1 {
+  color: #f1f7ff !important;
+}
+
+body[data-theme="dark"] .circular-keyboard-reserved p {
+  color: #c9f3fb !important;
+}
+
+body[data-theme="dark"] .carousel-full-topbar .icon-btn[data-go="build"] {
+  background: #17344d !important;
+  color: #f1f7ff !important;
+  border: 2px solid #8ddff0 !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, .4) !important;
+}
+
+body[data-theme="dark"] .carousel-full-topbar .icon-btn[data-go="build"]:hover,
+body[data-theme="dark"] .carousel-full-topbar .icon-btn[data-go="build"]:focus-visible {
+  background: #234d69 !important;
+  color: #ffffff !important;
 }
 
 * {
@@ -157,6 +196,32 @@ button:focus-visible,
   outline: 4px solid var(--focus-ring);
   outline-offset: 3px;
   border-radius: 10px;
+}
+
+#app .scan-active,
+#app .accessibility-focus,
+#app button:hover,
+#app [role="button"]:hover,
+#app input:hover,
+#app select:hover,
+#app textarea:hover,
+#app .switch:hover {
+  outline: 5px solid #ffd400 !important;
+  outline-offset: 5px !important;
+  box-shadow: 0 0 0 2px #10283d, 0 0 0 9px rgba(255, 212, 0, .95), 0 8px 22px rgba(0, 0, 0, .55) !important;
+  background: #ffd400 !important;
+  color: #173a5e !important;
+  position: relative;
+  z-index: 20;
+}
+
+#app .scan-active *,
+#app .accessibility-focus *,
+#app button:hover *,
+#app [role="button"]:hover *,
+#app .switch:hover * {
+  color: #173a5e !important;
+  text-shadow: none !important;
 }
 
 .skip-link {
@@ -1088,16 +1153,16 @@ button:focus-visible,
 }
 .word-favorite-remove {
   position: absolute;
-  top: 4px;
-  left: 4px;
+  top: 8px;
+  right: 8px;
   z-index: 2;
-  width: 38px;
-  height: 38px;
+  width: 30px;
+  height: 30px;
   border: 0;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.94);
   color: var(--red);
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 900;
   line-height: 1;
   cursor: pointer;
@@ -1269,6 +1334,19 @@ button:focus-visible,
 }
 .fav-remove { background: none !important; color: var(--red) !important; font-size: 18px; }
 
+.fav-item .fav-speak {
+  background: #ffd166 !important;
+  color: #173a5e !important;
+  border: 2px solid #b98200 !important;
+  text-shadow: none !important;
+}
+
+body[data-theme="dark"] .fav-item .fav-speak {
+  background: #ffd166 !important;
+  color: #10283d !important;
+  border-color: #b98200 !important;
+}
+
 .empty-state {
   text-align: center;
   color: #ffffff;
@@ -1358,7 +1436,28 @@ button:focus-visible,
   align-items: center;
   gap: 8px;
 }
-.custom-chip span.x { color: var(--red); cursor: pointer; font-weight: 800; padding: 4px; }
+.custom-chip .x {
+  appearance: none;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--red);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 900;
+  line-height: 1;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.custom-chip .x:hover,
+.custom-chip .x:focus-visible {
+  background: #ffe5e5;
+  color: #a6261d;
+}
 
 .challenge-card {
   width: 100%;
@@ -1591,6 +1690,98 @@ body[data-theme="dark"] .screen .stepper button {
   border-color: #4d789c !important;
 }
 
+body[data-theme="dark"] .form-block {
+  background: #1b344d !important;
+  border-color: #4d789c !important;
+  color: #f1f7ff !important;
+}
+
+body[data-theme="dark"] .form-block h3,
+body[data-theme="dark"] .form-block .field-label {
+  color: #f1f7ff !important;
+}
+
+body[data-theme="dark"] .form-row input,
+body[data-theme="dark"] .form-row select {
+  background: #10283d !important;
+  color: #f1f7ff !important;
+  border-color: #8ddff0 !important;
+}
+
+body[data-theme="dark"] .form-row input::placeholder {
+  color: #c9f3fb !important;
+  opacity: 1 !important;
+}
+
+body[data-theme="dark"] .emoji-pick {
+  background: #10283d !important;
+  color: #f1f7ff !important;
+  border-color: #8ddff0 !important;
+}
+
+body[data-theme="dark"] .emoji-pick:hover,
+body[data-theme="dark"] .emoji-pick:focus-visible,
+body[data-theme="dark"] .emoji-pick.accessibility-focus {
+  background: #294967 !important;
+  border-color: #f7c94d !important;
+  outline: 3px solid rgba(141, 223, 240, .55) !important;
+  outline-offset: 2px !important;
+}
+
+body[data-theme="dark"] .emoji-pick.chosen {
+  background: #51451c !important;
+  border-color: #f7c94d !important;
+}
+
+body[data-theme="dark"] .custom-chip {
+  background: #1b344d !important;
+  color: #f1f7ff !important;
+  border-color: #8ddff0 !important;
+}
+
+body[data-theme="dark"] .custom-chip .x {
+  color: #ffaaa3 !important;
+}
+
+body[data-theme="dark"] .submit-btn {
+  background: #f7c94d !important;
+  color: #10283d !important;
+  border: 2px solid #b98200 !important;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, .28) !important;
+}
+
+body[data-theme="dark"] .submit-btn:hover,
+body[data-theme="dark"] .submit-btn:focus-visible {
+  background: #ffdc70 !important;
+  color: #10283d !important;
+  border-color: #dca707 !important;
+}
+
+body[data-theme="dark"] .action-row .btn-erase {
+  background: #ffb995 !important;
+  color: #10283d !important;
+  border-color: #ff8f61 !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+
+body[data-theme="dark"] .action-row .btn-clear {
+  background: #f3a8b4 !important;
+  color: #10283d !important;
+  border-color: #e2768c !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+
+body[data-theme="dark"] .speak-btn,
+body[data-theme="dark"] .speak-btn:disabled {
+  background: #3fa875 !important;
+  color: #ffffff !important;
+  border: 2px solid #79e0a8 !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+
 /* Contraste final do Guri e das ações no tema escuro infantil. */
 body[data-theme="dark"] .mascot-tip-toast {
   background: #ffffff !important;
@@ -1661,6 +1852,158 @@ body[data-theme="dark"] #feedbackText {
   background: #8bd3a8 !important;
   border-color: #3f9b68 !important;
 }
+
+/* Carrossel infantil: texto e cartões com contraste estável nos dois temas. */
+body[data-theme="light"] .carousel-card.side {
+  background: #e3eef4 !important;
+  border-color: #8aafc0 !important;
+}
+
+body[data-theme="light"] .carousel-card.side .label {
+  color: #123b4d !important;
+  text-shadow: none !important;
+}
+
+body[data-theme="dark"] .carousel-card.side {
+  background: #17344d !important;
+  border-color: #4f7898 !important;
+}
+
+body[data-theme="dark"] .carousel-card.side .label {
+  color: #eff7ff !important;
+  text-shadow: none !important;
+}
+
+body[data-theme="light"] .carousel-card.center,
+body[data-theme="dark"] .carousel-card.center {
+  background: #f7c94d !important;
+  border-color: #b98200 !important;
+}
+
+body[data-theme="light"] .carousel-card.center .label,
+body[data-theme="dark"] .carousel-card.center .label {
+  color: #123b4d !important;
+  text-shadow: none !important;
+}
+
+body[data-theme="light"] .carousel-full-content .action-row button,
+body[data-theme="dark"] .carousel-full-content .action-row button {
+  color: #123b4d !important;
+  text-shadow: none !important;
+}
+
+body[data-theme="light"] .carousel-full-content .phrase-placeholder {
+  color: #456678 !important;
+  opacity: 1 !important;
+}
+
+body[data-theme="dark"] .carousel-full-content .phrase-placeholder {
+  color: #dbeaf3 !important;
+  opacity: 1 !important;
+}
+
+body[data-theme="dark"] .phrase-bar {
+  background: #10283d !important;
+  border-color: #4d789c !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .35) !important;
+}
+
+body[data-theme="dark"] .phrase-chip {
+  background: #e8f6fb !important;
+  color: #10283d !important;
+  border-color: #8ddff0 !important;
+  text-shadow: none !important;
+}
+
+/* O X dos favoritos não deve herdar o hover gigante da navegação acessível. */
+#app .favorite-toggle:hover,
+#app .favorite-toggle:focus-visible,
+#app .favorite-toggle.accessibility-focus,
+#app .favorite-toggle.scan-active {
+  position: absolute !important;
+  top: 2px !important;
+  right: 2px !important;
+  width: 40px !important;
+  height: 40px !important;
+  margin: 0 !important;
+  padding: 2px !important;
+  transform: scale(1.05) !important;
+  outline: 3px solid var(--focus-ring) !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 2px 6px rgba(23, 58, 94, .22) !important;
+  background: rgba(255, 255, 255, .94) !important;
+  color: #e0a527 !important;
+  z-index: 4 !important;
+}
+
+#app .word-favorite-remove:focus-visible,
+#app .word-favorite-remove.accessibility-focus,
+#app .word-favorite-remove.scan-active {
+  position: absolute !important;
+  top: 8px !important;
+  right: 8px !important;
+  margin: 0 !important;
+}
+
+#app .word-favorite-remove:hover {
+  position: absolute !important;
+  z-index: 4 !important;
+  outline: none !important;
+  outline-offset: 0 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .22) !important;
+  background: rgba(255, 255, 255, .98) !important;
+  color: var(--red) !important;
+  transform: scale(1.06) !important;
+}
+
+/* Avisos de favoritos legíveis no tema escuro. */
+body[data-theme="dark"] .toast {
+  background: #10283d !important;
+  color: #f1f7ff !important;
+  border: 2px solid #8ddff0 !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, .45) !important;
+}
+
+.confirm-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(5, 20, 32, .72);
+}
+.confirm-dialog[hidden] { display: none; }
+.confirm-dialog-panel {
+  width: min(420px, 100%);
+  padding: 24px;
+  border: 2px solid #8ddff0;
+  border-radius: 20px;
+  background: #17344d;
+  color: #f1f7ff;
+  text-align: center;
+  box-shadow: 0 12px 32px rgba(0,0,0,.45);
+}
+.confirm-dialog-message { margin: 0 0 20px; font-size: 18px; font-weight: 800; }
+.confirm-dialog-actions { display: flex; justify-content: center; gap: 12px; }
+.confirm-dialog-actions button {
+  min-width: 120px;
+  min-height: 48px;
+  border: 2px solid #8ddff0;
+  border-radius: 12px;
+  background: #e8f6fb;
+  color: #10283d;
+  font: inherit;
+  font-weight: 900;
+  cursor: pointer;
+}
+.confirm-dialog-actions .confirm-dialog-cancel { background: #dbe5eb; }
+.confirm-dialog-actions button:focus-visible,
+.confirm-dialog-actions button.accessibility-focus {
+  outline: 4px solid #ffd400;
+  outline-offset: 3px;
+}
+
 </style>
 </head>
 
@@ -1941,9 +2284,11 @@ function getScanSpeed() {
 }
 
 function scanTargets() {
-  const targets = [...document.querySelectorAll(
-    '#app button:not([disabled]), #app [role="button"]:not([aria-disabled="true"]), #app input:not([disabled]), #app select:not([disabled]), #app textarea:not([disabled])'
-  )].filter(element => element.offsetParent !== null);
+  const dialog = document.querySelector('.confirm-dialog');
+  const selector = dialog
+    ? '.confirm-dialog button:not([disabled])'
+    : '#app button:not([disabled]), #app [role="button"]:not([aria-disabled="true"]), #app input:not([disabled]), #app select:not([disabled]), #app textarea:not([disabled])';
+  const targets = [...document.querySelectorAll(selector)].filter(element => element.offsetParent !== null);
 
   targets.forEach(element => {
     if (element.matches('[role="button"]') && !element.hasAttribute('tabindex')) {
@@ -1957,6 +2302,7 @@ function scanTargets() {
 function scheduleScan() {
   clearTimeout(scanTimer);
   scanTimer = null;
+  document.querySelectorAll('.scan-active').forEach(element => element.classList.remove('scan-active'));
   if (!STATE.data.settings.scanEnabled || document.getElementById('app')?.getAttribute('aria-hidden') === 'true') return;
 
   const targets = scanTargets();
@@ -1966,7 +2312,10 @@ function scheduleScan() {
     scanIndex = -1;
   }
   scanIndex = (scanIndex + 1) % targets.length;
-  targets[scanIndex].focus({ preventScroll: true });
+  const target = targets[scanIndex];
+  target.classList.add('scan-active');
+  target.closest('.switch')?.classList.add('scan-active');
+  target.focus({ preventScroll: true });
   scanTimer = setTimeout(scheduleScan, getScanSpeed());
 }
 
@@ -1979,6 +2328,50 @@ function showToast(message) {
   STATE.toastTimer = setTimeout(() => {
     toast.classList.remove('show');
   }, 1800);
+}
+
+function showAccessibleConfirm(message, onConfirm) {
+  document.querySelector('.confirm-dialog')?.remove();
+  const dialog = document.createElement('div');
+  dialog.className = 'confirm-dialog';
+  dialog.setAttribute('role', 'alertdialog');
+  dialog.setAttribute('aria-modal', 'true');
+  dialog.innerHTML = `<div class="confirm-dialog-panel" role="document">
+    <p class="confirm-dialog-message">${message}</p>
+    <div class="confirm-dialog-actions">
+      <button type="button" class="confirm-dialog-confirm">Confirmar</button>
+      <button type="button" class="confirm-dialog-cancel">Cancelar</button>
+    </div>
+  </div>`;
+  document.body.appendChild(dialog);
+  const confirmButton = dialog.querySelector('.confirm-dialog-confirm');
+  const cancelButton = dialog.querySelector('.confirm-dialog-cancel');
+  const returnFocusId = document.activeElement?.id;
+  const close = () => {
+    dialog.remove();
+    restoreFocusedControl(returnFocusId);
+  };
+  confirmButton.addEventListener('click', () => { close(); onConfirm(); });
+  cancelButton.addEventListener('click', close);
+  dialog.addEventListener('keydown', event => {
+    event.stopPropagation();
+    if (event.key === 'Escape') { event.preventDefault(); close(); return; }
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      (document.activeElement === confirmButton ? cancelButton : confirmButton).focus();
+      return;
+    }
+    if (['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown'].includes(event.key)) {
+      event.preventDefault();
+      (document.activeElement === confirmButton ? cancelButton : confirmButton).focus();
+      return;
+    }
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      document.activeElement?.click();
+    }
+  });
+  confirmButton.focus();
 }
 
 function showMascotTip(text) {
@@ -2179,19 +2572,28 @@ function eraseLast() {
     showToast('Não há palavras para apagar.');
     return;
   }
+  const focusedControlId = document.activeElement?.id;
   speak('Apagar');
   STATE.phrase.pop();
   loadLayer();
-  render();
+  renderKeepingFocus(focusedControlId);
   announcePhrase();
 }
 
 function clearPhrase() {
-  if (STATE.phrase.length > 0 && !window.confirm('Deseja limpar toda a frase?')) return;
+  if (STATE.phrase.length > 0) {
+    const focusedControlId = document.activeElement?.id;
+    showAccessibleConfirm('Deseja limpar toda a frase?', () => clearPhraseConfirmed(focusedControlId));
+    return;
+  }
+  clearPhraseConfirmed();
+}
+
+function clearPhraseConfirmed(focusedControlId = document.activeElement?.id) {
   if (STATE.phrase.length > 0) speak('Limpar frase');
   STATE.phrase = [];
   loadLayer();
-  render();
+  renderKeepingFocus(focusedControlId);
   announcePhrase();
 }
 
@@ -2245,7 +2647,65 @@ function moveCarousel(delta) {
   if (STATE.options.length === 0) return;
   const total = STATE.options.length;
   STATE.carouselIndex = (STATE.carouselIndex + delta + total) % total;
+  renderKeepingFocus();
+}
+
+function restoreFocusedControl(focusedControlId) {
+  if (!focusedControlId) return;
+  const focusedControl = document.getElementById(focusedControlId);
+  if (focusedControl) {
+    document.querySelectorAll('.accessibility-focus').forEach(item => item.classList.remove('accessibility-focus'));
+    focusedControl.focus();
+    focusedControl.classList.add('accessibility-focus');
+  }
+}
+
+function renderKeepingFocus(focusedControlId = document.activeElement?.id) {
   render();
+  restoreFocusedControl(focusedControlId);
+}
+
+function focusCarouselCenter() {
+  const centerCard = document.querySelector('.carousel-card.center[data-pick]');
+  if (centerCard) {
+    document.querySelectorAll('.accessibility-focus').forEach(item => item.classList.remove('accessibility-focus'));
+    centerCard.focus();
+    centerCard.classList.add('accessibility-focus');
+  }
+}
+
+function markedCarouselTarget() {
+  return document.querySelector(
+    '#app .accessibility-focus#prevBtn, #app .accessibility-focus#nextBtn, #app .accessibility-focus#confirmBtn'
+  );
+}
+
+function carouselControls() {
+  return [...document.querySelectorAll(
+    '#app button:not([disabled]), #app [role="button"]:not(.carousel-card):not([aria-disabled="true"]), #app input:not([disabled]), #app select:not([disabled]), #app textarea:not([disabled])'
+  )].filter(element => element.offsetParent !== null);
+}
+
+function activateMarkedCarouselTarget() {
+  const active = document.activeElement;
+  const activeIsControl = active && active !== document.body && active.matches(
+    '#app button:not([disabled]), #app [role="button"]:not(.carousel-card), #app input:not([disabled]), #app select:not([disabled]), #app textarea:not([disabled])'
+  );
+  const marked = activeIsControl ? active : markedCarouselTarget();
+  if (!marked) return false;
+
+  const markedId = marked.getAttribute('data-pick');
+  if (markedId) {
+    const markedIndex = STATE.options.indexOf(markedId);
+    if (markedIndex >= 0) {
+      STATE.carouselIndex = markedIndex;
+      confirmSelection();
+      return true;
+    }
+  }
+
+  marked.click();
+  return true;
 }
 
 function confirmSelection() {
@@ -2253,6 +2713,7 @@ function confirmSelection() {
     showToast('Não há mais opções.');
     return;
   }
+  const focusedControlId = document.activeElement?.id;
   const id = STATE.options[STATE.carouselIndex];
   const word = wordById(id);
   if (!word) return;
@@ -2267,7 +2728,7 @@ function confirmSelection() {
 
   STATE.carouselIndex = 0;
   loadLayer();
-  render();
+  renderKeepingFocus(focusedControlId);
   announcePhrase();
 }
 
@@ -2283,9 +2744,13 @@ function isFavoriteWord(wordId) {
 function toggleFavoriteWord(wordId) {
   const index = STATE.data.favWords.indexOf(wordId);       
   if (index >= 0) {
-    if (!window.confirm('Remover esta palavra dos favoritos?')) return;
-    STATE.data.favWords.splice(index, 1);
-    showToast('Palavra removida dos favoritos.');
+    showAccessibleConfirm('Remover esta palavra dos favoritos?', () => {
+      STATE.data.favWords.splice(index, 1);
+      showToast('Palavra removida dos favoritos.');
+      saveData();
+      render();
+    });
+    return;
   } else {
     STATE.data.favWords.push(wordId);
     showToast('Palavra adicionada aos favoritos ⭐');
@@ -2299,17 +2764,21 @@ function wordCardHtml(word, inFavorites = false) {
   return `
     <div class="word-card" data-word="${word.id}" ${inFavorites ? 'data-favorite-word-card' : ''} role="button" tabindex="0"
       aria-label="Adicionar palavra ${word.label} à frase. ${word.description || ''}">
-      <button type="button" class="favorite-toggle ${favorite ? 'is-favorite' : ''}"
-        data-fav-word="${word.id}"
-        aria-label="${favorite ? `Remover ${word.label} dos favoritos` : `Adicionar ${word.label} aos favoritos`}"
-        aria-pressed="${favorite}">
-        ${favorite ? '★' : '☆'}
-      </button>
+      ${!inFavorites ? `
+        <button type="button" class="favorite-toggle ${favorite ? 'is-favorite' : ''}"
+          data-fav-word="${word.id}"
+          aria-label="${favorite ? `Palavra ${word.label} já adicionada aos favoritos` : `Adicionar ${word.label} aos favoritos` }"
+          title="${favorite ? 'Palavra já adicionada' : `Adicionar ${word.label} aos favoritos` }"
+          aria-pressed="${favorite}">
+          ${favorite ? '★' : '☆'}
+        </button>
+      ` : ''}
       ${inFavorites ? `
         <button type="button" class="word-favorite-remove"
           data-remove-word="${word.id}"
           aria-label="Remover ${word.label} dos favoritos"
-          title="Remover dos favoritos">✕</button>
+          title="Remover dos favoritos"
+          data-delete-action="favorite-word">✕</button>
       ` : ''}
       ${wordVisualHtml(word)}
       <div class="label">${word.label}</div>
@@ -2467,31 +2936,6 @@ function renderCircularKeyboard() {
   return `<div class="mode-screen circular-mode-screen"><button class="mode-screen-back" data-go="build" aria-label="Voltar para escolha do modo">← Voltar</button><div class="circular-keyboard-reserved"><h1>Teclado circular</h1><p>Área reservada para adicionar o teclado circular.</p></div></div>`;
 }
 
-function renderModeScreenLegacy(mode) {
-  return `
-    <div class="mode-screen">
-      <button class="mode-screen-back" data-go="build" aria-label="Voltar para escolha do modo">← Voltar</button>
-      <div class="mode-screen-content">
-        <div class="input-mode-placeholder-icon" aria-hidden="true">${isCircular ? '◌' : '◈'}</div>
-        <h1>${title}</h1>
-        <p>${description}</p>
-      </div>
-    </div>
-  `;
-}
-
-function renderCircularKeyboard() {
-  return `
-    <div class="mode-screen circular-mode-screen">
-      <button class="mode-screen-back" data-go="build" aria-label="Voltar para escolha do modo">← Voltar</button>
-      <div class="circular-keyboard-reserved">
-        <h1>Teclado circular</h1>
-        <p>Área reservada para adicionar o teclado circular.</p>
-      </div>
-    </div>
-  `;
-}
-
 function renderCategories() {
   const categories = allCategories();
   return `
@@ -2568,7 +3012,7 @@ function renderFavorites() {
       ` : STATE.data.favPhrases.map((phrase, index) => `
           <div class="fav-item">
             <div class="txt">🗣️ ${phrase}</div>
-            <button data-speak="${phrase}" aria-label="Falar frase: ${phrase}">🔊</button>
+            <button class="fav-speak" data-speak="${phrase}" aria-label="Falar frase: ${phrase}">🔊 Falar</button>
             <button class="fav-remove" data-remove-phrase="${index}" aria-label="Remover frase dos favoritos: ${phrase}">✕</button>
           </div>
         `).join('')}
@@ -2590,14 +3034,14 @@ function renderPersonalize() {
   const customWordsHtml = STATE.data.customWords.map(word => `
       <span class="custom-chip">
         ${word.emoji} ${word.label}
-        <span class="x" data-del-word="${word.id}" role="button" tabindex="0" aria-label="Excluir palavra ${word.label}">✕</span>
+        <button type="button" class="x" data-del-word="${word.id}" aria-label="Excluir palavra ${word.label}" title="Excluir palavra">✕</button>
       </span>
     `).join('') || `<span style="color:var(--navy-soft);font-weight:600;font-size:13px;">Nenhuma palavra personalizada ainda.</span>`;
 
   const customCategoriesHtml = STATE.data.customCategories.map(category => `
       <span class="custom-chip">
         ${category.emoji} ${category.label}
-        <span class="x" data-del-cat="${category.id}" role="button" tabindex="0" aria-label="Excluir categoria ${category.label}">✕</span>
+        <button type="button" class="x" data-del-cat="${category.id}" aria-label="Excluir categoria ${category.label}" title="Excluir categoria">✕</button>
       </span>
     `).join('') || `<span style="color:var(--navy-soft);font-weight:600;font-size:13px;">Nenhuma categoria personalizada ainda.</span>`;
 
@@ -2741,7 +3185,7 @@ function renderProfile() {
     <div class="info-block">
       <h3 style="margin:0 0 12px; color:#103d5d; font-weight:900; letter-spacing:0.02em;">Feedback</h3>
       <div style="display:grid; gap:10px;">
-        <textarea id="feedbackText" rows="4" placeholder="Como podemos melhorar?" style="width:100%; border-radius:12px; border:1px solid rgba(16,61,93,.25); background:#ffffff; color:var(--navy); padding:12px; resize:vertical; font-weight:600;">${profile.feedback || ''}</textarea>
+        <textarea id="feedbackText" rows="4" placeholder="Como podemos melhorar?" style="width:100%; border-radius:12px; border:1px solid rgba(16,61,93,.25); background:#ffffff; color:var(--navy); padding:12px; resize:vertical; font-weight:600;">${profile.feedback && profile.feedback.trim().toLowerCase() !== 'fe' ? profile.feedback : ''}</textarea>
         <button class="submit-btn" id="saveFeedbackBtn">Salvar feedback</button>
       </div>
     </div>
@@ -2779,6 +3223,13 @@ function renderSettings() {
   const fontLabels = ['Pequena', 'Média', 'Grande', 'Extra grande'];
   const scanSpeed = getScanSpeed();
   const voiceRate = getVoiceRate();
+  const voiceLabel = voiceRate <= 0.6
+    ? 'Muito lenta'
+    : voiceRate <= 0.8
+      ? 'Lenta'
+      : voiceRate <= 1
+        ? 'Normal'
+        : 'Rápida';
 
   return `
     <div class="topbar">
@@ -2842,7 +3293,7 @@ function renderSettings() {
           </div>
           <div class="stepper">
             <button id="rateDownBtn" aria-label="Diminuir velocidade da voz">−</button>
-            <span aria-live="polite">${Math.round(voiceRate * 100)}%</span>
+            <span aria-live="polite">${voiceLabel}</span>
             <button id="rateUpBtn" aria-label="Aumentar velocidade da voz">+</button>
           </div>
         </div>
@@ -2944,7 +3395,12 @@ function attachHandlers() {
   document.querySelectorAll('[data-fav-word]').forEach(element => {
     element.addEventListener('click', event => {
       event.stopPropagation();
-      toggleFavoriteWord(element.getAttribute('data-fav-word'));
+      const wordId = element.getAttribute('data-fav-word');
+      if (isFavoriteWord(wordId)) {
+        showToast('Palavra já adicionada aos favoritos.');
+        return;
+      }
+      toggleFavoriteWord(wordId);
     });
   });
 
@@ -2985,7 +3441,7 @@ function attachHandlers() {
       }
     };
     element.addEventListener('click', activate);
-    element.addEventListener('keydown', activateOnEnterSpace(activate));
+    /* No carrossel, teclado e analógico não selecionam cartões. */
   });
 
   const confirmBtn = document.getElementById('confirmBtn');
@@ -3009,7 +3465,12 @@ function attachHandlers() {
   const favWordBtn = document.getElementById('favWordBtn');
   if (favWordBtn) favWordBtn.addEventListener('click', () => {
     const word = STATE.phrase[STATE.phrase.length - 1];
-    if (word) toggleFavoriteWord(word.id);
+    if (!word) return;
+    if (isFavoriteWord(word.id)) {
+      showToast('Palavra já adicionada aos favoritos.');
+      return;
+    }
+    toggleFavoriteWord(word.id);
   });
 
   document.querySelectorAll('[data-speak]').forEach(element => {
@@ -3024,10 +3485,11 @@ function attachHandlers() {
       event.stopPropagation();
       const index = parseInt(element.getAttribute('data-remove-phrase'), 10);
       if (Number.isNaN(index)) return;
-      if (!window.confirm('Remover esta frase dos favoritos?')) return;
-      STATE.data.favPhrases.splice(index, 1);
-      saveData();
-      render();
+      showAccessibleConfirm('Remover esta frase dos favoritos?', () => {
+        STATE.data.favPhrases.splice(index, 1);
+        saveData();
+        render();
+      });
     });
   });
 
@@ -3107,11 +3569,13 @@ function attachHandlers() {
     const activate = event => {
       event.stopPropagation();
       const id = element.getAttribute('data-del-word');
-      STATE.data.customWords = STATE.data.customWords.filter(word => word.id !== id);
-      STATE.data.favWords = STATE.data.favWords.filter(wordId => wordId !== id);
-      saveData();
-      loadLayer();
-      render();
+      showAccessibleConfirm('Remover esta palavra personalizada?', () => {
+        STATE.data.customWords = STATE.data.customWords.filter(word => word.id !== id);
+        STATE.data.favWords = STATE.data.favWords.filter(wordId => wordId !== id);
+        saveData();
+        loadLayer();
+        render();
+      });
     };
     element.addEventListener('click', activate);
     element.addEventListener('keydown', activateOnEnterSpace(activate));
@@ -3121,11 +3585,13 @@ function attachHandlers() {
     const activate = event => {
       event.stopPropagation();
       const id = element.getAttribute('data-del-cat');
-      STATE.data.customCategories = STATE.data.customCategories.filter(category => category.id !== id);
-      STATE.data.customWords = STATE.data.customWords.filter(word => word.cat !== id);
-      saveData();
-      loadLayer();
-      render();
+      showAccessibleConfirm('Remover esta categoria personalizada?', () => {
+        STATE.data.customCategories = STATE.data.customCategories.filter(category => category.id !== id);
+        STATE.data.customWords = STATE.data.customWords.filter(word => word.cat !== id);
+        saveData();
+        loadLayer();
+        render();
+      });
     };
     element.addEventListener('click', activate);
     element.addEventListener('keydown', activateOnEnterSpace(activate));
@@ -3293,33 +3759,22 @@ if (mascotFloatBtn) {
       return;
     }
 
-    if (event.key === 'Escape') {
-      event.preventDefault();
-      if (STATE.screen !== 'home') {
-        go('home');
-      } else {
-        mascotFloatBtn.blur();
-      }
-      return;
-    }
-
-    if (['ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowUp'].includes(event.key)) {
-      event.preventDefault();
-      const targets = [...document.querySelectorAll(
-        '#app button:not([disabled]), #app [role="button"]:not([aria-disabled="true"]), #app input:not([disabled]), #app select:not([disabled]), #app textarea:not([disabled])'
-      )].filter(element => element.offsetParent !== null);
-      if (!targets.length) return;
-      const next = event.key === 'ArrowRight' || event.key === 'ArrowDown'
-        ? targets[0]
-        : targets[targets.length - 1];
-      next.focus();
-    }
   });
 }
 
+/* Delete/Backspace também ativam o X que estiver focado. */
+document.addEventListener('keydown', event => {
+  if (event.defaultPrevented || !['Backspace', 'Delete'].includes(event.key) || event.repeat) return;
+  const active = document.activeElement;
+  if (!active?.matches('[data-del-word], [data-del-cat], [data-remove-word], [data-remove-phrase]')) return;
+  event.preventDefault();
+  active.click();
+});
+
 /* Navegação por teclado/switch na tela de montagem de frase */
 document.addEventListener('keydown', event => {
-  if (STATE.data.settings.scanEnabled && (event.key === 'Enter' || event.key === ' ')) {
+  if (STATE.screen !== 'carouselMode'
+      && STATE.data.settings.scanEnabled && (event.key === 'Enter' || event.key === ' ')) {
     const active = document.activeElement;
     if (active && active.matches('[role="button"][tabindex="0"]')) {
       event.preventDefault();
@@ -3328,7 +3783,81 @@ document.addEventListener('keydown', event => {
     }
   }
 
-  if (STATE.screen !== 'build') return;
+  const confirmDialog = document.querySelector('.confirm-dialog');
+  if (confirmDialog) {
+    const confirmButtons = [...confirmDialog.querySelectorAll('button:not([disabled])')];
+    if (confirmButtons.length) {
+      event.preventDefault();
+      const activeIndex = confirmButtons.indexOf(document.activeElement);
+      if (event.key === 'Escape') {
+        confirmDialog.querySelector('.confirm-dialog-cancel')?.click();
+      } else if (['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown', 'Tab'].includes(event.key)) {
+        const direction = event.key === 'ArrowLeft' || event.key === 'ArrowUp' || event.key === 'Tab' ? -1 : 1;
+        const nextIndex = activeIndex < 0 ? 0 : (activeIndex + direction + confirmButtons.length) % confirmButtons.length;
+        document.querySelectorAll('.accessibility-focus').forEach(item => item.classList.remove('accessibility-focus'));
+        confirmButtons[nextIndex].focus();
+        confirmButtons[nextIndex].classList.add('accessibility-focus');
+      } else if (event.key === 'Enter' || event.key === ' ') {
+        (activeIndex >= 0 ? confirmButtons[activeIndex] : confirmButtons[0]).click();
+      }
+      return;
+    }
+  }
+
+  if (event.key === 'Escape') {
+    event.preventDefault();
+    if (STATE.screen !== 'home') {
+      go('home');
+    } else {
+      document.activeElement?.blur();
+    }
+    return;
+  }
+
+  if (STATE.screen === 'carouselMode') {
+    const controls = carouselControls();
+    if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) {
+      if (!controls.length) return;
+      event.preventDefault();
+      const currentIndex = controls.indexOf(document.activeElement);
+      const direction = event.key === 'ArrowLeft' || event.key === 'ArrowUp' ? -1 : 1;
+      const nextIndex = currentIndex < 0
+        ? (direction > 0 ? 0 : controls.length - 1)
+        : (currentIndex + direction + controls.length) % controls.length;
+      document.querySelectorAll('.accessibility-focus').forEach(item => item.classList.remove('accessibility-focus'));
+      controls[nextIndex].focus();
+      controls[nextIndex].classList.add('accessibility-focus');
+      return;
+    }
+    if (event.key === 'Enter' || event.key === ' ') {
+      if (activateMarkedCarouselTarget()) event.preventDefault();
+      return;
+    }
+    return;
+  }
+
+  if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+    const dialog = document.querySelector('.confirm-dialog');
+    const targets = [...(dialog ? dialog.querySelectorAll('button:not([disabled])') : document.querySelectorAll(
+      '#app button:not([disabled]), #app [role="button"]:not([aria-disabled="true"]), #app input:not([disabled]), #app select:not([disabled]), #app textarea:not([disabled])'
+    ))].filter(element => element.offsetParent !== null);
+    if (targets.length) {
+      event.preventDefault();
+      document.querySelectorAll('.accessibility-focus').forEach(item => item.classList.remove('accessibility-focus'));
+      const activeIndex = targets.indexOf(document.activeElement);
+      const direction = event.key === 'ArrowDown' ? 1 : -1;
+      const nextIndex = activeIndex < 0
+        ? (direction > 0 ? 0 : targets.length - 1)
+        : (activeIndex + direction + targets.length) % targets.length;
+      const target = targets[nextIndex];
+      target.focus();
+      target.classList.add('accessibility-focus');
+      target.closest('.switch')?.classList.add('accessibility-focus');
+      return;
+    }
+  }
+
+  if (STATE.screen !== 'carouselMode') return;
 
   const tag = document.activeElement?.tagName;
   if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
@@ -3550,33 +4079,99 @@ function initGamepadControls() {
   if (!('getGamepads' in navigator)) return;
   let previous = [];
   let lastAxisMove = 0;
+  const markGamepadFocus = element => {
+    document.querySelectorAll('.accessibility-focus').forEach(item => item.classList.remove('accessibility-focus'));
+    element?.classList.add('accessibility-focus');
+    element?.closest('.switch')?.classList.add('accessibility-focus');
+  };
 
   const poll = timestamp => {
     const pad = [...(navigator.getGamepads?.() || [])].find(Boolean);
     if (pad) {
       const pressed = index => Boolean(pad.buttons[index]?.pressed);
       const rising = index => pressed(index) && !previous[index];
-      const targets = () => [...document.querySelectorAll(
-        '#app button:not([disabled]), #app [role="button"]:not([aria-disabled="true"]), #app input:not([disabled]), #app select:not([disabled]), #app textarea:not([disabled])'
-      )].filter(element => element.offsetParent !== null);
+      const targets = () => {
+        const dialog = document.querySelector('.confirm-dialog');
+        return [...(dialog ? dialog.querySelectorAll('button:not([disabled])') : document.querySelectorAll(
+          '#app button:not([disabled]), #app [role="button"]:not([aria-disabled="true"]), #app input:not([disabled]), #app select:not([disabled]), #app textarea:not([disabled])'
+        ))].filter(element => element.offsetParent !== null);
+      };
 
-      if (rising(10) || rising(0)) {
-        const active = document.activeElement;
-        if (active && active !== document.body && typeof active.click === 'function') active.click();
-        else targets()[0]?.focus();
+      const dialog = document.querySelector('.confirm-dialog');
+      if (dialog) {
+        const dialogTargets = [...dialog.querySelectorAll('button:not([disabled])')];
+        if (rising(0) || rising(10)) {
+          const active = dialog.contains(document.activeElement)
+            ? document.activeElement
+            : dialogTargets[0];
+          active?.click();
+        }
+        if (rising(1)) {
+          dialog.querySelector('.confirm-dialog-cancel')?.click();
+        }
+        if (timestamp - lastAxisMove > 180 && dialogTargets.length) {
+          const x = pad.axes[0] || 0;
+          const y = pad.axes[1] || 0;
+          const direction = Math.abs(x) > 0.4 || Math.abs(y) > 0.4;
+          if (direction) {
+            const current = dialogTargets.indexOf(document.activeElement);
+            const next = current < 0 ? 0 : (current + 1) % dialogTargets.length;
+            dialogTargets[next].focus();
+            markGamepadFocus(dialogTargets[next]);
+            lastAxisMove = timestamp;
+          }
+        }
+        previous = pad.buttons.map(button => Boolean(button.pressed));
+        requestAnimationFrame(poll);
+        return;
+      }
+
+      if (rising(0) || rising(10)) {
+        const splash = document.getElementById('splashScreen');
+        const splashVisible = splash && !splash.classList.contains('splash-hidden')
+          && splash.style.display !== 'none';
+        if (splashVisible) {
+          splash.click();
+        } else if (document.querySelector('.confirm-dialog')) {
+          const dialog = document.querySelector('.confirm-dialog');
+          const active = dialog.contains(document.activeElement)
+            ? document.activeElement
+            : dialog.querySelector('button:not([disabled])');
+          active?.click();
+        } else if (STATE.screen === 'carouselMode') {
+          activateMarkedCarouselTarget();
+        } else {
+          const active = document.activeElement;
+          if (active && active !== document.body && typeof active.click === 'function') {
+            markGamepadFocus(active);
+            active.click();
+          } else {
+            const firstTarget = targets()[0];
+            firstTarget?.focus();
+            markGamepadFocus(firstTarget);
+          }
+        }
       }
       if (rising(1)) {
-        if (STATE.screen !== 'home') go('home');
+        const dialogCancel = document.querySelector('.confirm-dialog-cancel');
+        if (dialogCancel) {
+          dialogCancel.click();
+        } else if (STATE.screen === 'carouselMode') {
+          // No carrossel, B não abandona a tela.
+        } else if (STATE.screen !== 'home') {
+          go('home');
+        }
       }
       if (timestamp - lastAxisMove > 180) {
         const x = pad.axes[0] || 0;
         const y = pad.axes[1] || 0;
         const direction = Math.abs(x) > 0.4 ? (x > 0 ? 1 : -1) : Math.abs(y) > 0.4 ? (y > 0 ? 1 : -1) : 0;
         if (direction) {
-          const list = targets();
+          const list = STATE.screen === 'carouselMode' ? carouselControls() : targets();
           const current = list.indexOf(document.activeElement);
           const next = current < 0 ? 0 : (current + direction + list.length) % list.length;
           list[next]?.focus();
+          markGamepadFocus(list[next]);
           lastAxisMove = timestamp;
         }
       }
