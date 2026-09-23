@@ -32,54 +32,61 @@
   --tap-min: 48px;
 }
 
-/* ---------- High contrast theme ---------- */
-body[data-contrast="high"] {
-  --sky-top: #000000;
-  --sky-bottom: #000000;
-  --yellow: #ffe600;
-  --yellow-dark: #cbb700;
-  --navy: #ffffff;
-  --navy-soft: #ffffff;
-  --card: #000000;
-  --card-border: #ffe600;
-  --green: #00e676;
-  --red: #ff5252;
-  --white: #000000;
+/* ---------- Tema escuro acessível ---------- */
+body[data-theme="dark"] {
+  --sky-top: #10283d;
+  --sky-bottom: #173a5e;
+  --navy: #f1f7ff;
+  --navy-soft: #c9dced;
+  --card: #1b344d;
+  --card-border: #3d6688;
+  --white: #10283d;
+  background: #10283d !important;
+  color: #f1f7ff;
 }
 
-body[data-contrast="high"] .word-card,
-body[data-contrast="high"] .cat-card,
-body[data-contrast="high"] .form-block,
-body[data-contrast="high"] .info-block,
-body[data-contrast="high"] .fav-item,
-body[data-contrast="high"] .challenge-card,
-body[data-contrast="high"] .carousel-card {
-  color: #ffe600;
-  border-width: 3px;
+body[data-theme="dark"]:not(.bg-outras),
+body[data-theme="dark"].bg-outras {
+  background: linear-gradient(180deg, rgba(16,40,61,.82), rgba(10,25,39,.96)),
+    url('assets/imagens/plano-inicio.png') center / cover fixed !important;
 }
 
-body[data-contrast="high"] .phrase-bar {
-  background: #000;
-  border-color: #ffe600;
-  color: #ffe600;
+body[data-theme="dark"] .card,
+body[data-theme="dark"] .menu-btn,
+body[data-theme="dark"] .word-card,
+body[data-theme="dark"] .cat-card,
+body[data-theme="dark"] .form-block,
+body[data-theme="dark"] .info-block,
+body[data-theme="dark"] .fav-item,
+body[data-theme="dark"] .challenge-card,
+body[data-theme="dark"] .carousel-card {
+  background: #1b344d !important;
+  color: #f1f7ff !important;
+  border-color: #3d6688 !important;
 }
 
-body[data-contrast="high"] .menu-btn,
-body[data-contrast="high"] .card {
-  color: #ffe600;
+body[data-theme="dark"] .word-card .label,
+body[data-theme="dark"] .word-card .description,
+body[data-theme="dark"] .cat-card .label,
+body[data-theme="dark"] .cat-card .count,
+body[data-theme="dark"] .menu-title,
+body[data-theme="dark"] .menu-sub,
+body[data-theme="dark"] .settings-label,
+body[data-theme="dark"] .settings-desc {
+  color: #f1f7ff !important;
 }
 
-body[data-contrast="high"] .word-card .label,
-body[data-contrast="high"] .word-card .description,
-body[data-contrast="high"] .cat-card .label,
-body[data-contrast="high"] .cat-card .count,
-body[data-contrast="high"] .menu-title,
-body[data-contrast="high"] .menu-sub {
-  color: #ffe600 !important;
+body[data-theme="dark"] .phrase-bar,
+body[data-theme="dark"] input,
+body[data-theme="dark"] select,
+body[data-theme="dark"] textarea {
+  background: #10283d !important;
+  color: #f1f7ff !important;
+  border-color: #4d789c !important;
 }
 
-body[data-contrast="high"] {
-  background: #000 !important;
+body[data-theme="dark"] .splash-screen {
+  background: #10283d !important;
 }
 
 * {
@@ -117,10 +124,6 @@ body:not(.bg-outras) {
   background:
     linear-gradient(180deg, rgba(255,255,255,0.16) 0%, rgba(23,58,94,0.28) 100%),
     url('assets/imagens/plano-inicio.png') center center / cover no-repeat fixed;
-}
-
-body[data-contrast="high"]:not(.bg-outras) {
-  background: #000 !important;
 }
 
 body.bg-outras {
@@ -1037,6 +1040,20 @@ button:focus-visible,
   text-shadow: 0 1px 0 rgba(255,255,255,0.45);
   transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
 }
+
+/* Mantém Favoritar palavra ao lado das demais ações, sem criar uma linha extra. */
+.carousel-full-screen .action-row {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.carousel-full-screen .action-row button {
+  min-width: 0;
+  padding: 7px 3px;
+  font-size: 11px;
+  line-height: 1.05;
+}
 .action-row button:hover {
   transform: translateY(-2px);
   filter: saturate(1.08) brightness(1.03);
@@ -1069,6 +1086,28 @@ button:focus-visible,
   background: linear-gradient(180deg, #fff0a8, #ffcf4d);
   border-color: var(--yellow-dark) !important;
 }
+.word-favorite-remove {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  z-index: 2;
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--red);
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 1;
+  cursor: pointer;
+}
+
+#feedbackText::placeholder {
+  color: #173a5e !important;
+  opacity: 0.72 !important;
+}
+
 .action-row .action-icon {
   width: 28px;
   height: 28px;
@@ -1465,12 +1504,31 @@ button:focus-visible,
   .word-card .description { font-size: 9.5px; }
   .action-row { gap: 7px; }
   .action-row button { font-size: 12px; padding: 10px 4px; }
+  .carousel-full-screen .action-row button { font-size: 10px; min-height: 68px; }
   .carousel-card.center { width: 112px; height: 140px; }
   .carousel-card.center .emoji { font-size: 36px; }
   .carousel-card.side { width: 68px; height: 98px; }
   .carousel-card.side .emoji { font-size: 23px; }
   .carousel-card.side .label { font-size: 10px; }
   .carousel-arrow { width: 44px; height: 44px; }
+}
+
+@media (max-width: 360px) {
+  .carousel-full-screen .action-row {
+    gap: 4px;
+  }
+
+  .carousel-full-screen .action-row button {
+    min-height: 64px;
+    padding: 5px 2px;
+    font-size: 9px;
+  }
+
+  .carousel-full-screen .action-row .action-icon {
+    width: 22px;
+    height: 22px;
+    flex-basis: 22px;
+  }
 }
 
 @media (max-width: 350px) {
@@ -1512,6 +1570,97 @@ button:focus-visible,
   .word-grid { grid-template-columns: repeat(6, 1fr); }
   .cat-grid { grid-template-columns: repeat(4, 1fr); }
 }
+body[data-theme="dark"] .screen,
+body[data-theme="dark"] .screen h1,
+body[data-theme="dark"] .screen h2,
+body[data-theme="dark"] .screen h3,
+body[data-theme="dark"] .screen p,
+body[data-theme="dark"] .screen span,
+body[data-theme="dark"] .settings-label,
+body[data-theme="dark"] .settings-desc,
+body[data-theme="dark"] .topbar-title {
+  color: #f1f7ff !important;
+}
+
+body[data-theme="dark"] .screen input,
+body[data-theme="dark"] .screen select,
+body[data-theme="dark"] .screen textarea,
+body[data-theme="dark"] .screen .stepper button {
+  color: #f1f7ff !important;
+  background: #10283d !important;
+  border-color: #4d789c !important;
+}
+
+/* Contraste final do Guri e das ações no tema escuro infantil. */
+body[data-theme="dark"] .mascot-tip-toast {
+  background: #ffffff !important;
+  color: #123b4d !important;
+  border-color: #dca707 !important;
+}
+
+body[data-theme="dark"] .mascot-tip-toast::after {
+  background: #ffffff !important;
+  border-right-color: #dca707 !important;
+  border-bottom-color: #dca707 !important;
+}
+
+body[data-theme="dark"] #testVoiceBtn,
+body[data-theme="dark"] #saveFeedbackBtn,
+body[data-theme="dark"] #switchProfileBtn {
+  background: #f7c94d !important;
+  color: #123b4d !important;
+  border: 2px solid #b98200 !important;
+}
+
+body[data-theme="dark"] #logoutBtn {
+  background: #c0392b !important;
+  color: #ffffff !important;
+  border: 2px solid #8f2b20 !important;
+}
+body[data-theme="dark"] .form-block > p {
+  color: #f1f7ff !important;
+  opacity: 1 !important;
+}
+
+body[data-theme="light"] .form-block > p {
+  color: #123b4d !important;
+  opacity: 1 !important;
+}
+
+body[data-theme="dark"] #feedbackText::placeholder {
+  color: #123b4d !important;
+  opacity: 1 !important;
+}
+
+body[data-theme="dark"] #feedbackText {
+  background: #ffffff !important;
+  color: #123b4d !important;
+  border-color: #9dbbca !important;
+}
+
+/* Escolha de modo: botões planos, sem o quadrado branco por trás. */
+.mode-choice-back {
+  background: #f7c94d !important;
+  color: #123b4d !important;
+  border: 2px solid #b98200 !important;
+  box-shadow: none !important;
+}
+
+.mode-choice-button {
+  color: #123b4d !important;
+  box-shadow: none !important;
+  border-width: 3px !important;
+}
+
+.mode-choice-button[data-mode-screen="circularMode"] {
+  background: #f7c94d !important;
+  border-color: #b98200 !important;
+}
+
+.mode-choice-button[data-mode-screen="carouselMode"] {
+  background: #8bd3a8 !important;
+  border-color: #3f9b68 !important;
+}
 </style>
 </head>
 
@@ -1542,8 +1691,7 @@ button:focus-visible,
 /* =========================================================
    ComunicA — App de Comunicação Alternativa e Aumentativa
    Melhorias: mascote "Guri", acessibilidade (WCAG),
-   responsividade para tablet/celular, ajustes de fonte e
-   alto contraste.
+   responsividade para tablet/celular e ajustes de fonte.
    ========================================================= */
 
 const DEFAULT_CATEGORIES = [
@@ -1598,11 +1746,10 @@ const DEFAULT_WORDS = [
 ];
 
 const SUGGESTIONS = {
-  __start__: ['eu', 'voce', 'mae', 'pai', 'professor', 'amigo'],
+  __start__: ['eu', 'voce', 'mae', 'professor', 'amigo'],
   eu: ['quero', 'preciso', 'estou', 'gosto', 'vou'],
   voce: ['quero', 'preciso', 'estou', 'gosto', 'vou'],
   mae: ['quero', 'preciso', 'estou', 'gosto', 'vou'],
-  pai: ['quero', 'preciso', 'estou', 'gosto', 'vou'],
   professor: ['quero', 'preciso', 'estou', 'gosto', 'vou'],
   amigo: ['quero', 'preciso', 'estou', 'gosto', 'vou'],
   quero: ['agua', 'comida', 'brincar', 'jogar', 'assistir', 'desenhar', 'passear', 'musica', 'dormir', 'sair', 'casa'],
@@ -1653,7 +1800,7 @@ const MASCOT_TIPS = {
   personalize: 'Você pode criar novas palavras e categorias, do seu jeito.',
   challenge: 'Vamos brincar! Monte a frase certa para ganhar uma estrela.',
   profile: 'Aqui você vê seu nome e suas conquistas.',
-  settings: 'Aqui você ajusta o tamanho da letra, o contraste e a voz.',
+  settings: 'Aqui você ajusta o tamanho da letra e a voz.',
   about: 'O ComunicA ajuda você a se comunicar com frases montadas por toque.'
 };
 
@@ -1704,10 +1851,18 @@ let STATE = {
     favPhrases: [],
     customWords: [],
     customCategories: [],
-    profile: { name: '', stars: 0 },
+    profile: {
+      name: '',
+      stars: 0,
+      wordsUsed: 0,
+      wordsSaved: 0,
+      feedback: ''
+    },
     settings: {
       fontStep: 2,        // 1..4 -> pequeno, médio, grande, extra grande
-      highContrast: false,
+      darkTheme: true,
+      scanEnabled: false,
+      scanSpeed: 1800,
       voiceRate: 1,
       mascotVoiceEnabled: true
     }
@@ -1768,7 +1923,51 @@ function saveData() {
 function applySettings() {
   const scale = FONT_SCALES[(STATE.data.settings.fontStep || 2) - 1] || 1;
   document.documentElement.style.setProperty('--a11y-scale', scale);
-  document.body.dataset.contrast = STATE.data.settings.highContrast ? 'high' : 'normal';
+  document.body.dataset.theme = STATE.data.settings.darkTheme === false ? 'light' : 'dark';
+}
+
+let scanTimer = null;
+let scanIndex = -1;
+let scanScreen = '';
+
+function getVoiceRate() {
+  const value = Number(STATE.data.settings.voiceRate);
+  return Math.min(1.6, Math.max(0.5, Number.isFinite(value) ? value : 1));
+}
+
+function getScanSpeed() {
+  const value = Number(STATE.data.settings.scanSpeed);
+  return Math.min(3000, Math.max(600, Number.isFinite(value) ? value : 1800));
+}
+
+function scanTargets() {
+  const targets = [...document.querySelectorAll(
+    '#app button:not([disabled]), #app [role="button"]:not([aria-disabled="true"]), #app input:not([disabled]), #app select:not([disabled]), #app textarea:not([disabled])'
+  )].filter(element => element.offsetParent !== null);
+
+  targets.forEach(element => {
+    if (element.matches('[role="button"]') && !element.hasAttribute('tabindex')) {
+      element.setAttribute('tabindex', '0');
+    }
+  });
+
+  return targets;
+}
+
+function scheduleScan() {
+  clearTimeout(scanTimer);
+  scanTimer = null;
+  if (!STATE.data.settings.scanEnabled || document.getElementById('app')?.getAttribute('aria-hidden') === 'true') return;
+
+  const targets = scanTargets();
+  if (!targets.length) return;
+  if (scanScreen !== STATE.screen) {
+    scanScreen = STATE.screen;
+    scanIndex = -1;
+  }
+  scanIndex = (scanIndex + 1) % targets.length;
+  targets[scanIndex].focus({ preventScroll: true });
+  scanTimer = setTimeout(scheduleScan, getScanSpeed());
 }
 
 function showToast(message) {
@@ -1802,7 +2001,7 @@ function speak(text) {
 
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = 'pt-BR';
-  utterance.rate = STATE.data.settings.voiceRate || 1;
+  utterance.rate = getVoiceRate();
 
   const voices = window.speechSynthesis.getVoices();
   const ptVoice = voices.find(voice => voice.lang && voice.lang.toLowerCase().startsWith('pt'));
@@ -1821,6 +2020,7 @@ function playMascotVoice() {
 
   mascotAudio.pause();
   mascotAudio.currentTime = 0;
+  mascotAudio.playbackRate = getVoiceRate();
   const playPromise = mascotAudio.play();
   if (playPromise && typeof playPromise.catch === 'function') {
     playPromise.catch(() => {});
@@ -1848,6 +2048,7 @@ function playMascotVoiceAfterRefresh() {
     attempts += 1;
     started = true;
     mascotAudio.currentTime = 0;
+    mascotAudio.playbackRate = getVoiceRate();
     const playPromise = mascotAudio.play();
 
     if (playPromise && typeof playPromise.catch === 'function') {
@@ -1888,6 +2089,7 @@ function playMenuVoice(target, fallbackText) {
 
   const audio = menuAudios[target];
   audio.currentTime = 0;
+  audio.playbackRate = getVoiceRate();
   const playPromise = audio.play();
 
   if (playPromise && typeof playPromise.catch === 'function') {
@@ -1985,6 +2187,7 @@ function eraseLast() {
 }
 
 function clearPhrase() {
+  if (STATE.phrase.length > 0 && !window.confirm('Deseja limpar toda a frase?')) return;
   if (STATE.phrase.length > 0) speak('Limpar frase');
   STATE.phrase = [];
   loadLayer();
@@ -2078,8 +2281,9 @@ function isFavoriteWord(wordId) {
 }
 
 function toggleFavoriteWord(wordId) {
-  const index = STATE.data.favWords.indexOf(wordId);
+  const index = STATE.data.favWords.indexOf(wordId);       
   if (index >= 0) {
+    if (!window.confirm('Remover esta palavra dos favoritos?')) return;
     STATE.data.favWords.splice(index, 1);
     showToast('Palavra removida dos favoritos.');
   } else {
@@ -2090,10 +2294,10 @@ function toggleFavoriteWord(wordId) {
   render();
 }
 
-function wordCardHtml(word) {
+function wordCardHtml(word, inFavorites = false) {
   const favorite = isFavoriteWord(word.id);
   return `
-    <div class="word-card" data-word="${word.id}" role="button" tabindex="0"
+    <div class="word-card" data-word="${word.id}" ${inFavorites ? 'data-favorite-word-card' : ''} role="button" tabindex="0"
       aria-label="Adicionar palavra ${word.label} à frase. ${word.description || ''}">
       <button type="button" class="favorite-toggle ${favorite ? 'is-favorite' : ''}"
         data-fav-word="${word.id}"
@@ -2101,6 +2305,12 @@ function wordCardHtml(word) {
         aria-pressed="${favorite}">
         ${favorite ? '★' : '☆'}
       </button>
+      ${inFavorites ? `
+        <button type="button" class="word-favorite-remove"
+          data-remove-word="${word.id}"
+          aria-label="Remover ${word.label} dos favoritos"
+          title="Remover dos favoritos">✕</button>
+      ` : ''}
       ${wordVisualHtml(word)}
       <div class="label">${word.label}</div>
       <div class="description">${word.description || 'Toque para adicionar'}</div>
@@ -2139,6 +2349,7 @@ function render() {
   }
 
   attachHandlers();
+  scheduleScan();
   announcePhrase();
 }
 
@@ -2249,7 +2460,7 @@ function renderCarouselMode() {
   }
 
   const layerLabel = STATE.phrase.length === 0 ? 'QUEM ESTÁ FALANDO?' : STATE.phrase.length === 1 ? 'O QUE VOCÊ QUER DIZER?' : 'COMPLETE A FRASE';
-  return `<div class="carousel-full-screen"><div class="carousel-full-topbar"><button class="icon-btn" data-go="build" aria-label="Voltar para escolha do modo">←</button><div class="topbar-title">Comunicar</div><button class="icon-btn" data-go="personalize" aria-label="Personalizar palavras"><img class="menu-icon" src="assets/imagens/icone-configuracoes.png" alt=""></button></div><div class="carousel-full-content"><div class="section-label">MINHA FRASE</div><div class="phrase-bar" role="group" aria-label="Minha frase">${chipHtml}</div><div class="layer-label">${layerLabel}</div><div class="carousel-wrap">${cardsHtml}</div><button class="confirm-btn" id="confirmBtn" ${n === 0 ? 'disabled' : ''}>✓ Selecionar</button><div class="action-row" role="toolbar" aria-label="Ações da frase"><button class="btn-erase" id="eraseBtn" aria-label="Apagar última palavra"><img class="action-icon" src="assets/imagens/icone-apagar.png" alt="">Apagar</button><button class="btn-clear" id="clearBtn" aria-label="Limpar toda a frase"><img class="action-icon" src="assets/imagens/icone-limpar.png" alt="">Limpar</button><button class="btn-speak" id="speakBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Falar a frase em voz alta"><img class="action-icon" src="assets/imagens/icone-falar.png" alt="">Falar</button><button class="btn-fav" id="favPhraseBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Favoritar esta frase"><img class="action-icon" src="assets/imagens/icone-estrela.png" alt="">Favoritar</button></div><div class="back-link" data-go="categories" role="button" tabindex="0" style="margin-top:4px;"><img class="action-icon" src="assets/imagens/icone-livros.png" alt="">Ver todas as categorias</div><div class="hint">← → navega · Enter/Espaço seleciona · toque também funciona</div></div></div>`;
+  return `<div class="carousel-full-screen"><div class="carousel-full-topbar"><button class="icon-btn" data-go="build" aria-label="Voltar para escolha do modo">←</button><div class="topbar-title">Comunicar</div><button class="icon-btn" data-go="personalize" aria-label="Personalizar palavras"><img class="menu-icon" src="assets/imagens/icone-configuracoes.png" alt=""></button></div><div class="carousel-full-content"><div class="section-label">MINHA FRASE</div><div class="phrase-bar" role="group" aria-label="Minha frase">${chipHtml}</div><div class="layer-label">${layerLabel}</div><div class="carousel-wrap">${cardsHtml}</div><button class="confirm-btn" id="confirmBtn" ${n === 0 ? 'disabled' : ''}>✓ Selecionar</button><div class="action-row" role="toolbar" aria-label="Ações da frase"><button class="btn-erase" id="eraseBtn" aria-label="Apagar última palavra"><img class="action-icon" src="assets/imagens/icone-apagar.png" alt="">Apagar</button><button class="btn-clear" id="clearBtn" aria-label="Limpar toda a frase"><img class="action-icon" src="assets/imagens/icone-limpar.png" alt="">Limpar</button><button class="btn-speak" id="speakBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Falar a frase em voz alta"><img class="action-icon" src="assets/imagens/icone-falar.png" alt="">Falar</button><button class="btn-fav" id="favPhraseBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Favoritar esta frase"><img class="action-icon" src="assets/imagens/icone-estrela.png" alt="">⭐ Favoritar frase</button><button class="btn-fav-word" id="favWordBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Favorizar palavra"><img class="action-icon" src="assets/imagens/icone-estrela.png" alt="">⭐ Favoritar palavra</button></div><div class="back-link" data-go="categories" role="button" tabindex="0" style="margin-top:4px;"><img class="action-icon" src="assets/imagens/icone-livros.png" alt="">Ver todas as categorias</div><div class="hint">← → navega · Enter/Espaço seleciona · toque também funciona</div></div></div>`;
 }
 
 function renderCircularKeyboard() {
@@ -2368,7 +2579,7 @@ function renderFavorites() {
         <div class="empty-state">Nenhuma palavra favorita ainda.</div>
       ` : `
         <div class="word-grid" role="list">
-          ${favWordObjects.map(word => wordCardHtml(word)).join('')}
+          ${favWordObjects.map(word => wordCardHtml(word, true)).join('')}
         </div>
       `}
     </div>
@@ -2512,6 +2723,30 @@ function renderChallenge() {
 
 function renderProfile() {
   const profile = STATE.data.profile;
+  const wordsUsed = Number(profile.wordsUsed || 0);
+  const wordsSaved = Number(profile.wordsSaved || 0);
+
+  const summaryHtml = `
+    <div class="info-block">
+      <h3 style="margin:0 0 12px; color:#103d5d; font-weight:900; letter-spacing:0.02em;">Resumo</h3>
+      <div class="profile-stat"><span>⭐ Estrelas conquistadas</span><span>${profile.stars}</span></div>
+      <div class="profile-stat"><span>🗣️ Frases favoritas</span><span>${STATE.data.favPhrases.length}</span></div>
+      <div class="profile-stat"><span>💬 Palavras usadas</span><span>${wordsUsed}</span></div>
+      <div class="profile-stat"><span>💾 Palavras favoritas</span><span>${STATE.data.favWords.length}</span></div>
+      <div class="profile-stat" style="border-bottom:none;"><span>📁 Categorias criadas</span><span>${STATE.data.customCategories.length}</span></div>
+    </div>
+  `;
+
+  const feedbackHtml = `
+    <div class="info-block">
+      <h3 style="margin:0 0 12px; color:#103d5d; font-weight:900; letter-spacing:0.02em;">Feedback</h3>
+      <div style="display:grid; gap:10px;">
+        <textarea id="feedbackText" rows="4" placeholder="Como podemos melhorar?" style="width:100%; border-radius:12px; border:1px solid rgba(16,61,93,.25); background:#ffffff; color:var(--navy); padding:12px; resize:vertical; font-weight:600;">${profile.feedback || ''}</textarea>
+        <button class="submit-btn" id="saveFeedbackBtn">Salvar feedback</button>
+      </div>
+    </div>
+  `;
+
   return `
     <div class="topbar">
       <button class="icon-btn" data-go="home" aria-label="Voltar para o início">←</button>
@@ -2520,25 +2755,12 @@ function renderProfile() {
     </div>
 
     <div class="screen">
-      <div class="form-block">
-        <h3>Nome</h3>
-        <label class="visually-hidden" for="profileName">Como você se chama?</label>
-        <div class="form-row">
-          <input type="text" id="profileName" placeholder="Como você se chama?" value="${profile.name || ''}">
-        </div>
-        <button class="submit-btn" id="saveNameBtn">Salvar nome</button>
-      </div>
-
-      <div class="info-block">
-        <div class="profile-stat"><span>⭐ Estrelas conquistadas</span><span>${profile.stars}</span></div>
-        <div class="profile-stat"><span>🗣️ Frases favoritas</span><span>${STATE.data.favPhrases.length}</span></div>
-        <div class="profile-stat"><span>💛 Palavras favoritas</span><span>${STATE.data.favWords.length}</span></div>
-        <div class="profile-stat" style="border-bottom:none;"><span>📁 Categorias criadas</span><span>${STATE.data.customCategories.length}</span></div>
-      </div>
+      ${summaryHtml}
+      ${feedbackHtml}
 
       <div class="form-block">
         <h3>Conta</h3>
-        <p style="margin:0 0 12px;font-size:12px;font-weight:600;color:#173a5e !important;opacity:.9;">
+        <p style="margin:0 0 12px;font-size:12px;font-weight:600;">
           Volte para o menu e escolha entre os perfis Sênior e Júnior, ou saia da conta.
         </p>
         <button class="submit-btn" id="switchProfileBtn">
@@ -2555,6 +2777,8 @@ function renderProfile() {
 function renderSettings() {
   const s = STATE.data.settings;
   const fontLabels = ['Pequena', 'Média', 'Grande', 'Extra grande'];
+  const scanSpeed = getScanSpeed();
+  const voiceRate = getVoiceRate();
 
   return `
     <div class="topbar">
@@ -2579,13 +2803,36 @@ function renderSettings() {
 
         <div class="settings-row">
           <div>
-            <div class="settings-label">Alto contraste</div>
-            <div class="settings-desc">Fundo preto e texto amarelo para melhor leitura</div>
+            <div class="settings-label">Tema escuro</div>
+            <div class="settings-desc">Fundo escuro e menos brilho para facilitar o uso</div>
           </div>
           <label class="switch">
-            <input type="checkbox" id="contrastToggle" ${s.highContrast ? 'checked' : ''}>
+            <input type="checkbox" id="darkThemeToggle" ${s.darkTheme !== false ? 'checked' : ''}>
             <span class="switch-track"></span>
           </label>
+        </div>
+
+        <div class="settings-row">
+          <div>
+            <div class="settings-label">Modo de varredura</div>
+            <div class="settings-desc">O destaque passa pelos botões; pressione o centro do analógico para escolher</div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="scanToggle" ${s.scanEnabled ? 'checked' : ''}>
+            <span class="switch-track"></span>
+          </label>
+        </div>
+
+        <div class="settings-row">
+          <div>
+            <div class="settings-label">Velocidade da varredura</div>
+            <div class="settings-desc">Tempo em cada botão: ${Math.round(scanSpeed / 100) / 10}s</div>
+          </div>
+          <div class="stepper">
+            <button id="scanSpeedDownBtn" aria-label="Deixar a varredura mais lenta">−</button>
+            <span aria-live="polite">${Math.round(scanSpeed / 100) / 10}s</span>
+            <button id="scanSpeedUpBtn" aria-label="Deixar a varredura mais rápida">+</button>
+          </div>
         </div>
 
         <div class="settings-row">
@@ -2595,7 +2842,7 @@ function renderSettings() {
           </div>
           <div class="stepper">
             <button id="rateDownBtn" aria-label="Diminuir velocidade da voz">−</button>
-            <span aria-live="polite">${Math.round((s.voiceRate || 1) * 100)}%</span>
+            <span aria-live="polite">${Math.round(voiceRate * 100)}%</span>
             <button id="rateUpBtn" aria-label="Aumentar velocidade da voz">+</button>
           </div>
         </div>
@@ -2634,7 +2881,7 @@ function renderAbout() {
         Toque em <strong>Começar a comunicar</strong> para montar frases usando o carrossel.
         Explore as <strong>Categorias</strong> para encontrar palavras por tema.
         Guarde o que mais usa em <strong>Favoritos</strong> e crie suas próprias palavras em <strong>Personalizar</strong>.
-        Em <strong>Configurações</strong> você ajusta o tamanho da letra, o contraste e a voz.
+        Em <strong>Configurações</strong> você ajusta o tamanho da letra e a voz.
       </div>
     </div>
   `;
@@ -2682,10 +2929,12 @@ function attachHandlers() {
   });
 
   document.querySelectorAll('[data-word]').forEach(element => {
-    const activate = () => {
+    const activate = event => {
+      if (event.target.closest('button, [data-speak], [data-remove-word]')) return;
       const word = wordById(element.getAttribute('data-word'));
       if (!word) return;
       speak(word.label);
+      if (element.hasAttribute('data-favorite-word-card')) return;
       addWordToPhrase(word);
     };
     element.addEventListener('click', activate);
@@ -2696,6 +2945,13 @@ function attachHandlers() {
     element.addEventListener('click', event => {
       event.stopPropagation();
       toggleFavoriteWord(element.getAttribute('data-fav-word'));
+    });
+  });
+
+  document.querySelectorAll('[data-remove-word]').forEach(element => {
+    element.addEventListener('click', event => {
+      event.stopPropagation();
+      toggleFavoriteWord(element.getAttribute('data-remove-word'));
     });
   });
 
@@ -2750,6 +3006,12 @@ function attachHandlers() {
   const favPhraseBtn = document.getElementById('favPhraseBtn');
   if (favPhraseBtn) favPhraseBtn.addEventListener('click', favoritePhrase);
 
+  const favWordBtn = document.getElementById('favWordBtn');
+  if (favWordBtn) favWordBtn.addEventListener('click', () => {
+    const word = STATE.phrase[STATE.phrase.length - 1];
+    if (word) toggleFavoriteWord(word.id);
+  });
+
   document.querySelectorAll('[data-speak]').forEach(element => {
     element.addEventListener('click', event => {
       event.stopPropagation();
@@ -2762,6 +3024,7 @@ function attachHandlers() {
       event.stopPropagation();
       const index = parseInt(element.getAttribute('data-remove-phrase'), 10);
       if (Number.isNaN(index)) return;
+      if (!window.confirm('Remover esta frase dos favoritos?')) return;
       STATE.data.favPhrases.splice(index, 1);
       saveData();
       render();
@@ -2868,21 +3131,24 @@ function attachHandlers() {
     element.addEventListener('keydown', activateOnEnterSpace(activate));
   });
 
-  const saveNameBtn = document.getElementById('saveNameBtn');
-  if (saveNameBtn) {
-    saveNameBtn.addEventListener('click', () => {
-      const input = document.getElementById('profileName');
+  const saveFeedbackBtn = document.getElementById('saveFeedbackBtn');
+  if (saveFeedbackBtn) {
+    saveFeedbackBtn.addEventListener('click', () => {
+      const input = document.getElementById('feedbackText');
       if (!input) return;
-      STATE.data.profile.name = input.value.trim();
+      STATE.data.profile.feedback = input.value.trim();
       saveData();
-      showToast('Nome salvo!');
-      speak('Nome salvo');
+      showToast('Feedback salvo!');
+      speak('Feedback salvo');
+      render();
     });
   }
 
   const switchProfileBtn = document.getElementById('switchProfileBtn');
   if (switchProfileBtn) {
     switchProfileBtn.addEventListener('click', () => {
+      STATE.data.profile.layout = 'neutro';
+      saveData();
       localStorage.setItem('comunica:goToProfileSelection', '1');
       window.location.href = 'index.html';
     });
@@ -2946,23 +3212,44 @@ function attachHandlers() {
     render();
   });
 
-  const contrastToggle = document.getElementById('contrastToggle');
-  if (contrastToggle) contrastToggle.addEventListener('change', event => {
-    STATE.data.settings.highContrast = event.target.checked;
+  const darkThemeToggle = document.getElementById('darkThemeToggle');
+  if (darkThemeToggle) darkThemeToggle.addEventListener('change', event => {
+    STATE.data.settings.darkTheme = event.target.checked;
     applySettings();
     saveData();
   });
 
+  const scanToggle = document.getElementById('scanToggle');
+  if (scanToggle) scanToggle.addEventListener('change', event => {
+    STATE.data.settings.scanEnabled = event.target.checked;
+    saveData();
+    render();
+  });
+
+  const scanSpeedDownBtn = document.getElementById('scanSpeedDownBtn');
+  if (scanSpeedDownBtn) scanSpeedDownBtn.addEventListener('click', () => {
+    STATE.data.settings.scanSpeed = Math.min(3000, getScanSpeed() + 300);
+    saveData();
+    render();
+  });
+
+  const scanSpeedUpBtn = document.getElementById('scanSpeedUpBtn');
+  if (scanSpeedUpBtn) scanSpeedUpBtn.addEventListener('click', () => {
+    STATE.data.settings.scanSpeed = Math.max(600, getScanSpeed() - 300);
+    saveData();
+    render();
+  });
+
   const rateDownBtn = document.getElementById('rateDownBtn');
   if (rateDownBtn) rateDownBtn.addEventListener('click', () => {
-    STATE.data.settings.voiceRate = Math.max(0.5, +(STATE.data.settings.voiceRate - 0.1).toFixed(1));
+    STATE.data.settings.voiceRate = Math.max(0.5, +(getVoiceRate() - 0.1).toFixed(1));
     saveData();
     render();
   });
 
   const rateUpBtn = document.getElementById('rateUpBtn');
   if (rateUpBtn) rateUpBtn.addEventListener('click', () => {
-    STATE.data.settings.voiceRate = Math.min(1.6, +(STATE.data.settings.voiceRate + 0.1).toFixed(1));
+    STATE.data.settings.voiceRate = Math.min(1.6, +(getVoiceRate() + 0.1).toFixed(1));
     saveData();
     render();
   });
@@ -2993,8 +3280,54 @@ document.getElementById('mascotFloatBtn').addEventListener('click', () => {
   speakMascot(MASCOT_TIPS[STATE.screen] || MASCOT_TIPS.home);
 });
 
+/* Controle do Guri por teclado: setas navegam, Enter chama a dica e Esc volta. */
+const mascotFloatBtn = document.getElementById('mascotFloatBtn');
+if (mascotFloatBtn) {
+  mascotFloatBtn.addEventListener('keydown', event => {
+    const tag = document.activeElement?.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      mascotFloatBtn.click();
+      return;
+    }
+
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      if (STATE.screen !== 'home') {
+        go('home');
+      } else {
+        mascotFloatBtn.blur();
+      }
+      return;
+    }
+
+    if (['ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowUp'].includes(event.key)) {
+      event.preventDefault();
+      const targets = [...document.querySelectorAll(
+        '#app button:not([disabled]), #app [role="button"]:not([aria-disabled="true"]), #app input:not([disabled]), #app select:not([disabled]), #app textarea:not([disabled])'
+      )].filter(element => element.offsetParent !== null);
+      if (!targets.length) return;
+      const next = event.key === 'ArrowRight' || event.key === 'ArrowDown'
+        ? targets[0]
+        : targets[targets.length - 1];
+      next.focus();
+    }
+  });
+}
+
 /* Navegação por teclado/switch na tela de montagem de frase */
 document.addEventListener('keydown', event => {
+  if (STATE.data.settings.scanEnabled && (event.key === 'Enter' || event.key === ' ')) {
+    const active = document.activeElement;
+    if (active && active.matches('[role="button"][tabindex="0"]')) {
+      event.preventDefault();
+      active.click();
+      return;
+    }
+  }
+
   if (STATE.screen !== 'build') return;
 
   const tag = document.activeElement?.tagName;
@@ -3025,7 +3358,7 @@ document.addEventListener('keydown', event => {
 function typeWelcomeBubble(playVoice = true) {
   const el = document.getElementById('mascotTip');
   if (!el) return;
-  const text = `Oi! Eu sou o ${MASCOT_NAME}. Vamos comunicar juntos?`;
+  const text = `Oi, eu sou o ${MASCOT_NAME}!`;
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   el.textContent = '';
@@ -3212,8 +3545,52 @@ function iniciarMusicaDoLogout() {
   });
 }
 
+/* Controle por joystick/gamepad: analógico navega, clique no analógico seleciona e B volta. */
+function initGamepadControls() {
+  if (!('getGamepads' in navigator)) return;
+  let previous = [];
+  let lastAxisMove = 0;
+
+  const poll = timestamp => {
+    const pad = [...(navigator.getGamepads?.() || [])].find(Boolean);
+    if (pad) {
+      const pressed = index => Boolean(pad.buttons[index]?.pressed);
+      const rising = index => pressed(index) && !previous[index];
+      const targets = () => [...document.querySelectorAll(
+        '#app button:not([disabled]), #app [role="button"]:not([aria-disabled="true"]), #app input:not([disabled]), #app select:not([disabled]), #app textarea:not([disabled])'
+      )].filter(element => element.offsetParent !== null);
+
+      if (rising(10) || rising(0)) {
+        const active = document.activeElement;
+        if (active && active !== document.body && typeof active.click === 'function') active.click();
+        else targets()[0]?.focus();
+      }
+      if (rising(1)) {
+        if (STATE.screen !== 'home') go('home');
+      }
+      if (timestamp - lastAxisMove > 180) {
+        const x = pad.axes[0] || 0;
+        const y = pad.axes[1] || 0;
+        const direction = Math.abs(x) > 0.4 ? (x > 0 ? 1 : -1) : Math.abs(y) > 0.4 ? (y > 0 ? 1 : -1) : 0;
+        if (direction) {
+          const list = targets();
+          const current = list.indexOf(document.activeElement);
+          const next = current < 0 ? 0 : (current + direction + list.length) % list.length;
+          list[next]?.focus();
+          lastAxisMove = timestamp;
+        }
+      }
+      previous = pad.buttons.map(button => Boolean(button.pressed));
+    }
+    requestAnimationFrame(poll);
+  };
+
+  requestAnimationFrame(poll);
+}
+
 loadData();
 initSplash();
+initGamepadControls();
 </script>
 
 </body>

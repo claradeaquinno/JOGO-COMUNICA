@@ -469,6 +469,7 @@ body.bg-outras {
   width: 100%;
 
   display: flex;
+  flex-wrap: wrap;
 
   gap: 10px;
 
@@ -477,6 +478,7 @@ body.bg-outras {
 
 .action-row button {
   flex: 1;
+  min-width: 0;
 
   border: none;
 
@@ -514,6 +516,38 @@ body.bg-outras {
   background: #fff0c2;
 }
 
+.btn-fav-word {
+  background: #ffe49a;
+}
+
+.action-row button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 420px) {
+  .action-row button {
+    flex: 1 1 calc(50% - 5px);
+  }
+}
+
+.favorite-choice-menu {
+  display: flex;
+  gap: 8px;
+  margin: -6px 0 14px;
+}
+
+.favorite-choice-option {
+  flex: 1;
+  background: #ffffff;
+  color: var(--navy);
+  border: 1px solid rgba(16, 61, 93, 0.22);
+  border-radius: 12px;
+  padding: 10px 8px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
 
 
 .word-grid {
@@ -529,6 +563,7 @@ body.bg-outras {
 
 
 .word-card {
+  position: relative;
   min-height: 164px;
 
   background: var(--card);
@@ -561,6 +596,30 @@ body.bg-outras {
   transition:
     transform 0.1s ease,
     background 0.1s ease;
+}
+
+.favorite-toggle {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border: 0;
+  background: rgba(255, 255, 255, 0.18);
+  color: var(--navy);
+  border-radius: 999px;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.favorite-toggle.is-favorite {
+  background: rgba(247, 201, 77, 0.22);
+  color: #d28c00;
 }
 
 .word-card:hover {
@@ -727,14 +786,20 @@ body.bg-outras {
   gap: 10px;
 
   backdrop-filter: blur(4px);
+
+  box-sizing: border-box;
 }
 
 .fav-item .txt {
   flex: 1;
 
+  min-width: 0;
+
   font-weight: 700;
 
   color: var(--navy);
+
+  word-break: break-word;
 }
 
 .fav-item button {
@@ -751,6 +816,8 @@ body.bg-outras {
   cursor: pointer;
 
   color: var(--navy);
+
+  flex-shrink: 0;
 }
 
 .fav-remove {
@@ -1008,9 +1075,9 @@ body.bg-outras {
 .info-block {
   width: 100%;
 
-  background: var(--card);
+  background: rgba(255, 255, 255, 0.94);
 
-  border: 2px solid var(--card-border);
+  border: 2px solid rgba(23, 58, 94, 0.16);
 
   border-radius: 18px;
 
@@ -1026,6 +1093,8 @@ body.bg-outras {
 
   color: var(--navy);
 
+  box-shadow: 0 6px 18px rgba(23, 58, 94, 0.12);
+
   backdrop-filter: blur(4px);
 }
 
@@ -1040,9 +1109,9 @@ body.bg-outras {
 
   padding: 10px 0;
 
-  border-bottom: 1px solid var(--card-border);
+  border-bottom: 1px solid rgba(23, 58, 94, 0.14);
 
-  font-weight: 700;
+  font-weight: 800;
 
   color: var(--navy);
 }

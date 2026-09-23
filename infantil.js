@@ -35,14 +35,6 @@ const DEFAULT_WORDS = [
   },
 
   {
-    id: 'pai',
-    label: 'Pai',
-    emoji: '👨',
-    description: 'Meu pai',
-    cat: 'pessoas'
-  },
-
-  {
     id: 'professor',
     label: 'Professor',
     emoji: '🧑‍🏫',
@@ -307,8 +299,6 @@ const SUGGESTIONS = {
 
   mae: ['quero', 'preciso', 'estou', 'gosto', 'vou'],
 
-  pai: ['quero', 'preciso', 'estou', 'gosto', 'vou'],
-
   quero: [
     'agua',
     'comida',
@@ -404,6 +394,8 @@ let STATE = {
 
   toastTimer: null,
 
+  favoriteChoiceOpen: false,
+
   data: {
 
     favWords: [],
@@ -416,7 +408,10 @@ let STATE = {
 
     profile: {
       name: '',
-      stars: 0
+      stars: 0,
+      wordsUsed: 0,
+      wordsSaved: 0,
+      feedback: ''
     }
 
   }
@@ -436,11 +431,7 @@ function allCategories() {
 
 
 function allWords() {
-
-  return DEFAULT_WORDS.concat(
-    STATE.data.customWords
-  );
-
+  return DEFAULT_WORDS.concat(STATE.data.customWords);
 }
 
 
@@ -648,6 +639,25 @@ function currentPhraseText() {
 }
 
 
+function isFavoriteWord(wordId) {
+  return STATE.data.favWords.includes(wordId);
+}
+
+
+function toggleFavoriteWord(wordId) {
+  const index = STATE.data.favWords.indexOf(wordId);
+
+  if (index >= 0) {
+    STATE.data.favWords.splice(index, 1);
+    showToast('Palavra removida dos favoritos.');
+  } else {
+    STATE.data.favWords.push(wordId);
+    showToast('Palavra adicionada aos favoritos ⭐');
+  }
+
+  saveData();
+  render();
+}
 
 
 function favoritePhrase() {
@@ -938,6 +948,7 @@ function renderHome() {
 
 
 function wordCardHtml(word, selected = false) {
+  const favorite = isFavoriteWord(word.id);
 
   return `
 
@@ -945,6 +956,16 @@ function wordCardHtml(word, selected = false) {
       class="word-card ${selected ? 'selected' : ''}"
       data-word="${word.id}"
     >
+
+      <button
+        type="button"
+        class="favorite-toggle ${favorite ? 'is-favorite' : ''}"
+        data-fav-word="${word.id}"
+        aria-label="${favorite ? 'Remover palavra dos favoritos' : 'Adicionar palavra aos favoritos'}"
+        title="${favorite ? 'Remover palavra dos favoritos' : 'Adicionar palavra aos favoritos'}"
+      >
+        ${favorite ? '★' : '☆'}
+      </button>
 
       <div class="emoji">
         ${word.emoji}
@@ -986,10 +1007,12 @@ function renderBuild() {
       'eu',
       'voce',
       'mae',
-      'pai'
+      ...STATE.data.favWords
     ];
 
   }
+
+  suggestedIds = [...new Set(suggestedIds.filter(Boolean))];
 
 
   let words;
@@ -1045,6 +1068,11 @@ function renderBuild() {
         </span>
 
       `;
+
+  const lastWordIsFavorite = last && isFavoriteWord(last.id);
+  const favoriteWordLabel = lastWordIsFavorite
+    ? '⭐ Remover palavra'
+    : '⭐ Favoritar palavra';
 
 
   return `
@@ -1114,8 +1142,17 @@ function renderBuild() {
         <button
           class="btn-fav"
           id="favPhraseBtn"
+          ${STATE.phrase.length ? '' : 'disabled'}
         >
-          ⭐ Favoritar
+          ⭐ Favoritar frase
+        </button>
+
+        <button
+          class="btn-fav-word"
+          id="favWordBtn"
+          ${STATE.phrase.length ? '' : 'disabled'}
+        >
+          ${favoriteWordLabel}
         </button>
 
       </div>
@@ -1387,14 +1424,9 @@ function renderFavorites() {
           ? `
 
             <div class="empty-state">
-
               Nenhuma frase favoritada ainda.
-
               <br>
-
-              Monte uma frase e toque em
-              ⭐ Favoritar.
-
+              Monte uma frase e toque em <strong>Favoritar</strong>.
             </div>
 
           `
@@ -1406,18 +1438,19 @@ function renderFavorites() {
                   <div class="fav-item">
 
                     <div class="txt">
-                      🗣️ ${phrase}
+                      ${phrase}
                     </div>
 
                     <button
                       data-speak="${phrase}"
                     >
-                      🔊
+                      Falar
                     </button>
 
                     <button
                       class="fav-remove"
                       data-remove-phrase="${index}"
+                      aria-label="Remover frase dos favoritos"
                     >
                       ✕
                     </button>
@@ -1445,6 +1478,8 @@ function renderFavorites() {
 
             <div class="empty-state">
               Nenhuma palavra favorita ainda.
+              <br>
+              Toque na estrela de uma palavra para salvar.
             </div>
 
           `
@@ -1982,6 +2017,61 @@ function renderProfile() {
   const profile =
     STATE.data.profile;
 
+  const tab =
+    STATE.profileTab || 'summary';
+
+  const wordsUsed =
+    Number(profile.wordsUsed || 0);
+
+  const favoritesCount =
+    STATE.data.favWords.length;
+
+  const tabsHtml = `
+    <div class="profile-tabs" style="display:flex;gap:8px;margin:0 0 12px;">
+      <button class="submit-btn" data-profile-tab="summary" style="flex:1;${tab === 'summary' ? 'background:#1d5b85;' : ''}">Resumo</button>
+      <button class="submit-btn" data-profile-tab="tips" style="flex:1;${tab === 'tips' ? 'background:#1d5b85;' : ''}">Dicas</button>
+      <button class="submit-btn" data-profile-tab="feedback" style="flex:1;${tab === 'feedback' ? 'background:#1d5b85;' : ''}">Feedback</button>
+    </div>
+  `;
+
+  let contentHtml = `
+    <div class="info-block">
+      <h3 style="margin:0 0 12px; color:#103d5d; font-weight:900; letter-spacing:0.02em;">Resumo</h3>
+      <div class="profile-stat"><span>⭐ Estrelas conquistadas</span><span>${profile.stars}</span></div>
+      <div class="profile-stat"><span>🗣️ Frases favoritas</span><span>${STATE.data.favPhrases.length}</span></div>
+      <div class="profile-stat"><span>💬 Palavras usadas</span><span>${wordsUsed}</span></div>
+      <div class="profile-stat"><span>💾 Palavras favoritas</span><span>${favoritesCount}</span></div>
+      <div class="profile-stat" style="border-bottom:none;"><span>📁 Categorias criadas</span><span>${STATE.data.customCategories.length}</span></div>
+    </div>
+  `;
+
+  if (tab === 'tips') {
+    contentHtml = `
+      <div class="info-block">
+        <div class="profile-stat" style="display:block; border-bottom:none; text-align:left;">
+          <strong style="display:block; margin-bottom:8px; color:var(--navy);">Dicas de uso</strong>
+          <div style="display:grid; gap:8px; font-size:13px; line-height:1.5; color:var(--navy);">
+            <div>• Use frases curtas e claras para facilitar a comunicação.</div>
+            <div>• Salve as palavras que você mais usa nos favoritos.</div>
+            <div>• Combine ações com necessidades para montar mensagens rápidas.</div>
+            <div>• Revise o perfil para acompanhar o progresso e os desafios.</div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  if (tab === 'feedback') {
+    contentHtml = `
+      <div class="info-block">
+        <h3 style="margin:0 0 12px; color:#103d5d; font-weight:900; letter-spacing:0.02em;">Feedback</h3>
+        <div style="display:grid; gap:10px;">
+          <textarea id="feedbackText" rows="4" placeholder="O que pode melhorar?" style="width:100%; border-radius:12px; border:1px solid rgba(16,61,93,.25); background:#ffffff; color:var(--navy); padding:12px; resize:vertical; font-weight:600;">${profile.feedback || ''}</textarea>
+          <button class="submit-btn" id="saveFeedbackBtn">Salvar feedback</button>
+        </div>
+      </div>
+    `;
+  }
 
   return `
 
@@ -2005,94 +2095,9 @@ function renderProfile() {
 
     <div class="screen">
 
+      ${tabsHtml}
 
-      <div class="form-block">
-
-        <h3>
-          Nome
-        </h3>
-
-
-        <div class="form-row">
-
-          <input
-            type="text"
-            id="profileName"
-            placeholder="Como você se chama?"
-            value="${profile.name || ''}"
-          >
-
-        </div>
-
-
-        <button
-          class="submit-btn"
-          id="saveNameBtn"
-        >
-          Salvar nome
-        </button>
-
-      </div>
-
-
-      <div class="info-block">
-
-        <div class="profile-stat">
-
-          <span>
-            ⭐ Estrelas conquistadas
-          </span>
-
-          <span>
-            ${profile.stars}
-          </span>
-
-        </div>
-
-
-        <div class="profile-stat">
-
-          <span>
-            🗣️ Frases favoritas
-          </span>
-
-          <span>
-            ${STATE.data.favPhrases.length}
-          </span>
-
-        </div>
-
-
-        <div class="profile-stat">
-
-          <span>
-            💛 Palavras favoritas
-          </span>
-
-          <span>
-            ${STATE.data.favWords.length}
-          </span>
-
-        </div>
-
-
-        <div
-          class="profile-stat"
-          style="border-bottom:none;"
-        >
-
-          <span>
-            📁 Categorias criadas
-          </span>
-
-          <span>
-            ${STATE.data.customCategories.length}
-          </span>
-
-        </div>
-
-      </div>
-
+      ${contentHtml}
 
     </div>
 
@@ -2248,6 +2253,41 @@ function attachHandlers() {
 
 
 
+  const saveFeedbackBtn =
+    document.getElementById(
+      'saveFeedbackBtn'
+    );
+
+  if (saveFeedbackBtn) {
+
+    saveFeedbackBtn.addEventListener(
+      'click',
+      () => {
+
+        const input =
+          document.getElementById(
+            'feedbackText'
+          );
+
+        if (!input) return;
+
+        STATE.data.profile.feedback =
+          input.value.trim();
+
+        saveData();
+
+        showToast('Feedback salvo!');
+
+        speak('Feedback salvo');
+
+        render();
+
+      }
+    );
+
+  }
+
+
   document
     .querySelectorAll('[data-word]')
     .forEach(element => {
@@ -2270,6 +2310,23 @@ function attachHandlers() {
           speak(word.label);
 
           addWordToPhrase(word);
+
+        }
+      );
+
+    });
+
+
+  document
+    .querySelectorAll('[data-fav-word]')
+    .forEach(element => {
+
+      element.addEventListener(
+        'click',
+        event => {
+
+          event.stopPropagation();
+          toggleFavoriteWord(element.getAttribute('data-fav-word'));
 
         }
       );
@@ -2341,6 +2398,14 @@ function attachHandlers() {
 
         if (text) {
 
+          const spokenWords =
+            text.trim().split(/\s+/).filter(Boolean).length;
+
+          STATE.data.profile.wordsUsed =
+            (STATE.data.profile.wordsUsed || 0) + spokenWords;
+
+          saveData();
+
           speak(text);
 
         }
@@ -2400,6 +2465,29 @@ function attachHandlers() {
   }
 
 
+  const favWordBtn =
+    document.getElementById(
+      'favWordBtn'
+    );
+
+  if (favWordBtn) {
+    favWordBtn.addEventListener(
+      'click',
+      () => {
+        const currentWord = STATE.phrase[STATE.phrase.length - 1];
+
+        if (!currentWord) {
+          showToast('Escolha uma palavra antes de salvar.');
+          return;
+        }
+
+        const alreadyFavorite = isFavoriteWord(currentWord.id);
+        toggleFavoriteWord(currentWord.id);
+        speak(alreadyFavorite ? 'Palavra removida dos favoritos' : 'Palavra favoritada ⭐');
+      }
+    );
+  }
+
   const favPhraseBtn =
     document.getElementById(
       'favPhraseBtn'
@@ -2416,7 +2504,7 @@ function attachHandlers() {
           STATE.phrase.length > 0
         ) {
 
-          speak('Favoritado');
+          speak('Frase favoritada');
 
         }
 
@@ -2884,51 +2972,6 @@ function attachHandlers() {
       );
 
     });
-
-
-  
-
-  const saveNameBtn =
-    document.getElementById(
-      'saveNameBtn'
-    );
-
-
-  if (saveNameBtn) {
-
-    saveNameBtn.addEventListener(
-      'click',
-      () => {
-
-        const input =
-          document.getElementById(
-            'profileName'
-          );
-
-
-        if (!input) return;
-
-
-        STATE.data.profile.name =
-          input.value.trim();
-
-
-        saveData();
-
-
-        showToast(
-          'Nome salvo!'
-        );
-
-
-        speak(
-          'Nome salvo'
-        );
-
-      }
-    );
-
-  }
 
 
   

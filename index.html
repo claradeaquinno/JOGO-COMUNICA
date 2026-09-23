@@ -11,26 +11,102 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Nunito:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 :root {
-  --sky-top: #d4eafb;
-  --sky-bottom: #f7fbff;
-  --yellow: #dca707;
-  --yellow-dark: #ae8100;
-  --navy: #092B3B;
+  --sky-top: #bfe1ff;
+  --sky-bottom: #edf8ff;
+  --sky-glow: #dff3ff;
+  --yellow: #f7c94d;
+  --yellow-dark: #d9a314;
+  --navy: #103d5d;
   --navy-soft: #ffffff;
-  --card: #123b4d;
-  --card-border: rgba(212, 234, 251, 0.32);
+  --card: #0d3556;
+  --card-border: rgba(18, 60, 90, 0.16);
   --green: #1c5873;
   --red: #1c5873;
   --white: #ffffff;
-  --radius: 10px;
+  --radius: 18px;
   --font: 'Manrope', sans-serif;
   --font-title: 'Manrope', sans-serif;
+}
+
+body[data-theme="dark"] {
+  --sky-top: #0b1f31;
+  --sky-bottom: #102f48;
+  --sky-glow: #173a56;
+  --navy: #eff7ff;
+  --navy-soft: #d4e6f5;
+  --card: #17344d;
+  --card-border: #3f6685;
+  --white: #eff7ff;
+  background: #0b1f31 !important;
+  color: #eff7ff !important;
+}
+
+body[data-theme="dark"] #app,
+body[data-theme="dark"] .app {
+  color: #eff7ff;
+}
+
+body[data-theme="dark"] .splash-screen {
+  background: #0b1f31 !important;
+  color: #eff7ff;
+}
+
+body[data-theme="dark"] .form-block,
+body[data-theme="dark"] .info-block,
+body[data-theme="dark"] .word-card,
+body[data-theme="dark"] .cat-card,
+body[data-theme="dark"] .category-card,
+body[data-theme="dark"] .fav-item,
+body[data-theme="dark"] .challenge-card,
+body[data-theme="dark"] .profile-choice-card,
+body[data-theme="dark"] .menu-btn {
+  background: #17344d !important;
+  color: #eff7ff !important;
+  border-color: #3f6685 !important;
+}
+
+body[data-theme="dark"] input,
+body[data-theme="dark"] select,
+body[data-theme="dark"] textarea,
+body[data-theme="dark"] .phrase-bar {
+  background: #0f293e !important;
+  color: #eff7ff !important;
+  border-color: #4f7898 !important;
+}
+
+body[data-theme="dark"] .word-card .label,
+body[data-theme="dark"] .word-card .description,
+body[data-theme="dark"] .cat-card .label,
+body[data-theme="dark"] .cat-card .count,
+body[data-theme="dark"] .menu-title,
+body[data-theme="dark"] .menu-sub,
+body[data-theme="dark"] label,
+body[data-theme="dark"] p {
+  color: #eff7ff !important;
 }
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  font-size: calc(100% * var(--a11y-scale, 1));
+}
+
+button,
+[role="button"],
+[data-go],
+[data-word],
+[data-category],
+.menu-btn,
+.word-card,
+.cat-card,
+.about-link,
+.back-link {
+  touch-action: manipulation;
 }
 
 html,
@@ -39,8 +115,8 @@ body {
     min-height: 100%;
     margin: 0;
     padding: 0;
-    background-color: #1B364A !important;
-    color: var(--white);
+    background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-glow) 26%, var(--sky-bottom) 100%);
+    color: var(--navy);
 }
 #app {
     width: 100%;
@@ -49,6 +125,7 @@ body {
     border: none;
     outline: none;
     box-shadow: none;
+    background: transparent;
 }
 
 body,.bg-outras{
@@ -59,7 +136,7 @@ body,.bg-outras{
     background-repeat: no-repeat;
     background-attachment: fixed;
     
-    color: #F7FBFC;
+    color: var(--navy);
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -166,29 +243,31 @@ body,.bg-outras{
 
 .brand-intro {
   margin: 12px 0 26px;
+  padding: 10px 4px;
 }
 
 .brand-intro h1 {
   margin: 0;
-  color: var(--white);
+  color: var(--navy);
   font-family: var(--font-title);
-  font-size: clamp(30px, 7vw, 42px);
-  font-weight: 800;
-  letter-spacing: -0.045em;
+  font-size: clamp(34px, 8vw, 52px);
+  font-weight: 900;
+  letter-spacing: -0.055em;
+  text-shadow: 0 8px 24px rgba(16, 61, 93, 0.12);
 }
 
 .brand-intro p {
-  margin: 7px 0 0;
-  color: var(--white);
-  font-size: 14px;
-  font-weight: 500;
+  margin: 10px 0 0;
+  color: rgba(16, 61, 93, 0.8);
+  font-size: 15px;
+  font-weight: 700;
 }
 
 .menu-btn.primary,
 .card.yellow,
 .action-btn.primary {
-  background: transparent;
-  border-color: var(--card-border);
+  background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(190,225,255,0.8));
+  border-color: rgba(16, 61, 93, 0.12);
 }
 
 .menu-btn,
@@ -214,28 +293,34 @@ body,.bg-outras{
   align-items: center;
   gap: 10px;
 
-  border: 1.5px solid var(--card-border);
-  border-radius: var(--radius);
-  padding: 10px 14px;
+  border: 1px solid rgba(17, 62, 96, 0.08);
+  border-radius: 22px;
+  padding: 14px 16px;
   cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
   text-align: left;
   text-decoration: none;
-  color: inherit;
-  
- 
+  color: var(--navy);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 10px 25px rgba(16, 61, 93, 0.08);
   font-family: var(--font);
-  backdrop-filter: blur(6px);
-  transition: transform 0.1s ease, border-color 0.15s ease;
 }
 
 .menu-btn:hover,
 .card:hover {
   transform: translateY(-2px);
+  box-shadow: 0 16px 30px rgba(16, 61, 93, 0.12);
 }
 
 .menu-btn:active,
 .card:active {
   transform: scale(0.98);
+}
+
+.menu-btn.primary {
+  background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(195,229,255,0.82));
+  border-color: rgba(16, 61, 93, 0.12);
 }
 
 
@@ -352,6 +437,19 @@ body,.bg-outras{
   color: var(--white);
   margin: 4px 0 10px;
   text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
+}
+
+.favorites-screen {
+  overflow-x: hidden;
+}
+
+.favorites-heading {
+  margin-top: 8px;
+  margin-bottom: 12px;
+}
+
+.favorites-heading-words {
+  margin-top: 24px;
 }
 
 
@@ -681,6 +779,7 @@ body,.bg-outras{
 .action-row {
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 16px;
  
@@ -688,6 +787,7 @@ body,.bg-outras{
 
 .action-row button {
   flex: 1;
+  min-width: 0;
   border:1px solid var(--card-border);
   background: transparent;
   color: white;
@@ -698,6 +798,17 @@ body,.bg-outras{
   font-size: 13px;
   cursor: pointer;
   transition: transform 0.1s ease;
+}
+
+@media (max-width: 560px) {
+  .action-row button {
+    flex: 1 1 calc(50% - 5px);
+  }
+
+  .action-row .btn-speak,
+  .action-row .btn-fav {
+    flex-basis: calc(33.333% - 7px);
+  }
 }
 
 .action-row button:active {
@@ -725,6 +836,28 @@ body,.bg-outras{
 
 .favorite-toggle.is-favorite {
   color: var(--yellow-dark);
+}
+
+#feedbackText::placeholder {
+  color: #ffffff !important;
+  opacity: 0.78 !important;
+}
+
+.word-favorite-remove {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  z-index: 2;
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #c0392b;
+  font-size: 17px;
+  font-weight: 900;
+  line-height: 1;
+  cursor: pointer;
 }
 
 .speak-btn {
@@ -917,12 +1050,23 @@ body,.bg-outras{
   align-items: center;
   gap: 10px;
   backdrop-filter: blur(4px);
+  box-shadow: 0 4px 12px rgba(16, 61, 93, 0.12);
 }
 
 .fav-item .txt {
   flex: 1;
+  min-width: 0;
   font-weight: 700;
   color: var(--white);
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.fav-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 0 0 auto;
 }
 
 .fav-item button {
@@ -935,10 +1079,17 @@ body,.bg-outras{
   color: var(--navy);
 }
 
+.fav-speak {
+  min-width: 58px;
+}
+
 .fav-remove {
   background: none !important;
   color: var(--red) !important;
   font-size: 16px;
+  min-width: 34px;
+  min-height: 34px;
+  padding: 6px !important;
 }
 
 .empty-state {
@@ -2090,6 +2241,38 @@ body {
   border-bottom-color: rgba(212, 234, 251, 0.32) !important;
 }
 
+/* Perfil senior: azul antigo, com títulos em branco */
+.info-block {
+  background: #123b4d !important;
+  color: #ffffff !important;
+  border: 2px solid rgba(212, 234, 251, 0.32) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16) !important;
+}
+
+.info-block .profile-stat,
+.info-block .profile-stat span,
+.info-block .profile-stat strong,
+.info-block label,
+.info-block textarea,
+.info-block textarea::placeholder {
+  color: #ffffff !important;
+  text-shadow: none !important;
+}
+
+.info-block .profile-stat {
+  border-bottom-color: rgba(212, 234, 251, 0.32) !important;
+}
+
+.info-block textarea {
+  background: #1b364a !important;
+  border-color: rgba(255,255,255,0.25) !important;
+}
+
+.info-block h3 {
+  color: #ffffff !important;
+  text-shadow: none !important;
+}
+
 .profile-choice-card.kids {
   background: linear-gradient(180deg, #ffe08a, #dca707) !important;
   color: #092b3b !important;
@@ -2119,6 +2302,12 @@ textarea,
   border-color: rgba(212, 234, 251, 0.55) !important;
 }
 
+#app .info-block #feedbackText {
+  background: #1b364a !important;
+  color: #ffffff !important;
+  border-color: rgba(255,255,255,0.25) !important;
+}
+
 .submit-btn,
 .confirm-btn,
 .speak-btn,
@@ -2135,6 +2324,42 @@ html,
 body {
   background-color: #1b364a !important;
   background-image: none !important;
+}
+
+/* Grade azul em movimento: decorativa, leve e sem bloquear os controles. */
+body.layout-neutro::before {
+  content: '';
+  position: fixed;
+  inset: -30vh -20vw;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.34;
+  background-image:
+    linear-gradient(90deg,
+      rgba(32, 112, 174, 0.52) 0 78px,
+      rgba(69, 165, 218, 0.42) 78px 156px,
+      rgba(22, 82, 135, 0.52) 156px 234px,
+      rgba(111, 197, 239, 0.38) 234px 312px),
+    linear-gradient(0deg,
+      transparent 0 76px,
+      rgba(164, 225, 255, 0.2) 76px 78px,
+      transparent 78px 154px,
+      rgba(8, 61, 105, 0.24) 154px 156px);
+  background-size: 312px 156px;
+  background-position: 0 0;
+  background-blend-mode: screen, multiply;
+  animation: blueGridSlide 10s ease-in-out infinite alternate;
+}
+
+@keyframes blueGridSlide {
+  from { background-position: 0 0; }
+  to { background-position: 312px 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.layout-neutro::before {
+    animation: none;
+  }
 }
 
 body.layout-neutro {
@@ -2181,6 +2406,11 @@ body.layout-infantil .app {
   background: transparent !important;
 }
 
+body.layout-neutro #app,
+body.layout-neutro .app {
+  z-index: 1;
+}
+
 
 
 /* Ícones das listas na cor principal do site */
@@ -2212,6 +2442,612 @@ body.layout-infantil .app {
 /* Ícones gerados do menu: arquivos PNG já estão em azul */
 .home-screen .menu-image {
   filter: none !important;
+}
+
+body[data-theme="dark"] .screen,
+body[data-theme="dark"] .settings-panel,
+body[data-theme="dark"] .settings-panel h3,
+body[data-theme="dark"] .settings-panel p,
+body[data-theme="dark"] .settings-panel span,
+body[data-theme="dark"] .topbar-title {
+  color: #eff7ff !important;
+}
+
+body[data-theme="dark"] .settings-panel button,
+body[data-theme="dark"] .settings-panel input,
+body[data-theme="dark"] .settings-panel select,
+body[data-theme="dark"] .settings-panel textarea {
+  color: #eff7ff !important;
+  background: #0f293e !important;
+  border-color: #4f7898 !important;
+}
+
+.settings-panel {
+  max-width: 760px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.settings-row:last-child { border-bottom: none; }
+.settings-label { font-weight: 800; color: var(--navy); font-size: 14.5px; }
+.settings-desc { font-weight: 600; color: var(--navy-soft); font-size: 12px; margin-top: 2px; }
+.stepper { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.stepper button { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--card-border); background: var(--white); color: var(--navy); font-size: 24px; font-weight: 800; }
+.stepper span { min-width: 64px; text-align: center; font-weight: 800; color: var(--navy); }
+.settings-topbar { padding-top: 16px; padding-bottom: 18px; }
+.settings-topbar .icon-btn { transform: translateY(3px); }
+
+/* Contraste consistente para a tela de configurações nos dois temas. */
+body[data-theme="dark"] .settings-panel {
+  background: #17344d !important;
+  color: #eff7ff !important;
+  border-color: #4f7898 !important;
+}
+
+body[data-theme="dark"] .settings-row {
+  border-bottom-color: #4f7898 !important;
+}
+
+body[data-theme="dark"] .settings-label,
+body[data-theme="dark"] .settings-desc,
+body[data-theme="dark"] .stepper span {
+  color: #eff7ff !important;
+}
+
+body[data-theme="light"] {
+  background: #eaf4fb !important;
+  color: #123b4d !important;
+}
+
+body[data-theme="light"] #app,
+body[data-theme="light"] .app {
+  background: transparent !important;
+  color: #123b4d !important;
+}
+
+body[data-theme="light"] .settings-panel,
+body[data-theme="light"] .form-block,
+body[data-theme="light"] .info-block,
+body[data-theme="light"] .challenge-card,
+body[data-theme="light"] .word-card,
+body[data-theme="light"] .cat-card,
+body[data-theme="light"] .fav-item,
+body[data-theme="light"] .menu-btn,
+body[data-theme="light"] .onboard-panel {
+  background: #ffffff !important;
+  color: #123b4d !important;
+  border-color: #9dbbca !important;
+  box-shadow: 0 5px 14px rgba(18, 59, 77, 0.16) !important;
+}
+
+body[data-theme="light"] .settings-row {
+  border-bottom-color: #c2d5df !important;
+}
+
+body[data-theme="light"] .settings-label,
+body[data-theme="light"] .settings-desc,
+body[data-theme="light"] .stepper span,
+body[data-theme="light"] .form-block h3,
+body[data-theme="light"] .menu-title,
+body[data-theme="light"] .menu-sub,
+body[data-theme="light"] .topbar-title,
+body[data-theme="light"] .section-label,
+body[data-theme="light"] .brand-intro h1,
+body[data-theme="light"] .brand-intro p,
+body[data-theme="light"] .about-link,
+body[data-theme="light"] .back-link,
+body[data-theme="light"] .hint {
+  color: #123b4d !important;
+  text-shadow: none !important;
+}
+
+body[data-theme="light"] .settings-desc,
+body[data-theme="light"] .menu-sub,
+body[data-theme="light"] .word-card .description,
+body[data-theme="light"] .cat-card .count {
+  color: #456678 !important;
+}
+
+body[data-theme="dark"] .home-screen .menu-btn.primary {
+  background: #ffffff !important;
+  border-color: #c5d7df !important;
+}
+
+body[data-theme="dark"] .home-screen .menu-btn.primary .menu-title,
+body[data-theme="dark"] .home-screen .menu-btn.primary .menu-sub,
+body[data-theme="dark"] .home-screen .menu-btn.primary .menu-arrow,
+body[data-theme="light"] .home-screen .menu-btn .menu-title,
+body[data-theme="light"] .home-screen .menu-btn .menu-sub,
+body[data-theme="light"] .home-screen .menu-btn .menu-arrow {
+  color: #123b4d !important;
+  text-shadow: none !important;
+}
+
+body[data-theme="dark"] .home-screen .menu-btn:not(.primary) .menu-title,
+body[data-theme="dark"] .home-screen .menu-btn:not(.primary) .menu-sub,
+body[data-theme="dark"] .home-screen .menu-btn:not(.primary) .menu-arrow {
+  color: #eff7ff !important;
+  text-shadow: none !important;
+}
+
+body[data-theme="dark"] .home-screen .menu-btn:not(.primary) .menu-image {
+  filter: brightness(0) invert(1) !important;
+}
+
+body[data-theme="light"] .home-screen .menu-image {
+  filter: none !important;
+}
+
+body[data-theme="light"] .stepper button {
+  background: #edf7fb !important;
+  color: #123b4d !important;
+  border-color: #7fa8ba !important;
+}
+
+body[data-theme="light"] .switch-track {
+  background: #c2d5df !important;
+  border-color: #7fa8ba !important;
+}
+
+body[data-theme="light"] .switch input:checked + .switch-track {
+  background: #dca707 !important;
+}
+
+/* Revisão geral: telas especiais, cartões, formulários e estados vazios. */
+body[data-theme="light"] .mode-choice-screen,
+body[data-theme="light"] .mode-screen {
+  background: #eaf4fb !important;
+  color: #123b4d !important;
+}
+
+body[data-theme="dark"] .mode-choice-screen,
+body[data-theme="dark"] .mode-screen {
+  background: #1b364a !important;
+  color: #eff7ff !important;
+}
+
+body[data-theme="light"] .mode-choice-content h1 {
+  color: #123b4d !important;
+  text-shadow: none !important;
+}
+
+body[data-theme="dark"] .mode-choice-content h1 {
+  color: #eff7ff !important;
+}
+
+body[data-theme="light"] .mode-choice-back,
+body[data-theme="dark"] .mode-choice-back,
+body[data-theme="light"] .mode-screen-back,
+body[data-theme="dark"] .mode-screen-back {
+  color: #123b4d !important;
+}
+
+body[data-theme="light"] .mode-choice-button {
+  color: #123b4d !important;
+  border-color: #7fa8ba !important;
+}
+
+body[data-theme="dark"] .mode-choice-button {
+  color: #123b4d !important;
+}
+
+body[data-theme="light"] .mode-screen-content,
+body[data-theme="light"] .circular-keyboard-reserved {
+  background: #ffffff !important;
+  color: #123b4d !important;
+  border-color: #9dbbca !important;
+}
+
+body[data-theme="dark"] .mode-screen-content,
+body[data-theme="dark"] .circular-keyboard-reserved {
+  background: #17344d !important;
+  color: #eff7ff !important;
+  border-color: #4f7898 !important;
+}
+
+body[data-theme="light"] .mode-screen-content p,
+body[data-theme="light"] .circular-keyboard-reserved p,
+body[data-theme="light"] .mode-choice-hint {
+  color: #456678 !important;
+}
+
+body[data-theme="dark"] .mode-screen-content p,
+body[data-theme="dark"] .circular-keyboard-reserved p,
+body[data-theme="dark"] .mode-choice-hint {
+  color: #dbeaf3 !important;
+}
+
+body[data-theme="light"] .carousel-full-screen {
+  background: #eaf4fb !important;
+}
+
+body[data-theme="dark"] .carousel-full-screen {
+  background: linear-gradient(180deg, rgba(15, 41, 62, .88), rgba(23, 58, 94, .92)), url('assets/imagens/imagem-adulto.png') center / cover no-repeat !important;
+}
+
+body[data-theme="light"] .carousel-full-content .section-label,
+body[data-theme="light"] .carousel-full-content .layer-label,
+body[data-theme="light"] .carousel-full-content .topbar-title {
+  color: #123b4d !important;
+  text-shadow: none !important;
+}
+
+body[data-theme="dark"] .carousel-full-content .section-label,
+body[data-theme="dark"] .carousel-full-content .layer-label,
+body[data-theme="dark"] .carousel-full-content .topbar-title {
+  color: #eff7ff !important;
+}
+
+body[data-theme="light"] .carousel-arrow {
+  color: #123b4d !important;
+  border-color: #7fa8ba !important;
+}
+
+body[data-theme="light"] .carousel-card .label,
+body[data-theme="light"] .carousel-full-content .action-row button {
+  color: #123b4d !important;
+}
+
+body[data-theme="dark"] .carousel-card .label,
+body[data-theme="dark"] .carousel-full-content .action-row button {
+  color: #eff7ff !important;
+}
+
+.carousel-card.center .label {
+  color: #123b4d !important;
+}
+
+body[data-theme="dark"] .carousel-card.center .label {
+  color: #123b4d !important;
+}
+
+.confirm-btn {
+  color: #123b4d !important;
+}
+
+body[data-theme="light"] .action-row button {
+  border-color: #7fa8ba !important;
+}
+
+body[data-theme="dark"] .action-row button {
+  border-color: #4f7898 !important;
+}
+
+body[data-theme="light"] .empty-state,
+body[data-theme="light"] .fav-item .txt,
+body[data-theme="light"] .word-card .label,
+body[data-theme="light"] .cat-card .label,
+body[data-theme="light"] .challenge-card p {
+  color: #123b4d !important;
+  text-shadow: none !important;
+}
+
+body[data-theme="dark"] .empty-state,
+body[data-theme="dark"] .fav-item .txt,
+body[data-theme="dark"] .word-card .label,
+body[data-theme="dark"] .cat-card .label,
+body[data-theme="dark"] .challenge-card p {
+  color: #eff7ff !important;
+  text-shadow: none !important;
+}
+
+body[data-theme="light"] .fav-item button,
+body[data-theme="dark"] .fav-item button,
+body[data-theme="light"] .word-card::after,
+body[data-theme="dark"] .word-card::after {
+  color: #123b4d !important;
+}
+
+.form-row input,
+.form-row select,
+.custom-chip {
+  color: #123b4d !important;
+}
+
+body[data-theme="light"] .screen #feedbackText {
+  background: #ffffff !important;
+  color: #123b4d !important;
+  border-color: #9dbbca !important;
+}
+
+body[data-theme="light"] #app .info-block #feedbackText {
+  background: #ffffff !important;
+  color: #123b4d !important;
+  border-color: #9dbbca !important;
+}
+
+body[data-theme="light"] .info-block h3,
+body[data-theme="light"] .info-block .profile-stat,
+body[data-theme="light"] .info-block .profile-stat span,
+body[data-theme="light"] .form-block > p {
+  color: #123b4d !important;
+}
+
+.switch {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  width: 54px;
+  height: 32px;
+  cursor: pointer;
+}
+
+.switch input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.switch-track {
+  position: relative;
+  width: 54px;
+  height: 32px;
+  border: 2px solid #6f91a8;
+  border-radius: 999px;
+  background: #345a74;
+  transition: background .15s ease, border-color .15s ease;
+}
+
+.switch-track::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0,0,0,.35);
+  transition: transform .15s ease;
+}
+
+.switch input:checked + .switch-track {
+  background: #dca707;
+  border-color: #ae8100;
+}
+
+.switch input:checked + .switch-track::after {
+  transform: translateX(22px);
+}
+
+#app .scan-active {
+  outline: 4px solid #ffe600 !important;
+  outline-offset: 4px !important;
+  box-shadow: 0 0 0 6px rgba(255, 230, 0, .28), 0 8px 20px rgba(0, 0, 0, .28) !important;
+  position: relative;
+  z-index: 3;
+}
+
+body[data-theme="light"] #app .scan-active {
+  outline-color: #8a5d00 !important;
+  box-shadow: 0 0 0 6px rgba(138, 93, 0, .2), 0 8px 20px rgba(18, 59, 77, .24) !important;
+}
+
+/* Contraste do cadastro e da escolha de perfil. */
+body[data-theme="light"].profile-selection .onboard-title,
+body[data-theme="light"].profile-selection .onboard-subtitle,
+body[data-theme="light"].profile-selection .onboard-panel h2,
+body[data-theme="light"].profile-selection .onboard-panel > p,
+body[data-theme="light"].profile-selection .onboard-hint {
+  color: #123b4d !important;
+  text-shadow: none !important;
+}
+
+body[data-theme="light"].profile-selection .onboard-panel {
+  background: #ffffff !important;
+  border-color: #9dbbca !important;
+  box-shadow: 0 8px 20px rgba(18, 59, 77, .16) !important;
+}
+
+body[data-theme="light"].profile-selection .profile-choice-card .tag,
+body[data-theme="light"].profile-selection .profile-choice-card .title,
+body[data-theme="light"].profile-selection .profile-choice-card .desc,
+body[data-theme="light"].profile-selection .profile-choice-card .foot {
+  color: #123b4d !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
+}
+
+body[data-theme="light"].profile-selection .profile-choice-card.adult {
+  background: #eaf2f7 !important;
+  border-color: #8aaebe !important;
+}
+
+body[data-theme="light"].profile-selection .profile-choice-card.kids {
+  background: #febe24 !important;
+  border-color: #b98200 !important;
+}
+
+body[data-theme="dark"].profile-selection .onboard-title,
+body[data-theme="dark"].profile-selection .onboard-panel h2 {
+  color: #eff7ff !important;
+}
+
+body[data-theme="dark"].profile-selection .onboard-subtitle,
+body[data-theme="dark"].profile-selection .onboard-panel > p,
+body[data-theme="dark"].profile-selection .onboard-hint {
+  color: #dbeaf3 !important;
+  text-shadow: none !important;
+}
+
+/* No tema escuro, os cartões mantêm os fundos coloridos do tema claro. */
+body[data-theme="dark"].profile-selection .profile-choice-card.kids {
+  background: #febe24 !important;
+  border-color: #b98200 !important;
+}
+
+body[data-theme="dark"].profile-selection .profile-choice-card.adult {
+  background: #eaf2f7 !important;
+  border-color: #8aaebe !important;
+}
+
+/* Texto escuro sobre os fundos amarelo e azul-claro dos cartões. */
+body[data-theme="dark"].profile-selection .profile-choice-card .tag,
+body[data-theme="dark"].profile-selection .profile-choice-card .title,
+body[data-theme="dark"].profile-selection .profile-choice-card .desc,
+body[data-theme="dark"].profile-selection .profile-choice-card .foot {
+  color: #123b4d !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
+}
+
+/* Contraste da tela Bem-vindo(a) no tema claro. */
+body[data-theme="light"] .onboard-wrap .onboard-title,
+body[data-theme="light"] .onboard-wrap .onboard-subtitle,
+body[data-theme="light"] .onboard-wrap .onboard-panel h2,
+body[data-theme="light"] .onboard-wrap .onboard-panel > p,
+body[data-theme="light"] .onboard-wrap .onboard-hint {
+  color: #123b4d !important;
+  text-shadow: none !important;
+}
+
+body[data-theme="light"] .onboard-wrap .onboard-panel {
+  background: #ffffff !important;
+  border-color: #9dbbca !important;
+  box-shadow: 0 8px 20px rgba(18, 59, 77, .16) !important;
+}
+
+body[data-theme="light"] .onboard-wrap .form-row input {
+  background: #ffffff !important;
+  color: #123b4d !important;
+  border-color: #7fa8ba !important;
+}
+
+body[data-theme="light"] .onboard-wrap .form-row input::placeholder {
+  color: #456678 !important;
+  opacity: 1 !important;
+}
+
+/* Botões de voz: texto escuro sobre o botão claro no tema escuro. */
+body[data-theme="dark"] .speak-btn,
+body[data-theme="dark"] .action-row .btn-speak {
+  background: #f7c94d !important;
+  color: #123b4d !important;
+  border-color: #b98200 !important;
+}
+
+/* Perfil infantil: Conta e feedback usam cartões claros com texto escuro. */
+body.layout-infantil .info-block,
+body.layout-infantil .form-block {
+  background: #ffffff !important;
+  color: #123b4d !important;
+  border-color: #9dbbca !important;
+}
+
+body.layout-infantil .info-block h3,
+body.layout-infantil .info-block label,
+body.layout-infantil .info-block .profile-stat,
+body.layout-infantil .info-block .profile-stat span,
+body.layout-infantil .info-block .profile-stat strong,
+body.layout-infantil .form-block h3,
+body.layout-infantil .form-block > p {
+  color: #123b4d !important;
+  text-shadow: none !important;
+}
+
+body.layout-infantil .info-block .profile-stat {
+  border-bottom-color: #c2d5df !important;
+}
+
+body.layout-infantil .info-block #feedbackText {
+  background: #ffffff !important;
+  color: #123b4d !important;
+  border-color: #9dbbca !important;
+}
+
+body.layout-infantil #app .info-block #feedbackText {
+  background: #ffffff !important;
+  color: #123b4d !important;
+  border-color: #9dbbca !important;
+}
+
+body.layout-infantil .info-block #feedbackText::placeholder {
+  color: #456678 !important;
+  opacity: 1 !important;
+}
+
+body.layout-infantil .form-block .submit-btn,
+body.layout-infantil .info-block .submit-btn {
+  background: #123b4d !important;
+  color: #ffffff !important;
+  border-color: #123b4d !important;
+}
+
+body.layout-infantil .topbar-title,
+body.layout-infantil .topbar .back-link {
+  color: #123b4d !important;
+  text-shadow: none !important;
+}
+
+/* Escolha de modo: botões planos, sem o quadrado branco por trás. */
+.mode-choice-back {
+  background: #f7c94d !important;
+  color: #123b4d !important;
+  border: 2px solid #b98200 !important;
+  box-shadow: none !important;
+}
+
+.mode-choice-button {
+  color: #123b4d !important;
+  box-shadow: none !important;
+  border-width: 3px !important;
+}
+
+.mode-choice-button[data-mode-screen="circularMode"] {
+  background: #f7c94d !important;
+  border-color: #b98200 !important;
+}
+
+.mode-choice-button[data-mode-screen="carouselMode"] {
+  background: #8bd3a8 !important;
+  border-color: #3f9b68 !important;
+}
+
+/* Perfil Sênior: sem painel/card atrás e com cores mais sóbrias. */
+body.layout-neutro .mode-choice-screen {
+  background: transparent !important;
+}
+
+body.layout-neutro .mode-choice-back {
+  background: #dce8ef !important;
+  color: #123b4d !important;
+  border-color: #6f95aa !important;
+}
+
+body.layout-neutro .mode-choice-button[data-mode-screen="circularMode"] {
+  background: #c6dce8 !important;
+  border-color: #6f95aa !important;
+  color: #123b4d !important;
+}
+
+body.layout-neutro .mode-choice-button[data-mode-screen="carouselMode"] {
+  background: #b8c9d5 !important;
+  border-color: #5f7686 !important;
+  color: #123b4d !important;
+}
+
+body.layout-neutro .mode-choice-button[data-mode-screen="circularMode"]:hover {
+  background: #d8e8f0 !important;
+}
+
+body.layout-neutro .mode-choice-button[data-mode-screen="carouselMode"]:hover {
+  background: #cbd9e2 !important;
+}
+
+body[data-theme="light"] #app .info-block #feedbackText::placeholder,
+body[data-theme="light"] #feedbackText::placeholder {
+  color: #456678 !important;
+  opacity: 1 !important;
 }
 
 </style>
@@ -2277,14 +3113,6 @@ const DEFAULT_WORDS = [
     label: 'Mãe',
     emoji: '👩',
     description: 'Minha mãe',
-    cat: 'pessoas'
-  },
-
-  {
-    id: 'pai',
-    label: 'Pai',
-    emoji: '👨',
-    description: 'Meu pai',
     cat: 'pessoas'
   },
 
@@ -2542,7 +3370,6 @@ const SUGGESTIONS = {
     'eu',
     'voce',
     'mae',
-    'pai',
     'professor',
     'amigo'
   ],
@@ -2564,14 +3391,6 @@ const SUGGESTIONS = {
   ],
 
   mae: [
-    'quero',
-    'preciso',
-    'estou',
-    'gosto',
-    'vou'
-  ],
-
-  pai: [
     'quero',
     'preciso',
     'estou',
@@ -2860,12 +3679,100 @@ let STATE = {
       stars: 0,
       age: null,
       layout: 'neutro',
-      onboarded: false
+      onboarded: false,
+      wordsUsed: 0,
+      wordsSaved: 0,
+      feedback: ''
+    },
+    settings: {
+      darkTheme: true,
+      fontStep: 2,
+      scanEnabled: false,
+      scanSpeed: 1800,
+      voiceRate: 0.8
     }
 
   }
 
 };
+
+const SETTINGS_DEFAULTS = {
+  darkTheme: true,
+  fontStep: 2,
+  scanEnabled: false,
+  scanSpeed: 1800,
+  voiceRate: 0.8
+};
+
+function getSettings() {
+  const current = STATE.data.settings && typeof STATE.data.settings === 'object'
+    ? STATE.data.settings
+    : {};
+
+  STATE.data.settings = {
+    ...SETTINGS_DEFAULTS,
+    ...current
+  };
+
+  return STATE.data.settings;
+}
+
+function applyAccessibilityTheme() {
+  const settings = getSettings();
+  const scales = [0.9, 1, 1.15, 1.35];
+  const fontStep = Math.min(4, Math.max(1, Number(settings.fontStep) || 2));
+
+  document.documentElement.style.setProperty(
+    '--a11y-scale',
+    scales[fontStep - 1]
+  );
+  document.body.dataset.theme = settings.darkTheme === false ? 'light' : 'dark';
+}
+
+let scanTimer = null;
+let scanIndex = -1;
+let scanScreen = '';
+
+function clearScanHighlight() {
+  document.querySelectorAll('.scan-active').forEach(element => {
+    element.classList.remove('scan-active');
+  });
+}
+
+function scanTargets() {
+  return [...document.querySelectorAll(
+    '#app button:not([disabled]), #app [role="button"]:not([aria-disabled="true"]), #app input:not([disabled]), #app select:not([disabled]), #app textarea:not([disabled])'
+  )].filter(element => {
+    const rect = element.getBoundingClientRect();
+    return rect.width > 0 && rect.height > 0 && !element.closest('[hidden]');
+  });
+}
+
+function scheduleScan() {
+  clearTimeout(scanTimer);
+  scanTimer = null;
+  clearScanHighlight();
+
+  const settings = getSettings();
+  const app = document.getElementById('app');
+  if (!settings.scanEnabled || app?.getAttribute('aria-hidden') === 'true') return;
+
+  const targets = scanTargets();
+  if (!targets.length) return;
+
+  if (scanScreen !== STATE.screen) {
+    scanScreen = STATE.screen;
+    scanIndex = -1;
+  }
+
+  scanIndex = (scanIndex + 1) % targets.length;
+  const target = targets[scanIndex];
+  target.classList.add('scan-active');
+  target.focus({ preventScroll: true });
+
+  const scanSpeed = Math.min(5000, Math.max(600, Number(settings.scanSpeed) || 1800));
+  scanTimer = setTimeout(scheduleScan, scanSpeed);
+}
 
 const STORAGE_KEY = 'comunica:data';
 
@@ -2880,11 +3787,7 @@ function allCategories() {
 }
 
 function allWords() {
-
-  return DEFAULT_WORDS.concat(
-    STATE.data.customWords
-  );
-
+  return DEFAULT_WORDS.concat(STATE.data.customWords);
 }
 
 function wordById(id) {
@@ -3010,60 +3913,61 @@ function showToast(message) {
 }
 
 
-function speak(text) {
+let speechRequestId = 0;
 
-  if (!('speechSynthesis' in window)) {
-
-    showToast(
-      'A voz não é suportada neste navegador.'
-    );
-
-    return;
-
-  }
-
-  if (!text) return;
-
-  const utterance =
-    new SpeechSynthesisUtterance(text);
-
-  utterance.lang = 'pt-BR';
-
-  const voices =
-    window.speechSynthesis.getVoices();
-
-  // Prioriza a voz tradicional do Google em português do Brasil.
-  // O nome pode variar ligeiramente entre Chrome, Android e desktop.
+function preferredPortugueseVoice() {
+  const voices = window.speechSynthesis.getVoices();
   const normalizedVoices = voices.map(voice => ({
     voice,
     name: (voice.name || '').toLowerCase(),
     lang: (voice.lang || '').toLowerCase()
   }));
 
-  const ptVoice =
-    normalizedVoices.find(({ name, lang }) =>
-      lang === 'pt-br' &&
-      name.includes('google') &&
-      (name.includes('portugu') || name.includes('brazil') || name.includes('brasil'))
-    )?.voice ||
-    normalizedVoices.find(({ name, lang }) =>
-      lang === 'pt-br' && name.includes('google')
-    )?.voice ||
-    normalizedVoices.find(({ lang }) => lang === 'pt-br')?.voice ||
-    normalizedVoices.find(({ lang }) => lang.startsWith('pt'))?.voice;
+  // O nome da voz varia entre Chrome, Android e Windows, por isso há alternativas.
+  return normalizedVoices.find(({ name, lang }) =>
+    lang === 'pt-br' &&
+    name.includes('google') &&
+    (name.includes('portugu') || name.includes('brazil') || name.includes('brasil'))
+  )?.voice ||
+  normalizedVoices.find(({ name, lang }) => lang === 'pt-br' && name.includes('google'))?.voice ||
+  normalizedVoices.find(({ lang }) => lang === 'pt-br')?.voice ||
+  normalizedVoices.find(({ lang }) => lang.startsWith('pt'))?.voice;
+}
 
-  if (ptVoice) {
-
-    utterance.voice = ptVoice;
-
+function speak(text) {
+  if (!('speechSynthesis' in window)) {
+    showToast('A voz não é suportada neste navegador.');
+    return;
   }
 
-  window.speechSynthesis.cancel();
+  if (!text) return;
 
-  window.speechSynthesis.speak(
-    utterance
-  );
+  const requestId = ++speechRequestId;
+  let speechStarted = false;
+  const speakNow = () => {
+    if (requestId !== speechRequestId || speechStarted) return;
+    speechStarted = true;
 
+    const settings = getSettings();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'pt-BR';
+    utterance.rate = Math.min(1.2, Math.max(0.5, Number(settings.voiceRate) || 0.8));
+    utterance.pitch = 1;
+
+    const ptVoice = preferredPortugueseVoice();
+    if (ptVoice) utterance.voice = ptVoice;
+
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(utterance);
+  };
+
+  if (window.speechSynthesis.getVoices().length) {
+    speakNow();
+    return;
+  }
+
+  window.speechSynthesis.addEventListener('voiceschanged', speakNow, { once: true });
+  setTimeout(speakNow, 250);
 }
 
 
@@ -3108,6 +4012,11 @@ function addWordToPhrase(word) {
 
   STATE.phrase.push(word);
 
+  STATE.data.profile.wordsUsed =
+    (STATE.data.profile.wordsUsed || 0) + 1;
+
+  saveData();
+
   loadLayer();
 
   render();
@@ -3137,6 +4046,8 @@ function eraseLast() {
 function clearPhrase() {
 
   if (STATE.phrase.length > 0) {
+
+    if (!window.confirm('Deseja limpar toda a frase?')) return;
 
     speak('Limpar frase');
 
@@ -3180,6 +4091,9 @@ function favoritePhrase() {
   ) {
 
     STATE.data.favPhrases.push(text);
+
+    STATE.data.profile.wordsSaved =
+      (STATE.data.profile.wordsSaved || 0) + STATE.phrase.length;
 
     saveData();
 
@@ -3323,6 +4237,14 @@ function speakPhrase() {
 
   if (text) {
 
+    const spokenWords =
+      text.trim().split(/\s+/).filter(Boolean).length;
+
+    STATE.data.profile.wordsUsed =
+      (STATE.data.profile.wordsUsed || 0) + spokenWords;
+
+    saveData();
+
     speak(text);
 
   }
@@ -3339,6 +4261,9 @@ function toggleFavoriteWord(wordId) {
   const index = STATE.data.favWords.indexOf(wordId);
 
   if (index >= 0) {
+
+    if (!window.confirm('Remover esta palavra dos favoritos?')) return;
+
     STATE.data.favWords.splice(index, 1);
     showToast('Palavra removida dos favoritos.');
   } else {
@@ -3350,17 +4275,34 @@ function toggleFavoriteWord(wordId) {
   render();
 }
 
-function wordCardHtml(word, selected = false) {
+function favoriteLastWord() {
+  const word = STATE.phrase[STATE.phrase.length - 1];
+
+  if (!word) {
+    showToast('Selecione uma palavra primeiro.');
+    return;
+  }
+
+  toggleFavoriteWord(word.id);
+}
+
+function wordCardHtml(word, selected = false, inFavorites = false) {
   const favorite = isFavoriteWord(word.id);
 
   return `
-    <div class="word-card ${selected ? 'selected' : ''}" data-word="${word.id}">
+    <div class="word-card ${selected ? 'selected' : ''}" data-word="${word.id}" ${inFavorites ? 'data-favorite-word-card' : ''}>
       <button type="button" class="favorite-toggle ${favorite ? 'is-favorite' : ''}"
         data-fav-word="${word.id}"
         aria-label="${favorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}"
         title="${favorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}">
         ${favorite ? '★' : '☆'}
       </button>
+      ${inFavorites ? `
+        <button type="button" class="word-favorite-remove"
+          data-remove-word="${word.id}"
+          aria-label="Remover ${word.label} dos favoritos"
+          title="Remover dos favoritos">✕</button>
+      ` : ''}
       <div class="emoji">${word.emoji}</div>
       <div class="label">${word.label}</div>
       <div class="description">${word.description || 'Toque para adicionar'}</div>
@@ -3428,6 +4370,10 @@ function render() {
       html = renderProfile();
       break;
 
+    case 'settings':
+      html = renderSettings();
+      break;
+
     case 'about':
       html = renderAbout();
       break;
@@ -3473,6 +4419,7 @@ function render() {
   );
 
   attachHandlers();
+  scheduleScan();
 
 }
 
@@ -3480,7 +4427,13 @@ function render() {
 
 function applyLayoutClass() {
 
-  const layout = 'neutro';
+  const isEntryScreen =
+    STATE.screen === 'login' ||
+    STATE.screen === 'chooseProfile';
+
+  const layout = !isEntryScreen && STATE.data.profile.layout === 'infantil'
+    ? 'infantil'
+    : 'neutro';
 
   document.body.classList.toggle(
     'layout-infantil',
@@ -3536,7 +4489,7 @@ function renderLineIcons() {
     const destination = button.dataset.go;
     const iconName = destination === 'profile'
       ? 'profile'
-      : destination === 'personalize'
+      : (destination === 'settings' || destination === 'personalize')
         ? 'settings'
         : 'back';
 
@@ -3548,7 +4501,7 @@ function renderLineIcons() {
         iconName === 'profile'
           ? 'Perfil'
           : iconName === 'settings'
-            ? 'Personalizar'
+            ? (destination === 'settings' ? 'Configurações de acessibilidade' : 'Personalizar')
             : 'Voltar'
       );
     }
@@ -3716,12 +4669,15 @@ function renderHome() {
       <p>Comunicação simples, clara e no seu ritmo.</p>
     </section>
 
-      <div></div>
+      <button class="icon-btn" data-go="settings" title="Configurações" aria-label="Configurações de acessibilidade" style="position:absolute;left:0;top:16px;">
+        <img class="menu-icon" src="assets/imagens/icone-configuracoes.png" alt="">
+      </button>
 
       <button
         class="icon-btn"
         data-go="profile"
         title="Perfil"
+        style="position:absolute;right:0;top:16px;"
       >
         <span class="profile-outline" aria-hidden="true"></span>
       </button>
@@ -3915,7 +4871,7 @@ function renderCarouselMode() {
   }
 
   const layerLabel = STATE.phrase.length === 0 ? 'QUEM ESTÁ FALANDO?' : STATE.phrase.length === 1 ? 'O QUE VOCÊ QUER DIZER?' : 'COMPLETE A FRASE';
-  return `<div class="carousel-full-screen"><div class="carousel-full-topbar"><button class="icon-btn" data-go="build" aria-label="Voltar para escolha do modo">←</button><div class="topbar-title">Comunicar</div><button class="icon-btn" data-go="personalize" aria-label="Personalizar">⚙︎</button></div><div class="carousel-full-content"><div class="section-label">MINHA FRASE</div><div class="phrase-bar" role="group" aria-label="Minha frase">${chipHtml}</div><div class="layer-label">${layerLabel}</div><div class="carousel-wrap">${cardsHtml}</div><button class="confirm-btn" id="confirmBtn" ${n === 0 ? 'disabled' : ''}>✓ Selecionar</button><div class="action-row"><button class="btn-erase" id="eraseBtn">Apagar</button><button class="btn-clear" id="clearBtn">Limpar</button><button class="btn-speak" id="speakBtn" ${STATE.phrase.length ? '' : 'disabled'}>Falar</button><button class="btn-fav" id="favPhraseBtn" ${STATE.phrase.length ? '' : 'disabled'}>Favoritar</button></div><div class="back-link" data-go="categories" style="margin-top:4px;">Ver todas as categorias</div><div class="hint">← → navega · Enter/Espaço seleciona · toque também funciona</div></div></div>`;
+  return `<div class="carousel-full-screen"><div class="carousel-full-topbar"><button class="icon-btn" data-go="build" aria-label="Voltar para escolha do modo">←</button><div class="topbar-title">Comunicar</div><button class="icon-btn" data-go="personalize" aria-label="Personalizar">⚙︎</button></div><div class="carousel-full-content"><div class="section-label">MINHA FRASE</div><div class="phrase-bar" role="group" aria-label="Minha frase">${chipHtml}</div><div class="layer-label">${layerLabel}</div><div class="carousel-wrap">${cardsHtml}</div><button class="confirm-btn" id="confirmBtn" ${n === 0 ? 'disabled' : ''}>✓ Selecionar</button><div class="action-row"><button class="btn-erase" id="eraseBtn">Apagar</button><button class="btn-clear" id="clearBtn">Limpar</button><button class="btn-speak" id="speakBtn" ${STATE.phrase.length ? '' : 'disabled'}>Falar</button><button class="btn-fav" id="favPhraseBtn" ${STATE.phrase.length ? '' : 'disabled'}>Favorizar frase</button><button class="btn-fav-word" id="favWordBtn" ${STATE.phrase.length ? '' : 'disabled'}>Favoritar palavra</button></div><div class="back-link" data-go="categories" style="margin-top:4px;">Ver todas as categorias</div><div class="hint">← → navega · Enter/Espaço seleciona · toque também funciona</div></div></div>`;
 }
 
 function renderCircularKeyboard() {
@@ -4105,6 +5061,15 @@ function renderCategoryDetail() {
 }
 
 
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 function renderFavorites() {
 
   const favWordObjects =
@@ -4131,9 +5096,9 @@ function renderFavorites() {
 
     </div>
 
-    <div class="screen">
+    <div class="screen favorites-screen">
 
-      <div class="section-label">
+      <div class="section-label favorites-heading">
         FRASES FAVORITAS
       </div>
 
@@ -4143,13 +5108,9 @@ function renderFavorites() {
           ? `
 
             <div class="empty-state">
-
               Nenhuma frase favoritada ainda.
-
-              <br><br>
-
-              Monte uma frase e toque em  Favoritar.
-
+              <br>
+              Monte uma frase e toque em <strong>Favoritar</strong>.
             </div>
 
           `
@@ -4158,22 +5119,39 @@ function renderFavorites() {
               .map(
                 (phrase, index) => `
 
-                  <div class="fav-item">
+                  <article class="fav-item">
 
                     <div class="txt">
-                       ${phrase}
+                      ${escapeHtml(phrase)}
                     </div>
+
+                    <div class="fav-actions">
+                      <button
+                        class="fav-speak"
+                        data-speak="${escapeHtml(phrase)}"
+                        aria-label="Falar frase: ${escapeHtml(phrase)}"
+                      >
+                        Falar
+                      </button>
+
+                      <button
+                        class="fav-remove"
+                        data-remove-phrase="${index}"
+                        aria-label="Remover frase dos favoritos"
+                        title="Remover frase"
+                      >
+                        ✕
+                      </button>
+                    </div>
+
+                  </article>
 
                 `
               )
               .join('')
-
       }
 
-      <div
-        class="section-label"
-        style="margin-top:18px;"
-      >
+      <div class="section-label favorites-heading favorites-heading-words">
         PALAVRAS FAVORITAS
       </div>
 
@@ -4184,6 +5162,8 @@ function renderFavorites() {
 
             <div class="empty-state">
               Nenhuma palavra favorita ainda.
+              <br>
+              Toque na estrela de uma palavra para salvar.
             </div>
 
           `
@@ -4193,19 +5173,14 @@ function renderFavorites() {
             <div class="word-grid">
 
               ${favWordObjects
-                .map(
-                  word =>
-                    wordCardHtml(
-                      word,
-                      false
-                    )
+                .map(word =>
+                  wordCardHtml(word, false, true)
                 )
                 .join('')}
 
             </div>
 
           `
-
       }
 
     </div>
@@ -4642,14 +5617,29 @@ function renderProfile() {
   const profile =
     STATE.data.profile;
 
-  const hasName =
-    !!(profile.name && profile.name.trim() !== '');
+  const wordsUsed =
+    Number(profile.wordsUsed || 0);
 
-  const isEditingName =
-    STATE.editingProfileName;
+  const summaryHtml = `
+    <div class="info-block">
+      <h3 style="margin:0 0 12px; color:#ffffff; font-weight:900; letter-spacing:0.02em;">Resumo</h3>
+      <div class="profile-stat"><span style="color:#ffffff;">⭐ Estrelas conquistadas</span><span style="color:#ffffff;">${profile.stars}</span></div>
+      <div class="profile-stat"><span style="color:#ffffff;">🗣️ Frases favoritas</span><span style="color:#ffffff;">${STATE.data.favPhrases.length}</span></div>
+      <div class="profile-stat" style="border-bottom:none;"><span style="color:#ffffff;">💬 Palavras usadas</span><span style="color:#ffffff;">${wordsUsed}</span></div>
+      <div class="profile-stat"><span style="color:#ffffff;">💾 Palavras favoritas</span><span style="color:#ffffff;">${STATE.data.favWords.length}</span></div>
+      <div class="profile-stat" style="border-bottom:none;"><span style="color:#ffffff;">📁 Categorias criadas</span><span style="color:#ffffff;">${STATE.data.customCategories.length}</span></div>
+    </div>
+  `;
 
-  const showRegisterBtn =
-    !hasName || isEditingName;
+  const feedbackHtml = `
+    <div class="info-block">
+      <h3 style="margin:0 0 12px; color:#ffffff; font-weight:900; letter-spacing:0.02em;">Feedback</h3>
+      <div style="display:grid; gap:10px;">
+        <textarea id="feedbackText" rows="4" placeholder="Como podemos melhorar?" style="width:100%; border-radius:12px; border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.08); color:#ffffff; padding:12px; resize:vertical; font-weight:600; opacity:0.92;">${profile.feedback || ''}</textarea>
+        <button class="submit-btn" id="saveFeedbackBtn">Salvar feedback</button>
+      </div>
+    </div>
+  `;
 
   return `
 
@@ -4672,100 +5662,8 @@ function renderProfile() {
 
     <div class="screen">
 
-      <div class="form-block">
-
-        <h3>
-          Cadastro do perfil
-        </h3>
-
-        <div class="form-row">
-
-          <input
-            type="text"
-            id="profileName"
-            placeholder="Como você se chama?"
-            value="${profile.name || ''}"
-            ${hasName && !isEditingName ? 'disabled' : ''}
-          >
-
-        </div>
-
-        ${
-          showRegisterBtn
-            ? `
-              <button
-                class="submit-btn"
-                id="registerProfileBtn"
-              >
-                Cadastrar perfil
-              </button>
-            `
-            : `
-              <button
-                class="submit-btn"
-                id="editProfileBtn"
-              >
-                Editar
-              </button>
-            `
-        }
-
-      </div>
-
-      <div class="info-block">
-
-        <div class="profile-stat">
-
-          <span>
-             Estrelas conquistadas
-          </span>
-
-          <span>
-            ${profile.stars}
-          </span>
-
-        </div>
-
-        <div class="profile-stat">
-
-          <span>
-             Frases favoritas
-          </span>
-
-          <span>
-            ${STATE.data.favPhrases.length}
-          </span>
-
-        </div>
-
-        <div class="profile-stat">
-
-          <span>
-             Palavras favoritas
-          </span>
-
-          <span>
-            ${STATE.data.favWords.length}
-          </span>
-
-        </div>
-
-        <div
-          class="profile-stat"
-          style="border-bottom:none;"
-        >
-
-          <span>
-             Categorias criadas
-          </span>
-
-          <span>
-            ${STATE.data.customCategories.length}
-          </span>
-
-        </div>
-
-      </div>
+      ${summaryHtml}
+      ${feedbackHtml}
 
       <div class="form-block">
 
@@ -4802,6 +5700,37 @@ function renderProfile() {
 }
 
 
+
+function renderSettings() {
+  const s = getSettings();
+  const fontLabels = ['Pequena', 'Média', 'Grande', 'Extra grande'];
+  const speed = s.scanSpeed || 1800;
+  const voiceRate = Math.min(1.2, Math.max(0.5, Number(s.voiceRate) || 0.8));
+  const voiceLabel = voiceRate <= 0.6 ? 'Muito lenta' : voiceRate <= 0.8 ? 'Lenta' : voiceRate <= 1 ? 'Normal' : 'Rápida';
+  return `
+    <div class="topbar settings-topbar">
+      <button class="icon-btn" data-go="home" aria-label="Voltar para o início">←</button>
+      <div class="topbar-title">Configurações</div>
+      <div style="width:var(--tap-min)"></div>
+    </div>
+    <div class="screen">
+      <div class="form-block settings-panel">
+        <div class="settings-row"><div><div class="settings-label">Tamanho da letra e dos botões</div><div class="settings-desc">Deixa tudo maior ou menor na tela</div></div><div class="stepper"><button id="seniorFontDown" aria-label="Diminuir tamanho da letra">−</button><span aria-live="polite">${fontLabels[(s.fontStep || 2) - 1]}</span><button id="seniorFontUp" aria-label="Aumentar tamanho da letra">+</button></div></div>
+        <div class="settings-row"><div><div class="settings-label">Tema escuro</div><div class="settings-desc">Fundo escuro e menos brilho para facilitar o uso</div></div><label class="switch"><input id="seniorDarkToggle" type="checkbox" ${s.darkTheme !== false ? 'checked' : ''}><span class="switch-track"></span></label></div>
+        <div class="settings-row"><div><div class="settings-label">Modo de varredura</div><div class="settings-desc">O foco amarelo passa pelos controles. Pressione Enter, Espaço ou o centro do analógico para escolher o controle destacado.</div></div><label class="switch"><input id="seniorScanToggle" type="checkbox" ${s.scanEnabled ? 'checked' : ''}><span class="switch-track"></span></label></div>
+        <div class="settings-row"><div><div class="settings-label">Velocidade da varredura</div><div class="settings-desc">Tempo em cada botão: ${(speed / 1000).toFixed(1)}s</div></div><div class="stepper"><button id="seniorScanSlow" aria-label="Deixar a varredura mais lenta">−</button><span aria-live="polite">${(speed / 1000).toFixed(1)}s</span><button id="seniorScanFast" aria-label="Deixar a varredura mais rápida">+</button></div></div>
+        <div class="settings-row"><div><div class="settings-label">Velocidade da voz</div><div class="settings-desc">A voz lê a frase mais devagar ou mais depressa.</div></div><div class="stepper"><button id="seniorVoiceSlow" aria-label="Deixar a voz mais lenta">−</button><span aria-live="polite">${voiceLabel}</span><button id="seniorVoiceFast" aria-label="Deixar a voz mais rápida">+</button></div></div>
+      </div>
+    </div>`;
+}
+
+function updateAccessibilitySettings(changes) {
+  const settings = getSettings();
+  Object.assign(settings, changes);
+  saveData();
+  applyAccessibilityTheme();
+  render();
+}
 
 function renderAbout() {
 
@@ -4869,6 +5798,37 @@ function attachHandlers() {
 
 
   prepareKeyboardNavigation();
+
+  const settings = getSettings();
+  const fontDown = document.getElementById('seniorFontDown');
+  const fontUp = document.getElementById('seniorFontUp');
+  if (fontDown) fontDown.addEventListener('click', () => updateAccessibilitySettings({ fontStep: Math.max(1, (settings.fontStep || 2) - 1) }));
+  if (fontUp) fontUp.addEventListener('click', () => updateAccessibilitySettings({ fontStep: Math.min(4, (settings.fontStep || 2) + 1) }));
+  const darkToggle = document.getElementById('seniorDarkToggle');
+  if (darkToggle) darkToggle.addEventListener('change', event => updateAccessibilitySettings({ darkTheme: event.target.checked }));
+  const scanToggle = document.getElementById('seniorScanToggle');
+  if (scanToggle) scanToggle.addEventListener('change', event => updateAccessibilitySettings({ scanEnabled: event.target.checked }));
+  const scanSlow = document.getElementById('seniorScanSlow');
+  const scanFast = document.getElementById('seniorScanFast');
+  if (scanSlow) scanSlow.addEventListener('click', () => updateAccessibilitySettings({ scanSpeed: Math.min(5000, (settings.scanSpeed || 1800) + 300) }));
+  if (scanFast) scanFast.addEventListener('click', () => updateAccessibilitySettings({ scanSpeed: Math.max(600, (settings.scanSpeed || 1800) - 300) }));
+  const voiceSlow = document.getElementById('seniorVoiceSlow');
+  const voiceFast = document.getElementById('seniorVoiceFast');
+  if (voiceSlow) voiceSlow.addEventListener('click', () => updateAccessibilitySettings({ voiceRate: Math.max(0.5, Math.round(((settings.voiceRate || 0.8) - 0.1) * 10) / 10) }));
+  if (voiceFast) voiceFast.addEventListener('click', () => updateAccessibilitySettings({ voiceRate: Math.min(1.2, Math.round(((settings.voiceRate || 0.8) + 0.1) * 10) / 10) }));
+
+  const saveFeedbackBtn = document.getElementById('saveFeedbackBtn');
+  if (saveFeedbackBtn) {
+    saveFeedbackBtn.addEventListener('click', () => {
+      const input = document.getElementById('feedbackText');
+      if (!input) return;
+      STATE.data.profile.feedback = input.value.trim();
+      saveData();
+      showToast('Feedback salvo!');
+      speak('Feedback salvo');
+      render();
+    });
+  }
 
   document.querySelectorAll('[data-mode-screen]').forEach(element => {
     element.addEventListener('click', () => {
@@ -5061,8 +6021,9 @@ function attachHandlers() {
     .forEach(element => {
 
       element.addEventListener(
-        'click',
-        () => {
+      'click',
+      event => {
+        if (event.target.closest('button, [data-speak], [data-remove-word]')) return;
 
           const word =
             wordById(
@@ -5074,6 +6035,8 @@ function attachHandlers() {
           if (!word) return;
 
           speak(word.label);
+
+          if (element.hasAttribute('data-favorite-word-card')) return;
 
           addWordToPhrase(word);
 
@@ -5088,6 +6051,13 @@ function attachHandlers() {
     element.addEventListener('click', event => {
       event.stopPropagation();
       toggleFavoriteWord(element.getAttribute('data-fav-word'));
+    });
+  });
+
+  document.querySelectorAll('[data-remove-word]').forEach(element => {
+    element.addEventListener('click', event => {
+      event.stopPropagation();
+      toggleFavoriteWord(element.getAttribute('data-remove-word'));
     });
   });
 
@@ -5239,6 +6209,14 @@ function attachHandlers() {
 
         if (text) {
 
+          const spokenWords =
+            text.trim().split(/\s+/).filter(Boolean).length;
+
+          STATE.data.profile.wordsUsed =
+            (STATE.data.profile.wordsUsed || 0) + spokenWords;
+
+          saveData();
+
           speak(text);
 
         }
@@ -5301,6 +6279,9 @@ function attachHandlers() {
 
   
 
+  const favWordBtn = document.getElementById('favWordBtn');
+  if (favWordBtn) favWordBtn.addEventListener('click', favoriteLastWord);
+
   document
     .querySelectorAll(
       '[data-speak]'
@@ -5349,6 +6330,8 @@ function attachHandlers() {
           if (
             Number.isNaN(index)
           ) return;
+
+          if (!window.confirm('Remover esta frase dos favoritos?')) return;
 
           STATE.data.favPhrases.splice(
             index,
@@ -5708,81 +6691,6 @@ function attachHandlers() {
     });
 
   
-  const registerProfileBtn =
-    document.getElementById(
-      'registerProfileBtn'
-    );
-
-  if (registerProfileBtn) {
-
-    registerProfileBtn.addEventListener(
-      'click',
-      () => {
-
-        const nameInput =
-          document.getElementById(
-            'profileName'
-          );
-
-        if (nameInput) {
-
-          STATE.data.profile.name =
-            nameInput.value.trim();
-
-        }
-
-        STATE.editingProfileName = false;
-
-        saveData();
-
-        showToast(
-          'Perfil cadastrado!'
-        );
-
-        speak(
-          'Perfil cadastrado'
-        );
-
-        render();
-
-      }
-    );
-
-  }
-
-
-  const editProfileBtn =
-    document.getElementById(
-      'editProfileBtn'
-    );
-
-  if (editProfileBtn) {
-
-    editProfileBtn.addEventListener(
-      'click',
-      () => {
-
-        STATE.editingProfileName = true;
-
-        render();
-
-        const nameInput =
-          document.getElementById(
-            'profileName'
-          );
-
-        if (nameInput) {
-
-          nameInput.focus();
-
-        }
-
-      }
-    );
-
-  }
-
-
   const switchProfileBtn =
     document.getElementById(
       'switchProfileBtn'
@@ -6058,6 +6966,16 @@ document.addEventListener('keydown', event => {
 
   if (event.defaultPrevented) return;
 
+  if (event.key === 'Escape') {
+    event.preventDefault();
+    if (STATE.screen !== 'home' && STATE.screen !== 'login' && STATE.screen !== 'chooseProfile') {
+      go('home');
+    } else {
+      document.activeElement?.blur();
+    }
+    return;
+  }
+
   if (isArrow) {
     event.preventDefault();
     moveKeyboardFocus(event.key);
@@ -6310,10 +7228,49 @@ function pararMusica() {
   musica.currentTime = 0;
 }
 
+/* Controle por joystick/gamepad: analógico navega, clique no analógico seleciona e B volta. */
+function initGamepadControls() {
+  if (!('getGamepads' in navigator)) return;
+  let previous = [];
+  let lastAxisMove = 0;
+
+  const press = (pad, index) => Boolean(pad.buttons[index]?.pressed);
+  const rising = (pad, index) => press(pad, index) && !previous[index];
+
+  const poll = timestamp => {
+    const pad = [...(navigator.getGamepads?.() || [])].find(Boolean);
+    if (pad) {
+      if (rising(pad, 10) || rising(pad, 0)) {
+        const active = document.activeElement;
+        if (active && active !== document.body && typeof active.click === 'function') active.click();
+        else document.querySelector('#app button:not([disabled]), #app [role="button"]')?.focus();
+      }
+      if (rising(pad, 1)) {
+        if (STATE.screen !== 'home' && STATE.screen !== 'login' && STATE.screen !== 'chooseProfile') go('home');
+      }
+      if (timestamp - lastAxisMove > 180) {
+        const x = pad.axes[0] || 0;
+        const y = pad.axes[1] || 0;
+        const direction = Math.abs(x) > 0.4 ? (x > 0 ? 'ArrowRight' : 'ArrowLeft') : Math.abs(y) > 0.4 ? (y > 0 ? 'ArrowDown' : 'ArrowUp') : null;
+        if (direction) {
+          moveKeyboardFocus(direction);
+          lastAxisMove = timestamp;
+        }
+      }
+      previous = pad.buttons.map(button => Boolean(button.pressed));
+    }
+    requestAnimationFrame(poll);
+  };
+
+  requestAnimationFrame(poll);
+}
+
 loadData();
+applyAccessibilityTheme();
 initSeniorSplash();
 initInitialSplash();
 iniciarMusicaUmaVez();
+initGamepadControls();
 
 </script>
 
