@@ -625,9 +625,252 @@ body,.bg-outras{
 .mode-screen-content h1 { margin: 0; font-size: clamp(28px, 5vw, 48px); }
 .mode-screen-content p { margin: 0; font-size: 16px; font-weight: 700; opacity: 0.9; }
 
-.circular-keyboard-reserved { width: min(100%, 900px); min-height: 420px; margin: auto; border: 3px dashed #cfe9f7; border-radius: 28px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: #fff; color: var(--navy); }
-.circular-keyboard-reserved h1 { margin: 0; font-size: clamp(30px,5vw,52px); }
-.circular-keyboard-reserved p { margin: 10px 0 0; color: var(--navy-soft); font-size: 16px; font-weight: 700; }
+.circular-keyboard-reserved {
+  width: min(100%, 620px);
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 22px 18px 26px;
+  border-radius: 28px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.02));
+  box-shadow: 0 20px 44px rgba(9, 43, 59, 0.35);
+  backdrop-filter: blur(8px);
+  color: var(--white);
+}
+
+.circular-keyboard-reserved .campo {
+  width: 100%;
+  min-height: 56px;
+  background: #ffffff;
+  border: 2px solid var(--card-border);
+  border-radius: 16px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  font-family: var(--font);
+  font-weight: 800;
+  font-size: 18px;
+  color: #103d5d;
+  text-shadow: 0 1px 1px rgba(255,255,255,0.45);
+  box-shadow: 0 3px 8px rgba(23, 58, 94, 0.18);
+}
+
+.circular-keyboard-reserved .frases-prontas {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  min-height: 0;
+}
+
+.circular-keyboard-reserved .frase-pronta {
+  border: 1.5px solid var(--card-border);
+  border-radius: 999px;
+  padding: 8px 16px;
+  background: #ffffff;
+  color: var(--navy);
+  font: 700 13px var(--font);
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease, transform .1s ease;
+}
+
+.circular-keyboard-reserved .frase-pronta:hover,
+.circular-keyboard-reserved .frase-pronta:focus-visible {
+  background: var(--yellow);
+  border-color: var(--yellow-dark);
+  color: var(--navy);
+  outline: none;
+}
+
+.teclado-area {
+  position: relative;
+  width: min(530px, 100%);
+  height: auto;
+  max-width: 100%;
+  aspect-ratio: 1 / 1;
+  margin: 12px 0 10px;
+}
+
+.teclado-area .teclado,
+.teclado-area .anel,
+.teclado-area .satelites {
+  position: absolute;
+  inset: 0;
+}
+
+.teclado-area .anel {
+  margin: auto;
+  border-radius: 50%;
+  transition: opacity .25s ease, transform .25s ease, background .2s ease;
+}
+
+/* Argola de sugestões (autocomplete): fica por fora e só aparece depois da
+   primeira palavra-chave escolhida, crescendo ao redor da argola interna. */
+.anel-externo {
+  width: 85%;
+  height: 85%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.78), rgba(238,246,252,0.68));
+  border: 2px solid var(--card-border);
+  box-shadow: 0 10px 26px rgba(9, 43, 59, 0.28);
+  opacity: 0;
+  transform: scale(0.85);
+  pointer-events: none;
+}
+
+.anel-externo.visivel {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+/* Argola de palavras-chave: fica por dentro e sempre visível. */
+.anel-meio {
+  width: 60%;
+  height: 60%;
+  background: var(--card);
+  border: 2px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 12px 30px rgba(9, 43, 59, 0.45), inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.cunha {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .16s ease;
+}
+
+.cunha.ativa {
+  opacity: 1;
+}
+
+/* Botão "Aa" no centro da argola inicial: alterna a argola de fora entre
+   sugestões de palavras e um teclado alfabético. */
+.buraco-central {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 28%;
+  height: 28%;
+  border: 0;
+  border-radius: 50%;
+  background: #ffffff;
+  color: var(--navy);
+  font: 800 15px var(--font);
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 4px 10px rgba(9, 43, 59, 0.28);
+  transition: background .15s ease, color .15s ease;
+}
+
+.buraco-central.ativo {
+  background: var(--yellow);
+  color: var(--navy);
+  box-shadow: 0 4px 12px rgba(174, 129, 0, 0.35);
+}
+
+.buraco-central:focus,
+.buraco-central:focus-visible {
+  outline: 3px solid var(--yellow);
+  outline-offset: 2px;
+}
+
+.tecla {
+  position: absolute;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  padding: 3px;
+  border: 0;
+  border-radius: 50%;
+  outline: none;
+  background: transparent;
+  color: var(--white);
+  font: 700 11px/1.05 var(--font);
+  text-align: center;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+  transition: color .12s ease;
+}
+
+.anel-externo .tecla { font-size: 12px; color: #103d5d; text-shadow: 0 1px 2px rgba(255,255,255,0.9); }
+.anel-meio .tecla { font-size: 10px; color: #ffffff; }
+
+/* Teclas menores para caber as 26 letras do modo alfabético na argola de dentro. */
+.tecla-compacta {
+  width: 32px;
+  height: 32px;
+  padding: 2px;
+}
+.anel-meio .tecla-compacta { font-size: 13px; }
+
+/* Indicação visual de foco, essencial para navegar com as setas do teclado físico.
+   O destaque principal é o setor (cunha) atrás da tecla; aqui só garantimos contraste do texto. */
+.tecla:focus,
+.tecla:focus-visible {
+  outline: none;
+  color: var(--navy);
+}
+
+.satelites {
+  z-index: 2;
+  pointer-events: none;
+}
+
+.satelite {
+  position: absolute;
+  width: 54px;
+  height: 54px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--navy);
+  font: 800 10px var(--font);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  box-shadow: 0 4px 10px rgba(9, 43, 59, 0.28);
+  /* left/top são calculados em JS (posicionarMenuOrbital), com a mesma
+     trigonometria usada nas teclas, para encaixar exatamente na
+     circunferência da argola visível no momento. */
+  transform: translate(-50%, -50%);
+  transition: left .2s ease, top .2s ease, opacity .16s ease, background .2s ease, color .2s ease;
+}
+
+.satelites.ativo .satelite {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.satelite:hover,
+.satelite:focus-visible {
+  background: var(--yellow);
+  color: var(--navy);
+  outline: 3px solid var(--yellow-dark);
+  outline-offset: 2px;
+}
+
+.satelite-destaque {
+  background: var(--yellow);
+  color: var(--navy);
+  border: 1px solid var(--yellow-dark);
+}
+
+@media (max-width: 420px) {
+  .teclado-area { width: 300px; height: 300px; }
+  .satelite { width: 46px; height: 46px; font-size: 9px; }
+}
+
+@media (max-width: 350px) {
+  .teclado-area { width: 270px; height: 270px; }
+}
 
 .carousel-full-screen { position: fixed; inset: 0; z-index: 100; overflow: auto; min-height: 100vh; padding: 18px 24px 28px; background: linear-gradient(180deg, rgba(255,255,255,.1), rgba(23,58,94,.3)), url('assets/imagens/imagem-adulto.png') center / cover no-repeat; }
 .carousel-full-topbar { width: min(100%, 1100px); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
@@ -1536,6 +1779,116 @@ body[data-theme="dark"] .toast {
   outline-offset: 3px;
 }
 
+
+/* ===== Ajustes do teclado circular e menu orbital ===== */
+/*
+   No teclado circular o foco do navegador e o hover NÃO devem criar uma
+   segunda seleção visual. A única indicação de seleção da tecla é a cunha
+   amarela clara desenhada atrás dela por mostrarCunha().
+*/
+.teclado-area .tecla:hover,
+.teclado-area .tecla:focus,
+.teclado-area .tecla:focus-visible,
+.teclado-area .tecla.accessibility-focus,
+.teclado-area .tecla.scan-active {
+  outline: none !important;
+  outline-offset: 0 !important;
+  box-shadow: none !important;
+  border: 0 !important;
+  background: transparent !important;
+  transform: translate(-50%, -50%) !important;
+}
+
+/* Evita que regras gerais de acessibilidade desenhem um círculo extra
+   sobre as teclas do teclado circular. */
+#app .teclado-area .tecla:hover,
+#app .teclado-area .tecla:focus-visible,
+#app .teclado-area .tecla.accessibility-focus,
+#app .teclado-area .tecla.scan-active {
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+/* O botão central Aa precisa permanecer legível em qualquer estado. */
+.teclado-area .buraco-central,
+.teclado-area .buraco-central:hover,
+.teclado-area .buraco-central:focus,
+.teclado-area .buraco-central:focus-visible,
+.teclado-area .buraco-central.accessibility-focus {
+  color: #103d5d !important;
+  text-shadow: none !important;
+}
+
+.teclado-area .buraco-central.ativo {
+  color: #103d5d !important;
+}
+
+
+/* O menu fica levemente translúcido, mas mantém contraste suficiente antes do foco. */
+.satelite {
+  background: rgba(255, 255, 255, 0.78);
+  color: #103d5d;
+  border: 1px solid rgba(16, 61, 93, 0.22);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  text-shadow: none;
+}
+
+.satelite:focus,
+.satelite:focus-visible {
+  background: rgba(247, 201, 77, 0.96);
+  color: #103d5d;
+}
+
+/* O texto do menu principal também permanece legível antes da seleção. */
+.menu-btn .menu-title,
+.menu-btn .menu-sub,
+.menu-btn .menu-arrow {
+  color: #103d5d;
+}
+
+.menu-btn {
+  background: rgba(255, 255, 255, 0.72);
+  border-color: rgba(16, 61, 93, 0.18);
+}
+
+/* Os satélites seguem o mesmo arco angular da argola externa,
+   mas ficam um pouco mais afastados dela para evitar sobreposição. */
+.satelites {
+  overflow: visible;
+}
+
+@media (max-width: 420px) {
+  .satelite {
+    width: 44px;
+    height: 44px;
+    font-size: 9px;
+  }
+
+  .teclado-area .anel-externo .tecla {
+    width: 56px;
+    height: 56px;
+    padding: 3px;
+    border: 1px solid rgba(16, 61, 93, 0.28);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 2px 7px rgba(9, 43, 59, 0.24);
+    color: #103d5d;
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.1;
+    text-shadow: none;
+  }
+
+  #app .teclado-area .anel-externo .tecla:hover,
+  #app .teclado-area .anel-externo .tecla:focus,
+  #app .teclado-area .anel-externo .tecla:focus-visible {
+    border: 1px solid rgba(16, 61, 93, 0.28) !important;
+    background: rgba(255, 255, 255, 0.96) !important;
+    color: #103d5d;
+  }
+}
 
 /* ===== Layout Infantil ===== */
 /* Ativado quando STATE.data.profile.layout === 'infantil'
@@ -4708,6 +5061,10 @@ function render() {
     pararMusica();
   }
 
+  if (STATE.screen === 'circularMode') {
+    initCircularKeyboard();
+  }
+
   renderLineIcons();
 
 
@@ -5194,7 +5551,7 @@ function renderCarouselMode() {
 }
 
 function renderCircularKeyboard() {
-  return `<div class="mode-screen circular-mode-screen"><button class="mode-screen-back" data-go="build" aria-label="Voltar para escolha do modo">← Voltar</button><div class="circular-keyboard-reserved"><h1>Teclado circular</h1><p>Área reservada para adicionar o teclado circular.</p></div></div>`;
+  return `<div class="mode-screen circular-mode-screen"><button class="mode-screen-back" data-go="build" aria-label="Voltar para escolha do modo">← Voltar</button><div class="circular-keyboard-reserved"><div class="campo" aria-label="Frase formada"><span id="valor"></span></div><div class="frases-prontas" id="frasesProntas" aria-label="Frases prontas sugeridas" aria-live="polite"></div><div class="teclado-area"><section class="teclado" id="teclado" aria-label="Teclado circular"><div class="anel anel-externo" id="anelExterno"></div><div class="anel anel-meio" id="anelMeio"></div></section><div class="satelites" id="menuOrbital" aria-label="Menu de ações"><button class="satelite" id="limpar" type="button" aria-label="Limpar">limpar</button><button class="satelite" id="excluir" type="button" aria-label="Excluir">excluir</button><button class="satelite" id="recarregar" type="button" aria-label="Recarregar sugestões">recarregar</button><button class="satelite" id="voltarInicio" type="button" aria-label="Voltar ao início">voltar</button><button class="satelite" id="falar" type="button" aria-label="Falar">falar</button><button class="satelite satelite-destaque" id="concluir" type="button" aria-label="Concluir">concluir</button></div></div></div></div>`;
 }
 
 function renderCategories() {
@@ -7265,6 +7622,10 @@ function moveKeyboardFocus(direction) {
 
 document.addEventListener('keydown', event => {
 
+  // O teclado circular controla as próprias setas. Não deixar o atalho global
+  // de acessibilidade mover o foco para outro controle antes do handler do anel.
+  if (STATE.screen === 'circularMode') return;
+
   const active = document.activeElement;
   const tag = active?.tagName;
 
@@ -7651,6 +8012,889 @@ function initGamepadControls() {
   };
 
   requestAnimationFrame(poll);
+}
+
+
+/* ======================================================================
+   TECLADO CIRCULAR (integrado ao Comunica)
+   Lógica original preservada; adaptado para (re)inicializar toda vez que
+   a tela "circularMode" é renderizada dentro do app de página única.
+   ====================================================================== */
+
+// Palavras-chave da argola de dentro (sempre visível), para começar uma frase.
+const palavrasChave = ["eu", "você", "ele", "ela", "nós", "eles", "elas", "isso", "aquilo"];
+
+// Pool de reserva usado quando faltam sugestões específicas para completar a argola de fora.
+const frasesRapidas = [
+    "olá", "tudo bem", "pode ajudar", "quero ir para casa", "estou com dor",
+    "preciso de água", "não entendi", "mais devagar", "até logo", "obrigado"
+];
+
+// Saudações usadas pelo botão "recarregar" na argola de dentro, quando a
+// frase ainda está vazia (estado inicial) — dão outras formas de começar
+// uma conversa, além dos pronomes.
+const saudacoes = [
+    "Bom dia", "Boa tarde", "Boa noite", "Olá", "Oi", "Tudo bem?",
+    "Como vai?", "Até logo", "Tchau", "Prazer em conhecer você",
+    "Como você está?", "Muito prazer"
+];
+
+// No estado inicial, a argola de dentro só pode mostrar os pronomes
+// originais e as saudações acima — nada além disso.
+const opcoesArgolaInicial = palavrasChave.concat(saudacoes);
+
+// Sugestões da argola de fora (aparece após a 1ª palavra), tipo corretor automático.
+const sugestoesPorPalavra = {
+    eu: ["vou", "quero", "não", "acho", "tenho", "preciso", "estou"],
+    voce: ["vai", "quer", "pode", "sabe", "tem", "está", "foi"],
+    ela: [
+        "é", "está", "vai", "tem", "foi", "quer", "pode", "sabe", "fez", "disse",
+        "chegou", "gosta", "precisa", "queria", "estava", "era", "ficou", "começou",
+        "terminou", "mora", "trabalha", "estuda", "faz", "diz", "acha", "pensa",
+        "conhece", "entende", "viu", "falou", "ligou", "mandou", "pegou", "deu",
+        "saiu", "voltou", "entrou"
+    ],
+    nos: [
+        "somos", "estamos", "vamos", "temos", "fomos", "queremos", "podemos",
+        "sabemos", "fizemos", "dissemos", "chegamos", "gostamos", "precisamos",
+        "queríamos", "estávamos", "éramos", "ficamos", "começamos", "terminamos",
+        "moramos", "trabalhamos", "estudamos", "fazemos", "dizemos", "achamos",
+        "pensamos", "conhecemos", "entendemos", "vimos", "falamos", "ligamos",
+        "mandamos", "pegamos", "demos", "saímos", "voltamos", "entramos",
+        "iremos", "teremos", "poderemos"
+    ],
+    eles: [
+        "são", "estão", "vão", "têm", "foram", "querem", "podem", "sabem",
+        "fizeram", "disseram", "chegaram", "gostam", "precisam", "queriam",
+        "estavam", "eram", "ficaram", "começaram", "terminaram", "moram",
+        "trabalham", "estudam", "fazem", "dizem", "acham", "pensam", "conhecem",
+        "entendem", "viram", "falaram", "ligaram", "mandaram", "pegaram", "deram",
+        "saíram", "voltaram", "entraram", "irão", "terão", "poderão"
+    ],
+    quero: ["água", "comida", "ir ao banheiro", "ajuda", "falar", "ir para casa", "descansar", "saber", "parar", "mais tempo"],
+    preciso: ["de ajuda", "de água", "de comida", "ir ao banheiro", "descansar", "falar com alguém", "de remédio", "ir para casa", "de tempo", "entender"],
+    não: ["quero", "sei", "entendi", "posso", "estou bem", "gosto", "preciso", "consigo", "tenho certeza", "obrigado"],
+    sim: ["por favor", "eu quero", "eu posso", "está bem", "obrigado", "vamos", "agora", "quero isso", "entendi", "claro"],
+    isso: [
+        "é", "está", "foi", "será", "era", "parece", "pode", "poderia", "deve",
+        "deveria", "tem", "tinha", "vai", "vai ser", "seria", "significa",
+        "aconteceu", "acontece", "funciona", "funcionou", "faz", "fez", "fica",
+        "ficou", "está certo", "está errado", "está acontecendo", "não", "sim",
+        "mesmo", "muito", "bem", "melhor", "pior", "importante", "necessário",
+        "possível", "verdade", "fácil", "difícil", "bom", "ruim", "incrível",
+        "interessante", "estranho"
+    ],
+    ajuda: ["por favor", "agora", "para mim", "com isso", "eu preciso", "não consigo", "estou com dor", "quero falar", "por aqui", "obrigado"],
+    agua: ["por favor", "eu quero", "preciso de", "agora", "um pouco", "mais água", "para beber", "obrigado", "estou com sede", "quero beber"],
+    comida: ["por favor", "eu quero", "preciso de", "agora", "um pouco", "mais comida", "para comer", "obrigado", "estou com fome", "quero comer"],
+    banheiro: ["por favor", "quero ir", "preciso ir", "agora", "onde fica", "me acompanhe", "com ajuda", "obrigado", "urgente", "vamos"],
+    dor: ["estou com", "muita dor", "aqui", "preciso de ajuda", "agora", "por favor", "não estou bem", "chame alguém", "remédio", "obrigado"],
+
+    // Continuações para os verbos mais comuns das listas de "eu" e de
+    // "você/ele/ela", para a frase continuar fazendo sentido depois deles.
+    vou: ["para casa", "embora", "tentar", "dormir", "comer", "trabalhar", "sair", "ficar bem", "voltar", "fazer isso"],
+    acho: ["que sim", "que não", "bom", "estranho", "engraçado", "difícil", "interessante", "melhor assim", "isso certo", "isso errado"],
+    tenho: ["certeza", "dúvida", "medo", "fome", "sede", "sono", "pressa", "um problema", "uma pergunta", "saudade"],
+    estou: ["bem", "cansado", "com fome", "com sede", "com dor", "feliz", "triste", "preocupado", "com pressa", "com sono"],
+    vai: ["ficar bem", "dar certo", "chover", "sair", "embora", "dormir", "comer", "trabalhar", "demorar", "voltar"],
+    quer: ["água", "comida", "ajuda", "ir embora", "descansar", "falar", "saber", "parar", "dormir", "sair"],
+    pode: ["me ajudar", "esperar", "repetir", "vir aqui", "falar mais devagar", "ser", "ficar", "entrar", "sair", "continuar"],
+    sabe: ["onde fica", "como fazer", "o que aconteceu", "de que estou falando", "a resposta", "que horas são", "por quê", "quando", "quem foi", "o que fazer"],
+    tem: ["certeza", "razão", "um problema", "tempo", "fome", "sede", "medo", "pressa", "paciência", "cuidado"],
+    esta: ["bem", "certo", "errado", "acontecendo", "ótimo", "difícil", "tudo bem", "cansado", "com fome", "com dor"],
+    foi: ["embora", "bom", "difícil", "rápido", "um erro", "sem querer", "sozinho", "com ela", "com ele", "ontem"],
+    e: ["verdade", "importante", "difícil", "fácil", "isso mesmo", "sério", "engraçado", "possível", "necessário", "estranho"],
+    faz: ["tempo", "sentido", "isso", "um favor", "calor", "frio", "bem", "mal", "diferença", "falta"],
+    diz: ["que sim", "que não", "a verdade", "para eu esperar", "olá", "obrigado", "desculpa", "por favor", "tchau", "não sei"],
+    gosta: ["muito", "disso", "de mim", "de você", "de música", "de comer", "de ler", "de conversar", "de passear", "de ajudar"],
+    precisa: ["de ajuda", "de água", "descansar", "ir embora", "de tempo", "de remédio", "de mim", "de calma", "conversar", "entender"],
+
+    // O mesmo, para as formas no plural das listas de "nós" e de "eles/elas".
+    vamos: ["embora", "comer", "sair", "para casa", "tentar", "ver", "conversar", "esperar", "começar", "descansar"],
+    estamos: ["bem", "com fome", "cansados", "com pressa", "quase lá", "juntos", "esperando", "prontos", "atrasados", "bem aqui"],
+    vao: ["embora", "chegar", "ficar bem", "dar certo", "voltar", "sair", "demorar", "entender", "ajudar", "conseguir"],
+    querem: ["ajuda", "água", "ir embora", "saber", "descansar", "falar", "comer", "sair", "entender", "parar"],
+    podem: ["vir", "esperar", "ajudar", "entrar", "ficar", "continuar", "sair", "repetir", "explicar", "tentar"],
+    sabem: ["onde fica", "o que fazer", "a resposta", "que horas são", "por quê", "quando", "quem foi", "como funciona", "o que aconteceu", "de que se trata"]
+};
+
+// "ele" usa a mesma conjugação de "ela" (3ª pessoa do singular).
+// "elas" e "aquilo" usam as mesmas sugestões de "eles" e "isso".
+sugestoesPorPalavra.ele = sugestoesPorPalavra.ela;
+sugestoesPorPalavra.elas = sugestoesPorPalavra.eles;
+sugestoesPorPalavra.aquilo = sugestoesPorPalavra.isso;
+
+// Sugestão genérica quando a última palavra não tem lista específica.
+const sugestoesGenericas = [
+    "quero", "preciso", "por favor", "ajuda", "agora", "mais",
+    "de novo", "está bem", "não entendi", "obrigado"
+];
+
+// Referências de DOM e estado do teclado circular — recriados a cada
+// entrada na tela "circularMode" pela função initCircularKeyboard().
+let valor = null;
+let menuOrbital = null;
+let botoesMenu = [];
+let frasesProntasEl = null;
+
+// Argola 0: palavras-chave, fica por dentro e sempre visível.
+// Argola 1: sugestões (autocomplete), fica por fora e só aparece ao redor
+// da argola 0 depois que a primeira palavra-chave é escolhida.
+let aneis = [];
+
+let teclaAtiva = null;
+let direcaoAtiva = "cima";
+let sugestoesVisiveis = false;
+
+// Cursor de navegação controlado pelo próprio código (não depende só do
+// foco real do navegador, que pode falhar em certos ambientes de exibição).
+let anelAtualIndice = 0;
+let posicaoAtualIndice = 0;
+
+function normalizarPalavra(texto) {
+    return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+}
+
+function palavraAtual() {
+    const palavras = valor.textContent.trim().split(/\s+/);
+    return normalizarPalavra(palavras.at(-1) || "");
+}
+
+function preencherAte(palavras, quantidade, reserva) {
+    const resultado = [...palavras];
+    reserva.forEach((palavra) => {
+        if (resultado.length < quantidade && !resultado.includes(palavra)) resultado.push(palavra);
+    });
+    return resultado.slice(0, quantidade);
+}
+
+function atualizarTextoDasTeclas(anel, palavras) {
+    anel.palavras = palavras;
+    anel.teclas.forEach((tecla, indice) => {
+        const texto = palavras[indice];
+        tecla.textContent = texto;
+        tecla.dataset.valor = texto;
+        tecla.setAttribute("aria-label", `Sugestão: ${texto}`);
+    });
+}
+
+// ==== Integrações externas (opcionais) ====
+// Sugestões de continuação de frase via OpenAI e correção ortográfica/
+// gramatical via LanguageTool. Ambas são chamadas diretamente do navegador.
+//
+// ATENÇÃO sobre a chave da OpenAI: colocá-la aqui deixa a chave visível para
+// qualquer pessoa que abrir o código-fonte da página (F12 > rede/fontes).
+// Isso é aceitável para testes pessoais, mas se for publicar este teclado
+// para outras pessoas usarem, o recomendado é criar um pequeno servidor
+// (proxy) que guarde a chave em segredo e repasse as chamadas — nesse caso,
+// preencha OPENAI_PROXY_URL em vez de OPENAI_API_KEY (veja abaixo).
+const OPENAI_API_KEY = ""; // ex: "sk-..."
+const OPENAI_PROXY_URL = ""; // ex: "https://meu-servidor.com/api/sugestoes" (mais seguro)
+const OPENAI_MODELO = "gpt-4o-mini";
+
+// Endpoint público do LanguageTool: não exige chave para uso moderado.
+const LANGUAGETOOL_URL = "https://api.languagetool.org/v2/check";
+const LANGUAGETOOL_IDIOMA = "pt-BR";
+
+// Pede à OpenAI (ou ao proxy configurado) palavras/expressões curtas para
+// continuar a frase atual. Retorna null se não há integração configurada
+// ou se a chamada falha, para que o código sempre tenha um caminho local
+// de reserva (o dicionário de sugestões já existente).
+async function sugerirComOpenAI(frase) {
+    if (!OPENAI_PROXY_URL && !OPENAI_API_KEY) return null;
+    try {
+        const corpoBase = {
+            model: OPENAI_MODELO,
+            temperature: 0.7,
+            messages: [
+                {
+                    role: "system",
+                    content: "Você ajuda um teclado de comunicação alternativa (AAC) em português do Brasil. Dada uma frase incompleta, sugira até 10 palavras ou expressões curtas (1 a 3 palavras) para continuar a frase de forma natural. Responda SOMENTE com um array JSON de strings, sem nenhum texto além disso."
+                },
+                { role: "user", content: frase || "(frase vazia, sugira palavras para começar uma frase)" }
+            ]
+        };
+
+        const url = OPENAI_PROXY_URL || "https://api.openai.com/v1/chat/completions";
+        const cabecalhos = { "Content-Type": "application/json" };
+        if (!OPENAI_PROXY_URL) cabecalhos.Authorization = `Bearer ${OPENAI_API_KEY}`;
+
+        const resposta = await fetch(url, { method: "POST", headers: cabecalhos, body: JSON.stringify(corpoBase) });
+        if (!resposta.ok) return null;
+
+        const dados = await resposta.json();
+        const texto = dados.choices?.[0]?.message?.content?.trim() ?? "";
+        const lista = JSON.parse(texto);
+        return Array.isArray(lista) ? lista.filter((item) => typeof item === "string" && item.trim()) : null;
+    } catch (erro) {
+        console.warn("Não foi possível buscar sugestões da OpenAI:", erro);
+        return null;
+    }
+}
+
+// Envia o texto ao LanguageTool e devolve a versão corrigida, aplicando a
+// primeira sugestão de cada erro encontrado. Se a chamada falhar, devolve
+// o texto original sem alterações.
+async function corrigirComLanguageTool(texto) {
+    if (!texto) return texto;
+    try {
+        const corpo = new URLSearchParams({ text: texto, language: LANGUAGETOOL_IDIOMA });
+        const resposta = await fetch(LANGUAGETOOL_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: corpo
+        });
+        if (!resposta.ok) return texto;
+
+        const dados = await resposta.json();
+        let corrigido = texto;
+        // Aplica as correções de trás para frente, para não bagunçar os índices dos erros seguintes.
+        const erros = [...(dados.matches || [])].sort((a, b) => b.offset - a.offset);
+        erros.forEach((erro) => {
+            const sugestao = erro.replacements?.[0]?.value;
+            if (sugestao !== undefined) {
+                corrigido = corrigido.slice(0, erro.offset) + sugestao + corrigido.slice(erro.offset + erro.length);
+            }
+        });
+        return corrigido;
+    } catch (erro) {
+        console.warn("Não foi possível corrigir o texto com o LanguageTool:", erro);
+        return texto;
+    }
+}
+
+// Pede à OpenAI (ou ao proxy configurado) frases completas prontas, a
+// partir do conjunto de palavras já escolhido, para mostrar como atalho
+// abaixo do campo de texto. Mesmo caminho de configuração/limite de
+// segurança de sugerirComOpenAI.
+async function sugerirFrasesProntas(frase) {
+    if (!OPENAI_PROXY_URL && !OPENAI_API_KEY) return null;
+    try {
+        const corpo = {
+            model: OPENAI_MODELO,
+            temperature: 0.7,
+            messages: [
+                {
+                    role: "system",
+                    content: "Você ajuda um teclado de comunicação alternativa (AAC) em português do Brasil. Dado um conjunto de palavras ou frase parcial, sugira até 4 frases completas, curtas e naturais que a pessoa provavelmente quer dizer, usando essas palavras como base. Responda SOMENTE com um array JSON de strings, sem nenhum texto além disso."
+                },
+                { role: "user", content: frase }
+            ]
+        };
+
+        const url = OPENAI_PROXY_URL || "https://api.openai.com/v1/chat/completions";
+        const cabecalhos = { "Content-Type": "application/json" };
+        if (!OPENAI_PROXY_URL) cabecalhos.Authorization = `Bearer ${OPENAI_API_KEY}`;
+
+        const resposta = await fetch(url, { method: "POST", headers: cabecalhos, body: JSON.stringify(corpo) });
+        if (!resposta.ok) return null;
+
+        const dados = await resposta.json();
+        const texto = dados.choices?.[0]?.message?.content?.trim() ?? "";
+        const lista = JSON.parse(texto);
+        return Array.isArray(lista) ? lista.filter((item) => typeof item === "string" && item.trim()) : null;
+    } catch (erro) {
+        console.warn("Não foi possível buscar frases prontas da OpenAI:", erro);
+        return null;
+    }
+}
+
+// Renderiza (ou limpa) o painel de frases prontas abaixo do campo de texto.
+// Clicar numa delas substitui a frase atual por ela.
+function mostrarFrasesProntas(frases) {
+    if (!frasesProntasEl) return;
+    frasesProntasEl.innerHTML = "";
+    if (!frases || !frases.length) return;
+    frases.forEach((frase) => {
+        const botao = document.createElement("button");
+        botao.type = "button";
+        botao.className = "frase-pronta";
+        botao.textContent = frase;
+        botao.addEventListener("click", () => {
+            valor.textContent = frase;
+        });
+        frasesProntasEl.appendChild(botao);
+    });
+}
+
+async function atualizarFrasesProntas() {
+    const frase = valor.textContent.trim();
+    if (!frase) {
+        mostrarFrasesProntas(null);
+        return;
+    }
+    const frases = await sugerirFrasesProntas(frase);
+    // Só aplica se a frase não tiver mudado enquanto a resposta chegava.
+    if (valor.textContent.trim() === frase) mostrarFrasesProntas(frases);
+}
+
+function atualizarAnelPalavrasChave() {
+    atualizarTextoDasTeclas(aneis[0], palavrasChave);
+}
+
+// Preenche o anel indicado (0 ou 1) com sugestões para continuar a frase.
+// Como as duas argolas se revezam nesse papel, essa função recebe qual
+// delas atualizar, em vez de mexer sempre na mesma.
+function atualizarSugestoesNoAnel(indiceAnel) {
+    const anel = aneis[indiceAnel];
+    const base = sugestoesPorPalavra[palavraAtual()] || sugestoesGenericas;
+    const completas = preencherAte(base, anel.quantidade, frasesRapidas.concat(palavrasChave));
+    atualizarTextoDasTeclas(anel, completas);
+
+    // Se a OpenAI estiver configurada, tenta melhorar essas sugestões com base
+    // na frase inteira assim que a resposta chegar (não bloqueia a exibição
+    // imediata das sugestões locais, que continuam servindo de reserva).
+    sugerirComOpenAI(valor.textContent.trim()).then((sugestoesIA) => {
+        if (modoAlfabeto) return;
+        if (sugestoesIA && sugestoesIA.length) {
+            atualizarTextoDasTeclas(anel, preencherAte(sugestoesIA, anel.quantidade, completas));
+        }
+    });
+}
+
+function embaralhar(lista) {
+    const copia = [...lista];
+    for (let i = copia.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copia[i], copia[j]] = [copia[j], copia[i]];
+    }
+    return copia;
+}
+
+// Botão "recarregar": age sobre a argola que estiver ativa no momento (a que
+// está exibindo sugestões agora, seja a de dentro ou a de fora). A argola de
+// dentro pode ser recarregada a qualquer momento, inclusive antes de
+// qualquer palavra ser escolhida (ela é sempre visível); a de fora só pode
+// ser recarregada depois de já ter aparecido pela primeira vez. Tenta
+// primeiro pedir novas sugestões à OpenAI (se configurada); se não houver
+// integração ou a chamada falhar, sorteia uma nova combinação local.
+async function recarregarSugestoes() {
+    // No modo alfabético não há o que recarregar (as 26 letras já estão
+    // todas na argola); "recarregar" fica sem efeito até sair do modo.
+    if (modoAlfabeto) return;
+
+    const indiceAnel = anelAtualIndice;
+    if (indiceAnel === 1 && !sugestoesVisiveis) return;
+    const anel = aneis[indiceAnel];
+    const frase = valor.textContent.trim();
+
+    // Estado inicial (frase ainda vazia): a argola de dentro sorteia uma
+    // mistura dos pronomes originais com as saudações, intercalando os dois.
+    if (indiceAnel === 0 && !frase) {
+        atualizarTextoDasTeclas(anel, embaralhar(opcoesArgolaInicial).slice(0, anel.quantidade));
+        return;
+    }
+
+    const sugestoesIA = await sugerirComOpenAI(`${frase} (sugira opções diferentes das mais óbvias)`);
+    if (sugestoesIA && sugestoesIA.length) {
+        atualizarTextoDasTeclas(anel, preencherAte(sugestoesIA, anel.quantidade, frasesRapidas.concat(palavrasChave)));
+        return;
+    }
+
+    const base = sugestoesPorPalavra[palavraAtual()] || sugestoesGenericas;
+    const baseEmbaralhada = embaralhar(base);
+    const extras = embaralhar(frasesRapidas.concat(palavrasChave).filter((palavra) => !base.includes(palavra)));
+    const novaLista = preencherAte(baseEmbaralhada, anel.quantidade, extras);
+    atualizarTextoDasTeclas(anel, novaLista);
+}
+
+// Reseta o teclado para a configuração inicial: argola de dentro volta a
+// mostrar as palavras-chave e a argola de fora desaparece de novo.
+function voltarConfiguracaoInicial() {
+    if (modoAlfabeto) {
+        criarTeclasDoAnel(aneis[0], 9, false);
+        modoAlfabeto = false;
+        document.querySelectorAll(".botao-alfabeto").forEach((botao) => botao.classList.remove("ativo"));
+    }
+    atualizarAnelPalavrasChave();
+    esconderAnelSugestoes();
+    mostrarFrasesProntas(null);
+    novaPalavraAlfabeto = true;
+    noBotaoCentral = false;
+    anelAtualIndice = 0;
+    posicaoAtualIndice = 0;
+    focarTecla(0, 0);
+}
+
+// Posiciona os botões do menu lateral com a mesma trigonometria usada nas
+// teclas (ângulo + raio a partir do centro), formando um arco que encaixa
+// exatamente na circunferência da argola visível no momento — mais perto
+// da borda da argola de dentro (raio 36%) e mais longe quando a argola de
+// fora está aberta (raio 46%, acompanhando o tamanho maior dela).
+const ANGULO_BASE_MENU = { direita: 0, baixo: 90, esquerda: 180, cima: -90 };
+const ARCO_MENU_GRAUS = 110;
+
+function posicionarMenuOrbital() {
+    if (!menuOrbital || !botoesMenu.length) return;
+
+    const anguloBase = ANGULO_BASE_MENU[direcaoAtiva] ?? 0;
+    // A argola externa ocupa 85% da área (raio ≈ 42,5%).
+    // 52% deixa uma pequena folga para os botões sem alterar o arco.
+    const raio = sugestoesVisiveis ? 52 : 43;
+    const total = botoesMenu.length;
+
+    botoesMenu.forEach((botao, indice) => {
+        const offset = total > 1
+            ? (indice - (total - 1) / 2) * (ARCO_MENU_GRAUS / (total - 1))
+            : 0;
+        const anguloGraus = anguloBase + offset;
+        const anguloRad = anguloGraus * Math.PI / 180;
+        const x = 50 + Math.cos(anguloRad) * raio;
+        const y = 50 + Math.sin(anguloRad) * raio;
+
+        botao.style.left = `${x}%`;
+        botao.style.top = `${y}%`;
+        botao.dataset.angulo = String(anguloGraus);
+    });
+}
+
+function mostrarAnelSugestoes() {
+    sugestoesVisiveis = true;
+    aneis[1].elemento.classList.add("visivel");
+    posicionarMenuOrbital();
+}
+
+function esconderAnelSugestoes() {
+    sugestoesVisiveis = false;
+    aneis[1].elemento.classList.remove("visivel");
+    aneis[1].cunha.classList.remove("ativa");
+    aneis[1].teclas.forEach((tecla) => (tecla.tabIndex = -1));
+    posicionarMenuOrbital();
+}
+
+function adicionarPalavra(texto) {
+    if (!texto) return;
+    valor.textContent = `${valor.textContent.trim()} ${texto}`.trim();
+    atualizarFrasesProntas();
+}
+
+// ==== Modo alfabético (botão "Aa" no centro da argola de dentro) ====
+// Reconstrói a própria argola de dentro (a "argola inicial") com as 26
+// letras do alfabeto, no lugar do que ela estivesse mostrando (palavras-
+// chave ou sugestões). Só entra nesse modo quando o botão central é clicado.
+const alfabeto = "abcdefghijklmnopqrstuvwxyz".split("");
+let modoAlfabeto = false;
+let novaPalavraAlfabeto = true;
+
+// Restaura o conteúdo "normal" da argola de dentro, de acordo com o ponto
+// da frase em que o usuário está: palavras-chave se ainda não começou a
+// frase, ou sugestões baseadas na última palavra se já começou.
+function restaurarConteudoAnelInicial() {
+    if (valor.textContent.trim()) {
+        atualizarSugestoesNoAnel(0);
+    } else {
+        atualizarAnelPalavrasChave();
+    }
+}
+
+function entrarModoAlfabeto() {
+    modoAlfabeto = true;
+    novaPalavraAlfabeto = true;
+    criarTeclasDoAnel(aneis[0], alfabeto.length, true);
+    atualizarTextoDasTeclas(aneis[0], alfabeto);
+    anelAtualIndice = 0;
+    posicaoAtualIndice = 0;
+    focarTecla(0, 0);
+}
+
+function sairModoAlfabeto() {
+    modoAlfabeto = false;
+    criarTeclasDoAnel(aneis[0], 9, false);
+    restaurarConteudoAnelInicial();
+    anelAtualIndice = 0;
+    posicaoAtualIndice = 0;
+    focarTecla(0, 0);
+}
+
+function alternarModoAlfabeto() {
+    noBotaoCentral = false;
+    if (modoAlfabeto) sairModoAlfabeto(); else entrarModoAlfabeto();
+    document.querySelectorAll(".botao-alfabeto").forEach((botao) => botao.classList.toggle("ativo", modoAlfabeto));
+}
+
+// Digita uma letra na palavra atual: a primeira letra depois de entrar no
+// modo alfabético começa uma palavra nova (com espaço); as seguintes
+// grudam direto na anterior, sem espaço, até o usuário sair do modo.
+function adicionarLetra(letra) {
+    if (novaPalavraAlfabeto) {
+        valor.textContent = `${valor.textContent.trim()} ${letra}`.trim();
+        novaPalavraAlfabeto = false;
+    } else {
+        valor.textContent += letra;
+    }
+}
+
+// Usada tanto pelo clique quanto pela tecla Enter/Espaço. Ao selecionar uma
+// palavra em uma argola, é a OUTRA argola que recebe novas sugestões para
+// continuar a frase e ganha o foco — as duas vão se revezando conforme a
+// frase cresce (dentro -> fora -> dentro -> fora...).
+function selecionarPalavra(tecla) {
+    const indiceReal = aneis.findIndex((anel) => anel.teclas.includes(tecla));
+    if (indiceReal < 0) return;
+    anelAtualIndice = indiceReal;
+    posicaoAtualIndice = aneis[indiceReal].teclas.indexOf(tecla);
+
+    if (modoAlfabeto) {
+        // No modo alfabético só a própria argola de dentro (agora com as
+        // letras) responde; a de fora fica bloqueada até sair do modo.
+        if (aneis[0].teclas.includes(tecla)) adicionarLetra(tecla.dataset.valor);
+        return;
+    }
+
+    const anelOrigem = anelAtualIndice;
+    adicionarPalavra(tecla.dataset.valor);
+
+    const anelDestino = anelOrigem === 0 ? 1 : 0;
+    if (anelDestino === 1 && !sugestoesVisiveis) mostrarAnelSugestoes();
+    atualizarSugestoesNoAnel(anelDestino);
+
+    anelAtualIndice = anelDestino;
+    posicaoAtualIndice = 0;
+    focarTecla(anelDestino, 0);
+}
+
+function direcaoDoAngulo(angulo) {
+    const x = Math.cos(angulo * Math.PI / 180);
+    const y = Math.sin(angulo * Math.PI / 180);
+    if (Math.abs(x) >= Math.abs(y)) return x >= 0 ? "direita" : "esquerda";
+    return y >= 0 ? "baixo" : "cima";
+}
+
+function indiceMaisProximoNoAnel(origem, destino, posicao) {
+    const anguloOrigem = (posicao / origem.teclas.length) * 2 * Math.PI - Math.PI / 2;
+    let melhorIndice = 0;
+    let menorDistancia = Infinity;
+    destino.teclas.forEach((_, indice) => {
+        const anguloDestino = (indice / destino.teclas.length) * 2 * Math.PI - Math.PI / 2;
+        const distancia = Math.abs(Math.atan2(Math.sin(anguloDestino - anguloOrigem), Math.cos(anguloDestino - anguloOrigem)));
+        if (distancia < menorDistancia) {
+            menorDistancia = distancia;
+            melhorIndice = indice;
+        }
+    });
+    return melhorIndice;
+}
+
+function mostrarCunha(anel, posicao) {
+    const abertura = 360 / anel.quantidade;
+    const inicio = posicao * abertura - abertura / 2;
+    aneis.forEach((outroAnel) => outroAnel.cunha.classList.remove("ativa"));
+    anel.cunha.style.background = `conic-gradient(from ${inicio}deg, rgb(247 201 77 / 55%) 0deg ${abertura}deg, transparent ${abertura}deg 360deg)`;
+    anel.cunha.classList.add("ativa");
+}
+
+function selecionarTecla(tecla, anel, posicao) {
+    const indiceAnel = aneis.indexOf(anel);
+    if (teclaAtiva === tecla && anelAtualIndice === indiceAnel && posicaoAtualIndice === posicao) return;
+    aneis.forEach((outroAnel) => {
+        if (outroAnel.cunha) outroAnel.cunha.classList.remove("ativa");
+    });
+    teclaAtiva = tecla;
+    direcaoAtiva = tecla.dataset.direcao;
+    anelAtualIndice = indiceAnel;
+    posicaoAtualIndice = posicao;
+    menuOrbital.classList.add("ativo");
+    posicionarMenuOrbital();
+    mostrarCunha(anel, posicao);
+}
+
+function focarTecla(anelDestino, posicaoDestino) {
+    const anel = aneis[anelDestino];
+    if (!anel || (anelDestino === 1 && !sugestoesVisiveis) || !anel.teclas.length) return;
+
+    const indiceSeguro = ((posicaoDestino % anel.teclas.length) + anel.teclas.length) % anel.teclas.length;
+    aneis.forEach((item) => item.teclas.forEach((tecla) => (tecla.tabIndex = -1)));
+
+    const proximaTecla = anel.teclas[indiceSeguro];
+    posicaoAtualIndice = indiceSeguro;
+    proximaTecla.tabIndex = 0;
+    proximaTecla.focus();
+}
+
+// Navegação por seta do teclado físico: um único listener global (ligado
+// apenas uma vez, mais abaixo), que usa o cursor (anelAtualIndice/
+// posicaoAtualIndice) em vez de depender de qual elemento o navegador
+// considera "focado" — assim funciona mesmo quando o foco automático do
+// navegador não pega em algum ambiente de exibição. Ele só age quando a
+// tela do teclado circular está aberta.
+// Cursor extra: quando true, o foco está no botão "Aa" no centro da
+// argola de dentro (acessível pela seta para cima a partir dela).
+let noBotaoCentral = false;
+let teclaRetornoMenu = null;
+
+function tratarSetaTecladoCircular(evento) {
+    if (typeof STATE === "undefined" || STATE.screen !== "circularMode") return;
+    if (!aneis.length || !aneis[anelAtualIndice]) return;
+
+    const elementoFocado = document.activeElement;
+    const anelFocado = aneis.findIndex((anel) => anel.teclas.includes(elementoFocado));
+    const focoNaTecla = anelFocado >= 0;
+    const botaoCentral = document.querySelector(".botao-alfabeto");
+    const focoNoCentro = elementoFocado === botaoCentral;
+    if (!focoNaTecla && !focoNoCentro) return;
+    noBotaoCentral = focoNoCentro;
+
+    // Se o foco estiver em um botão do menu lateral, quem cuida disso é o moverNoMenu.
+    if (botoesMenu.includes(document.activeElement)) return;
+
+    if (noBotaoCentral) {
+        if (["Enter", " "].includes(evento.key)) {
+            evento.preventDefault();
+            noBotaoCentral = false;
+            alternarModoAlfabeto();
+            return;
+        }
+        if (evento.key === "ArrowDown" || evento.key === "ArrowUp") {
+            evento.preventDefault();
+            noBotaoCentral = false;
+            focarTecla(anelAtualIndice, posicaoAtualIndice);
+        }
+        return;
+    }
+
+    // Tab pode entrar no menu sem alterar o comportamento circular das setas.
+    if (focoNaTecla && evento.key === "Tab" && !evento.shiftKey) {
+        evento.preventDefault();
+        teclaRetornoMenu = elementoFocado;
+        botoesMenu[0]?.focus();
+        return;
+    }
+
+    if (["Enter", " "].includes(evento.key)) {
+        evento.preventDefault();
+        selecionarPalavra(aneis[anelAtualIndice].teclas[posicaoAtualIndice]);
+        return;
+    }
+
+    anelAtualIndice = anelFocado;
+    const anelAtual = aneis[anelAtualIndice];
+    const indiceFocado = anelAtual.teclas.indexOf(elementoFocado);
+    if (indiceFocado >= 0) posicaoAtualIndice = indiceFocado;
+    let proximoAnel = anelAtualIndice;
+    let proximaPosicao = posicaoAtualIndice;
+
+    switch (evento.key) {
+        case "ArrowLeft":
+            proximaPosicao = (posicaoAtualIndice + anelAtual.teclas.length - 1) % anelAtual.teclas.length;
+            break;
+        case "ArrowRight":
+            proximaPosicao = (posicaoAtualIndice + 1) % anelAtual.teclas.length;
+            break;
+        case "ArrowUp":
+            if (anelAtualIndice === 1) {
+                proximoAnel = 0;
+                proximaPosicao = indiceMaisProximoNoAnel(anelAtual, aneis[0], posicaoAtualIndice);
+            } else if (anelAtualIndice === 0) {
+                evento.preventDefault();
+                const botaoCentral = document.querySelector(".botao-alfabeto");
+                if (botaoCentral) {
+                    evento.preventDefault();
+                    noBotaoCentral = true;
+                    botaoCentral.focus();
+                }
+                return;
+            }
+            break;
+        case "ArrowDown":
+            if (anelAtualIndice === 0 && sugestoesVisiveis && !modoAlfabeto) {
+                proximoAnel = 1;
+                proximaPosicao = indiceMaisProximoNoAnel(anelAtual, aneis[1], posicaoAtualIndice);
+            }
+            break;
+        default:
+            return;
+    }
+
+    if (proximoAnel === 1 && !sugestoesVisiveis) return;
+
+    evento.preventDefault();
+    if (proximoAnel !== anelAtualIndice || proximaPosicao !== posicaoAtualIndice) {
+        anelAtualIndice = proximoAnel;
+        posicaoAtualIndice = proximaPosicao;
+        focarTecla(proximoAnel, proximaPosicao);
+    }
+}
+
+let ckKeydownGlobalBound = false;
+let ckFocusFallbackPending = false;
+
+function moverNoMenu(evento, indiceAtual) {
+    if (evento.key === "Escape") {
+        evento.preventDefault();
+        const destino = teclaRetornoMenu || aneis[anelAtualIndice]?.teclas?.[posicaoAtualIndice] || teclaAtiva || aneis[0]?.teclas?.[0];
+        if (destino) destino.focus();
+        teclaRetornoMenu = null;
+        return;
+    }
+}
+
+// Cria (ou recria) as teclas de uma argola com a quantidade indicada,
+// substituindo qualquer tecla que já existisse nela. Usada na montagem
+// inicial e para reconstruir a argola de dentro no modo alfabético, que
+// precisa de mais posições (26) do que as palavras-chave normais (9).
+function criarTeclasDoAnel(anel, quantidade, compacta) {
+    anel.teclas.forEach((tecla) => tecla.remove());
+    anel.teclas = [];
+    anel.quantidade = quantidade;
+
+    for (let posicao = 0; posicao < quantidade; posicao += 1) {
+        const tecla = document.createElement("button");
+        const angulo = (posicao / quantidade) * 360 - 90;
+        const x = 50 + Math.cos(angulo * Math.PI / 180) * anel.raio * 0.5;
+        const y = 50 + Math.sin(angulo * Math.PI / 180) * anel.raio * 0.5;
+        tecla.className = compacta ? "tecla tecla-compacta" : "tecla";
+        tecla.type = "button";
+        tecla.tabIndex = -1;
+        tecla.dataset.direcao = direcaoDoAngulo(angulo);
+        tecla.style.left = `${x}%`;
+        tecla.style.top = `${y}%`;
+        tecla.style.transform = "translate(-50%, -50%)";
+        tecla.addEventListener("click", (evento) => {
+            evento.stopPropagation();
+            selecionarPalavra(tecla);
+        });
+        tecla.addEventListener("pointerenter", () => {
+            selecionarTecla(tecla, anel, posicao);
+        });
+        tecla.addEventListener("focus", () => {
+            if (document.activeElement === tecla) selecionarTecla(tecla, anel, posicao);
+        });
+        anel.teclas.push(tecla);
+        anel.elemento.appendChild(tecla);
+    }
+}
+
+// Botão "falar": lê em voz alta a frase montada até agora.
+function falarFrase() {
+    const texto = valor.textContent.trim();
+    if (!texto) return;
+    if (!("speechSynthesis" in window)) {
+        showToast("Este navegador não tem suporte a leitura por voz.");
+        return;
+    }
+    const fala = new SpeechSynthesisUtterance(texto);
+    fala.lang = "pt-BR";
+    speechSynthesis.cancel();
+    speechSynthesis.speak(fala);
+}
+
+function focarInicio() {
+    if (aneis[0] && aneis[0].teclas[0]) aneis[0].teclas[0].focus();
+}
+
+// Monta (ou remonta) todo o teclado circular na tela "circularMode" atual.
+// Chamada pelo render() principal do app sempre que essa tela é exibida,
+// já que o app substitui o HTML da tela a cada navegação.
+function initCircularKeyboard() {
+    valor = document.getElementById("valor");
+    menuOrbital = document.getElementById("menuOrbital");
+    frasesProntasEl = document.getElementById("frasesProntas");
+    if (!valor || !menuOrbital) return;
+
+    botoesMenu = [...menuOrbital.querySelectorAll(".satelite")];
+
+    valor.textContent = "";
+    mostrarFrasesProntas(null);
+
+    teclaAtiva = null;
+    direcaoAtiva = "cima";
+    sugestoesVisiveis = false;
+    anelAtualIndice = 0;
+    posicaoAtualIndice = 0;
+    modoAlfabeto = false;
+    novaPalavraAlfabeto = true;
+    noBotaoCentral = false;
+
+    aneis = [
+        { elemento: document.getElementById("anelMeio"), quantidade: 9, teclas: [], palavras: palavrasChave, raio: 72, temBuraco: true },
+        { elemento: document.getElementById("anelExterno"), quantidade: 10, teclas: [], palavras: [], raio: 80 }
+    ];
+
+    aneis.forEach((anel) => {
+        const cunha = document.createElement("div");
+        cunha.className = "cunha";
+        anel.elemento.appendChild(cunha);
+        anel.cunha = cunha;
+
+        if (anel.temBuraco) {
+            const botaoAlfabeto = document.createElement("button");
+            botaoAlfabeto.type = "button";
+            botaoAlfabeto.className = "buraco-central botao-alfabeto";
+            botaoAlfabeto.textContent = "Aa";
+            botaoAlfabeto.setAttribute("aria-label", "Alternar para teclado alfabético");
+            botaoAlfabeto.addEventListener("click", alternarModoAlfabeto);
+            anel.elemento.appendChild(botaoAlfabeto);
+        }
+
+        criarTeclasDoAnel(anel, anel.quantidade, false);
+    });
+
+    aneis[0].teclas[0].tabIndex = 0;
+
+    botoesMenu.forEach((botao, indice) => {
+        // tabIndex 0 fixo: os botões do menu lateral ficam sempre alcançáveis
+        // pela tecla Tab do teclado físico, sem depender de gestos com as setas.
+        botao.tabIndex = 0;
+        botao.addEventListener("keydown", (evento) => moverNoMenu(evento, indice));
+    });
+
+    const btnLimpar = document.getElementById("limpar");
+    if (btnLimpar) btnLimpar.addEventListener("click", () => {
+        valor.textContent = "";
+        voltarConfiguracaoInicial();
+    });
+
+    const btnExcluir = document.getElementById("excluir");
+    if (btnExcluir) btnExcluir.addEventListener("click", () => {
+        const palavras = valor.textContent.trim().split(/\s+/).filter(Boolean);
+        palavras.pop();
+        valor.textContent = palavras.join(" ");
+        if (palavras.length === 0) {
+            voltarConfiguracaoInicial();
+        } else {
+            atualizarSugestoesNoAnel(anelAtualIndice);
+            atualizarFrasesProntas();
+        }
+    });
+
+    const btnRecarregar = document.getElementById("recarregar");
+    if (btnRecarregar) btnRecarregar.addEventListener("click", () => recarregarSugestoes());
+
+    const btnVoltarInicio = document.getElementById("voltarInicio");
+    if (btnVoltarInicio) btnVoltarInicio.addEventListener("click", () => voltarConfiguracaoInicial());
+
+    const btnFalar = document.getElementById("falar");
+    if (btnFalar) btnFalar.addEventListener("click", falarFrase);
+
+    // Botão "concluir": corrige a ortografia/gramática da frase com o
+    // LanguageTool, mostra o texto corrigido e devolve o teclado à
+    // configuração inicial (argola de dentro com as palavras-chave de novo).
+    const btnConcluir = document.getElementById("concluir");
+    if (btnConcluir) btnConcluir.addEventListener("click", async () => {
+        const textoOriginal = valor.textContent.trim();
+        const textoCorrigido = await corrigirComLanguageTool(textoOriginal);
+        valor.textContent = textoCorrigido;
+        voltarConfiguracaoInicial();
+    });
+
+    atualizarAnelPalavrasChave();
+
+    if (!ckKeydownGlobalBound) {
+        ckKeydownGlobalBound = true;
+        document.addEventListener("keydown", tratarSetaTecladoCircular);
+    }
+
+    // Garante o destaque visual na primeira tecla da argola (dica de por onde
+    // começar) assim que a tela abre, e reforça de novo no primeiro
+    // clique/toque, caso o foco automático não "pegue" de início.
+    focarInicio();
+    if (!ckFocusFallbackPending) {
+        ckFocusFallbackPending = true;
+        document.addEventListener("pointerdown", () => {
+            ckFocusFallbackPending = false;
+            if (STATE.screen === "circularMode") focarInicio();
+        }, { capture: true, once: true });
+    }
 }
 
 loadData();
