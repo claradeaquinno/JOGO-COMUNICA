@@ -990,7 +990,7 @@ button:focus-visible,
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 14px;
   width: 100%;
   overflow: visible;
 }
@@ -1037,16 +1037,19 @@ button:focus-visible,
 .carousel-card.side .emoji { font-size: 26px; }
 .carousel-card.side .label { font-size: 11px; }
 .carousel-card.center {
-  width: 130px;
-  height: 158px;
+  width: clamp(150px, 34vw, 180px);
+  height: clamp(180px, 40vw, 210px);
   opacity: 1;
   transform: scale(1);
-  border-color: var(--yellow-dark);
-  background: linear-gradient(180deg, #ffe08a, var(--yellow));
-  box-shadow: 0 6px 16px rgba(23,58,94,0.25);
+  border: 4px solid var(--yellow-dark);
+  background: linear-gradient(180deg, #ffe99f 0%, var(--yellow) 100%);
+  box-shadow: 0 0 0 5px rgba(255, 207, 77, 0.24), 0 12px 26px rgba(23,58,94,0.32);
 }
-.carousel-card.center .emoji { font-size: 44px; }
-.carousel-card.center .label { font-size: 16px; }
+.carousel-card.center .emoji { font-size: clamp(50px, 10vw, 64px); }
+.carousel-card.center .label {
+  font-size: clamp(18px, 4vw, 22px);
+  font-weight: 900;
+}
 .carousel-card .emoji { line-height: 1; }
 .carousel-card .label {
   font-family: var(--font-title);
@@ -2002,6 +2005,66 @@ body[data-theme="dark"] .toast {
 .confirm-dialog-actions button.accessibility-focus {
   outline: 4px solid #ffd400;
   outline-offset: 3px;
+}
+
+/* Carrossel compacto para celulares: evita corte lateral e mantém o foco no cartão central. */
+@media (max-width: 560px) {
+  .carousel-wrap {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    padding: 6px 0;
+  }
+
+  .carousel-track {
+    gap: 6px;
+    max-width: 100%;
+  }
+
+  .carousel-arrow {
+    width: 42px;
+    height: 42px;
+  }
+
+  .carousel-arrow img {
+    width: 27px;
+    height: 27px;
+  }
+
+  .carousel-card.side {
+    width: 42px;
+    height: 96px;
+  }
+
+  .carousel-card.center {
+    width: min(38vw, 150px);
+    height: min(54vw, 180px);
+  }
+
+  .carousel-card.center .emoji {
+    font-size: clamp(42px, 11vw, 58px);
+  }
+
+  .carousel-card.center .label {
+    font-size: clamp(16px, 4.5vw, 21px);
+  }
+}
+
+@media (max-width: 380px) {
+  .carousel-card.side {
+    width: 24px;
+    opacity: 0.35;
+  }
+
+  .carousel-card.side .emoji,
+  .carousel-card.side .label {
+    visibility: hidden;
+  }
+
+  .carousel-arrow {
+    width: 38px;
+    height: 38px;
+  }
 }
 
 </style>
