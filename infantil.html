@@ -791,11 +791,11 @@ button:focus-visible,
   font-weight: 700;
 }
 
-.mode-choice-screen { min-height: 100vh; width: 100%; padding: 24px; display: flex; flex-direction: column; }
-.mode-choice-back { align-self: flex-start; border: 0; border-radius: 999px; padding: 14px 20px; background: rgba(255,255,255,.94); color: var(--navy); font: 800 16px var(--font); cursor: pointer; }
-.mode-choice-content { width: min(100%, 760px); margin: auto; display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; }
-.mode-choice-content h1 { margin: 0 0 10px; color: #fff; font-size: clamp(28px,5vw,48px); text-shadow: 0 2px 5px rgba(23,58,94,.4); }
-.mode-choice-button { width: min(100%, 680px); min-height: 120px; border: 4px solid rgba(255,255,255,.9); border-radius: 28px; background: #fff; color: var(--navy); font: 900 clamp(24px,5vw,42px) var(--font); box-shadow: 0 10px 24px rgba(23,58,94,.2); cursor: pointer; transition: transform .15s ease, background .15s ease; }
+.mode-choice-screen { min-height: 100vh; width: 100%; padding: 14px; display: flex; flex-direction: column; }
+.mode-choice-back { align-self: flex-start; border: 0; border-radius: 999px; padding: 8px 13px; background: rgba(255,255,255,.94); color: var(--navy); font: 800 12px var(--font); cursor: pointer; }
+.mode-choice-content { width: min(100%, 440px); margin: auto; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; }
+.mode-choice-content h1 { margin: 0 0 4px; color: #fff; font-size: clamp(20px,3.5vw,28px); text-shadow: 0 2px 5px rgba(23,58,94,.4); }
+.mode-choice-button { width: min(100%, 400px); min-height: 62px; border: 2px solid rgba(255,255,255,.9); border-radius: 15px; background: #fff; color: var(--navy); font: 900 clamp(16px,3vw,24px) var(--font); box-shadow: 0 5px 12px rgba(23,58,94,.2); cursor: pointer; transition: transform .15s ease, background .15s ease; }
 .mode-choice-button:hover { transform: scale(1.02); background: #fff4c9; }
 .mode-choice-button:active { transform: scale(.98); }
 
@@ -1844,13 +1844,13 @@ body[data-theme="dark"] #feedbackText {
 }
 
 .mode-choice-button[data-mode-screen="circularMode"] {
-  background: #f7c94d !important;
-  border-color: #b98200 !important;
+  background: #fffaf0 !important;
+  border-color: #d8cfc0 !important;
 }
 
 .mode-choice-button[data-mode-screen="carouselMode"] {
-  background: #8bd3a8 !important;
-  border-color: #3f9b68 !important;
+  background: #fffaf0 !important;
+  border-color: #d8cfc0 !important;
 }
 
 /* Carrossel infantil: texto e cartões com contraste estável nos dois temas. */
@@ -2135,7 +2135,7 @@ const CHALLENGES = [
 
 /* Dicas do mascote por tela — usadas quando o botão flutuante é tocado */
 const MASCOT_TIPS = {
-  home: 'Oi! Eu sou o Guri. Toque em "Começar a comunicar" para montar sua frase comigo.',
+  home: 'Oi, eu sou o Guri! Vamos comunicar juntos.',
   build: 'Escolha as palavras no carrossel e toque em Selecionar. Quando terminar, toque em Falar.',
   categories: 'Aqui você encontra as palavras organizadas por assunto. Toque em uma categoria para abrir.',
   categoryDetail: 'Toque em uma palavra para adicionar na sua frase.',
@@ -2158,7 +2158,9 @@ const MENU_AUDIO_SRC = {
   favorites: 'assets/audio/favoritos.mp3',
   profile: 'assets/audio/meu-comunica.mp3',
   personalize: 'assets/audio/personalizar.mp3',
-  about: 'assets/audio/sobre o comunica.mp3'
+  about: 'assets/audio/sobre o comunica.mp3',
+  circularMode: 'assets/audio/teclado-circular.mp3',
+  carouselMode: 'assets/audio/carrossel.mp3'
 };
 const WORD_ICON_SRC = {
   mae: 'assets/imagens/icone-mae.png',
@@ -2494,9 +2496,6 @@ function playMenuVoice(target, fallbackText) {
 
 function speakMascot(text) {
   showMascotTip(text);
-  if (STATE.data.settings.mascotVoiceEnabled) {
-    playMascotVoice(text);
-  }
 }
 
 /* ---------- Mascote "Guri" em SVG ---------- */
@@ -3352,7 +3351,13 @@ function attachHandlers() {
 
   document.querySelectorAll('[data-mode-screen]').forEach(element => {
     const activate = () => {
-      go(element.getAttribute('data-mode-screen'));
+      const target = element.getAttribute('data-mode-screen');
+      const modeTexts = {
+        circularMode: 'Teclado circular',
+        carouselMode: 'Carrossel'
+      };
+      playMenuVoice(target, modeTexts[target]);
+      go(target);
     };
     element.addEventListener('click', activate);
     element.addEventListener('keydown', activateOnEnterSpace(activate));
@@ -3371,7 +3376,10 @@ function attachHandlers() {
         settings: 'Configurações',
         about: 'Sobre o ComunicA'
       };
-      if (menuTexts[target]) playMenuVoice(target, menuTexts[target]);
+      const isMainHomeButton = element.closest('.home-screen');
+      if (menuTexts[target] && (target !== 'build' || isMainHomeButton)) {
+        playMenuVoice(target, menuTexts[target]);
+      }
       if (target === 'challenge') STATE.challenge = null;
       go(target);
     };
@@ -3726,24 +3734,14 @@ function attachHandlers() {
     saveData();
   });
 
-  const testVoiceBtn = document.getElementById('testVoiceBtn');
-  if (testVoiceBtn) testVoiceBtn.addEventListener('click', () => {
-    playMascotVoice('Oi! Esta é a minha voz no ComunicA.');
-  });
-
-  /* Mascote na tela inicial */
-  const mascotHeroBtn = document.getElementById('mascotHeroBtn');
-  if (mascotHeroBtn) {
-    const activate = () => speakMascot(MASCOT_TIPS[STATE.screen] || MASCOT_TIPS.home);
-    mascotHeroBtn.addEventListener('click', activate);
-    mascotHeroBtn.addEventListener('keydown', activateOnEnterSpace(activate));
-  }
 }
 
 /* Botão flutuante do mascote — disponível em todas as telas */
 document.getElementById('mascotFloatBtn').innerHTML = mascotImgHtml({ size: 46, mood: 'idle' });
 document.getElementById('mascotFloatBtn').addEventListener('click', () => {
-  speakMascot(MASCOT_TIPS[STATE.screen] || MASCOT_TIPS.home);
+  const text = MASCOT_TIPS.home;
+  showMascotTip(text);
+  playMascotVoice();
 });
 
 /* Controle do Guri por teclado: setas navegam, Enter chama a dica e Esc volta. */
@@ -3884,7 +3882,7 @@ document.addEventListener('keydown', event => {
 /* =========================================================
    Tela de abertura (splash) com o mascote Guri
    ========================================================= */
-function typeWelcomeBubble(playVoice = true) {
+function typeWelcomeBubble(playVoice = false) {
   const el = document.getElementById('mascotTip');
   if (!el) return;
   const text = `Oi, eu sou o ${MASCOT_NAME}!`;
@@ -3971,10 +3969,6 @@ function initSplash() {
       if (audio) {
         audio.preload = 'auto';
       }
-      typeWelcomeBubble(false);
-      if (STATE.data.settings.mascotVoiceEnabled) {
-        setTimeout(playMascotVoiceAfterRefresh, 50);
-      }
       return;
     }
 
@@ -3983,7 +3977,6 @@ function initSplash() {
       app.removeAttribute('aria-hidden');
       floatBtn.style.opacity = '1';
       floatBtn.style.pointerEvents = 'auto';
-      typeWelcomeBubble();
       return;
     }
 
@@ -4014,7 +4007,6 @@ function initSplash() {
       splash.style.display = 'none';
       floatBtn.style.opacity = '1';
       floatBtn.style.pointerEvents = 'auto';
-      typeWelcomeBubble();
     }, 720);
   }
 
