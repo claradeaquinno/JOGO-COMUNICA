@@ -549,8 +549,8 @@ button:focus-visible,
 .menu-btn:active, .card:active { transform: scale(0.98); }
 
 .menu-btn.primary, .card.yellow {
-  background: linear-gradient(180deg, #ffe08a, var(--yellow));
-  border-color: var(--yellow-dark);
+  background: #eaf6ff;
+  border-color: #cfe9f7;
 }
 
 .menu-emoji, .card-icon {
@@ -1847,13 +1847,13 @@ body[data-theme="dark"] #feedbackText {
 }
 
 .mode-choice-button[data-mode-screen="circularMode"] {
-  background: #fffaf0 !important;
-  border-color: #d8cfc0 !important;
+  background: #eaf6ff !important;
+  border-color: #cfe9f7 !important;
 }
 
 .mode-choice-button[data-mode-screen="carouselMode"] {
-  background: #fffaf0 !important;
-  border-color: #d8cfc0 !important;
+  background: #eaf6ff !important;
+  border-color: #cfe9f7 !important;
 }
 
 /* Carrossel infantil: texto e cartões com contraste estável nos dois temas. */
@@ -2067,6 +2067,30 @@ body[data-theme="dark"] .toast {
   }
 }
 
+/* Aba principal: visual branco semelhante às opções de comunicação. */
+body .menu-btn.primary {
+  background: #eaf6ff !important;
+  border-color: #cfe9f7 !important;
+  color: #123b4d !important;
+}
+
+/* Cor padrão das abas: branco com azul-claro suave. */
+body .menu-btn,
+body .mode-choice-button {
+  background: #eaf6ff !important;
+  border-color: #cfe9f7 !important;
+  color: #123b4d !important;
+}
+
+/* No carrossel, exibir apenas o texto das palavras, sem emojis. */
+.carousel-card .emoji {
+  display: none !important;
+}
+
+.carousel-card img {
+  display: none !important;
+}
+
 </style>
 </head>
 
@@ -2151,41 +2175,93 @@ const DEFAULT_WORDS = [
   { id: 'sair', label: 'Sair', emoji: '🚪', description: 'Quero sair', cat: 'lugares' }
 ];
 
+const AAC_EXTRA_WORDS = [
+  ['ele', 'Ele', '👤'], ['ela', 'Ela', '👤'], ['nos', 'Nós', '👥'], ['eles', 'Eles', '👥'],
+  ['elas', 'Elas', '👥'], ['isso', 'Isso', '👉'], ['aquilo', 'Aquilo', '👉'],
+  ['avo', 'Avô', '👴'], ['ava', 'Avó', '👵'], ['tio', 'Tio', '👨'], ['tia', 'Tia', '👩'],
+  ['irmao', 'Irmão', '👦'], ['irma', 'Irmã', '👧'],
+  ['bomDia', 'Bom dia', '🌞'], ['boaTarde', 'Boa tarde', '🌤️'], ['boaNoite', 'Boa noite', '🌙'],
+  ['ola', 'Olá', '👋'], ['oi', 'Oi', '👋'], ['tudoBem', 'Tudo bem?', '🙂'], ['comoVai', 'Como vai?', '😊'],
+  ['ateLogo', 'Até logo', '👋'], ['tchau', 'Tchau', '👋'], ['prazerConhecer', 'Prazer em conhecer você', '🤝'],
+  ['comoVoceEsta', 'Como você está?', '🙂'], ['muitoPrazer', 'Muito prazer', '🤝'],
+  ['vai', 'Vai', '➡️'], ['quer', 'Quer', '🙋'], ['nao', 'Não', '🚫'], ['acho', 'Acho', '💭'], ['trabalhar', 'Trabalhar', '💼'],
+  ['tenho', 'Tenho', '✋'], ['pode', 'Pode', '✅'], ['sabe', 'Sabe', '🧠'], ['tem', 'Tem', '📦'], ['temPlural', 'Têm', '📦'],
+  ['esta', 'Está', '💭'], ['foi', 'Foi', '⏮️'], ['e', 'É', '🔗'], ['faz', 'Faz', '🛠️'],
+  ['diz', 'Diz', '💬'], ['gosta', 'Gosta', '😊'], ['precisa', 'Precisa', '❗'], ['morava', 'Morava', '🏠'],
+  ['trabalha', 'Trabalha', '💼'], ['estuda', 'Estuda', '📚'], ['conhece', 'Conhece', '🤝'], ['entende', 'Entende', '💡'],
+  ['somos', 'Somos', '👥'], ['estamos', 'Estamos', '👥'], ['vamos', 'Vamos', '➡️'], ['temos', 'Temos', '📦'],
+  ['fomos', 'Fomos', '⏮️'], ['queremos', 'Queremos', '🙋'], ['podemos', 'Podemos', '✅'], ['sabemos', 'Sabemos', '🧠'],
+  ['fizemos', 'Fizemos', '🛠️'], ['precisamos', 'Precisamos', '❗'], ['sao', 'São', '👥'], ['estao', 'Estão', '👥'],
+  ['vao', 'Vão', '➡️'], ['foram', 'Foram', '⏮️'], ['querem', 'Querem', '🙋'], ['podem', 'Podem', '✅'],
+  ['sabem', 'Sabem', '🧠'], ['fizeram', 'Fizeram', '🛠️'], ['gostam', 'Gostam', '😊'], ['precisam', 'Precisam', '❗'],
+  ['sera', 'Será', '🔮'], ['parece', 'Parece', '👀'], ['deve', 'Deve', '📌'], ['funciona', 'Funciona', '⚙️'],
+  ['aconteceu', 'Aconteceu', '❓'], ['falar', 'Falar', '💬'], ['irBanheiro', 'Ir ao banheiro', '🚽'],
+  ['irCasa', 'Ir para casa', '🏠'], ['saber', 'Saber', '🧠'], ['parar', 'Parar', '🛑'], ['maisTempo', 'Mais tempo', '⏳'],
+  ['deAjuda', 'De ajuda', '🆘'], ['deAgua', 'De água', '💧'], ['deComida', 'De comida', '🍎'],
+  ['falarAlguem', 'Falar com alguém', '💬'], ['deRemedio', 'De remédio', '💊'], ['deTempo', 'De tempo', '⏳'],
+  ['entender', 'Entender', '💡'], ['comFome', 'Com fome', '🍽️'], ['comSede', 'Com sede', '💧'], ['cansados', 'Cansados', '😩'],
+  ['felizes', 'Felizes', '😄'], ['tristes', 'Tristes', '😢'], ['preocupado', 'Preocupado', '😟'], ['preocupados', 'Preocupados', '😟'], ['paraCasa', 'Para casa', '🏠'], ['embora', 'Embora', '🚶'],
+  ['tentar', 'Tentar', '💪'], ['comer', 'Comer', '🍽️'], ['certeza', 'Certeza', '✅'], ['duvida', 'Dúvida', '❓'],
+  ['medo', 'Medo', '😨'], ['fome', 'Fome', '🍽️'], ['sede', 'Sede', '💧'], ['sono', 'Sono', '😴'],
+  ['pressa', 'Pressa', '⏱️'], ['umProblema', 'Um problema', '⚠️'], ['meAjudar', 'Me ajudar', '🆘'],
+  ['esperar', 'Esperar', '⏳'], ['repetir', 'Repetir', '🔁'], ['virAqui', 'Vir aqui', '👋'],
+  ['falarDevagar', 'Falar mais devagar', '🐢'], ['explicar', 'Explicar', '💡'], ['porFavor', 'Por favor', '🙏'],
+  ['agora', 'Agora', '⏰'], ['paraMim', 'Para mim', '🙋'], ['comIsso', 'Com isso', '👉'], ['euPreciso', 'Eu preciso', '❗'],
+  ['naoConsigo', 'Não consigo', '😟'], ['estouComDor', 'Estou com dor', '🤕'], ['queroFalar', 'Quero falar', '💬'],
+  ['obrigado', 'Obrigado', '🙏'], ['dor', 'Dor', '🤕'], ['estouCom', 'Estou com', '💭'], ['muitaDor', 'Muita dor', '🤕'],
+  ['aqui', 'Aqui', '📍'], ['chameAlguem', 'Chame alguém', '📣'], ['remedio', 'Remédio', '💊'], ['umPouco', 'Um pouco', '🤏'],
+  ['ondeFica', 'Onde fica?', '📍'], ['urgente', 'Urgente', '🚨'], ['mais', 'Mais', '➕'], ['deNovo', 'De novo', '🔁'],
+  ['estaBem', 'Está bem', '👍'], ['naoEntendi', 'Não entendi', '❓'], ['queroIrCasa', 'Quero ir para casa', '🏠'],
+  ['precisoDeAgua', 'Preciso de água', '💧'], ['maisDevagar', 'Mais devagar', '🐢']
+].map(([id, label, emoji]) => ({ id, label, emoji, description: label, cat: 'acoes' }));
+
+const AAC_FALLBACK = [
+  'quero', 'preciso', 'porFavor', 'ajuda', 'agora', 'mais', 'deNovo', 'estaBem',
+  'naoEntendi', 'obrigado', 'ola', 'tudoBem', 'queroIrCasa', 'estouComDor',
+  'precisoDeAgua', 'maisDevagar', 'ateLogo'
+];
+
 const SUGGESTIONS = {
-  __start__: ['eu', 'voce', 'mae', 'professor', 'amigo'],
-  eu: ['quero', 'preciso', 'estou', 'gosto', 'vou'],
-  voce: ['quero', 'preciso', 'estou', 'gosto', 'vou'],
-  mae: ['quero', 'preciso', 'estou', 'gosto', 'vou'],
-  professor: ['quero', 'preciso', 'estou', 'gosto', 'vou'],
-  amigo: ['quero', 'preciso', 'estou', 'gosto', 'vou'],
-  quero: ['agua', 'comida', 'brincar', 'jogar', 'assistir', 'desenhar', 'passear', 'musica', 'dormir', 'sair', 'casa'],
-  preciso: ['agua', 'comida', 'banheiro', 'dormir', 'descansar', 'ajuda', 'hospital'],
-  estou: ['feliz', 'triste', 'cansado', 'comdor', 'commedo', 'bem'],
-  gosto: ['brincar', 'jogar', 'desenhar', 'assistir', 'passear', 'musica'],
-  vou: ['casa', 'escola', 'passear', 'dormir', 'banheiro', 'hospital'],
-  agua: ['quero', 'gosto', 'preciso'],
-  comida: ['quero', 'gosto', 'preciso'],
-  banheiro: ['preciso', 'quero'],
-  dormir: ['quero', 'preciso', 'estou'],
-  descansar: ['quero', 'preciso', 'estou'],
-  ajuda: ['preciso', 'quero'],
-  feliz: ['eu', 'gosto', 'quero'],
-  triste: ['eu', 'preciso', 'quero'],
-  cansado: ['eu', 'quero', 'preciso'],
-  commedo: ['eu', 'preciso', 'ajuda'],
-  comdor: ['eu', 'preciso', 'ajuda'],
-  bem: ['eu', 'gosto', 'quero'],
-  brincar: ['eu', 'quero', 'gosto'],
-  jogar: ['eu', 'quero', 'gosto'],
-  assistir: ['eu', 'quero', 'gosto'],
-  desenhar: ['eu', 'quero', 'gosto'],
-  passear: ['eu', 'quero', 'vou'],
-  musica: ['eu', 'quero', 'gosto'],
-  casa: ['eu', 'vou', 'quero'],
-  escola: ['eu', 'vou', 'quero'],
-  quarto: ['eu', 'vou', 'quero'],
-  hospital: ['eu', 'vou', 'preciso'],
-  sair: ['eu', 'quero', 'vou']
+  __start__: ['eu', 'voce', 'ele', 'ela', 'nos', 'eles', 'elas', 'isso', 'aquilo', 'mae', 'pai', 'professor', 'avo', 'ava', 'tio', 'tia', 'irmao', 'irma', 'bomDia', 'boaTarde', 'boaNoite', 'ola', 'oi', 'tudoBem', 'comoVai', 'ateLogo', 'tchau', 'prazerConhecer', 'comoVoceEsta', 'muitoPrazer'],
+  eu: ['vou', 'quero', 'nao', 'acho', 'tenho', 'preciso', 'estou'],
+  voce: ['vai', 'quer', 'pode', 'sabe', 'tem', 'esta', 'foi', 'e', 'faz', 'diz', 'gosta', 'precisa', 'morava', 'trabalha', 'estuda', 'conhece', 'entende'],
+  ele: ['vai', 'quer', 'pode', 'sabe', 'tem', 'esta', 'foi', 'e', 'faz', 'diz', 'gosta', 'precisa', 'morava', 'trabalha', 'estuda', 'conhece', 'entende'],
+  ela: ['vai', 'quer', 'pode', 'sabe', 'tem', 'esta', 'foi', 'e', 'faz', 'diz', 'gosta', 'precisa', 'morava', 'trabalha', 'estuda', 'conhece', 'entende'],
+  nos: ['somos', 'estamos', 'vamos', 'temos', 'fomos', 'queremos', 'podemos', 'sabemos', 'fizemos', 'precisamos'],
+  eles: ['sao', 'estao', 'vao', 'temPlural', 'foram', 'querem', 'podem', 'sabem', 'fizeram', 'gostam', 'precisam'],
+  elas: ['sao', 'estao', 'vao', 'temPlural', 'foram', 'querem', 'podem', 'sabem', 'fizeram', 'gostam', 'precisam'],
+  isso: ['e', 'esta', 'foi', 'sera', 'parece', 'pode', 'deve', 'funciona', 'aconteceu'],
+  aquilo: ['e', 'esta', 'foi', 'sera', 'parece', 'pode', 'deve', 'funciona', 'aconteceu'],
+  quero: ['agua', 'comida', 'irBanheiro', 'ajuda', 'falar', 'irCasa', 'descansar', 'saber', 'parar', 'maisTempo'],
+  quer: ['agua', 'comida', 'irBanheiro', 'ajuda', 'falar', 'irCasa', 'descansar', 'saber', 'parar', 'maisTempo'],
+  preciso: ['deAjuda', 'deAgua', 'deComida', 'irBanheiro', 'descansar', 'falarAlguem', 'deRemedio', 'irCasa', 'deTempo', 'entender'],
+  precisa: ['deAjuda', 'deAgua', 'deComida', 'irBanheiro', 'descansar', 'falarAlguem', 'deRemedio', 'irCasa', 'deTempo', 'entender'],
+  precisam: ['deAjuda', 'deAgua', 'deComida', 'irBanheiro', 'descansar', 'falarAlguem', 'deRemedio', 'irCasa', 'deTempo', 'entender'],
+  estou: ['bem', 'cansado', 'comFome', 'comSede', 'comdor', 'feliz', 'triste', 'preocupado'],
+  estamos: ['bem', 'cansados', 'comFome', 'comSede', 'comdor', 'felizes', 'tristes', 'preocupados'],
+  esta: ['bem', 'cansado', 'comFome', 'comSede', 'comdor', 'feliz', 'triste', 'preocupado'],
+  estao: ['bem', 'cansados', 'comFome', 'comSede', 'comdor', 'felizes', 'tristes', 'preocupados'],
+  vou: ['paraCasa', 'embora', 'tentar', 'dormir', 'comer', 'trabalhar', 'sair'],
+  vamos: ['paraCasa', 'embora', 'tentar', 'dormir', 'comer', 'trabalhar', 'sair'],
+  vai: ['paraCasa', 'embora', 'tentar', 'dormir', 'comer', 'trabalhar', 'sair'],
+  tenho: ['certeza', 'duvida', 'medo', 'fome', 'sede', 'sono', 'pressa', 'umProblema'],
+  tem: ['certeza', 'medo', 'fome', 'sede', 'sono', 'pressa', 'umProblema'],
+  temPlural: ['certeza', 'medo', 'fome', 'sede', 'sono', 'pressa', 'umProblema'],
+  pode: ['meAjudar', 'esperar', 'repetir', 'virAqui', 'falarDevagar', 'explicar'],
+  podem: ['meAjudar', 'esperar', 'repetir', 'virAqui', 'falarDevagar', 'explicar'],
+  ajuda: ['porFavor', 'agora', 'paraMim', 'comIsso', 'euPreciso', 'naoConsigo', 'estouComDor', 'queroFalar', 'obrigado'],
+  dor: ['estouCom', 'muitaDor', 'aqui', 'precisoDeAgua', 'agora', 'porFavor', 'naoEntendi', 'chameAlguem', 'remedio', 'obrigado'],
+  agua: ['porFavor', 'euPreciso', 'agora', 'umPouco', 'ondeFica', 'urgente', 'obrigado'],
+  comida: ['porFavor', 'euPreciso', 'agora', 'umPouco', 'ondeFica', 'urgente', 'obrigado'],
+  banheiro: ['porFavor', 'euPreciso', 'agora', 'ondeFica', 'urgente', 'obrigado'],
+  deAjuda: ['agora', 'porFavor', 'paraMim', 'comIsso', 'obrigado'],
+  deAgua: ['agora', 'porFavor', 'umPouco', 'urgente', 'obrigado'],
+  deComida: ['agora', 'porFavor', 'umPouco', 'urgente', 'obrigado'],
+  irBanheiro: ['agora', 'porFavor', 'ondeFica', 'urgente', 'obrigado'],
+  irCasa: ['agora', 'porFavor', 'obrigado'],
+  paraCasa: ['agora', 'porFavor', 'obrigado'],
+  queroFalar: ['porFavor', 'agora', 'paraMim', 'obrigado'],
+  estouComDor: ['agora', 'porFavor', 'chameAlguem', 'remedio', 'obrigado']
 };
 
 const CHALLENGES = [
@@ -2285,7 +2361,7 @@ function allCategories() {
 }
 
 function allWords() {
-  return DEFAULT_WORDS.concat(STATE.data.customWords);
+  return DEFAULT_WORDS.concat(AAC_EXTRA_WORDS, STATE.data.customWords);
 }
 
 function wordById(id) {
@@ -2691,7 +2767,7 @@ function currentLayerKey() {
 
 function loadLayer() {
   const key = currentLayerKey();
-  let suggestions = SUGGESTIONS[key] || [];
+  let suggestions = SUGGESTIONS[key] || AAC_FALLBACK;
 
   const customWords = STATE.data.customWords
     .filter(word => !suggestions.includes(word.id))
