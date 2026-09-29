@@ -89,33 +89,8 @@ body[data-theme="dark"] .splash-screen {
   background: #10283d !important;
 }
 
-body[data-theme="dark"] .circular-mode-screen {
-  background: #10283d !important;
-  color: #f1f7ff !important;
-}
-
-body[data-theme="dark"] .circular-mode-screen .mode-screen-back {
-  background: #f1f7ff !important;
-  color: #10283d !important;
-  border: 2px solid #8ddff0 !important;
-}
-
-body[data-theme="dark"] .circular-keyboard-reserved {
-  background: #1b344d !important;
-  color: #f1f7ff !important;
-  border-color: #8ddff0 !important;
-  box-shadow: 0 0 0 4px rgba(141, 223, 240, .18), 0 10px 24px rgba(0, 0, 0, .4) !important;
-}
-
-body[data-theme="dark"] .circular-keyboard-reserved h1 {
-  color: #f1f7ff !important;
-}
-
-body[data-theme="dark"] .circular-keyboard-reserved p {
-  color: #c9f3fb !important;
-}
-
-body[data-theme="dark"] .carousel-full-topbar .icon-btn[data-go="build"] {
+body[data-theme="dark"] .carousel-full-topbar .icon-btn[data-go="build"],
+body[data-theme="dark"] .circular-full-topbar .icon-btn[data-go="build"] {
   background: #17344d !important;
   color: #f1f7ff !important;
   border: 2px solid #8ddff0 !important;
@@ -123,9 +98,16 @@ body[data-theme="dark"] .carousel-full-topbar .icon-btn[data-go="build"] {
 }
 
 body[data-theme="dark"] .carousel-full-topbar .icon-btn[data-go="build"]:hover,
-body[data-theme="dark"] .carousel-full-topbar .icon-btn[data-go="build"]:focus-visible {
+body[data-theme="dark"] .carousel-full-topbar .icon-btn[data-go="build"]:focus-visible,
+body[data-theme="dark"] .circular-full-topbar .icon-btn[data-go="build"]:hover,
+body[data-theme="dark"] .circular-full-topbar .icon-btn[data-go="build"]:focus-visible {
   background: #234d69 !important;
   color: #ffffff !important;
+}
+
+body[data-theme="dark"] .circular-keyboard-center {
+  background: #10283d !important;
+  border: 2px solid #8ddff0 !important;
 }
 
 * {
@@ -549,8 +531,8 @@ button:focus-visible,
 .menu-btn:active, .card:active { transform: scale(0.98); }
 
 .menu-btn.primary, .card.yellow {
-  background: #eaf6ff;
-  border-color: #cfe9f7;
+  background: linear-gradient(180deg, #ffe08a, var(--yellow));
+  border-color: var(--yellow-dark);
 }
 
 .menu-emoji, .card-icon {
@@ -791,11 +773,11 @@ button:focus-visible,
   font-weight: 700;
 }
 
-.mode-choice-screen { min-height: 100vh; width: 100%; padding: 14px; display: flex; flex-direction: column; }
-.mode-choice-back { align-self: flex-start; border: 0; border-radius: 999px; padding: 8px 13px; background: rgba(255,255,255,.94); color: var(--navy); font: 800 12px var(--font); cursor: pointer; }
-.mode-choice-content { width: min(100%, 440px); margin: auto; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; }
-.mode-choice-content h1 { margin: 0 0 4px; color: #fff; font-size: clamp(20px,3.5vw,28px); text-shadow: 0 2px 5px rgba(23,58,94,.4); }
-.mode-choice-button { width: min(100%, 400px); min-height: 62px; border: 2px solid rgba(255,255,255,.9); border-radius: 15px; background: #fff; color: var(--navy); font: 900 clamp(16px,3vw,24px) var(--font); box-shadow: 0 5px 12px rgba(23,58,94,.2); cursor: pointer; transition: transform .15s ease, background .15s ease; }
+.mode-choice-screen { min-height: 100vh; width: 100%; padding: 24px; display: flex; flex-direction: column; }
+.mode-choice-back { align-self: flex-start; border: 0; border-radius: 999px; padding: 14px 20px; background: rgba(255,255,255,.94); color: var(--navy); font: 800 16px var(--font); cursor: pointer; }
+.mode-choice-content { width: min(100%, 760px); margin: auto; display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; }
+.mode-choice-content h1 { margin: 0 0 10px; color: #fff; font-size: clamp(28px,5vw,48px); text-shadow: 0 2px 5px rgba(23,58,94,.4); }
+.mode-choice-button { width: min(100%, 680px); min-height: 120px; border: 4px solid rgba(255,255,255,.9); border-radius: 28px; background: #fff; color: var(--navy); font: 900 clamp(24px,5vw,42px) var(--font); box-shadow: 0 10px 24px rgba(23,58,94,.2); cursor: pointer; transition: transform .15s ease, background .15s ease; }
 .mode-choice-button:hover { transform: scale(1.02); background: #fff4c9; }
 .mode-choice-button:active { transform: scale(.98); }
 
@@ -853,115 +835,500 @@ button:focus-visible,
 .carousel-full-content .carousel-card.side { width: 110px; height: 140px; }
 .carousel-full-content .confirm-btn { margin-bottom: 14px; }
 
-.circular-mode-screen { background: #ffffff; }
-
-.circular-keyboard-screen {
-  width: min(100%, 900px);
-  margin: auto;
-  text-align: center;
-}
-
-.circular-keyboard-screen h1 {
-  margin: 0;
+.circular-full-screen { position: fixed; inset: 0; z-index: 100; overflow: auto; min-height: 100vh; padding: 18px 24px 28px; background: linear-gradient(180deg, rgba(255,255,255,.1), rgba(23,58,94,.3)), url('assets/imagens/imagens-outrastelas.png') center / cover no-repeat; }
+.circular-full-topbar { width: min(100%, 1100px); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+.circular-full-content { width: min(100%, 1020px); margin: 12px auto 0; text-align: center; }
+.circular-full-content .section-label, .circular-full-content .layer-label { color: #fff; }
+.circular-full-content .phrase-bar { margin-bottom: 14px; }
+.circular-full-content .phrase-chip {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
   color: var(--navy);
-  font-size: clamp(30px, 5vw, 52px);
+  box-shadow: none;
 }
 
-.circular-keyboard-screen p {
-  margin: 6px 0 18px;
-  color: var(--navy-soft);
-  font-size: 16px;
-  font-weight: 700;
-}
-
-.circular-keyboard-reserved {
-  width: min(100%, 900px);
-  min-height: 420px;
-  margin: auto;
-  border: 3px dashed #cfe9f7;
-  border-radius: 28px;
+.circular-keyboard-wrap {
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  text-align: center;
-  background: #ffffff;
-}
-
-.circular-keyboard-reserved h1 {
-  margin: 0;
-  color: var(--navy);
-  font-size: clamp(30px, 5vw, 52px);
-}
-
-.circular-keyboard-reserved p {
-  margin: 10px 0 0;
-  color: var(--navy-soft);
-  font-size: 16px;
-  font-weight: 700;
+  margin: 6px 0 20px;
 }
 
 .circular-keyboard {
   position: relative;
-  width: min(78vw, 560px);
+  width: min(82vw, 440px);
   aspect-ratio: 1;
   margin: 0 auto;
   border-radius: 50%;
-  background: #f4f9fc;
-  border: 4px solid #cfe9f7;
-  box-shadow: 0 12px 30px rgba(23, 58, 94, 0.16);
+  background: var(--white);
+  border: 4px solid var(--card-border);
+  box-shadow: 0 10px 24px rgba(23, 58, 94, 0.15);
 }
 
 .circular-keyboard-ring {
   position: absolute;
-  inset: 18%;
-  border: 3px dashed #8bcbe5;
+  inset: 16%;
+  border: 3px dashed var(--card-border);
   border-radius: 50%;
+  pointer-events: none;
 }
 
 .circular-key {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: clamp(72px, 13vw, 112px);
-  min-height: clamp(72px, 11vw, 104px);
+  width: clamp(64px, 12vw, 104px);
+  min-height: clamp(64px, 10vw, 96px);
   padding: 8px 5px;
-  border: 3px solid #ffffff;
-  border-radius: 22px;
-  background: var(--yellow);
+  border: 2px solid var(--card-border);
+  border-radius: var(--radius);
+  background: var(--card);
   color: var(--navy);
-  font: 800 clamp(12px, 2vw, 17px) var(--font);
-  box-shadow: 0 5px 12px rgba(23, 58, 94, 0.2);
+  box-shadow: 0 3px 8px rgba(23, 58, 94, 0.1);
+  backdrop-filter: blur(4px);
   cursor: pointer;
-  transform: translate(-50%, -50%) rotate(var(--key-angle)) translateY(calc(min(31vw, 220px) * -1)) rotate(var(--key-inverse-angle));
+  transform: translate(-50%, -50%) rotate(var(--key-angle)) translateY(calc(var(--circ-radius, min(30vw, 200px)) * -1)) rotate(var(--key-inverse-angle));
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 4px;
+  text-align: center;
+  transition: transform .15s ease, background .15s ease;
 }
 
-.circular-key:hover { transform: translate(-50%, -50%) rotate(var(--key-angle)) translateY(calc(min(31vw, 220px) * -1)) rotate(var(--key-inverse-angle)) scale(1.06); }
-.circular-key:active { transform: translate(-50%, -50%) rotate(var(--key-angle)) translateY(calc(min(31vw, 220px) * -1)) rotate(var(--key-inverse-angle)) scale(0.96); }
-.circular-key-emoji { font-size: clamp(22px, 4vw, 34px); line-height: 1; }
+.circular-keyboard.dense .circular-key {
+  width: clamp(52px, 9vw, 78px);
+  min-height: clamp(52px, 8vw, 74px);
+  gap: 2px;
+}
+
+.circular-key:hover {
+  transform: translate(-50%, -50%) rotate(var(--key-angle)) translateY(calc(var(--circ-radius, min(30vw, 200px)) * -1)) rotate(var(--key-inverse-angle)) scale(1.08);
+}
+.circular-key:active {
+  transform: translate(-50%, -50%) rotate(var(--key-angle)) translateY(calc(var(--circ-radius, min(30vw, 200px)) * -1)) rotate(var(--key-inverse-angle)) scale(0.95);
+}
+#app .circular-key:focus-visible,
+#app .circular-key:hover {
+  transform: translate(-50%, -50%) rotate(var(--key-angle)) translateY(calc(var(--circ-radius, min(30vw, 200px)) * -1)) rotate(var(--key-inverse-angle)) scale(1.1) !important;
+  z-index: 5;
+}
+
+.circular-key .emoji { font-size: clamp(22px, 3.8vw, 32px); line-height: 1; margin: 0 0 2px; }
+.circular-key .word-icon { width: clamp(28px, 5vw, 42px); height: clamp(28px, 5vw, 42px); margin: 0 auto 2px; }
+.circular-key-label {
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: clamp(11px, 1.8vw, 15px);
+  line-height: 1.15;
+  color: var(--navy);
+}
+.circular-keyboard.dense .circular-key-label { font-size: clamp(9px, 1.5vw, 12px); }
 
 .circular-keyboard-center {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 30%;
+  width: 32%;
   aspect-ratio: 1;
   transform: translate(-50%, -50%);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
   border-radius: 50%;
   background: var(--navy);
   color: #ffffff;
-  font-size: clamp(12px, 2vw, 18px);
-  font-weight: 900;
+  gap: 3px;
+  pointer-events: none;
+  box-shadow: 0 6px 16px rgba(23, 58, 94, 0.25);
 }
+
+.circular-center-icon { font-size: clamp(22px, 4vw, 32px); }
+.circular-center-text { font-family: var(--font-title); font-size: clamp(9px, 1.6vw, 12px); font-weight: 800; padding: 0 10px; }
+
+.circular-empty { color: var(--navy); font-family: var(--font-title); font-weight: 800; padding: 40px 20px; text-align: center; }
+
+.circular-menu-layout {
+  position: relative;
+  container-type: inline-size;
+  width: min(82vw, 530px);
+  aspect-ratio: 1;
+  margin: 0 auto;
+}
+.circular-menu-layout .circular-keyboard-wrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+.circular-menu-layout .circular-keyboard { width: 100%; height: 100%; }
+.circular-menu-layout .circular-empty { min-width: 0; }
+ .circular-side-menu {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+}
+
+/* O menu funciona como um único bloco. Ele não reposiciona cada botão
+   individualmente durante a navegação. */
+.circular-side-menu.ativo {
+  pointer-events: none;
+}
+.circular-side-menu .circular-menu-button {
+  position: absolute;
+  width: 58px;
+  height: 58px;
+  padding: 5px;
+  border: 2px solid var(--card-border);
+  border-radius: 50%;
+  background: var(--card);
+  color: var(--navy);
+  box-shadow: 0 3px 8px rgba(23, 58, 94, 0.12);
+  font: 900 11px/1.05 var(--font-title);
+  text-transform: lowercase;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(.86);
+  transition: opacity .16s ease, transform .15s ease, background .2s ease, color .2s ease;
+}
+
+.circular-side-menu.ativo .circular-menu-button {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+/* Direções: o conjunto inteiro fica ao lado da argola externa,
+   com apenas um pequeno espaço entre teclado e menu. */
+.circular-side-menu.menu-direita .circular-menu-button,
+.circular-side-menu.menu-esquerda .circular-menu-button,
+.circular-side-menu.menu-cima .circular-menu-button,
+.circular-side-menu.menu-baixo .circular-menu-button {
+  position: static;
+  left: auto;
+  top: auto;
+}
+
+.circular-side-menu.menu-direita {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 58px;
+  height: 100%;
+  left: calc(100% + 8px);
+  top: 0;
+  inset: auto auto auto calc(100% + 8px);
+}
+.circular-side-menu.menu-esquerda {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 58px;
+  height: 100%;
+  left: auto;
+  right: calc(100% + 8px);
+  top: 0;
+  inset: auto calc(100% + 8px) auto auto;
+}
+.circular-side-menu.menu-cima {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 58px;
+  left: 0;
+  top: auto;
+  bottom: calc(100% + 8px);
+  inset: auto auto calc(100% + 8px) 0;
+}
+.circular-side-menu.menu-baixo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 58px;
+  left: 0;
+  top: calc(100% + 8px);
+  bottom: auto;
+  inset: calc(100% + 8px) auto auto 0;
+}
+
+.circular-menu-button:hover,
+.circular-menu-button:focus-visible {
+  outline: 3px solid var(--yellow);
+  outline-offset: 2px;
+  background: var(--yellow);
+  transform: scale(1.04);
+}
+.circular-menu-button:active {
+  transform: scale(.96) !important;
+}
+.circular-menu-button.circular-menu-highlight {
+  background: #4a4a4a;
+  color: #ffffff;
+  border-color: #4a4a4a;
+}
+
+/* Menu orbital: os botões acompanham o mesmo ângulo da tecla ativa e
+   ficam distribuídos em um pequeno arco, como se estivessem orbitando a argola. */
+.circular-side-menu {
+  --menu-orbit-angle: -90deg;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  transform: none !important;
+  pointer-events: none;
+}
+.circular-side-menu .circular-menu-button {
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  width: 58px;
+  height: 58px;
+  margin: -29px 0 0 -29px;
+  transform:
+    rotate(calc(var(--menu-orbit-angle) + var(--menu-offset, 0deg)))
+    translateY(calc(42.5cqw + 34px))
+    rotate(calc(-1 * (var(--menu-orbit-angle) + var(--menu-offset, 0deg))));
+  transform-origin: center center;
+}
+.circular-side-menu.ativo .circular-menu-button {
+  transform:
+    rotate(calc(var(--menu-orbit-angle) + var(--menu-offset, 0deg)))
+    translateY(calc(42.5cqw + 34px))
+    rotate(calc(-1 * (var(--menu-orbit-angle) + var(--menu-offset, 0deg))));
+}
+.circular-side-menu .circular-menu-button:nth-child(1) { --menu-offset: -30deg; }
+.circular-side-menu .circular-menu-button:nth-child(2) { --menu-offset: -18deg; }
+.circular-side-menu .circular-menu-button:nth-child(3) { --menu-offset: -6deg; }
+.circular-side-menu .circular-menu-button:nth-child(4) { --menu-offset: 6deg; }
+.circular-side-menu .circular-menu-button:nth-child(5) { --menu-offset: 18deg; }
+.circular-side-menu .circular-menu-button:nth-child(6) { --menu-offset: 30deg; }
+
+/* A distância do menu é proporcional ao teclado, para ele continuar orbitando
+   mesmo em telas menores. */
+@media (max-width: 560px) {
+  .circular-side-menu .circular-menu-button {
+    width: 50px;
+    height: 50px;
+    margin: -25px 0 0 -25px;
+    transform: rotate(calc(var(--menu-orbit-angle) + var(--menu-offset, 0deg))) translateY(calc(42.5cqw + 28px)) rotate(calc(-1 * (var(--menu-orbit-angle) + var(--menu-offset, 0deg))));
+  }
+  .circular-side-menu.ativo .circular-menu-button {
+    transform: rotate(calc(var(--menu-orbit-angle) + var(--menu-offset, 0deg))) translateY(calc(42.5cqw + 28px)) rotate(calc(-1 * (var(--menu-orbit-angle) + var(--menu-offset, 0deg))));
+  }
+}
+
+/* Geometria das duas argolas inspirada no teclado de referência, usando a
+   paleta e as fontes do layout infantil. */
+.circular-menu-layout .circular-keyboard {
+  container-type: inline-size;
+  overflow: visible;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+.circular-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.circular-ring:not(.circular-ring-hidden) .circular-key { pointer-events: auto; z-index: 2; }
+.circular-ring-outer {
+  width: 85%;
+  height: 85%;
+  background: rgba(29,29,29,.72);
+  border: 2px solid rgba(255,255,255,.16);
+  box-shadow: 0 10px 26px rgba(9,43,59,.28);
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  transition: opacity .25s ease, transform .25s ease;
+}
+/* Hover/seleção no formato da referência: a área inteira do segmento da
+   argola fica cinza, enquanto as demais áreas permanecem pretas. */
+.circular-ring::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  background: conic-gradient(
+    from calc(var(--active-angle, -90deg) - var(--sector-size, 40deg) / 2),
+    var(--yellow) 0 var(--sector-size, 40deg),
+    transparent var(--sector-size, 40deg) 360deg
+  );
+  opacity: 0;
+}
+.circular-ring.circular-ring-active::after {
+  opacity: 1;
+}
+
+.circular-ring-outer.circular-ring-hidden {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(.85);
+  pointer-events: none;
+}
+.circular-ring-hidden .circular-key { pointer-events: none; }
+.circular-ring-inner {
+  width: 60%;
+  height: 60%;
+  background: #1f6fa8;
+  border: 2px solid rgba(255,255,255,.20);
+  box-shadow: 0 12px 30px rgba(9,43,59,.35), inset 0 0 0 1px rgba(255,255,255,.06);
+}
+#app .circular-menu-layout .circular-key {
+  z-index: 2;
+  left: 50%;
+  top: 50%;
+  width: 56px;
+  height: 56px;
+  min-height: 0;
+  padding: 3px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--navy);
+  box-shadow: none;
+  font-family: var(--font-title);
+  transform: translate(-50%, -50%) rotate(var(--key-angle)) translateY(var(--key-radius)) rotate(var(--key-inverse-angle)) !important;
+}
+#app .circular-menu-layout .circular-key-inner { color: #fff; }
+#app .circular-menu-layout .circular-key-letter { width: 24px; height: 24px; padding: 1px; }
+#app .circular-menu-layout .circular-key-label {
+  font: 900 clamp(11px, 2.8vw, 14px)/1.08 var(--font-title);
+  text-shadow: 0 1px 2px rgba(0,0,0,.35);
+  overflow-wrap: anywhere;
+}
+#app .circular-menu-layout .circular-key-letter .circular-key-label { font-size: 12px; }
+#app .circular-menu-layout .circular-key-current,
+#app .circular-menu-layout .circular-key:focus-visible {
+  z-index: 4;
+  outline: 0;
+  background: transparent;
+  box-shadow: none;
+}
+#app .circular-menu-layout .circular-key-current .circular-key-label {
+  color: #173a5e;
+  text-shadow: 0 1px 1px rgba(255,255,255,.45);
+}
+#app .circular-menu-layout .circular-key-outer {
+  width: clamp(42px, 12cqw, 64px);
+  height: 46px;
+  border-radius: 0;
+  background: transparent;
+}
+#app .circular-menu-layout .circular-key-outer .circular-key-label {
+  color: #ffffff;
+  font: 900 clamp(12px, 2.7vw, 15px)/1.08 var(--font-title);
+  text-shadow: 0 1px 2px rgba(0,0,0,.55), 0 0 5px rgba(0,0,0,.28);
+}
+#app .circular-menu-layout .circular-key-outer.circular-key-current,
+#app .circular-menu-layout .circular-key-outer:focus-visible {
+  outline: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+/* A palavra da argola externa permanece somente como texto.
+   Nenhum bloco, fundo ou borda arredondada é aplicado ao texto. */
+#app .circular-menu-layout .circular-key-outer .circular-key-label {
+  display: inline;
+  background: transparent !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  color: #123a58;
+  text-decoration: none;
+  text-shadow: 0 1px 0 rgba(255,255,255,.98), 0 0 4px rgba(255,255,255,.9);
+}
+
+/* A seleção/navegação da argola externa usa apenas o efeito visual do hover,
+   sem transformar a palavra em um botão com fundo arredondado. */
+#app .circular-menu-layout .circular-key-outer:hover .circular-key-label,
+#app .circular-menu-layout .circular-key-outer.circular-key-current .circular-key-label,
+#app .circular-menu-layout .circular-key-outer:focus-visible .circular-key-label {
+  background: transparent !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  color: #173a5e;
+  text-decoration: none;
+  text-shadow: 0 1px 1px rgba(255,255,255,.45);
+}
+
+/* A argola externa não ganha fundo nem raio ao ser selecionada. */
+#app .circular-menu-layout .circular-key-outer:hover,
+#app .circular-menu-layout .circular-key-outer.circular-key-current,
+#app .circular-menu-layout .circular-key-outer:focus-visible {
+  background: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  outline: 0 !important;
+}
+.circular-menu-layout .circular-keyboard-center {
+  z-index: 3;
+  width: 28%;
+  border: 0;
+  background: var(--white);
+  color: var(--navy);
+  font: 900 15px var(--font-title);
+  pointer-events: auto;
+  cursor: pointer;
+}
+.circular-menu-layout .circular-keyboard-center:focus-visible {
+  outline: 3px solid var(--yellow);
+  outline-offset: 2px;
+}
+@media (max-width: 560px) {
+  .circular-menu-layout {
+    width: min(calc(100vw - 36px), 340px);
+  }
+  .circular-menu-button {
+    width: 50px;
+    height: 50px;
+    font-size: 10px;
+  }
+  .circular-side-menu.menu-direita,
+  .circular-side-menu.menu-esquerda {
+    width: 50px;
+    gap: 6px;
+  }
+  .circular-side-menu.menu-cima,
+  .circular-side-menu.menu-baixo {
+    height: 50px;
+    gap: 6px;
+  }
+  #app .circular-menu-layout .circular-key {
+    width: 46px;
+    height: 46px;
+  }
+  #app .circular-menu-layout .circular-key-outer {
+    width: clamp(38px, 14cqw, 50px);
+    height: 42px;
+  }
+  #app .circular-menu-layout .circular-key-label {
+    font-size: clamp(10px, 3.2vw, 13px);
+  }
+}
+
 
 .carousel-mode-screen { background: #ffffff; }
 
@@ -990,7 +1357,7 @@ button:focus-visible,
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 14px;
+  gap: 10px;
   width: 100%;
   overflow: visible;
 }
@@ -1037,19 +1404,16 @@ button:focus-visible,
 .carousel-card.side .emoji { font-size: 26px; }
 .carousel-card.side .label { font-size: 11px; }
 .carousel-card.center {
-  width: clamp(150px, 34vw, 180px);
-  height: clamp(180px, 40vw, 210px);
+  width: 130px;
+  height: 158px;
   opacity: 1;
   transform: scale(1);
-  border: 4px solid var(--yellow-dark);
-  background: linear-gradient(180deg, #ffe99f 0%, var(--yellow) 100%);
-  box-shadow: 0 0 0 5px rgba(255, 207, 77, 0.24), 0 12px 26px rgba(23,58,94,0.32);
+  border-color: var(--yellow-dark);
+  background: linear-gradient(180deg, #ffe08a, var(--yellow));
+  box-shadow: 0 6px 16px rgba(23,58,94,0.25);
 }
-.carousel-card.center .emoji { font-size: clamp(50px, 10vw, 64px); }
-.carousel-card.center .label {
-  font-size: clamp(18px, 4vw, 22px);
-  font-weight: 900;
-}
+.carousel-card.center .emoji { font-size: 44px; }
+.carousel-card.center .label { font-size: 16px; }
 .carousel-card .emoji { line-height: 1; }
 .carousel-card .label {
   font-family: var(--font-title);
@@ -1847,13 +2211,13 @@ body[data-theme="dark"] #feedbackText {
 }
 
 .mode-choice-button[data-mode-screen="circularMode"] {
-  background: #eaf6ff !important;
-  border-color: #cfe9f7 !important;
+  background: #f7c94d !important;
+  border-color: #b98200 !important;
 }
 
 .mode-choice-button[data-mode-screen="carouselMode"] {
-  background: #eaf6ff !important;
-  border-color: #cfe9f7 !important;
+  background: #8bd3a8 !important;
+  border-color: #3f9b68 !important;
 }
 
 /* Carrossel infantil: texto e cartões com contraste estável nos dois temas. */
@@ -1916,6 +2280,13 @@ body[data-theme="dark"] .phrase-chip {
   color: #10283d !important;
   border-color: #8ddff0 !important;
   text-shadow: none !important;
+}
+
+body[data-theme="dark"] .circular-full-content .phrase-chip {
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  color: #e5f3fa !important;
 }
 
 /* O X dos favoritos não deve herdar o hover gigante da navegação acessível. */
@@ -2007,90 +2378,6 @@ body[data-theme="dark"] .toast {
   outline-offset: 3px;
 }
 
-/* Carrossel compacto para celulares: evita corte lateral e mantém o foco no cartão central. */
-@media (max-width: 560px) {
-  .carousel-wrap {
-    width: 100%;
-    max-width: 100%;
-    overflow: hidden;
-    padding: 6px 0;
-  }
-
-  .carousel-track {
-    gap: 6px;
-    max-width: 100%;
-  }
-
-  .carousel-arrow {
-    width: 42px;
-    height: 42px;
-  }
-
-  .carousel-arrow img {
-    width: 27px;
-    height: 27px;
-  }
-
-  .carousel-card.side {
-    width: 42px;
-    height: 96px;
-  }
-
-  .carousel-card.center {
-    width: min(38vw, 150px);
-    height: min(54vw, 180px);
-  }
-
-  .carousel-card.center .emoji {
-    font-size: clamp(42px, 11vw, 58px);
-  }
-
-  .carousel-card.center .label {
-    font-size: clamp(16px, 4.5vw, 21px);
-  }
-}
-
-@media (max-width: 380px) {
-  .carousel-card.side {
-    width: 24px;
-    opacity: 0.35;
-  }
-
-  .carousel-card.side .emoji,
-  .carousel-card.side .label {
-    visibility: hidden;
-  }
-
-  .carousel-arrow {
-    width: 38px;
-    height: 38px;
-  }
-}
-
-/* Aba principal: visual branco semelhante às opções de comunicação. */
-body .menu-btn.primary {
-  background: #eaf6ff !important;
-  border-color: #cfe9f7 !important;
-  color: #123b4d !important;
-}
-
-/* Cor padrão das abas: branco com azul-claro suave. */
-body .menu-btn,
-body .mode-choice-button {
-  background: #eaf6ff !important;
-  border-color: #cfe9f7 !important;
-  color: #123b4d !important;
-}
-
-/* No carrossel, exibir apenas o texto das palavras, sem emojis. */
-.carousel-card .emoji {
-  display: none !important;
-}
-
-.carousel-card img {
-  display: none !important;
-}
-
 </style>
 </head>
 
@@ -2175,93 +2462,41 @@ const DEFAULT_WORDS = [
   { id: 'sair', label: 'Sair', emoji: '🚪', description: 'Quero sair', cat: 'lugares' }
 ];
 
-const AAC_EXTRA_WORDS = [
-  ['ele', 'Ele', '👤'], ['ela', 'Ela', '👤'], ['nos', 'Nós', '👥'], ['eles', 'Eles', '👥'],
-  ['elas', 'Elas', '👥'], ['isso', 'Isso', '👉'], ['aquilo', 'Aquilo', '👉'],
-  ['avo', 'Avô', '👴'], ['ava', 'Avó', '👵'], ['tio', 'Tio', '👨'], ['tia', 'Tia', '👩'],
-  ['irmao', 'Irmão', '👦'], ['irma', 'Irmã', '👧'],
-  ['bomDia', 'Bom dia', '🌞'], ['boaTarde', 'Boa tarde', '🌤️'], ['boaNoite', 'Boa noite', '🌙'],
-  ['ola', 'Olá', '👋'], ['oi', 'Oi', '👋'], ['tudoBem', 'Tudo bem?', '🙂'], ['comoVai', 'Como vai?', '😊'],
-  ['ateLogo', 'Até logo', '👋'], ['tchau', 'Tchau', '👋'], ['prazerConhecer', 'Prazer em conhecer você', '🤝'],
-  ['comoVoceEsta', 'Como você está?', '🙂'], ['muitoPrazer', 'Muito prazer', '🤝'],
-  ['vai', 'Vai', '➡️'], ['quer', 'Quer', '🙋'], ['nao', 'Não', '🚫'], ['acho', 'Acho', '💭'], ['trabalhar', 'Trabalhar', '💼'],
-  ['tenho', 'Tenho', '✋'], ['pode', 'Pode', '✅'], ['sabe', 'Sabe', '🧠'], ['tem', 'Tem', '📦'], ['temPlural', 'Têm', '📦'],
-  ['esta', 'Está', '💭'], ['foi', 'Foi', '⏮️'], ['e', 'É', '🔗'], ['faz', 'Faz', '🛠️'],
-  ['diz', 'Diz', '💬'], ['gosta', 'Gosta', '😊'], ['precisa', 'Precisa', '❗'], ['morava', 'Morava', '🏠'],
-  ['trabalha', 'Trabalha', '💼'], ['estuda', 'Estuda', '📚'], ['conhece', 'Conhece', '🤝'], ['entende', 'Entende', '💡'],
-  ['somos', 'Somos', '👥'], ['estamos', 'Estamos', '👥'], ['vamos', 'Vamos', '➡️'], ['temos', 'Temos', '📦'],
-  ['fomos', 'Fomos', '⏮️'], ['queremos', 'Queremos', '🙋'], ['podemos', 'Podemos', '✅'], ['sabemos', 'Sabemos', '🧠'],
-  ['fizemos', 'Fizemos', '🛠️'], ['precisamos', 'Precisamos', '❗'], ['sao', 'São', '👥'], ['estao', 'Estão', '👥'],
-  ['vao', 'Vão', '➡️'], ['foram', 'Foram', '⏮️'], ['querem', 'Querem', '🙋'], ['podem', 'Podem', '✅'],
-  ['sabem', 'Sabem', '🧠'], ['fizeram', 'Fizeram', '🛠️'], ['gostam', 'Gostam', '😊'], ['precisam', 'Precisam', '❗'],
-  ['sera', 'Será', '🔮'], ['parece', 'Parece', '👀'], ['deve', 'Deve', '📌'], ['funciona', 'Funciona', '⚙️'],
-  ['aconteceu', 'Aconteceu', '❓'], ['falar', 'Falar', '💬'], ['irBanheiro', 'Ir ao banheiro', '🚽'],
-  ['irCasa', 'Ir para casa', '🏠'], ['saber', 'Saber', '🧠'], ['parar', 'Parar', '🛑'], ['maisTempo', 'Mais tempo', '⏳'],
-  ['deAjuda', 'De ajuda', '🆘'], ['deAgua', 'De água', '💧'], ['deComida', 'De comida', '🍎'],
-  ['falarAlguem', 'Falar com alguém', '💬'], ['deRemedio', 'De remédio', '💊'], ['deTempo', 'De tempo', '⏳'],
-  ['entender', 'Entender', '💡'], ['comFome', 'Com fome', '🍽️'], ['comSede', 'Com sede', '💧'], ['cansados', 'Cansados', '😩'],
-  ['felizes', 'Felizes', '😄'], ['tristes', 'Tristes', '😢'], ['preocupado', 'Preocupado', '😟'], ['preocupados', 'Preocupados', '😟'], ['paraCasa', 'Para casa', '🏠'], ['embora', 'Embora', '🚶'],
-  ['tentar', 'Tentar', '💪'], ['comer', 'Comer', '🍽️'], ['certeza', 'Certeza', '✅'], ['duvida', 'Dúvida', '❓'],
-  ['medo', 'Medo', '😨'], ['fome', 'Fome', '🍽️'], ['sede', 'Sede', '💧'], ['sono', 'Sono', '😴'],
-  ['pressa', 'Pressa', '⏱️'], ['umProblema', 'Um problema', '⚠️'], ['meAjudar', 'Me ajudar', '🆘'],
-  ['esperar', 'Esperar', '⏳'], ['repetir', 'Repetir', '🔁'], ['virAqui', 'Vir aqui', '👋'],
-  ['falarDevagar', 'Falar mais devagar', '🐢'], ['explicar', 'Explicar', '💡'], ['porFavor', 'Por favor', '🙏'],
-  ['agora', 'Agora', '⏰'], ['paraMim', 'Para mim', '🙋'], ['comIsso', 'Com isso', '👉'], ['euPreciso', 'Eu preciso', '❗'],
-  ['naoConsigo', 'Não consigo', '😟'], ['estouComDor', 'Estou com dor', '🤕'], ['queroFalar', 'Quero falar', '💬'],
-  ['obrigado', 'Obrigado', '🙏'], ['dor', 'Dor', '🤕'], ['estouCom', 'Estou com', '💭'], ['muitaDor', 'Muita dor', '🤕'],
-  ['aqui', 'Aqui', '📍'], ['chameAlguem', 'Chame alguém', '📣'], ['remedio', 'Remédio', '💊'], ['umPouco', 'Um pouco', '🤏'],
-  ['ondeFica', 'Onde fica?', '📍'], ['urgente', 'Urgente', '🚨'], ['mais', 'Mais', '➕'], ['deNovo', 'De novo', '🔁'],
-  ['estaBem', 'Está bem', '👍'], ['naoEntendi', 'Não entendi', '❓'], ['queroIrCasa', 'Quero ir para casa', '🏠'],
-  ['precisoDeAgua', 'Preciso de água', '💧'], ['maisDevagar', 'Mais devagar', '🐢']
-].map(([id, label, emoji]) => ({ id, label, emoji, description: label, cat: 'acoes' }));
-
-const AAC_FALLBACK = [
-  'quero', 'preciso', 'porFavor', 'ajuda', 'agora', 'mais', 'deNovo', 'estaBem',
-  'naoEntendi', 'obrigado', 'ola', 'tudoBem', 'queroIrCasa', 'estouComDor',
-  'precisoDeAgua', 'maisDevagar', 'ateLogo'
-];
-
 const SUGGESTIONS = {
-  __start__: ['eu', 'voce', 'ele', 'ela', 'nos', 'eles', 'elas', 'isso', 'aquilo', 'mae', 'pai', 'professor', 'avo', 'ava', 'tio', 'tia', 'irmao', 'irma', 'bomDia', 'boaTarde', 'boaNoite', 'ola', 'oi', 'tudoBem', 'comoVai', 'ateLogo', 'tchau', 'prazerConhecer', 'comoVoceEsta', 'muitoPrazer'],
-  eu: ['vou', 'quero', 'nao', 'acho', 'tenho', 'preciso', 'estou'],
-  voce: ['vai', 'quer', 'pode', 'sabe', 'tem', 'esta', 'foi', 'e', 'faz', 'diz', 'gosta', 'precisa', 'morava', 'trabalha', 'estuda', 'conhece', 'entende'],
-  ele: ['vai', 'quer', 'pode', 'sabe', 'tem', 'esta', 'foi', 'e', 'faz', 'diz', 'gosta', 'precisa', 'morava', 'trabalha', 'estuda', 'conhece', 'entende'],
-  ela: ['vai', 'quer', 'pode', 'sabe', 'tem', 'esta', 'foi', 'e', 'faz', 'diz', 'gosta', 'precisa', 'morava', 'trabalha', 'estuda', 'conhece', 'entende'],
-  nos: ['somos', 'estamos', 'vamos', 'temos', 'fomos', 'queremos', 'podemos', 'sabemos', 'fizemos', 'precisamos'],
-  eles: ['sao', 'estao', 'vao', 'temPlural', 'foram', 'querem', 'podem', 'sabem', 'fizeram', 'gostam', 'precisam'],
-  elas: ['sao', 'estao', 'vao', 'temPlural', 'foram', 'querem', 'podem', 'sabem', 'fizeram', 'gostam', 'precisam'],
-  isso: ['e', 'esta', 'foi', 'sera', 'parece', 'pode', 'deve', 'funciona', 'aconteceu'],
-  aquilo: ['e', 'esta', 'foi', 'sera', 'parece', 'pode', 'deve', 'funciona', 'aconteceu'],
-  quero: ['agua', 'comida', 'irBanheiro', 'ajuda', 'falar', 'irCasa', 'descansar', 'saber', 'parar', 'maisTempo'],
-  quer: ['agua', 'comida', 'irBanheiro', 'ajuda', 'falar', 'irCasa', 'descansar', 'saber', 'parar', 'maisTempo'],
-  preciso: ['deAjuda', 'deAgua', 'deComida', 'irBanheiro', 'descansar', 'falarAlguem', 'deRemedio', 'irCasa', 'deTempo', 'entender'],
-  precisa: ['deAjuda', 'deAgua', 'deComida', 'irBanheiro', 'descansar', 'falarAlguem', 'deRemedio', 'irCasa', 'deTempo', 'entender'],
-  precisam: ['deAjuda', 'deAgua', 'deComida', 'irBanheiro', 'descansar', 'falarAlguem', 'deRemedio', 'irCasa', 'deTempo', 'entender'],
-  estou: ['bem', 'cansado', 'comFome', 'comSede', 'comdor', 'feliz', 'triste', 'preocupado'],
-  estamos: ['bem', 'cansados', 'comFome', 'comSede', 'comdor', 'felizes', 'tristes', 'preocupados'],
-  esta: ['bem', 'cansado', 'comFome', 'comSede', 'comdor', 'feliz', 'triste', 'preocupado'],
-  estao: ['bem', 'cansados', 'comFome', 'comSede', 'comdor', 'felizes', 'tristes', 'preocupados'],
-  vou: ['paraCasa', 'embora', 'tentar', 'dormir', 'comer', 'trabalhar', 'sair'],
-  vamos: ['paraCasa', 'embora', 'tentar', 'dormir', 'comer', 'trabalhar', 'sair'],
-  vai: ['paraCasa', 'embora', 'tentar', 'dormir', 'comer', 'trabalhar', 'sair'],
-  tenho: ['certeza', 'duvida', 'medo', 'fome', 'sede', 'sono', 'pressa', 'umProblema'],
-  tem: ['certeza', 'medo', 'fome', 'sede', 'sono', 'pressa', 'umProblema'],
-  temPlural: ['certeza', 'medo', 'fome', 'sede', 'sono', 'pressa', 'umProblema'],
-  pode: ['meAjudar', 'esperar', 'repetir', 'virAqui', 'falarDevagar', 'explicar'],
-  podem: ['meAjudar', 'esperar', 'repetir', 'virAqui', 'falarDevagar', 'explicar'],
-  ajuda: ['porFavor', 'agora', 'paraMim', 'comIsso', 'euPreciso', 'naoConsigo', 'estouComDor', 'queroFalar', 'obrigado'],
-  dor: ['estouCom', 'muitaDor', 'aqui', 'precisoDeAgua', 'agora', 'porFavor', 'naoEntendi', 'chameAlguem', 'remedio', 'obrigado'],
-  agua: ['porFavor', 'euPreciso', 'agora', 'umPouco', 'ondeFica', 'urgente', 'obrigado'],
-  comida: ['porFavor', 'euPreciso', 'agora', 'umPouco', 'ondeFica', 'urgente', 'obrigado'],
-  banheiro: ['porFavor', 'euPreciso', 'agora', 'ondeFica', 'urgente', 'obrigado'],
-  deAjuda: ['agora', 'porFavor', 'paraMim', 'comIsso', 'obrigado'],
-  deAgua: ['agora', 'porFavor', 'umPouco', 'urgente', 'obrigado'],
-  deComida: ['agora', 'porFavor', 'umPouco', 'urgente', 'obrigado'],
-  irBanheiro: ['agora', 'porFavor', 'ondeFica', 'urgente', 'obrigado'],
-  irCasa: ['agora', 'porFavor', 'obrigado'],
-  paraCasa: ['agora', 'porFavor', 'obrigado'],
-  queroFalar: ['porFavor', 'agora', 'paraMim', 'obrigado'],
-  estouComDor: ['agora', 'porFavor', 'chameAlguem', 'remedio', 'obrigado']
+  __start__: ['eu', 'voce', 'mae', 'professor', 'amigo'],
+  eu: ['quero', 'preciso', 'estou', 'gosto', 'vou'],
+  voce: ['quero', 'preciso', 'estou', 'gosto', 'vou'],
+  mae: ['quero', 'preciso', 'estou', 'gosto', 'vou'],
+  professor: ['quero', 'preciso', 'estou', 'gosto', 'vou'],
+  amigo: ['quero', 'preciso', 'estou', 'gosto', 'vou'],
+  quero: ['agua', 'comida', 'brincar', 'jogar', 'assistir', 'desenhar', 'passear', 'musica', 'dormir', 'sair', 'casa'],
+  preciso: ['agua', 'comida', 'banheiro', 'dormir', 'descansar', 'ajuda', 'hospital'],
+  estou: ['feliz', 'triste', 'cansado', 'comdor', 'commedo', 'bem'],
+  gosto: ['brincar', 'jogar', 'desenhar', 'assistir', 'passear', 'musica'],
+  vou: ['casa', 'escola', 'passear', 'dormir', 'banheiro', 'hospital'],
+  agua: ['quero', 'gosto', 'preciso'],
+  comida: ['quero', 'gosto', 'preciso'],
+  banheiro: ['preciso', 'quero'],
+  dormir: ['quero', 'preciso', 'estou'],
+  descansar: ['quero', 'preciso', 'estou'],
+  ajuda: ['preciso', 'quero'],
+  feliz: ['eu', 'gosto', 'quero'],
+  triste: ['eu', 'preciso', 'quero'],
+  cansado: ['eu', 'quero', 'preciso'],
+  commedo: ['eu', 'preciso', 'ajuda'],
+  comdor: ['eu', 'preciso', 'ajuda'],
+  bem: ['eu', 'gosto', 'quero'],
+  brincar: ['eu', 'quero', 'gosto'],
+  jogar: ['eu', 'quero', 'gosto'],
+  assistir: ['eu', 'quero', 'gosto'],
+  desenhar: ['eu', 'quero', 'gosto'],
+  passear: ['eu', 'quero', 'vou'],
+  musica: ['eu', 'quero', 'gosto'],
+  casa: ['eu', 'vou', 'quero'],
+  escola: ['eu', 'vou', 'quero'],
+  quarto: ['eu', 'vou', 'quero'],
+  hospital: ['eu', 'vou', 'preciso'],
+  sair: ['eu', 'quero', 'vou']
 };
 
 const CHALLENGES = [
@@ -2274,7 +2509,7 @@ const CHALLENGES = [
 
 /* Dicas do mascote por tela — usadas quando o botão flutuante é tocado */
 const MASCOT_TIPS = {
-  home: 'Oi, eu sou o Guri! Vamos comunicar juntos.',
+  home: 'Oi! Eu sou o Guri. Toque em "Começar a comunicar" para montar sua frase comigo.',
   build: 'Escolha as palavras no carrossel e toque em Selecionar. Quando terminar, toque em Falar.',
   categories: 'Aqui você encontra as palavras organizadas por assunto. Toque em uma categoria para abrir.',
   categoryDetail: 'Toque em uma palavra para adicionar na sua frase.',
@@ -2297,9 +2532,7 @@ const MENU_AUDIO_SRC = {
   favorites: 'assets/audio/favoritos.mp3',
   profile: 'assets/audio/meu-comunica.mp3',
   personalize: 'assets/audio/personalizar.mp3',
-  about: 'assets/audio/sobre o comunica.mp3',
-  circularMode: 'assets/audio/teclado-circular.mp3',
-  carouselMode: 'assets/audio/carrossel.mp3'
+  about: 'assets/audio/sobre o comunica.mp3'
 };
 const WORD_ICON_SRC = {
   mae: 'assets/imagens/icone-mae.png',
@@ -2318,6 +2551,9 @@ let mascotAudio = null;
 let refreshVoiceTimer = null;
 let refreshVoiceCancelled = false;
 const menuAudios = {};
+let circularMenuReturnIndex = 0;
+let circularMenuReturnRing = 0;
+let circularMenuDirection = 'cima';
 
 let STATE = {
   screen: 'home',
@@ -2361,7 +2597,7 @@ function allCategories() {
 }
 
 function allWords() {
-  return DEFAULT_WORDS.concat(AAC_EXTRA_WORDS, STATE.data.customWords);
+  return DEFAULT_WORDS.concat(STATE.data.customWords);
 }
 
 function wordById(id) {
@@ -2635,6 +2871,9 @@ function playMenuVoice(target, fallbackText) {
 
 function speakMascot(text) {
   showMascotTip(text);
+  if (STATE.data.settings.mascotVoiceEnabled) {
+    playMascotVoice(text);
+  }
 }
 
 /* ---------- Mascote "Guri" em SVG ---------- */
@@ -2705,6 +2944,101 @@ function addWordToPhrase(word) {
   announcePhrase();
 }
 
+function focusCircularActiveKey() {
+  const ring = STATE.circularActiveRing ?? 0;
+  const index = STATE.circularCursorIndex || 0;
+  document.querySelector(`.circular-key[data-circular-ring="${ring}"][data-circular-index="${index}"]`)?.focus();
+}
+
+function circularDirectionFromAngle(angle) {
+  const radians = angle * Math.PI / 180;
+  const x = Math.cos(radians);
+  const y = Math.sin(radians);
+  return Math.abs(x) >= Math.abs(y)
+    ? (x >= 0 ? 'direita' : 'esquerda')
+    : (y >= 0 ? 'baixo' : 'cima');
+}
+
+function circularOuterRingIsOpen() {
+  return STATE.phrase.length > 0 && !STATE.circularAlphabetMode;
+}
+
+function setCircularNavigationKey(element) {
+  document.querySelectorAll('.circular-key-current').forEach(key => key.classList.remove('circular-key-current'));
+  document.querySelectorAll('.circular-ring.circular-ring-active').forEach(ring => ring.classList.remove('circular-ring-active'));
+
+  element.classList.add('circular-key-current');
+  const ringIndex = Number(element.dataset.circularRing);
+  const index = Number(element.dataset.circularIndex);
+  const ring = element.closest('.circular-ring');
+  const angle = Number.parseFloat(element.style.getPropertyValue('--key-angle'));
+  const keyCount = ring ? ring.querySelectorAll('.circular-key').length : 1;
+
+  if (ring) {
+    ring.classList.add('circular-ring-active');
+    ring.style.setProperty('--active-angle', `${Number.isFinite(angle) ? angle : -90}deg`);
+    ring.style.setProperty('--sector-size', `${360 / keyCount}deg`);
+  }
+
+  STATE.circularActiveRing = ringIndex;
+  STATE.circularCursorIndex = index;
+  circularMenuReturnRing = STATE.circularActiveRing;
+  circularMenuReturnIndex = STATE.circularCursorIndex;
+  positionCircularMenu(element);
+}
+
+function positionCircularMenu(key) {
+  const menu = document.querySelector('.circular-side-menu');
+  const buttons = [...(menu?.querySelectorAll('.circular-menu-button') || [])];
+  if (!menu || !buttons.length) return;
+
+  if (key) {
+    const angle = Number.parseFloat(key.style.getPropertyValue('--key-angle'));
+    if (Number.isFinite(angle)) {
+      circularMenuDirection = circularDirectionFromAngle(angle);
+      menu.style.setProperty('--menu-orbit-angle', `${angle}deg`);
+    }
+  }
+
+  menu.classList.remove('menu-direita', 'menu-esquerda', 'menu-cima', 'menu-baixo');
+  menu.classList.add(`menu-${circularMenuDirection}`);
+  buttons.forEach(button => {
+    button.style.left = '';
+    button.style.top = '';
+    button.tabIndex = 0;
+  });
+  menu.classList.add('ativo');
+}
+
+function selectCircularKeyboardKey(element) {
+  const ring = Number(element.dataset.circularRing);
+  const index = Number(element.dataset.circularIndex);
+  if (element.dataset.letter) {
+    const last = STATE.phrase[STATE.phrase.length - 1];
+    if (STATE.circularNewWord !== false || !last?.id?.startsWith('typed_')) {
+      STATE.phrase.push({ id: `typed_${Date.now()}`, label: element.dataset.letter, emoji: '', description: '', cat: 'custom' });
+      STATE.circularNewWord = false;
+    } else {
+      last.label += element.dataset.letter;
+    }
+    STATE.circularActiveRing = 0;
+    STATE.circularCursorIndex = index;
+  } else {
+    const word = wordById(element.dataset.word);
+    if (!word) return;
+    STATE.phrase.push(word);
+    STATE.circularRefreshedOptions = null;
+    STATE.circularNewWord = true;
+    STATE.circularActiveRing = ring === 0 ? 1 : 0;
+    STATE.circularCursorIndex = 0;
+    speak(word.label);
+  }
+  loadLayer();
+  render();
+  announcePhrase();
+  focusCircularActiveKey();
+}
+
 function eraseLast() {
   if (STATE.phrase.length === 0) {
     showToast('Não há palavras para apagar.');
@@ -2713,6 +3047,10 @@ function eraseLast() {
   const focusedControlId = document.activeElement?.id;
   speak('Apagar');
   STATE.phrase.pop();
+  STATE.circularActiveRing = STATE.phrase.length % 2;
+  STATE.circularCursorIndex = 0;
+  STATE.circularAlphabetMode = false;
+  STATE.circularNewWord = true;
   loadLayer();
   renderKeepingFocus(focusedControlId);
   announcePhrase();
@@ -2730,6 +3068,10 @@ function clearPhrase() {
 function clearPhraseConfirmed(focusedControlId = document.activeElement?.id) {
   if (STATE.phrase.length > 0) speak('Limpar frase');
   STATE.phrase = [];
+  STATE.circularActiveRing = 0;
+  STATE.circularCursorIndex = 0;
+  STATE.circularAlphabetMode = false;
+  STATE.circularNewWord = true;
   loadLayer();
   renderKeepingFocus(focusedControlId);
   announcePhrase();
@@ -2767,7 +3109,7 @@ function currentLayerKey() {
 
 function loadLayer() {
   const key = currentLayerKey();
-  let suggestions = SUGGESTIONS[key] || AAC_FALLBACK;
+  let suggestions = SUGGESTIONS[key] || [];
 
   const customWords = STATE.data.customWords
     .filter(word => !suggestions.includes(word.id))
@@ -2786,6 +3128,18 @@ function moveCarousel(delta) {
   const total = STATE.options.length;
   STATE.carouselIndex = (STATE.carouselIndex + delta + total) % total;
   renderKeepingFocus();
+}
+
+function refreshCircularSuggestions() {
+  const focusedId = document.activeElement?.id || 'circularRefreshBtn';
+  const options = [...(STATE.options.length ? STATE.options : (SUGGESTIONS.__start__ || []))];
+  for (let i = options.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [options[i], options[j]] = [options[j], options[i]];
+  }
+  STATE.circularRefreshedOptions = options;
+  STATE.carouselIndex = 0;
+  renderKeepingFocus(focusedId);
 }
 
 function restoreFocusedControl(focusedControlId) {
@@ -2956,6 +3310,7 @@ function render() {
   }
 
   attachHandlers();
+  if (STATE.screen === 'circularMode') focusCircularActiveKey();
   scheduleScan();
   announcePhrase();
 }
@@ -3070,8 +3425,74 @@ function renderCarouselMode() {
   return `<div class="carousel-full-screen"><div class="carousel-full-topbar"><button class="icon-btn" data-go="build" aria-label="Voltar para escolha do modo">←</button><div class="topbar-title">Comunicar</div><button class="icon-btn" data-go="personalize" aria-label="Personalizar palavras"><img class="menu-icon" src="assets/imagens/icone-configuracoes.png" alt=""></button></div><div class="carousel-full-content"><div class="section-label">MINHA FRASE</div><div class="phrase-bar" role="group" aria-label="Minha frase">${chipHtml}</div><div class="layer-label">${layerLabel}</div><div class="carousel-wrap">${cardsHtml}</div><button class="confirm-btn" id="confirmBtn" ${n === 0 ? 'disabled' : ''}>✓ Selecionar</button><div class="action-row" role="toolbar" aria-label="Ações da frase"><button class="btn-erase" id="eraseBtn" aria-label="Apagar última palavra"><img class="action-icon" src="assets/imagens/icone-apagar.png" alt="">Apagar</button><button class="btn-clear" id="clearBtn" aria-label="Limpar toda a frase"><img class="action-icon" src="assets/imagens/icone-limpar.png" alt="">Limpar</button><button class="btn-speak" id="speakBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Falar a frase em voz alta"><img class="action-icon" src="assets/imagens/icone-falar.png" alt="">Falar</button><button class="btn-fav" id="favPhraseBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Favoritar esta frase"><img class="action-icon" src="assets/imagens/icone-estrela.png" alt="">⭐ Favoritar frase</button><button class="btn-fav-word" id="favWordBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Favorizar palavra"><img class="action-icon" src="assets/imagens/icone-estrela.png" alt="">⭐ Favoritar palavra</button></div><div class="back-link" data-go="categories" role="button" tabindex="0" style="margin-top:4px;"><img class="action-icon" src="assets/imagens/icone-livros.png" alt="">Ver todas as categorias</div><div class="hint">← → navega · Enter/Espaço seleciona · toque também funciona</div></div></div>`;
 }
 
+function fillCircularRingOptions(optionIds, quantity) {
+  const result = [...new Set(optionIds.filter(id => wordById(id)))];
+  const fallbackIds = allWords().map(word => word.id);
+  fallbackIds.forEach(id => {
+    if (result.length < quantity && !result.includes(id)) result.push(id);
+  });
+  return result.slice(0, quantity);
+}
+
+function circularKeyboardRings() {
+  const people = allWords().filter(word => word.cat === 'pessoas').map(word => word.id);
+  const initial = fillCircularRingOptions([...(SUGGESTIONS.__start__ || []), ...people, ...STATE.data.favWords], 9);
+  const rings = [initial, []];
+  STATE.phrase.forEach((word, index) => {
+    const destination = index % 2 === 0 ? 1 : 0;
+    const quantity = destination === 0 ? 9 : 10;
+    const suggestions = index === STATE.phrase.length - 1 && STATE.circularRefreshedOptions
+      ? STATE.circularRefreshedOptions
+      : (SUGGESTIONS[word.id] || []);
+    rings[destination] = fillCircularRingOptions(suggestions, quantity);
+  });
+  return rings;
+}
+
 function renderCircularKeyboard() {
-  return `<div class="mode-screen circular-mode-screen"><button class="mode-screen-back" data-go="build" aria-label="Voltar para escolha do modo">← Voltar</button><div class="circular-keyboard-reserved"><h1>Teclado circular</h1><p>Área reservada para adicionar o teclado circular.</p></div></div>`;
+  const chipHtml = STATE.phrase.length
+    ? STATE.phrase.map(word => `<span class="phrase-chip">${word.label}</span>`).join('')
+    : `<span class="phrase-placeholder">Toque em uma palavra do círculo...</span>`;
+  const layerLabel = STATE.phrase.length === 0 ? 'QUEM ESTÁ FALANDO?' : STATE.phrase.length === 1 ? 'O QUE VOCÊ QUER DIZER?' : 'COMPLETE A FRASE';
+  const rings = circularKeyboardRings();
+  const activeRing = STATE.circularActiveRing ?? (STATE.phrase.length % 2);
+  STATE.circularActiveRing = activeRing;
+  const cursorIndex = STATE.circularCursorIndex || 0;
+  const ringHtml = (ringIndex, options, hidden = false) => {
+    const quantity = ringIndex === 0 ? 9 : 10;
+    const radius = ringIndex === 0 ? 'calc(0px - 22cqw)' : 'calc(0px - 36.25cqw)';
+    const keys = options.map((id, index) => {
+      const word = wordById(id);
+      if (!word) return '';
+      const angle = Math.round((360 / options.length) * index) - 90;
+      const isCurrent = ringIndex === activeRing && index === cursorIndex;
+    return `<button class="circular-key circular-key-outer ${isCurrent ? 'circular-key-current' : ''}" data-word="${word.id}" data-circular-index="${index}" data-circular-ring="${ringIndex}" type="button" tabindex="${isCurrent ? '0' : '-1'}" aria-label="${word.label}" style="--key-angle:${angle}deg;--key-inverse-angle:${-angle}deg;--key-radius:${radius};"><span class="circular-key-label">${word.label}</span></button>`;
+    }).join('');
+    const isActiveRing = ringIndex === activeRing;
+    const activeKeyAngle = isActiveRing && options.length ? Math.round((360 / options.length) * cursorIndex) - 90 : -90;
+    const ringClass = ringIndex === 0 ? 'inner' : 'outer';
+    const activeClass = isActiveRing ? 'circular-ring-active' : '';
+    const activeAngleStyle = isActiveRing ? ` style="--active-angle:${activeKeyAngle}deg;--sector-size:${360 / Math.max(options.length, 1)}deg;"` : '';
+    return `<div class="circular-ring circular-ring-${ringClass} ${hidden ? 'circular-ring-hidden' : ''} ${activeClass}" data-circular-ring="${ringIndex}" aria-label="${ringIndex === 0 ? 'Palavras principais' : 'Sugestões'}"${activeAngleStyle}>${keys}</div>`;
+  };
+
+  const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
+  const innerOptions = STATE.circularAlphabetMode ? alphabet : rings[0];
+  const innerHtml = innerOptions.map((value, index) => {
+    const word = STATE.circularAlphabetMode ? null : wordById(value);
+    const angle = Math.round((360 / innerOptions.length) * index) - 90;
+    const isCurrent = activeRing === 0 && index === cursorIndex;
+    const letterRadius = STATE.circularAlphabetMode
+      ? 'calc(0px - 36cqw)'
+      : 'calc(0px - 22cqw)';
+    return `<button class="circular-key circular-key-inner ${STATE.circularAlphabetMode ? 'circular-key-letter' : ''} ${isCurrent ? 'circular-key-current' : ''}" ${word ? `data-word="${word.id}"` : `data-letter="${value}"`} data-circular-index="${index}" data-circular-ring="0" type="button" tabindex="${isCurrent ? '0' : '-1'}" aria-label="${word?.label || value}" style="--key-angle:${angle}deg;--key-inverse-angle:${-angle}deg;--key-radius:${letterRadius};">${word ? `<span class="circular-key-label">${word.label}</span>` : `<span class="circular-key-label">${value}</span>`}</button>`;
+  }).join('');
+  const outerHtml = ringHtml(1, rings[1], !circularOuterRingIsOpen());
+  const wheelHtml = `<div class="circular-keyboard-wrap"><div class="circular-keyboard" aria-label="Teclado circular">${outerHtml}<div class="circular-ring circular-ring-inner" data-circular-ring="0" aria-label="Palavras principais">${innerHtml}</div><button type="button" id="circularAlphabetBtn" class="circular-keyboard-center" aria-label="Alternar teclado alfabético">Aa</button></div></div>`;
+
+  const circularMenuHtml = `<nav class="circular-side-menu" aria-label="Menu orbital do teclado circular"><button class="circular-menu-button" id="circularClearBtn" type="button">limpar</button><button class="circular-menu-button" id="circularEraseBtn" type="button">excluir</button><button class="circular-menu-button" id="circularRefreshBtn" type="button">recarregar</button><button class="circular-menu-button" id="circularBackBtn" type="button">voltar</button><button class="circular-menu-button" id="circularSpeakBtn" type="button">falar</button><button class="circular-menu-button circular-menu-highlight" id="circularDoneBtn" type="button">concluir</button></nav>`;
+  const wheelAndMenuHtml = `<div class="circular-menu-layout">${wheelHtml}${circularMenuHtml}</div>`;
+  return `<div class="circular-full-screen"><div class="circular-full-topbar"><button class="icon-btn" data-go="build" aria-label="Voltar para escolha do modo">←</button><div class="topbar-title">Teclado circular</div><button class="icon-btn" data-go="personalize" aria-label="Personalizar palavras"><img class="menu-icon" src="assets/imagens/icone-configuracoes.png" alt=""></button></div><div class="circular-full-content"><div class="section-label">MINHA FRASE</div><div class="phrase-bar" role="group" aria-label="Minha frase">${chipHtml}</div><div class="layer-label">${layerLabel}</div>${wheelAndMenuHtml}<div class="hint">Setas percorrem as argolas e os botões do menu · Tab acessa o menu · Enter/Espaço ou clique seleciona</div></div></div>`;
 }
 
 function renderCategories() {
@@ -3490,13 +3911,7 @@ function attachHandlers() {
 
   document.querySelectorAll('[data-mode-screen]').forEach(element => {
     const activate = () => {
-      const target = element.getAttribute('data-mode-screen');
-      const modeTexts = {
-        circularMode: 'Teclado circular',
-        carouselMode: 'Carrossel'
-      };
-      playMenuVoice(target, modeTexts[target]);
-      go(target);
+      go(element.getAttribute('data-mode-screen'));
     };
     element.addEventListener('click', activate);
     element.addEventListener('keydown', activateOnEnterSpace(activate));
@@ -3515,10 +3930,7 @@ function attachHandlers() {
         settings: 'Configurações',
         about: 'Sobre o ComunicA'
       };
-      const isMainHomeButton = element.closest('.home-screen');
-      if (menuTexts[target] && (target !== 'build' || isMainHomeButton)) {
-        playMenuVoice(target, menuTexts[target]);
-      }
+      if (menuTexts[target]) playMenuVoice(target, menuTexts[target]);
       if (target === 'challenge') STATE.challenge = null;
       go(target);
     };
@@ -3527,6 +3939,13 @@ function attachHandlers() {
   });
 
   document.querySelectorAll('[data-word]').forEach(element => {
+    if (element.classList.contains('circular-key')) {
+      const activateCircularKey = () => selectCircularKeyboardKey(element);
+      element.addEventListener('click', activateCircularKey);
+      element.addEventListener('keydown', activateOnEnterSpace(activateCircularKey));
+      element.addEventListener('focus', () => setCircularNavigationKey(element));
+      return;
+    }
     const activate = event => {
       if (event.target.closest('button, [data-speak], [data-remove-word]')) return;
       const word = wordById(element.getAttribute('data-word'));
@@ -3537,6 +3956,22 @@ function attachHandlers() {
     };
     element.addEventListener('click', activate);
     element.addEventListener('keydown', activateOnEnterSpace(activate));
+  });
+
+  document.querySelectorAll('.circular-key[data-letter]').forEach(element => {
+    const activate = () => selectCircularKeyboardKey(element);
+    element.addEventListener('click', activate);
+    element.addEventListener('keydown', activateOnEnterSpace(activate));
+    element.addEventListener('focus', () => setCircularNavigationKey(element));
+  });
+
+  document.querySelectorAll('.circular-side-menu .circular-menu-button').forEach(button => {
+    button.addEventListener('focus', () => {
+      /* O foco do menu lateral não deve reposicionar o menu nem alterar
+         a direção definida pela tecla circular que o abriu. */
+      circularMenuReturnRing = STATE.circularActiveRing ?? 0;
+      circularMenuReturnIndex = STATE.circularCursorIndex || 0;
+    });
   });
 
   document.querySelectorAll('[data-fav-word]').forEach(element => {
@@ -3605,6 +4040,31 @@ function attachHandlers() {
 
   const clearBtn = document.getElementById('clearBtn');
   if (clearBtn) clearBtn.addEventListener('click', clearPhrase);
+
+  const circularClearBtn = document.getElementById('circularClearBtn');
+  if (circularClearBtn) circularClearBtn.addEventListener('click', clearPhrase);
+  const circularEraseBtn = document.getElementById('circularEraseBtn');
+  if (circularEraseBtn) circularEraseBtn.addEventListener('click', eraseLast);
+  const circularRefreshBtn = document.getElementById('circularRefreshBtn');
+  if (circularRefreshBtn) circularRefreshBtn.addEventListener('click', refreshCircularSuggestions);
+  const circularBackBtn = document.getElementById('circularBackBtn');
+  if (circularBackBtn) circularBackBtn.addEventListener('click', () => go('build'));
+  const circularSpeakBtn = document.getElementById('circularSpeakBtn');
+  if (circularSpeakBtn) circularSpeakBtn.addEventListener('click', speakPhrase);
+  const circularDoneBtn = document.getElementById('circularDoneBtn');
+  if (circularDoneBtn) circularDoneBtn.addEventListener('click', () => {
+    speakPhrase();
+    go('build');
+  });
+  const circularAlphabetBtn = document.getElementById('circularAlphabetBtn');
+  if (circularAlphabetBtn) circularAlphabetBtn.addEventListener('click', () => {
+    STATE.circularAlphabetMode = !STATE.circularAlphabetMode;
+    STATE.circularNewWord = true;
+    STATE.circularActiveRing = 0;
+    STATE.circularCursorIndex = 0;
+    render();
+    focusCircularActiveKey();
+  });
 
   const favPhraseBtn = document.getElementById('favPhraseBtn');
   if (favPhraseBtn) favPhraseBtn.addEventListener('click', favoritePhrase);
@@ -3873,14 +4333,24 @@ function attachHandlers() {
     saveData();
   });
 
+  const testVoiceBtn = document.getElementById('testVoiceBtn');
+  if (testVoiceBtn) testVoiceBtn.addEventListener('click', () => {
+    playMascotVoice('Oi! Esta é a minha voz no ComunicA.');
+  });
+
+  /* Mascote na tela inicial */
+  const mascotHeroBtn = document.getElementById('mascotHeroBtn');
+  if (mascotHeroBtn) {
+    const activate = () => speakMascot(MASCOT_TIPS[STATE.screen] || MASCOT_TIPS.home);
+    mascotHeroBtn.addEventListener('click', activate);
+    mascotHeroBtn.addEventListener('keydown', activateOnEnterSpace(activate));
+  }
 }
 
 /* Botão flutuante do mascote — disponível em todas as telas */
 document.getElementById('mascotFloatBtn').innerHTML = mascotImgHtml({ size: 46, mood: 'idle' });
 document.getElementById('mascotFloatBtn').addEventListener('click', () => {
-  const text = MASCOT_TIPS.home;
-  showMascotTip(text);
-  playMascotVoice();
+  speakMascot(MASCOT_TIPS[STATE.screen] || MASCOT_TIPS.home);
 });
 
 /* Controle do Guri por teclado: setas navegam, Enter chama a dica e Esc volta. */
@@ -3910,6 +4380,7 @@ document.addEventListener('keydown', event => {
 
 /* Navegação por teclado/switch na tela de montagem de frase */
 document.addEventListener('keydown', event => {
+  if (event.defaultPrevented) return;
   if (STATE.screen !== 'carouselMode'
       && STATE.data.settings.scanEnabled && (event.key === 'Enter' || event.key === ' ')) {
     const active = document.activeElement;
@@ -3936,6 +4407,73 @@ document.addEventListener('keydown', event => {
         confirmButtons[nextIndex].classList.add('accessibility-focus');
       } else if (event.key === 'Enter' || event.key === ' ') {
         (activeIndex >= 0 ? confirmButtons[activeIndex] : confirmButtons[0]).click();
+      }
+      return;
+    }
+  }
+
+  if (STATE.screen === 'circularMode') {
+    const circularKeys = [...document.querySelectorAll('.circular-key[data-circular-index]')];
+    const menuButtons = [...document.querySelectorAll('.circular-side-menu .circular-menu-button')];
+    const activeMenuIndex = menuButtons.indexOf(document.activeElement);
+    if (activeMenuIndex >= 0) {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        circularKeys.find(key => Number(key.dataset.circularRing) === circularMenuReturnRing && Number(key.dataset.circularIndex) === circularMenuReturnIndex)?.focus();
+      } else if (['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown'].includes(event.key)) {
+        event.preventDefault();
+        const returnArrow = { direita: 'ArrowLeft', esquerda: 'ArrowRight', cima: 'ArrowDown', baixo: 'ArrowUp' }[circularMenuDirection];
+        if (event.key === returnArrow) {
+          circularKeys.find(key => Number(key.dataset.circularRing) === circularMenuReturnRing && Number(key.dataset.circularIndex) === circularMenuReturnIndex)?.focus();
+        } else {
+          const step = event.key === 'ArrowLeft' || event.key === 'ArrowUp' ? -1 : 1;
+          menuButtons[(activeMenuIndex + step + menuButtons.length) % menuButtons.length]?.focus();
+        }
+      }
+      return;
+    }
+
+    if (document.activeElement?.id === 'circularAlphabetBtn') {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        document.activeElement.click();
+      } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+        event.preventDefault();
+        focusCircularActiveKey();
+      }
+      return;
+    }
+
+    if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key) && circularKeys.length) {
+      event.preventDefault();
+      const currentRing = STATE.circularActiveRing ?? 0;
+      const ringKeys = circularKeys.filter(key => Number(key.dataset.circularRing) === currentRing);
+      const currentIndex = Math.min(STATE.circularCursorIndex || 0, ringKeys.length - 1);
+      let destinationRing = currentRing;
+      let destinationIndex = currentIndex;
+
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        const step = event.key === 'ArrowLeft' ? -1 : 1;
+        destinationIndex = (currentIndex + step + ringKeys.length) % ringKeys.length;
+      } else if (event.key === 'ArrowUp' && currentRing === 1) {
+        destinationRing = 0;
+        const innerKeys = circularKeys.filter(key => Number(key.dataset.circularRing) === 0);
+        destinationIndex = Math.round(currentIndex * innerKeys.length / ringKeys.length) % innerKeys.length;
+      } else if (event.key === 'ArrowDown' && currentRing === 0 && circularOuterRingIsOpen()) {
+        destinationRing = 1;
+        const outerKeys = circularKeys.filter(key => Number(key.dataset.circularRing) === 1);
+        destinationIndex = Math.round(currentIndex * outerKeys.length / ringKeys.length) % outerKeys.length;
+      } else if (event.key === 'ArrowUp' && currentRing === 0) {
+        document.getElementById('circularAlphabetBtn')?.focus();
+        return;
+      }
+
+      const targetKeys = circularKeys.filter(key => Number(key.dataset.circularRing) === destinationRing);
+      circularKeys.forEach(key => key.tabIndex = -1);
+      const target = targetKeys[destinationIndex];
+      if (target) {
+        target.tabIndex = 0;
+        target.focus();
       }
       return;
     }
@@ -4021,7 +4559,7 @@ document.addEventListener('keydown', event => {
 /* =========================================================
    Tela de abertura (splash) com o mascote Guri
    ========================================================= */
-function typeWelcomeBubble(playVoice = false) {
+function typeWelcomeBubble(playVoice = true) {
   const el = document.getElementById('mascotTip');
   if (!el) return;
   const text = `Oi, eu sou o ${MASCOT_NAME}!`;
@@ -4108,6 +4646,10 @@ function initSplash() {
       if (audio) {
         audio.preload = 'auto';
       }
+      typeWelcomeBubble(false);
+      if (STATE.data.settings.mascotVoiceEnabled) {
+        setTimeout(playMascotVoiceAfterRefresh, 50);
+      }
       return;
     }
 
@@ -4116,6 +4658,7 @@ function initSplash() {
       app.removeAttribute('aria-hidden');
       floatBtn.style.opacity = '1';
       floatBtn.style.pointerEvents = 'auto';
+      typeWelcomeBubble();
       return;
     }
 
@@ -4146,6 +4689,7 @@ function initSplash() {
       splash.style.display = 'none';
       floatBtn.style.opacity = '1';
       floatBtn.style.pointerEvents = 'auto';
+      typeWelcomeBubble();
     }, 720);
   }
 
