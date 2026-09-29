@@ -2437,6 +2437,20 @@ body .mode-choice-button[data-mode-screen="carouselMode"]:focus-visible {
   color: #123b4d !important;
 }
 
+/* Contraste das palavras do teclado circular. */
+#app .circular-menu-layout .circular-key-label,
+#app .circular-menu-layout .circular-key-outer .circular-key-label,
+#app .circular-menu-layout .circular-key-current .circular-key-label {
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .75), 0 0 4px rgba(0, 0, 0, .45) !important;
+}
+
+/* Menu circular: ações sempre disponíveis para toque e clique. */
+#app .circular-side-menu .circular-menu-button {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
 </style>
 </head>
 
@@ -4024,7 +4038,13 @@ function attachHandlers() {
 
   document.querySelectorAll('[data-mode-screen]').forEach(element => {
     const activate = () => {
-      go(element.getAttribute('data-mode-screen'));
+      const target = element.getAttribute('data-mode-screen');
+      const modeTexts = {
+        circularMode: 'Teclado circular',
+        carouselMode: 'Carrossel'
+      };
+      if (modeTexts[target]) playMenuVoice(target, modeTexts[target]);
+      go(target);
     };
     element.addEventListener('click', activate);
     element.addEventListener('keydown', activateOnEnterSpace(activate));
