@@ -2661,6 +2661,18 @@ const MENU_AUDIO_SRC = {
   circularMode: 'assets/audio/teclado-circular.mp3',
   carouselMode: 'assets/audio/carrossel.mp3'
 };
+const CIRCULAR_WORD_AUDIO_SRC = {
+  eu: 'assets/audio/eu.mp3',
+  ela: 'assets/audio/ela.mp3',
+  ele: 'assets/audio/ele.mp3',
+  eles: 'assets/audio/eles.mp3',
+  elas: 'assets/audio/elas.mp3',
+  voce: 'assets/audio/voce.mp3',
+  nos: 'assets/audio/nos.mp3',
+  isso: 'assets/audio/isso.mp3',
+  aquilo: 'assets/audio/aquilo.mp3'
+};
+const circularWordAudios = {};
 const WORD_ICON_SRC = {
   mae: 'assets/imagens/icone-mae.png',
   pai: 'assets/imagens/icone-pai.png',
@@ -2906,6 +2918,26 @@ function speak(text) {
 
   window.speechSynthesis.cancel();
   window.speechSynthesis.speak(utterance);
+}
+
+function playCircularWordAudio(word) {
+  const source = CIRCULAR_WORD_AUDIO_SRC[word?.id];
+  if (!source) {
+    speak(word?.label || '');
+    return;
+  }
+  if (!circularWordAudios[word.id]) {
+    circularWordAudios[word.id] = new Audio(source);
+    circularWordAudios[word.id].preload = 'auto';
+  }
+  const audio = circularWordAudios[word.id];
+  audio.pause();
+  audio.currentTime = 0;
+  audio.playbackRate = getVoiceRate();
+  const playPromise = audio.play();
+  if (playPromise && typeof playPromise.catch === 'function') {
+    playPromise.catch(() => speak(word.label));
+  }
 }
 
 function playMascotVoice() {
@@ -3158,7 +3190,7 @@ function selectCircularKeyboardKey(element) {
     STATE.circularNewWord = true;
     STATE.circularActiveRing = ring === 0 ? 1 : 0;
     STATE.circularCursorIndex = 0;
-    speak(word.label);
+    playCircularWordAudio(word);
   }
   loadLayer();
   render();
@@ -3339,7 +3371,9 @@ function confirmSelection() {
 
   STATE.phrase.push(word);
 
-  if (STATE.phrase.length === 3) {
+  if (CIRCULAR_WORD_AUDIO_SRC[word.id]) {
+    playCircularWordAudio(word);
+  } else if (STATE.phrase.length === 3) {
     setTimeout(() => { speak(currentPhraseText()); }, 250);
   } else {
     speak(word.label);
