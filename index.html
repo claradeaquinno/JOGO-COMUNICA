@@ -8832,8 +8832,7 @@ function initCircularKeyboard() {
     aneis[0].teclas[0].tabIndex = 0;
 
     botoesMenu.forEach((botao, indice) => {
-        // tabIndex 0 fixo: os botões do menu lateral ficam sempre alcançáveis
-        // pela tecla Tab do teclado físico, sem depender de gestos com as setas.
+       
         botao.tabIndex = 0;
         botao.addEventListener("keydown", (evento) => moverNoMenu(evento, indice));
     });
@@ -8866,9 +8865,7 @@ function initCircularKeyboard() {
     const btnFalar = document.getElementById("falar");
     if (btnFalar) btnFalar.addEventListener("click", falarFrase);
 
-    // Botão "concluir": corrige a ortografia/gramática da frase com o
-    // LanguageTool, mostra o texto corrigido e devolve o teclado à
-    // configuração inicial (argola de dentro com as palavras-chave de novo).
+    
     const btnConcluir = document.getElementById("concluir");
     if (btnConcluir) btnConcluir.addEventListener("click", async () => {
         const textoOriginal = valor.textContent.trim();
@@ -8884,9 +8881,7 @@ function initCircularKeyboard() {
         document.addEventListener("keydown", tratarSetaTecladoCircular);
     }
 
-    // Garante o destaque visual na primeira tecla da argola (dica de por onde
-    // começar) assim que a tela abre, e reforça de novo no primeiro
-    // clique/toque, caso o foco automático não "pegue" de início.
+   
     focarInicio();
     if (!ckFocusFallbackPending) {
         ckFocusFallbackPending = true;
