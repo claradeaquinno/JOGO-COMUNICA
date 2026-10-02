@@ -2059,8 +2059,8 @@ body.layout-infantil .stars {
   box-shadow: inset 0 0 0 12px rgba(255, 255, 255, .08), 0 8px 18px rgba(9, 43, 59, .18);
 }
 .name-alphabet-widget::after {
-  content: none;
-  display: none;
+  content: none !important;
+  display: none !important;
   position: absolute;
   left: 50%;
   top: 50%;
@@ -2135,23 +2135,23 @@ body.layout-infantil .stars {
 }
 @media (max-width: 420px) {
   .name-alphabet-widget {
-    right: -150px;
-    bottom: 58px;
-    width: 300px;
-    height: 300px;
-    min-width: 300px;
-    min-height: 300px;
+    right: -125px;
+    bottom: -65px;
+    width: 250px;
+    height: 250px;
+    min-width: 250px;
+    min-height: 250px;
   }
   .name-alphabet-key {
-    width: 38px;
-    height: 38px;
-    margin: -19px;
-    font-size: 15px;
-    transform: rotate(var(--letter-angle)) translateY(-128px) rotate(calc(var(--letter-angle) * -1));
+    width: 34px;
+    height: 34px;
+    margin: -17px;
+    font-size: 14px;
+    transform: rotate(var(--letter-angle)) translateY(-105px) rotate(calc(var(--letter-angle) * -1));
   }
   .name-alphabet-key:hover,
   .name-alphabet-key:focus-visible {
-    transform: rotate(var(--letter-angle)) translateY(-128px) rotate(calc(var(--letter-angle) * -1)) scale(1.1);
+    transform: rotate(var(--letter-angle)) translateY(-105px) rotate(calc(var(--letter-angle) * -1)) scale(1.1);
   }
   .name-alphabet-key.is-focus {
     box-shadow: 0 0 0 4px rgba(247, 201, 77, .28), 0 4px 10px rgba(9, 43, 59, .25);
