@@ -992,6 +992,11 @@ body,.bg-outras{
   visibility: hidden;
 }
 
+/* No carrossel, mostrar somente o texto das palavras. */
+.carousel-card .emoji {
+  display: none !important;
+}
+
 
 .confirm-btn {
   width: 100%;
@@ -2033,6 +2038,114 @@ body.layout-infantil .stars {
   color: rgba(255, 255, 255, 0.75);
   margin: 0 0 18px;
   line-height: 1.4;
+}
+
+/* Mini teclado circular para escrever o nome no cadastro. */
+.name-alphabet-widget {
+  position: fixed;
+  right: -275px;
+  bottom: 58px;
+  z-index: 150;
+  width: 550px;
+  height: 550px;
+  min-width: 550px;
+  min-height: 550px;
+  margin: 0;
+  border-radius: 50%;
+  /* A borda do aplicativo corta o círculo no centro: só a meia-roda esquerda fica visível. */
+  clip-path: inset(0 50% 0 0);
+  background: rgba(255, 255, 255, .18);
+  border: 2px solid rgba(255, 255, 255, .42);
+  box-shadow: inset 0 0 0 12px rgba(255, 255, 255, .08), 0 8px 18px rgba(9, 43, 59, .18);
+}
+.name-alphabet-widget::after {
+  content: none;
+  display: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 108px;
+  height: 108px;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #103d5d;
+  font: 900 30px var(--font-title);
+  box-shadow: 0 5px 14px rgba(9, 43, 59, .25);
+}
+@keyframes name-wheel-spin {
+  from { filter: brightness(1); }
+  50% { filter: brightness(1.12); }
+  to { filter: brightness(1); }
+}
+.name-alphabet-widget.is-spinning {
+  animation: name-wheel-spin .28s ease;
+}
+.name-alphabet-key {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 62px;
+  height: 62px;
+  margin: -31px;
+  padding: 0;
+  border: 2px solid rgba(16, 61, 93, .2);
+  border-radius: 50%;
+  background: #ffffff;
+  color: #103d5d;
+  font: 900 24px var(--font-title);
+  cursor: pointer;
+  transform: rotate(var(--letter-angle)) translateY(-235px) rotate(calc(var(--letter-angle) * -1));
+  transition: transform .28s cubic-bezier(.2,.8,.2,1), background .18s ease, box-shadow .18s ease;
+}
+.name-alphabet-key.is-focus {
+  background: var(--yellow);
+  border-color: var(--yellow-dark);
+  box-shadow: 0 0 0 6px rgba(247, 201, 77, .28), 0 5px 14px rgba(9, 43, 59, .28);
+  z-index: 2;
+}
+.name-alphabet-key:hover,
+.name-alphabet-key:focus-visible {
+  background: var(--yellow);
+  border-color: var(--yellow-dark);
+  outline: 3px solid var(--yellow);
+  outline-offset: 2px;
+  transform: rotate(var(--letter-angle)) translateY(-235px) rotate(calc(var(--letter-angle) * -1)) scale(1.12);
+}
+.name-alphabet-actions {
+  position: fixed;
+  right: 18px;
+  bottom: 12px;
+  z-index: 151;
+  display: flex;
+  justify-content: flex-end;
+  gap: 7px;
+  margin: -4px 0 10px;
+}
+.name-alphabet-action {
+  border: 1px solid rgba(16, 61, 93, .2);
+  border-radius: 999px;
+  padding: 6px 11px;
+  background: #ffffff;
+  color: #103d5d;
+  font: 800 11px var(--font);
+  cursor: pointer;
+}
+@media (max-width: 420px) {
+  .name-alphabet-widget {
+    right: -220px;
+    bottom: 58px;
+    width: 440px;
+    height: 440px;
+    min-width: 440px;
+    min-height: 440px;
+  }
+  .name-alphabet-actions {
+    right: 10px;
+    bottom: 10px;
+  }
 }
 
 .profile-choice-grid {
@@ -3717,519 +3830,135 @@ const DEFAULT_CATEGORIES = [
 ];
 
 const DEFAULT_WORDS = [
+  { id: 'eu', label: 'Eu', emoji: '👤', description: 'Quem está falando', cat: 'pessoas' },
+  { id: 'voce', label: 'Você', emoji: '👤', description: 'A pessoa com quem falo', cat: 'pessoas' },
+  { id: 'mae', label: 'Mãe', emoji: '👩', description: 'Minha mãe', cat: 'pessoas' },
+  { id: 'pai', label: 'Pai', emoji: '👨', description: 'Meu pai', cat: 'pessoas' },
+  { id: 'professor', label: 'Professor', emoji: '🧑‍🏫', description: 'Meu professor', cat: 'pessoas' },
+  { id: 'amigo', label: 'Amigo', emoji: '🧑‍🤝‍🧑', description: 'Meu amigo', cat: 'pessoas' },
 
-  /* Pessoas */
-  {
-    id: 'eu',
-    label: 'Eu',
-    emoji: '🙋',
-    description: 'Quem está falando',
-    cat: 'pessoas'
-  },
+  { id: 'quero', label: 'Quero', emoji: '🙋', description: 'Eu desejo algo', cat: 'acoes' },
+  { id: 'preciso', label: 'Preciso', emoji: '❗', description: 'Eu preciso de algo', cat: 'acoes' },
+  { id: 'estou', label: 'Estou', emoji: '💭', description: 'Como eu estou', cat: 'acoes' },
+  { id: 'gosto', label: 'Gosto', emoji: '😊', description: 'Eu gosto de algo', cat: 'acoes' },
+  { id: 'vou', label: 'Vou', emoji: '➡️', description: 'Eu vou para algum lugar', cat: 'acoes' },
 
-  {
-    id: 'voce',
-    label: 'Você',
-    emoji: '🫵',
-    description: 'A pessoa com quem falo',
-    cat: 'pessoas'
-  },
+  { id: 'agua', label: 'Água', emoji: '💧', description: 'Quero beber', cat: 'necessidades' },
+  { id: 'comida', label: 'Comida', emoji: '🍎', description: 'Quero comer', cat: 'necessidades' },
+  { id: 'banheiro', label: 'Banheiro', emoji: '🚽', description: 'Preciso ir ao banheiro', cat: 'necessidades' },
+  { id: 'dormir', label: 'Dormir', emoji: '😴', description: 'Quero dormir', cat: 'necessidades' },
+  { id: 'descansar', label: 'Descansar', emoji: '🛌', description: 'Quero descansar', cat: 'necessidades' },
+  { id: 'ajuda', label: 'Ajuda', emoji: '🆘', description: 'Preciso de ajuda', cat: 'necessidades' },
 
-  {
-    id: 'mae',
-    label: 'Mãe',
-    emoji: '👩',
-    description: 'Minha mãe',
-    cat: 'pessoas'
-  },
+  { id: 'feliz', label: 'Feliz', emoji: '😄', description: 'Estou feliz', cat: 'sentimentos' },
+  { id: 'triste', label: 'Triste', emoji: '😢', description: 'Estou triste', cat: 'sentimentos' },
+  { id: 'cansado', label: 'Cansado', emoji: '😩', description: 'Estou cansado', cat: 'sentimentos' },
+  { id: 'commedo', label: 'Com medo', emoji: '😨', description: 'Estou com medo', cat: 'sentimentos' },
+  { id: 'comdor', label: 'Com dor', emoji: '🤕', description: 'Estou com dor', cat: 'sentimentos' },
+  { id: 'bem', label: 'Bem', emoji: '🙂', description: 'Estou bem', cat: 'sentimentos' },
 
-  {
-    id: 'professor',
-    label: 'Professor',
-    emoji: '👩‍🏫',
-    description: 'Meu professor',
-    cat: 'pessoas'
-  },
+  { id: 'brincar', label: 'Brincar', emoji: '🧸', description: 'Quero brincar', cat: 'atividades' },
+  { id: 'jogar', label: 'Jogar', emoji: '🎮', description: 'Quero jogar', cat: 'atividades' },
+  { id: 'assistir', label: 'Assistir', emoji: '📺', description: 'Quero assistir', cat: 'atividades' },
+  { id: 'desenhar', label: 'Desenhar', emoji: '🎨', description: 'Quero desenhar', cat: 'atividades' },
+  { id: 'passear', label: 'Passear', emoji: '🚶', description: 'Quero passear', cat: 'atividades' },
+  { id: 'musica', label: 'Música', emoji: '🎵', description: 'Quero ouvir música', cat: 'atividades' },
 
-  {
-    id: 'amigo',
-    label: 'Amigo',
-    emoji: '🤝',
-    description: 'Meu amigo',
-    cat: 'pessoas'
-  },
-
-  /* Ações */
-  {
-    id: 'quero',
-    label: 'Quero',
-    emoji: '🙋',
-    description: 'Eu desejo algo',
-    cat: 'acoes'
-  },
-
-  {
-    id: 'preciso',
-    label: 'Preciso',
-    emoji: '❗',
-    description: 'Eu preciso de algo',
-    cat: 'acoes'
-  },
-
-  {
-    id: 'estou',
-    label: 'Estou',
-    emoji: '💭',
-    description: 'Como eu estou',
-    cat: 'acoes'
-  },
-
-  {
-    id: 'gosto',
-    label: 'Gosto',
-    emoji: '❤️',
-    description: 'Eu gosto de algo',
-    cat: 'acoes'
-  },
-
-  {
-    id: 'vou',
-    label: 'Vou',
-    emoji: '➡️',
-    description: 'Eu vou para algum lugar',
-    cat: 'acoes'
-  },
-
-
-  {
-    id: 'agua',
-    label: 'Água',
-    emoji: '💧',
-    description: 'Quero beber',
-    cat: 'necessidades'
-  },
-
-  {
-    id: 'comida',
-    label: 'Comida',
-    emoji: '🍽️',
-    description: 'Quero comer',
-    cat: 'necessidades'
-  },
-
-  {
-    id: 'banheiro',
-    label: 'Banheiro',
-    emoji: '🚻',
-    description: 'Preciso ir ao banheiro',
-    cat: 'necessidades'
-  },
-
-  {
-    id: 'dormir',
-    label: 'Dormir',
-    emoji: '😴',
-    description: 'Quero dormir',
-    cat: 'necessidades'
-  },
-
-  {
-    id: 'descansar',
-    label: 'Descansar',
-    emoji: '🛋️',
-    description: 'Quero descansar',
-    cat: 'necessidades'
-  },
-
-  {
-    id: 'ajuda',
-    label: 'Ajuda',
-    emoji: '🆘',
-    description: 'Preciso de ajuda',
-    cat: 'necessidades'
-  },
-
- 
-  {
-    id: 'feliz',
-    label: 'Feliz',
-    emoji: '😊',
-    description: 'Estou feliz',
-    cat: 'sentimentos'
-  },
-
-  {
-    id: 'triste',
-    label: 'Triste',
-    emoji: '😢',
-    description: 'Estou triste',
-    cat: 'sentimentos'
-  },
-
-  {
-    id: 'cansado',
-    label: 'Cansado',
-    emoji: '😴',
-    description: 'Estou cansado',
-    cat: 'sentimentos'
-  },
-
-  {
-    id: 'commedo',
-    label: 'Com medo',
-    emoji: '😨',
-    description: 'Estou com medo',
-    cat: 'sentimentos'
-  },
-
-  {
-    id: 'comdor',
-    label: 'Com dor',
-    emoji: '🤕',
-    description: 'Estou com dor',
-    cat: 'sentimentos'
-  },
-
-  {
-    id: 'bem',
-    label: 'Bem',
-    emoji: '🙂',
-    description: 'Estou bem',
-    cat: 'sentimentos'
-  },
-
-  
-  {
-    id: 'brincar',
-    label: 'Brincar',
-    emoji: '🧸',
-    description: 'Quero brincar',
-    cat: 'atividades'
-  },
-
-  {
-    id: 'jogar',
-    label: 'Jogar',
-    emoji: '🎮',
-    description: 'Quero jogar',
-    cat: 'atividades'
-  },
-
-  {
-    id: 'assistir',
-    label: 'Assistir',
-    emoji: '📺',
-    description: 'Quero assistir',
-    cat: 'atividades'
-  },
-
-  {
-    id: 'desenhar',
-    label: 'Desenhar',
-    emoji: '🖍️',
-    description: 'Quero desenhar',
-    cat: 'atividades'
-  },
-
-  {
-    id: 'passear',
-    label: 'Passear',
-    emoji: '🚶',
-    description: 'Quero passear',
-    cat: 'atividades'
-  },
-
-  {
-    id: 'musica',
-    label: 'Música',
-    emoji: '🎵',
-    description: 'Quero ouvir música',
-    cat: 'atividades'
-  },
-
-  
-  {
-    id: 'casa',
-    label: 'Casa',
-    emoji: '🏠',
-    description: 'Minha casa',
-    cat: 'lugares'
-  },
-
-  {
-    id: 'escola',
-    label: 'Escola',
-    emoji: '🏫',
-    description: 'Minha escola',
-    cat: 'lugares'
-  },
-
-  {
-    id: 'quarto',
-    label: 'Quarto',
-    emoji: '🛏️',
-    description: 'Meu quarto',
-    cat: 'lugares'
-  },
-
-  {
-    id: 'hospital',
-    label: 'Hospital',
-    emoji: '🏥',
-    description: 'Preciso ir ao hospital',
-    cat: 'lugares'
-  },
-
-  {
-    id: 'sair',
-    label: 'Sair',
-    emoji: '🚪',
-    description: 'Quero sair',
-    cat: 'lugares'
-  }
+  { id: 'casa', label: 'Casa', emoji: '🏠', description: 'Minha casa', cat: 'lugares' },
+  { id: 'escola', label: 'Escola', emoji: '🏫', description: 'Minha escola', cat: 'lugares' },
+  { id: 'quarto', label: 'Quarto', emoji: '🛏️', description: 'Meu quarto', cat: 'lugares' },
+  { id: 'hospital', label: 'Hospital', emoji: '🏥', description: 'Preciso ir ao hospital', cat: 'lugares' },
+  { id: 'sair', label: 'Sair', emoji: '🚪', description: 'Quero sair', cat: 'lugares' }
 ];
 
+const AAC_EXTRA_WORDS = [
+  ['ele', 'Ele', '👤'], ['ela', 'Ela', '👤'], ['nos', 'Nós', '👥'], ['eles', 'Eles', '👥'],
+  ['elas', 'Elas', '👥'], ['isso', 'Isso', '👉'], ['aquilo', 'Aquilo', '👉'],
+  ['avo', 'Avô', '👴'], ['ava', 'Avó', '👵'], ['tio', 'Tio', '👨'], ['tia', 'Tia', '👩'],
+  ['irmao', 'Irmão', '👦'], ['irma', 'Irmã', '👧'],
+  ['bomDia', 'Bom dia', '🌞'], ['boaTarde', 'Boa tarde', '🌤️'], ['boaNoite', 'Boa noite', '🌙'],
+  ['ola', 'Olá', '👋'], ['oi', 'Oi', '👋'], ['tudoBem', 'Tudo bem?', '🙂'], ['comoVai', 'Como vai?', '😊'],
+  ['ateLogo', 'Até logo', '👋'], ['tchau', 'Tchau', '👋'], ['prazerConhecer', 'Prazer em conhecer você', '🤝'],
+  ['comoVoceEsta', 'Como você está?', '🙂'], ['muitoPrazer', 'Muito prazer', '🤝'],
+  ['vai', 'Vai', '➡️'], ['quer', 'Quer', '🙋'], ['nao', 'Não', '🚫'], ['acho', 'Acho', '💭'], ['trabalhar', 'Trabalhar', '💼'],
+  ['tenho', 'Tenho', '✋'], ['pode', 'Pode', '✅'], ['sabe', 'Sabe', '🧠'], ['tem', 'Tem', '📦'], ['temPlural', 'Têm', '📦'],
+  ['esta', 'Está', '💭'], ['foi', 'Foi', '⏮️'], ['e', 'É', '🔗'], ['faz', 'Faz', '🛠️'],
+  ['diz', 'Diz', '💬'], ['gosta', 'Gosta', '😊'], ['precisa', 'Precisa', '❗'], ['morava', 'Morava', '🏠'],
+  ['trabalha', 'Trabalha', '💼'], ['estuda', 'Estuda', '📚'], ['conhece', 'Conhece', '🤝'], ['entende', 'Entende', '💡'],
+  ['somos', 'Somos', '👥'], ['estamos', 'Estamos', '👥'], ['vamos', 'Vamos', '➡️'], ['temos', 'Temos', '📦'],
+  ['fomos', 'Fomos', '⏮️'], ['queremos', 'Queremos', '🙋'], ['podemos', 'Podemos', '✅'], ['sabemos', 'Sabemos', '🧠'],
+  ['fizemos', 'Fizemos', '🛠️'], ['precisamos', 'Precisamos', '❗'], ['sao', 'São', '👥'], ['estao', 'Estão', '👥'],
+  ['vao', 'Vão', '➡️'], ['foram', 'Foram', '⏮️'], ['querem', 'Querem', '🙋'], ['podem', 'Podem', '✅'],
+  ['sabem', 'Sabem', '🧠'], ['fizeram', 'Fizeram', '🛠️'], ['gostam', 'Gostam', '😊'], ['precisam', 'Precisam', '❗'],
+  ['sera', 'Será', '🔮'], ['parece', 'Parece', '👀'], ['deve', 'Deve', '📌'], ['funciona', 'Funciona', '⚙️'],
+  ['aconteceu', 'Aconteceu', '❓'], ['falar', 'Falar', '💬'], ['irBanheiro', 'Ir ao banheiro', '🚽'],
+  ['irCasa', 'Ir para casa', '🏠'], ['saber', 'Saber', '🧠'], ['parar', 'Parar', '🛑'], ['maisTempo', 'Mais tempo', '⏳'],
+  ['deAjuda', 'De ajuda', '🆘'], ['deAgua', 'De água', '💧'], ['deComida', 'De comida', '🍎'],
+  ['falarAlguem', 'Falar com alguém', '💬'], ['deRemedio', 'De remédio', '💊'], ['deTempo', 'De tempo', '⏳'],
+  ['entender', 'Entender', '💡'], ['comFome', 'Com fome', '🍽️'], ['comSede', 'Com sede', '💧'], ['cansados', 'Cansados', '😩'],
+  ['felizes', 'Felizes', '😄'], ['tristes', 'Tristes', '😢'], ['preocupado', 'Preocupado', '😟'], ['preocupados', 'Preocupados', '😟'], ['paraCasa', 'Para casa', '🏠'], ['embora', 'Embora', '🚶'],
+  ['tentar', 'Tentar', '💪'], ['comer', 'Comer', '🍽️'], ['certeza', 'Certeza', '✅'], ['duvida', 'Dúvida', '❓'],
+  ['medo', 'Medo', '😨'], ['fome', 'Fome', '🍽️'], ['sede', 'Sede', '💧'], ['sono', 'Sono', '😴'],
+  ['pressa', 'Pressa', '⏱️'], ['umProblema', 'Um problema', '⚠️'], ['meAjudar', 'Me ajudar', '🆘'],
+  ['esperar', 'Esperar', '⏳'], ['repetir', 'Repetir', '🔁'], ['virAqui', 'Vir aqui', '👋'],
+  ['falarDevagar', 'Falar mais devagar', '🐢'], ['explicar', 'Explicar', '💡'], ['porFavor', 'Por favor', '🙏'],
+  ['agora', 'Agora', '⏰'], ['paraMim', 'Para mim', '🙋'], ['comIsso', 'Com isso', '👉'], ['euPreciso', 'Eu preciso', '❗'],
+  ['naoConsigo', 'Não consigo', '😟'], ['estouComDor', 'Estou com dor', '🤕'], ['queroFalar', 'Quero falar', '💬'],
+  ['obrigado', 'Obrigado', '🙏'], ['dor', 'Dor', '🤕'], ['estouCom', 'Estou com', '💭'], ['muitaDor', 'Muita dor', '🤕'],
+  ['aqui', 'Aqui', '📍'], ['chameAlguem', 'Chame alguém', '📣'], ['remedio', 'Remédio', '💊'], ['umPouco', 'Um pouco', '🤏'],
+  ['ondeFica', 'Onde fica?', '📍'], ['urgente', 'Urgente', '🚨'], ['mais', 'Mais', '➕'], ['deNovo', 'De novo', '🔁'],
+  ['estaBem', 'Está bem', '👍'], ['naoEntendi', 'Não entendi', '❓'], ['queroIrCasa', 'Quero ir para casa', '🏠'],
+  ['precisoDeAgua', 'Preciso de água', '💧'], ['maisDevagar', 'Mais devagar', '🐢']
+].map(([id, label, emoji]) => ({ id, label, emoji, description: label, cat: 'acoes' }));
 
+const AAC_FALLBACK = [
+  'quero', 'preciso', 'porFavor', 'ajuda', 'agora', 'mais', 'deNovo', 'estaBem',
+  'naoEntendi', 'obrigado', 'ola', 'tudoBem', 'queroIrCasa', 'estouComDor',
+  'precisoDeAgua', 'maisDevagar', 'ateLogo'
+];
 
 const SUGGESTIONS = {
-
-  __start__: [
-    'eu',
-    'voce',
-    'mae',
-    'professor',
-    'amigo'
-  ],
-
-  eu: [
-    'quero',
-    'preciso',
-    'estou',
-    'gosto',
-    'vou'
-  ],
-
-  voce: [
-    'quero',
-    'preciso',
-    'estou',
-    'gosto',
-    'vou'
-  ],
-
-  mae: [
-    'quero',
-    'preciso',
-    'estou',
-    'gosto',
-    'vou'
-  ],
-
-  professor: [
-    'quero',
-    'preciso',
-    'estou',
-    'gosto',
-    'vou'
-  ],
-
-  amigo: [
-    'quero',
-    'preciso',
-    'estou',
-    'gosto',
-    'vou'
-  ],
-
-  quero: [
-    'agua',
-    'comida',
-    'brincar',
-    'jogar',
-    'assistir',
-    'desenhar',
-    'passear',
-    'musica',
-    'dormir',
-    'sair',
-    'casa'
-  ],
-
-  preciso: [
-    'agua',
-    'comida',
-    'banheiro',
-    'dormir',
-    'descansar',
-    'ajuda',
-    'hospital'
-  ],
-
-  estou: [
-    'feliz',
-    'triste',
-    'cansado',
-    'comdor',
-    'commedo',
-    'bem'
-  ],
-
-  gosto: [
-    'brincar',
-    'jogar',
-    'desenhar',
-    'assistir',
-    'passear',
-    'musica'
-  ],
-
-  vou: [
-    'casa',
-    'escola',
-    'passear',
-    'dormir',
-    'banheiro',
-    'hospital'
-  ],
-
-  agua: [
-    'quero',
-    'gosto',
-    'preciso'
-  ],
-
-  comida: [
-    'quero',
-    'gosto',
-    'preciso'
-  ],
-
-  banheiro: [
-    'preciso',
-    'quero'
-  ],
-
-  dormir: [
-    'quero',
-    'preciso',
-    'estou'
-  ],
-
-  descansar: [
-    'quero',
-    'preciso',
-    'estou'
-  ],
-
-  ajuda: [
-    'preciso',
-    'quero'
-  ],
-
-  feliz: [
-    'eu',
-    'gosto',
-    'quero'
-  ],
-
-  triste: [
-    'eu',
-    'preciso',
-    'quero'
-  ],
-
-  cansado: [
-    'eu',
-    'quero',
-    'preciso'
-  ],
-
-  commedo: [
-    'eu',
-    'preciso',
-    'ajuda'
-  ],
-
-  comdor: [
-    'eu',
-    'preciso',
-    'ajuda'
-  ],
-
-  bem: [
-    'eu',
-    'gosto',
-    'quero'
-  ],
-
-  brincar: [
-    'eu',
-    'quero',
-    'gosto'
-  ],
-
-  jogar: [
-    'eu',
-    'quero',
-    'gosto'
-  ],
-
-  assistir: [
-    'eu',
-    'quero',
-    'gosto'
-  ],
-
-  desenhar: [
-    'eu',
-    'quero',
-    'gosto'
-  ],
-
-  passear: [
-    'eu',
-    'quero',
-    'vou'
-  ],
-
-  musica: [
-    'eu',
-    'quero',
-    'gosto'
-  ],
-
-  casa: [
-    'eu',
-    'vou',
-    'quero'
-  ],
-
-  escola: [
-    'eu',
-    'vou',
-    'quero'
-  ],
-
-  quarto: [
-    'eu',
-    'vou',
-    'quero'
-  ],
-
-  hospital: [
-    'eu',
-    'vou',
-    'preciso'
-  ],
-
-  sair: [
-    'eu',
-    'quero',
-    'vou'
-  ]
+  __start__: ['eu', 'voce', 'ele', 'ela', 'nos', 'eles', 'elas', 'isso', 'aquilo', 'mae', 'pai', 'professor', 'avo', 'ava', 'tio', 'tia', 'irmao', 'irma', 'bomDia', 'boaTarde', 'boaNoite', 'ola', 'oi', 'tudoBem', 'comoVai', 'ateLogo', 'tchau', 'prazerConhecer', 'comoVoceEsta', 'muitoPrazer'],
+  eu: ['vou', 'quero', 'nao', 'acho', 'tenho', 'preciso', 'estou'],
+  voce: ['vai', 'quer', 'pode', 'sabe', 'tem', 'esta', 'foi', 'e', 'faz', 'diz', 'gosta', 'precisa', 'morava', 'trabalha', 'estuda', 'conhece', 'entende'],
+  ele: ['vai', 'quer', 'pode', 'sabe', 'tem', 'esta', 'foi', 'e', 'faz', 'diz', 'gosta', 'precisa', 'morava', 'trabalha', 'estuda', 'conhece', 'entende'],
+  ela: ['vai', 'quer', 'pode', 'sabe', 'tem', 'esta', 'foi', 'e', 'faz', 'diz', 'gosta', 'precisa', 'morava', 'trabalha', 'estuda', 'conhece', 'entende'],
+  nos: ['somos', 'estamos', 'vamos', 'temos', 'fomos', 'queremos', 'podemos', 'sabemos', 'fizemos', 'precisamos'],
+  eles: ['sao', 'estao', 'vao', 'temPlural', 'foram', 'querem', 'podem', 'sabem', 'fizeram', 'gostam', 'precisam'],
+  elas: ['sao', 'estao', 'vao', 'temPlural', 'foram', 'querem', 'podem', 'sabem', 'fizeram', 'gostam', 'precisam'],
+  isso: ['e', 'esta', 'foi', 'sera', 'parece', 'pode', 'deve', 'funciona', 'aconteceu'],
+  aquilo: ['e', 'esta', 'foi', 'sera', 'parece', 'pode', 'deve', 'funciona', 'aconteceu'],
+  quero: ['agua', 'comida', 'irBanheiro', 'ajuda', 'falar', 'irCasa', 'descansar', 'saber', 'parar', 'maisTempo'],
+  quer: ['agua', 'comida', 'irBanheiro', 'ajuda', 'falar', 'irCasa', 'descansar', 'saber', 'parar', 'maisTempo'],
+  preciso: ['deAjuda', 'deAgua', 'deComida', 'irBanheiro', 'descansar', 'falarAlguem', 'deRemedio', 'irCasa', 'deTempo', 'entender'],
+  precisa: ['deAjuda', 'deAgua', 'deComida', 'irBanheiro', 'descansar', 'falarAlguem', 'deRemedio', 'irCasa', 'deTempo', 'entender'],
+  precisam: ['deAjuda', 'deAgua', 'deComida', 'irBanheiro', 'descansar', 'falarAlguem', 'deRemedio', 'irCasa', 'deTempo', 'entender'],
+  estou: ['bem', 'cansado', 'comFome', 'comSede', 'comdor', 'feliz', 'triste', 'preocupado'],
+  estamos: ['bem', 'cansados', 'comFome', 'comSede', 'comdor', 'felizes', 'tristes', 'preocupados'],
+  esta: ['bem', 'cansado', 'comFome', 'comSede', 'comdor', 'feliz', 'triste', 'preocupado'],
+  estao: ['bem', 'cansados', 'comFome', 'comSede', 'comdor', 'felizes', 'tristes', 'preocupados'],
+  vou: ['paraCasa', 'embora', 'tentar', 'dormir', 'comer', 'trabalhar', 'sair'],
+  vamos: ['paraCasa', 'embora', 'tentar', 'dormir', 'comer', 'trabalhar', 'sair'],
+  vai: ['paraCasa', 'embora', 'tentar', 'dormir', 'comer', 'trabalhar', 'sair'],
+  tenho: ['certeza', 'duvida', 'medo', 'fome', 'sede', 'sono', 'pressa', 'umProblema'],
+  tem: ['certeza', 'medo', 'fome', 'sede', 'sono', 'pressa', 'umProblema'],
+  temPlural: ['certeza', 'medo', 'fome', 'sede', 'sono', 'pressa', 'umProblema'],
+  pode: ['meAjudar', 'esperar', 'repetir', 'virAqui', 'falarDevagar', 'explicar'],
+  podem: ['meAjudar', 'esperar', 'repetir', 'virAqui', 'falarDevagar', 'explicar'],
+  ajuda: ['porFavor', 'agora', 'paraMim', 'comIsso', 'euPreciso', 'naoConsigo', 'estouComDor', 'queroFalar', 'obrigado'],
+  dor: ['estouCom', 'muitaDor', 'aqui', 'precisoDeAgua', 'agora', 'porFavor', 'naoEntendi', 'chameAlguem', 'remedio', 'obrigado'],
+  agua: ['porFavor', 'euPreciso', 'agora', 'umPouco', 'ondeFica', 'urgente', 'obrigado'],
+  comida: ['porFavor', 'euPreciso', 'agora', 'umPouco', 'ondeFica', 'urgente', 'obrigado'],
+  banheiro: ['porFavor', 'euPreciso', 'agora', 'ondeFica', 'urgente', 'obrigado'],
+  deAjuda: ['agora', 'porFavor', 'paraMim', 'comIsso', 'obrigado'],
+  deAgua: ['agora', 'porFavor', 'umPouco', 'urgente', 'obrigado'],
+  deComida: ['agora', 'porFavor', 'umPouco', 'urgente', 'obrigado'],
+  irBanheiro: ['agora', 'porFavor', 'ondeFica', 'urgente', 'obrigado'],
+  irCasa: ['agora', 'porFavor', 'obrigado'],
+  paraCasa: ['agora', 'porFavor', 'obrigado'],
+  queroFalar: ['porFavor', 'agora', 'paraMim', 'obrigado'],
+  estouComDor: ['agora', 'porFavor', 'chameAlguem', 'remedio', 'obrigado']
 };
-
-
 
 const CHALLENGES = [
 
@@ -4415,7 +4144,7 @@ function allCategories() {
 }
 
 function allWords() {
-  return DEFAULT_WORDS.concat(STATE.data.customWords);
+  return DEFAULT_WORDS.concat(AAC_EXTRA_WORDS, STATE.data.customWords);
 }
 
 function wordById(id) {
@@ -4791,39 +4520,19 @@ function currentLayerKey() {
 }
 
 function loadLayer() {
+  const key = currentLayerKey();
+  let suggestions = SUGGESTIONS[key] || AAC_FALLBACK;
 
-  const key =
-    currentLayerKey();
+  const customWords = STATE.data.customWords
+    .filter(word => !suggestions.includes(word.id))
+    .map(word => word.id);
 
-  let suggestions =
-    SUGGESTIONS[key] || [];
+  const combined = suggestions.concat(customWords);
+  STATE.options = combined.filter(id => wordById(id));
 
-  
-
-  const customWords =
-    STATE.data.customWords
-      .filter(word =>
-        !suggestions.includes(word.id)
-      )
-      .map(word => word.id);
-
-  const combined =
-    suggestions.concat(customWords);
-
-  STATE.options =
-    combined.filter(
-      id => wordById(id)
-    );
-
-  if (
-    STATE.carouselIndex >=
-    STATE.options.length
-  ) {
-
+  if (STATE.carouselIndex >= STATE.options.length) {
     STATE.carouselIndex = 0;
-
   }
-
 }
 
 function moveCarousel(delta) {
@@ -5186,6 +4895,46 @@ function renderLineIcons() {
 
 
 
+let nameAlphabetWheelOffset = 0;
+let nameAlphabetFocusIndex = 0;
+
+function nameAlphabetButtonsHtml() {
+  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  return letters.map((letter, index) => {
+    const angle = ((index - nameAlphabetFocusIndex + letters.length) % letters.length) * (360 / letters.length) - 90;
+    const focus = index === nameAlphabetFocusIndex ? ' is-focus' : '';
+    return `<button type="button" class="name-alphabet-key${focus}" data-name-letter="${letter}" data-name-index="${index}" data-name-slot="${index}" aria-label="Letra ${letter}${focus ? ', em foco' : ''}" style="--letter-angle:${angle}deg">${letter}</button>`;
+  }).join('');
+}
+
+function updateNameAlphabetWheel(animate = true) {
+  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  const wheel = document.querySelector('.name-alphabet-widget');
+  if (wheel && animate) {
+    wheel.classList.remove('is-spinning');
+    void wheel.offsetWidth;
+    wheel.classList.add('is-spinning');
+  }
+  const buttons = [...document.querySelectorAll('[data-name-letter]')];
+  buttons.forEach((button, index) => {
+    const letter = letters[index];
+    const angle = ((index - nameAlphabetFocusIndex + letters.length) % letters.length) * (360 / letters.length) - 90;
+    button.textContent = letter;
+    button.dataset.nameLetter = letter;
+    button.dataset.nameIndex = String(index);
+    button.dataset.nameSlot = String(index);
+    button.style.setProperty('--letter-angle', `${angle}deg`);
+    button.classList.toggle('is-focus', index === nameAlphabetFocusIndex);
+    button.setAttribute('aria-label', `Letra ${letter}`);
+  });
+}
+
+function moveNameAlphabetFocus(step) {
+  nameAlphabetFocusIndex = (nameAlphabetFocusIndex + step + 26) % 26;
+  nameAlphabetWheelOffset = nameAlphabetFocusIndex;
+  updateNameAlphabetWheel(true);
+}
+
 function renderLogin() {
 
   const profile =
@@ -5231,6 +4980,14 @@ function renderLogin() {
           Continuar
         </button>
 
+      </div>
+
+      <div class="name-alphabet-widget" aria-label="Teclado circular para escrever o nome">
+        ${nameAlphabetButtonsHtml()}
+      </div>
+      <div class="name-alphabet-actions">
+        <button type="button" class="name-alphabet-action" id="nameBackspaceBtn">⌫ Apagar</button>
+        <button type="button" class="name-alphabet-action" id="nameClearBtn">Limpar</button>
       </div>
 
     </div>
@@ -6516,6 +6273,49 @@ function attachHandlers() {
     element.addEventListener('click', () => {
       go(element.getAttribute('data-mode-screen'));
     });
+  });
+
+  const loginName = document.getElementById('loginName');
+  document.querySelectorAll('[data-name-letter]').forEach(button => {
+    button.addEventListener('click', () => {
+      if (!loginName) return;
+      const letter = button.getAttribute('data-name-letter') || '';
+      const current = loginName.value;
+      loginName.value = current ? current + letter.toLowerCase() : letter;
+      nameAlphabetFocusIndex = (Number(button.dataset.nameIndex || 0) + 1) % 26;
+      nameAlphabetWheelOffset = nameAlphabetFocusIndex;
+      updateNameAlphabetWheel(true);
+      loginName.focus();
+      loginName.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+  });
+  if (loginName) loginName.addEventListener('keydown', event => {
+    if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+      event.preventDefault();
+      moveNameAlphabetFocus(1);
+    } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+      event.preventDefault();
+      moveNameAlphabetFocus(-1);
+    } else if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      const focused = document.querySelector('.name-alphabet-key.is-focus');
+      if (focused) focused.click();
+    }
+  });
+  const nameBackspaceBtn = document.getElementById('nameBackspaceBtn');
+  if (nameBackspaceBtn) nameBackspaceBtn.addEventListener('click', () => {
+    if (!loginName) return;
+    loginName.value = loginName.value.slice(0, -1);
+    loginName.focus();
+  });
+  const nameClearBtn = document.getElementById('nameClearBtn');
+  if (nameClearBtn) nameClearBtn.addEventListener('click', () => {
+    if (!loginName) return;
+    loginName.value = '';
+    nameAlphabetWheelOffset = 0;
+    nameAlphabetFocusIndex = 0;
+    updateNameAlphabetWheel(false);
+    loginName.focus();
   });
 
   const loginContinueBtn =
