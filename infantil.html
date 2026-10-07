@@ -2451,6 +2451,398 @@ body .mode-choice-button[data-mode-screen="carouselMode"]:focus-visible {
   pointer-events: auto !important;
 }
 
+/* Modo para daltonismo: paleta azul, amarelo e laranja de alto contraste. */
+body[data-color-vision="on"] {
+  background-color: #b6c3ce !important;
+  color: #10283d !important;
+  --card: #fffdf5;
+  --card-border: #0072b2;
+  --navy: #10283d;
+  --navy-soft: #304b62;
+}
+body[data-color-vision="on"] #app .form-block,
+body[data-color-vision="on"] #app .settings-panel,
+body[data-color-vision="on"] #app .info-block,
+body[data-color-vision="on"] #app .profile-card,
+body[data-color-vision="on"] #app .onboard-panel {
+  background-color: #fffdf5 !important;
+  color: #10283d !important;
+  border-color: #0072b2 !important;
+}
+body[data-color-vision="on"] #app .word-card,
+body[data-color-vision="on"] #app .cat-card,
+body[data-color-vision="on"] #app .circular-key,
+body[data-color-vision="on"] #app .carousel-card:not(.empty),
+body[data-color-vision="on"] #app .profile-choice-card,
+body[data-color-vision="on"] #app .favorite-choice-option {
+  background-color: #0072b2 !important;
+  color: #ffffff !important;
+  border: 3px solid #10283d !important;
+  box-shadow: 0 4px 0 #10283d !important;
+}
+body[data-color-vision="on"] #app .word-card .label,
+body[data-color-vision="on"] #app .word-card .description,
+body[data-color-vision="on"] #app .cat-card .label,
+body[data-color-vision="on"] #app .cat-card .count,
+body[data-color-vision="on"] #app .circular-key-label,
+body[data-color-vision="on"] #app .carousel-card .label,
+body[data-color-vision="on"] #app .profile-choice-card .title,
+body[data-color-vision="on"] #app .profile-choice-card .desc,
+body[data-color-vision="on"] #app .profile-choice-card .tag {
+  color: #ffffff !important;
+  text-shadow: none !important;
+}
+body[data-color-vision="on"] #app .topbar-title,
+body[data-color-vision="on"] #app .section-label,
+body[data-color-vision="on"] #app .layer-label,
+body[data-color-vision="on"] #app .settings-label,
+body[data-color-vision="on"] #app .settings-desc {
+  color: #10283d !important;
+  text-shadow: none !important;
+}
+body[data-color-vision="on"] #app .word-card.selected,
+body[data-color-vision="on"] #app .cat-card.selected,
+body[data-color-vision="on"] #app .circular-key.selected,
+body[data-color-vision="on"] #app .carousel-card.center,
+body[data-color-vision="on"] #app .profile-choice-card.selected {
+  background-color: #f0e442 !important;
+  color: #10283d !important;
+  border: 4px solid #111111 !important;
+  box-shadow: 0 0 0 3px #ffffff, 0 0 0 6px #111111 !important;
+}
+body[data-color-vision="on"] #app .word-card.selected .label,
+body[data-color-vision="on"] #app .word-card.selected .description,
+body[data-color-vision="on"] #app .carousel-card.center .label {
+  color: #10283d !important;
+  text-shadow: none !important;
+}
+body[data-color-vision="on"] #app .word-card.selected::after {
+  content: "✓" !important;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: 2px solid #111111;
+  border-radius: 50%;
+  background-color: #ffffff;
+  color: #111111 !important;
+  font-size: 18px;
+  font-weight: 900;
+}
+body[data-color-vision="on"] #app .submit-btn,
+body[data-color-vision="on"] #app .confirm-btn,
+body[data-color-vision="on"] #app .action-row button,
+body[data-color-vision="on"] #app .speak-btn {
+  background-color: #e69f00 !important;
+  color: #10283d !important;
+  border: 2px solid #10283d !important;
+}
+body[data-color-vision="on"] #app button:focus-visible,
+body[data-color-vision="on"] #app [role="button"]:focus-visible {
+  outline: 4px solid #e69f00 !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 0 2px #111111 !important;
+}
+
+/* Cartão de prévia: documenta as cores e mostra que o estado não depende só delas. */
+.color-vision-preview {
+  margin: 0 0 14px;
+  padding: 14px;
+  border: 1px solid #c4d2df;
+  border-left: 4px solid #0072b2;
+  border-radius: 14px;
+  background-color: #f7f9fc;
+  color: #10283d;
+}
+.color-vision-preview-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.color-vision-preview-title { font-size: 13px; font-weight: 900; color: #10283d; }
+.color-vision-preview-badge {
+  padding: 4px 8px;
+  border: 1px solid #0072b2;
+  border-radius: 999px;
+  background-color: #ffffff;
+  color: #10283d;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.color-vision-preview-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
+  gap: 8px;
+}
+.color-vision-swatch {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 42px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 800;
+}
+.color-vision-swatch--option { background-color: #0072b2; color: #ffffff; border: 2px solid #10283d; }
+.color-vision-swatch--selected { background-color: #f0e442; color: #10283d; border: 3px solid #111111; }
+.color-vision-swatch--focus { background-color: #ffffff; color: #10283d; border: 2px dashed #d98200; }
+.color-vision-preview-note { margin: 9px 0 0; color: #304b62; font-size: 11px; font-weight: 600; line-height: 1.45; }
+#colorVisionToggle:checked + .switch-track,
+#seniorColorVisionToggle:checked + .switch-track { background-color: #0072b2 !important; }
+@media (max-width: 420px) {
+  .color-vision-preview { padding: 11px; }
+  .color-vision-preview-items { grid-template-columns: 1fr; }
+}
+
+/* Ajustes do tema combinado: nenhum texto ativo fica esmaecido. */
+body[data-theme="dark"][data-color-vision="on"] #app .phrase-bar {
+  background-color: #fffdf5 !important;
+  color: #10283d !important;
+  border-color: #0072b2 !important;
+}
+body[data-theme="dark"][data-color-vision="on"] #app .phrase-chip {
+  background-color: #0072b2 !important;
+  color: #ffffff !important;
+  border: 2px solid #10283d !important;
+}
+body[data-theme="dark"][data-color-vision="on"] #app .phrase-chip *,
+body[data-theme="dark"][data-color-vision="on"] #app .phrase-chip span {
+  color: #ffffff !important;
+}
+body[data-theme="dark"][data-color-vision="on"] #app .phrase-placeholder {
+  color: #304b62 !important;
+  opacity: 1 !important;
+}
+body[data-theme="dark"][data-color-vision="on"] #app .carousel-card.side {
+  opacity: 1 !important;
+}
+body[data-theme="dark"][data-color-vision="on"] #app .carousel-card.side .label {
+  color: #ffffff !important;
+  text-shadow: none !important;
+}
+body[data-theme="dark"][data-color-vision="on"] #app .fav-item {
+  background-color: #fffdf5 !important;
+  color: #10283d !important;
+  border-color: #0072b2 !important;
+}
+body[data-theme="dark"][data-color-vision="on"] #app .fav-item .txt {
+  color: #10283d !important;
+}
+body[data-theme="dark"][data-color-vision="on"] #app .cat-card.selected .label,
+body[data-theme="dark"][data-color-vision="on"] #app .cat-card.selected .count,
+body[data-theme="dark"][data-color-vision="on"] #app .circular-key.selected .circular-key-label,
+body[data-theme="dark"][data-color-vision="on"] #app .profile-choice-card.selected .title,
+body[data-theme="dark"][data-color-vision="on"] #app .profile-choice-card.selected .desc,
+body[data-theme="dark"][data-color-vision="on"] #app .profile-choice-card.selected .tag {
+  color: #10283d !important;
+  text-shadow: none !important;
+}
+body[data-theme="dark"][data-color-vision="on"] #app button:disabled {
+  opacity: 1 !important;
+  background-color: #e3e8ed !important;
+  color: #304b62 !important;
+  border: 2px dashed #526778 !important;
+  cursor: not-allowed !important;
+}
+
+/* Fundo infantil menos luminoso no modo daltônico, mantendo as ilustrações originais. */
+body[data-color-vision="on"]:not(.bg-outras),
+body[data-color-vision="on"].bg-outras {
+  background-image: linear-gradient(180deg, rgba(16, 40, 61, .38) 0%, rgba(16, 40, 61, .52) 100%), url('assets/imagens/plano-inicio.png') !important;
+}
+body[data-color-vision="on"] #app .carousel-full-screen,
+body[data-color-vision="on"] #app .circular-full-screen {
+  background-image: linear-gradient(180deg, rgba(16, 40, 61, .38) 0%, rgba(16, 40, 61, .54) 100%), url('assets/imagens/plano-inicio.png') !important;
+}
+body[data-color-vision="on"] #app .carousel-full-topbar .topbar-title,
+body[data-color-vision="on"] #app .circular-full-topbar .topbar-title,
+body[data-color-vision="on"] #app .carousel-full-content .section-label,
+body[data-color-vision="on"] #app .carousel-full-content .layer-label,
+body[data-color-vision="on"] #app .circular-full-content .section-label,
+body[data-color-vision="on"] #app .circular-full-content .layer-label {
+  color: #ffffff !important;
+  text-shadow: 0 1px 4px #10283d !important;
+}
+
+
+/* Legibilidade completa quando tema escuro e modo para daltonismo são usados juntos. */
+body[data-color-vision="on"] #app .form-block h1,
+body[data-color-vision="on"] #app .form-block h2,
+body[data-color-vision="on"] #app .form-block h3,
+body[data-color-vision="on"] #app .form-block p,
+body[data-color-vision="on"] #app .form-block span,
+body[data-color-vision="on"] #app .form-block label,
+body[data-color-vision="on"] #app .form-block strong,
+body[data-color-vision="on"] #app .form-block small,
+body[data-color-vision="on"] #app .form-block .field-label,
+body[data-color-vision="on"] #app .settings-panel h1,
+body[data-color-vision="on"] #app .settings-panel h2,
+body[data-color-vision="on"] #app .settings-panel h3,
+body[data-color-vision="on"] #app .settings-panel p,
+body[data-color-vision="on"] #app .settings-panel span,
+body[data-color-vision="on"] #app .settings-panel label,
+body[data-color-vision="on"] #app .settings-panel strong,
+body[data-color-vision="on"] #app .settings-panel small,
+body[data-color-vision="on"] #app .info-block h1,
+body[data-color-vision="on"] #app .info-block h2,
+body[data-color-vision="on"] #app .info-block h3,
+body[data-color-vision="on"] #app .info-block p,
+body[data-color-vision="on"] #app .info-block span,
+body[data-color-vision="on"] #app .info-block label,
+body[data-color-vision="on"] #app .info-block strong,
+body[data-color-vision="on"] #app .info-block small,
+body[data-color-vision="on"] #app .profile-card h1,
+body[data-color-vision="on"] #app .profile-card h2,
+body[data-color-vision="on"] #app .profile-card h3,
+body[data-color-vision="on"] #app .profile-card p,
+body[data-color-vision="on"] #app .profile-card span,
+body[data-color-vision="on"] #app .profile-card label,
+body[data-color-vision="on"] #app .profile-card strong,
+body[data-color-vision="on"] #app .onboard-panel h1,
+body[data-color-vision="on"] #app .onboard-panel h2,
+body[data-color-vision="on"] #app .onboard-panel h3,
+body[data-color-vision="on"] #app .onboard-panel p,
+body[data-color-vision="on"] #app .onboard-panel span,
+body[data-color-vision="on"] #app .onboard-panel label,
+body[data-color-vision="on"] #app .onboard-panel strong {
+  color: #10283d !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+body[data-color-vision="on"] #app .form-block input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+body[data-color-vision="on"] #app .form-block select,
+body[data-color-vision="on"] #app .form-block textarea {
+  background-color: #ffffff !important;
+  color: #10283d !important;
+  border-color: #0072b2 !important;
+}
+body[data-color-vision="on"] #app .form-block input::placeholder,
+body[data-color-vision="on"] #app .form-block textarea::placeholder {
+  color: #526778 !important;
+  opacity: 1 !important;
+}
+body[data-color-vision="on"] #app .settings-panel .stepper button {
+  background-color: #ffffff !important;
+  color: #10283d !important;
+  border: 2px solid #0072b2 !important;
+}
+body[data-color-vision="on"] #app .form-block .custom-chip {
+  background-color: #0072b2 !important;
+  color: #ffffff !important;
+  border-color: #10283d !important;
+}
+body[data-color-vision="on"] #app .form-block .custom-chip * {
+  color: #ffffff !important;
+  text-shadow: none !important;
+}
+body[data-color-vision="on"] #app .form-block .custom-chip .x { color: #ffddd8 !important; }
+body[data-color-vision="on"] #app .form-block .emoji-pick,
+body[data-color-vision="on"] #app .form-block .emoji-pick * { color: #ffffff !important; }
+body[data-color-vision="on"] #app .form-block #logoutBtn { color: #ffffff !important; }
+body[data-color-vision="on"] #app .stepper span,
+body[data-color-vision="on"] #app .profile-stat,
+body[data-color-vision="on"] #app .profile-stat span,
+body[data-color-vision="on"] #app .profile-stat strong {
+  color: #10283d !important;
+  opacity: 1 !important;
+}
+body[data-color-vision="on"] #app .empty-state,
+body[data-color-vision="on"] #app .circular-empty {
+  display: block;
+  max-width: 760px;
+  margin: 10px auto;
+  padding: 16px 20px;
+  border: 2px solid #0072b2;
+  border-radius: 14px;
+  background-color: #fffdf5 !important;
+  color: #10283d !important;
+  text-align: center;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+body[data-color-vision="on"] #app .empty-state *,
+body[data-color-vision="on"] #app .circular-empty * {
+  color: #10283d !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+body[data-color-vision="on"] #app .topbar-title,
+body[data-color-vision="on"] #app .section-label,
+body[data-color-vision="on"] #app .layer-label,
+body[data-color-vision="on"] #app .hint,
+body[data-color-vision="on"] #app .mode-choice-hint,
+body[data-color-vision="on"] #app .about-link,
+body[data-color-vision="on"] #app .back-link {
+  display: inline-block;
+  padding: 5px 10px;
+  border: 2px solid #0072b2 !important;
+  border-radius: 10px;
+  background-color: #fffdf5 !important;
+  color: #10283d !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+body[data-color-vision="on"] #app .section-label,
+body[data-color-vision="on"] #app .layer-label {
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+}
+body[data-color-vision="on"] #app .mode-choice-content h1 {
+  display: table;
+  margin: 0 auto 12px;
+  padding: 10px 14px;
+  border: 2px solid #0072b2;
+  border-radius: 12px;
+  background-color: #fffdf5 !important;
+  color: #10283d !important;
+  text-shadow: none !important;
+}
+body[data-color-vision="on"] #app .mode-screen {
+  background-color: #fffdf5 !important;
+  color: #10283d !important;
+}
+body[data-color-vision="on"] #app .mode-screen h1,
+body[data-color-vision="on"] #app .mode-screen h2,
+body[data-color-vision="on"] #app .mode-screen h3,
+body[data-color-vision="on"] #app .mode-screen p,
+body[data-color-vision="on"] #app .mode-screen span {
+  color: #10283d !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+body[data-color-vision="on"] #app .color-vision-preview-title,
+body[data-color-vision="on"] #app .color-vision-preview-badge,
+body[data-color-vision="on"] #app .color-vision-preview-note,
+body[data-color-vision="on"] #app .color-vision-swatch--selected,
+body[data-color-vision="on"] #app .color-vision-swatch--selected *,
+body[data-color-vision="on"] #app .color-vision-swatch--focus,
+body[data-color-vision="on"] #app .color-vision-swatch--focus * {
+  color: #10283d !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+body[data-color-vision="on"] #app .color-vision-swatch--option,
+body[data-color-vision="on"] #app .color-vision-swatch--option * {
+  color: #ffffff !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+
+
+/* Ações da conta: mesma aparência, mantendo comportamentos distintos. */
+body[data-color-vision="on"] #app .form-block #switchProfileBtn,
+body[data-color-vision="on"] #app .form-block #logoutBtn {
+  background-color: #e69f00 !important;
+  color: #10283d !important;
+  border: 2px solid #10283d !important;
+}
+
 </style>
 </head>
 
@@ -2720,6 +3112,7 @@ let STATE = {
     settings: {
       fontStep: 2,        // 1..4 -> pequeno, médio, grande, extra grande
       darkTheme: true,
+      colorVision: false,
       scanEnabled: false,
       scanSpeed: 1800,
       voiceRate: 1,
@@ -2783,6 +3176,7 @@ function applySettings() {
   const scale = FONT_SCALES[(STATE.data.settings.fontStep || 2) - 1] || 1;
   document.documentElement.style.setProperty('--a11y-scale', scale);
   document.body.dataset.theme = STATE.data.settings.darkTheme === false ? 'light' : 'dark';
+  document.body.dataset.colorVision = STATE.data.settings.colorVision ? 'on' : 'off';
 }
 
 let scanTimer = null;
@@ -3985,6 +4379,29 @@ function renderSettings() {
 
         <div class="settings-row">
           <div>
+            <div class="settings-label">Modo para daltonismo</div>
+            <div class="settings-desc" id="colorVisionDescription">Reforça o contraste e diferencia opções pela cor, pelo contorno e por símbolos.</div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="colorVisionToggle" aria-label="Ativar modo para daltonismo" aria-describedby="colorVisionDescription" ${s.colorVision ? 'checked' : ''}>
+            <span class="switch-track"></span>
+          </label>
+        </div>
+<div class="color-vision-preview" role="group" aria-label="Prévia da paleta do modo para daltonismo">
+  <div class="color-vision-preview-head">
+    <span class="color-vision-preview-title">Prévia da paleta</span>
+    <span class="color-vision-preview-badge">Alto contraste</span>
+  </div>
+  <div class="color-vision-preview-items">
+    <span class="color-vision-swatch color-vision-swatch--option"><span aria-hidden="true">◆</span> Opção</span>
+    <span class="color-vision-swatch color-vision-swatch--selected"><span aria-hidden="true">✓</span> Selecionada</span>
+    <span class="color-vision-swatch color-vision-swatch--focus"><span aria-hidden="true">▣</span> Foco</span>
+  </div>
+  <p class="color-vision-preview-note">A seleção também usa contorno e símbolo. As figuras e imagens do jogo são mantidas.</p>
+</div>
+
+        <div class="settings-row">
+          <div>
             <div class="settings-label">Modo de varredura</div>
             <div class="settings-desc">O destaque passa pelos botões; pressione o centro do analógico para escolher</div>
           </div>
@@ -4458,6 +4875,13 @@ function attachHandlers() {
   const darkThemeToggle = document.getElementById('darkThemeToggle');
   if (darkThemeToggle) darkThemeToggle.addEventListener('change', event => {
     STATE.data.settings.darkTheme = event.target.checked;
+    applySettings();
+    saveData();
+  });
+
+  const colorVisionToggle = document.getElementById('colorVisionToggle');
+  if (colorVisionToggle) colorVisionToggle.addEventListener('change', event => {
+    STATE.data.settings.colorVision = event.target.checked;
     applySettings();
     saveData();
   });
@@ -5026,6 +5450,7 @@ loadData();
 initSplash();
 initGamepadControls();
 </script>
+<script src="ocular-tracking.js" defer></script>
 
 </body>
 </html>
