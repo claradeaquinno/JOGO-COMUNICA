@@ -4,6 +4,18 @@
   const STORAGE_KEY = 'comunica:ocular-settings-v1';
   const WEBGAZER_URL = 'https://webgazer.cs.brown.edu/webgazer.js';
   const DEFAULTS = { enabled: false, dwellMs: 1200, sound: true };
+  const CAMERA_CONSTRAINTS = {
+    audio: false,
+    video: {
+      facingMode: { ideal: 'user' },
+      width: { ideal: 640 },
+      height: { ideal: 480 }
+    }
+  };
+  const GAZE_SAMPLE_LIMIT = 7;
+  const GAZE_SMOOTHING = 0.1;
+  const GAZE_DEADZONE_PX = 3.5;
+  const GAZE_MAX_STEP_PX = 18;
   const readSettings = () => {
     try { return { ...DEFAULTS, ...JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}') }; }
     catch (_) { return { ...DEFAULTS }; }
@@ -20,6 +32,7 @@
     x: null,
     y: null,
     lastPredictionAt: 0,
+    gazeSamples: [],
     candidate: null,
     candidateSince: 0,
     candidateTimer: 0,
@@ -27,7 +40,8 @@
     pauseOnHide: false
   };
 
-  const points = [[8, 10], [50, 10], [92, 10], [8, 50], [50, 50], [92, 50], [8, 90], [50, 90], [92, 90]];
+  const calibrationGrid = [[8, 10], [50, 10], [92, 10], [8, 50], [50, 50], [92, 50], [8, 90], [50, 90], [92, 90]];
+  const points = calibrationGrid.flatMap(point => [point, point]);
   let statusNode;
   let floatingButton;
   let gazeCursor;
@@ -229,6 +243,67 @@
     return window.__comunicaWebgazerLoad;
   }
 
+  async function requestCameraAccess() {
+    const getUserMedia = navigator.mediaDevices?.getUserMedia?.bind(navigator.mediaDevices);
+    if (!getUserMedia) {
+      const error = new Error('Este navegador não disponibilizou acesso à câmera.');
+      error.name = 'SecurityError';
+      throw error;
+    }
+
+    let stream;
+    try {
+      try {
+        stream = await getUserMedia(CAMERA_CONSTRAINTS);
+      } catch (error) {
+        // Algumas câmeras não aceitam restrições ideais; tente a configuração mínima.
+        if (error?.name !== 'OverconstrainedError') throw error;
+        stream = await getUserMedia({ audio: false, video: true });
+      }
+    } finally {
+      stream?.getTracks?.().forEach(track => track.stop());
+      if (stream) await new Promise(resolve => setTimeout(resolve, 120));
+    }
+  }
+
+  function withTimeout(promise, timeoutMs, message) {
+    let timer;
+    const timeout = new Promise((_, reject) => {
+      timer = setTimeout(() => {
+        const error = new Error(message);
+        error.name = 'TimeoutError';
+        reject(error);
+      }, timeoutMs);
+    });
+    return Promise.race([Promise.resolve(promise), timeout]).finally(() => clearTimeout(timer));
+  }
+
+  function cameraErrorMessage(error) {
+    if (/biblioteca|conexão com a internet|rastreamento ocular/i.test(String(error?.message || ''))) {
+      return 'Não foi possível carregar a biblioteca do rastreamento ocular. Verifique a conexão com a internet e tente novamente.';
+    }
+    switch (error?.name) {
+      case 'NotAllowedError':
+      case 'PermissionDeniedError':
+        return 'A permissão da câmera foi negada. Permita a câmera no cadeado da barra de endereço e toque novamente no controle ocular.';
+      case 'NotFoundError':
+        return 'Nenhuma câmera foi encontrada neste dispositivo. Conecte uma câmera e tente novamente.';
+      case 'NotReadableError':
+        return 'A câmera está ocupada por outro aplicativo. Feche chamadas ou programas que usam a câmera e tente novamente.';
+      case 'OverconstrainedError':
+        return 'A câmera não atende às configurações disponíveis neste dispositivo.';
+      case 'SecurityError':
+      case 'TypeError':
+        return 'O navegador bloqueou a câmera. Abra o Comunica por HTTPS ou por http://localhost (não use o arquivo aberto diretamente).';
+      case 'TimeoutError':
+        return 'A câmera demorou para iniciar. Verifique a permissão e tente novamente.';
+      default:
+        return error?.message
+          ? `Não foi possível abrir a câmera: ${error.message}`
+          : 'Não foi possível abrir a câmera. Verifique a permissão do navegador e tente novamente.';
+    }
+  }
+
   function clearCandidate() {
     if (state.candidateTimer) clearTimeout(state.candidateTimer);
     state.candidateTimer = 0;
@@ -268,6 +343,31 @@
     } catch (_) { /* O som é opcional. */ }
   }
 
+  function getMedian(values) {
+    const sorted = [...values].sort((a, b) => a - b);
+    return sorted[Math.floor(sorted.length / 2)];
+  }
+
+  function smoothGaze(data) {
+    const rawX = Math.max(0, Math.min(innerWidth - 1, data.x));
+    const rawY = Math.max(0, Math.min(innerHeight - 1, data.y));
+    state.gazeSamples.push({ x: rawX, y: rawY });
+    if (state.gazeSamples.length > GAZE_SAMPLE_LIMIT) state.gazeSamples.shift();
+
+    const medianX = getMedian(state.gazeSamples.map(sample => sample.x));
+    const medianY = getMedian(state.gazeSamples.map(sample => sample.y));
+    if (state.x == null || state.y == null) return { x: medianX, y: medianY };
+
+    const deltaX = medianX - state.x;
+    const deltaY = medianY - state.y;
+    const stepX = Math.max(-GAZE_MAX_STEP_PX, Math.min(GAZE_MAX_STEP_PX, deltaX * GAZE_SMOOTHING));
+    const stepY = Math.max(-GAZE_MAX_STEP_PX, Math.min(GAZE_MAX_STEP_PX, deltaY * GAZE_SMOOTHING));
+    return {
+      x: Math.abs(deltaX) <= GAZE_DEADZONE_PX ? state.x : state.x + stepX,
+      y: Math.abs(deltaY) <= GAZE_DEADZONE_PX ? state.y : state.y + stepY
+    };
+  }
+
   function activateTarget(target) {
     if (!target || !target.isConnected || !state.running || !state.calibrated || state.calibrationActive) return;
     const rect = target.getBoundingClientRect();
@@ -285,8 +385,9 @@
 
   function onGaze(data) {
     if (!data || !Number.isFinite(data.x) || !Number.isFinite(data.y)) return;
-    state.x = Math.max(0, Math.min(innerWidth - 1, state.x == null ? data.x : state.x * 0.62 + data.x * 0.38));
-    state.y = Math.max(0, Math.min(innerHeight - 1, state.y == null ? data.y : state.y * 0.62 + data.y * 0.38));
+    const smoothed = smoothGaze(data);
+    state.x = smoothed.x;
+    state.y = smoothed.y;
     state.lastPredictionAt = performance.now();
 
     if (gazeCursor && state.running && state.calibrated && !state.calibrationActive) {
@@ -332,6 +433,9 @@
       return;
     }
     clearCandidate();
+    state.x = null;
+    state.y = null;
+    state.gazeSamples.length = 0;
     state.calibrated = false;
     state.calibrationActive = true;
     state.calibrationIndex = 0;
@@ -339,7 +443,7 @@
     calibrationOverlay.hidden = false;
     gazeCursor.hidden = true;
     updateCalibrationPoint();
-    setStatus('Calibração iniciada. Toque ou clique nos nove pontos olhando para cada um.');
+    setStatus('Calibração iniciada. Confirme cada um dos nove pontos duas vezes, olhando para o centro.');
   }
 
   function advanceCalibration() {
@@ -372,6 +476,7 @@
     state.calibrationActive = false;
     state.x = null;
     state.y = null;
+    state.gazeSamples.length = 0;
     state.lockedCenter = null;
     if (gazeCursor) gazeCursor.hidden = true;
     if (calibrationOverlay) calibrationOverlay.hidden = true;
@@ -404,10 +509,14 @@
     state.starting = (async () => {
       setStatus('Carregando rastreamento ocular. O navegador solicitará permissão para a câmera.');
       try {
+        // Solicita a permissão no gesto do usuário e separa falhas da câmera de falhas do WebGazer.
+        await withTimeout(requestCameraAccess(), 12000, 'A câmera demorou para responder.');
+        setStatus('Câmera autorizada. Preparando o rastreamento ocular…');
         const webgazer = await loadWebGazer();
         state.webgazer = webgazer;
         window.saveDataAcrossSessions = false;
         webgazer.setGazeListener(onGaze);
+        try { webgazer.applyKalmanFilter?.(true); } catch (_) { /* Compatível com versões sem esse método. */ }
         const nativeAlert = window.alert;
         const isSecureLoopback = location.protocol === 'http:' && loopbackHost && window.isSecureContext;
         // Versões antigas do WebGazer alertam para qualquer host diferente de "localhost", inclusive loopback seguro.
@@ -420,10 +529,10 @@
             return nativeAlert.apply(window, [message, ...args]);
           };
           window.alert = filteredAlert;
-          try { await Promise.resolve(webgazer.begin()); }
+          try { await withTimeout(Promise.resolve(webgazer.begin()), 20000, 'O rastreamento ocular demorou para iniciar.'); }
           finally { if (window.alert === filteredAlert) window.alert = nativeAlert; }
         } else {
-          await Promise.resolve(webgazer.begin());
+          await withTimeout(Promise.resolve(webgazer.begin()), 20000, 'O rastreamento ocular demorou para iniciar.');
         }
         state.running = true;
         state.calibrated = false;
@@ -434,12 +543,9 @@
         startCalibration();
         return true;
       } catch (error) {
-        console.error('Falha ao iniciar o controle ocular:', error);
-        await stopTracking('Não foi possível iniciar. Verifique a câmera, a permissão do navegador e a conexão com a internet.');
-        if (error?.name === 'NotAllowedError' || error?.name === 'PermissionDeniedError') setStatus('A permissão da câmera foi negada. Você ainda pode usar toque, teclado ou varredura.');
-        else if (error?.name === 'NotFoundError') setStatus('Nenhuma câmera foi encontrada. Você ainda pode usar toque, teclado ou varredura.');
-        else if (error?.name === 'NotReadableError') setStatus('A câmera está ocupada por outro aplicativo. Feche-o e tente novamente.');
-        else if (error?.message) setStatus(`${error.message} Você ainda pode usar toque, teclado ou varredura.`);
+        console.error('Falha ao iniciar o controle ocular:', error?.stack || error);
+        await stopTracking('Controle ocular desligado. Toque e teclado continuam disponíveis.');
+        setStatus(`${cameraErrorMessage(error)} Você ainda pode usar toque, teclado ou varredura.`);
         return false;
       } finally {
         state.starting = null;

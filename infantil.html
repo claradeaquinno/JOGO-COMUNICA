@@ -2843,6 +2843,43 @@ body[data-color-vision="on"] #app .form-block #logoutBtn {
   border: 2px solid #10283d !important;
 }
 
+/* ===== Responsividade compartilhada ===== */
+html { min-height: 100%; }
+body { min-height: 100dvh; }
+#app, #app > *, .screen, .settings-panel, .form-block,
+.carousel-full-content, .circular-full-content, .mode-screen-content {
+  min-width: 0;
+}
+.settings-row > :first-child { min-width: 0; flex: 1 1 auto; }
+.settings-row > .switch, .settings-row > .stepper { flex: 0 0 auto; }
+.action-row > * { min-width: 0; }
+.carousel-track { min-width: 0; }
+
+@media (max-width: 560px) {
+  #app, .app { padding-inline: max(10px, env(safe-area-inset-left)) max(10px, env(safe-area-inset-right)); }
+  .topbar, .app-header { gap: 8px; }
+  .topbar-title { min-width: 0; overflow-wrap: anywhere; }
+  .settings-row { align-items: flex-start; }
+  .settings-row > :first-child { max-width: calc(100% - 58px); }
+  .settings-row .stepper { gap: 4px; }
+  .stepper button { width: 40px; height: 40px; }
+  .form-row { flex-wrap: wrap; }
+  .form-row > * { flex: 1 1 100%; }
+  .action-row button { flex: 1 1 calc(50% - 5px); min-height: 48px; }
+  .carousel-full-screen, .circular-full-screen, .mode-screen, .mode-choice-screen {
+    padding: max(12px, env(safe-area-inset-top)) max(10px, env(safe-area-inset-right))
+      max(24px, env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left));
+  }
+}
+
+@media (max-width: 380px) {
+  .word-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .word-card { min-height: 120px; }
+  .phrase-bar { font-size: 16px; }
+  .profile-choice-grid { grid-template-columns: 1fr; }
+  .action-row button { font-size: clamp(11px, 3.1vw, 13px); }
+}
+
 </style>
 </head>
 
