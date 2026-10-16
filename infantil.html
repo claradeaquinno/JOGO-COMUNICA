@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#173a5e">
-<meta name="description" content="ComunicA — aplicativo de Comunicação Alternativa e Aumentativa (CAA) para tablet e celular">
-<title>ComunicA</title>
+<meta name="description" content="Comunica — aplicativo de Comunicação Alternativa e Aumentativa (CAA) para tablet e celular">
+<title>Comunica</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@500;600;700;800&display=swap');
@@ -3097,6 +3097,173 @@ body[data-color-vision="on"][data-color-vision-type="protanopia"] > :not(script)
   transform: scale(1.8);
   transform-origin: 50% 18%;
 }
+
+/* Salvar feedback, Voltar para o menu, Sair desta conta: cor neutra */
+body[data-theme] #app #saveFeedbackBtn,
+body[data-theme] #app #switchProfileBtn,
+body[data-theme] #app #logoutBtn {
+  background: #eef2f6 !important;
+  background-image: none !important;
+  color: #2b4a63 !important;
+  border: 1.5px solid #d3dce5 !important;
+  text-shadow: none !important;
+  box-shadow: 0 2px 6px rgba(23,58,94,.08) !important;
+}
+body[data-theme="dark"] #app #saveFeedbackBtn,
+body[data-theme="dark"] #app #switchProfileBtn,
+body[data-theme="dark"] #app #logoutBtn {
+  background: #2a3b4d !important;
+  color: #e6eef7 !important;
+  border-color: #46607a !important;
+}
+body[data-theme] #app #saveFeedbackBtn:hover,
+body[data-theme] #app #switchProfileBtn:hover,
+body[data-theme] #app #logoutBtn:hover,
+body[data-theme] #app #saveFeedbackBtn:focus-visible,
+body[data-theme] #app #switchProfileBtn:focus-visible,
+body[data-theme] #app #logoutBtn:focus-visible {
+  background: #fff2bf !important;
+  border-color: #f3d675 !important;
+  color: #123b4d !important;
+}
+
+/* Feedback / Voltar para o menu / Sair: azul básico */
+body[data-theme] #app #saveFeedbackBtn,
+body[data-theme] #app #switchProfileBtn,
+body[data-theme] #app #logoutBtn {
+  background: #cfe9f7 !important;
+  color: #173a5e !important;
+  border: 2px solid #8fc4e3 !important;
+  font-weight: 800 !important;
+  opacity: 1 !important;
+}
+body[data-theme="dark"] #app #saveFeedbackBtn,
+body[data-theme="dark"] #app #switchProfileBtn,
+body[data-theme="dark"] #app #logoutBtn {
+  background: #1b344d !important;
+  color: #f1f7ff !important;
+  border-color: #3d6688 !important;
+}
+body[data-theme] #app #saveFeedbackBtn:hover,
+body[data-theme] #app #switchProfileBtn:hover,
+body[data-theme] #app #logoutBtn:hover,
+body[data-theme] #app #saveFeedbackBtn:focus-visible,
+body[data-theme] #app #switchProfileBtn:focus-visible,
+body[data-theme] #app #logoutBtn:focus-visible {
+  background: #fff2bf !important;
+  border-color: #f3d675 !important;
+  color: #123b4d !important;
+}
+
+/* Azul um pouco mais forte + Testar a voz */
+body[data-theme] #app #saveFeedbackBtn,
+body[data-theme] #app #switchProfileBtn,
+body[data-theme] #app #logoutBtn,
+body[data-theme] #app #testVoiceBtn {
+  background: #a9d6f0 !important;
+  background-image: none !important;
+  color: #123b5e !important;
+  border: 2px solid #6fb2dc !important;
+  font-weight: 800 !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
+}
+body[data-theme="dark"] #app #saveFeedbackBtn,
+body[data-theme="dark"] #app #switchProfileBtn,
+body[data-theme="dark"] #app #logoutBtn,
+body[data-theme="dark"] #app #testVoiceBtn {
+  background: #2a5a85 !important;
+  color: #ffffff !important;
+  border-color: #5b9bd0 !important;
+}
+body[data-theme] #app #testVoiceBtn:hover,
+body[data-theme] #app #testVoiceBtn:focus-visible {
+  background: #fff2bf !important;
+  border-color: #f3d675 !important;
+  color: #123b4d !important;
+}
+
+/* ===== Tela de abertura (melhorada) ===== */
+.splash-screen {
+  background:
+    radial-gradient(ellipse 60% 45% at 50% 52%, rgba(255,255,255,.95), rgba(255,255,255,0) 70%),
+    linear-gradient(180deg, #f4fbff 0%, #d9eefb 55%, #bfe3f7 100%);
+  gap: clamp(14px, 3vh, 26px);
+}
+body[data-theme="dark"] .splash-screen {
+  background:
+    radial-gradient(ellipse 60% 45% at 50% 52%, rgba(61,102,136,.45), rgba(16,40,61,0) 70%),
+    linear-gradient(180deg, #10283d, #173a5e) !important;
+}
+.splash-title { display: flex; flex-direction: column; align-items: center; gap: 2px; text-align: center; }
+.splash-title-name {
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: clamp(38px, 9vw, 64px);
+  line-height: 1;
+  letter-spacing: .01em;
+  color: var(--navy);
+}
+.splash-title-sub {
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: clamp(15px, 3.6vw, 22px);
+  color: var(--navy-soft);
+}
+.splash-mascot-wrap {
+  width: clamp(200px, 50vw, 340px);
+  height: clamp(200px, 50vw, 340px);
+}
+.splash-mascot-wrap .mascot-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: splashBob 3.2s ease-in-out 1.2s infinite;
+}
+@keyframes splashBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.splash-hint { margin-top: 4px; }
+.splash-hint.show { animation: splashPulse 2s ease-in-out infinite; }
+@keyframes splashPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+}
+.splash-hint-text {
+  display: inline-block;
+  padding: 14px 28px;
+  border-radius: 999px;
+  background: #a9d6f0;
+  border: 2px solid #6fb2dc;
+  color: #123b5e;
+  box-shadow: 0 6px 16px rgba(23,58,94,.18);
+  font-size: clamp(15px, 3.6vw, 19px);
+}
+body[data-theme="dark"] .splash-hint-text {
+  background: #2a5a85;
+  border-color: #5b9bd0;
+  color: #fff;
+}
+@media (prefers-reduced-motion: reduce) {
+  .splash-mascot-wrap .mascot-img, .splash-hint.show { animation: none !important; }
+}
+
+.splash-logo {
+  width: clamp(200px, 46vw, 340px);
+  height: auto;
+  max-height: 22vh;
+  object-fit: contain;
+  display: block;
+}
+
+/* logo mais perto do mascote */
+.splash-screen { gap: 0 !important; }
+.splash-title { gap: 0; margin-bottom: -6px; }
+.splash-logo { margin: -10px 0 -20px; max-height: 20vh; }
+.splash-title-sub { margin-top: 0; }
+.splash-mascot-wrap { margin-top: -4px; }
+.splash-hint { margin-top: 14px; }
 </style>
 </head>
 
@@ -3104,7 +3271,12 @@ body[data-color-vision="on"][data-color-vision-type="protanopia"] > :not(script)
 
 <a href="#app" class="skip-link">Pular para o conteúdo</a>
 
-<div id="splashScreen" class="splash-screen" role="dialog" aria-modal="true" aria-label="Tela de abertura do ComunicA" tabindex="-1">
+<div id="splashScreen" class="splash-screen" role="dialog" aria-modal="true" aria-label="Tela de abertura do Comunica" tabindex="-1">
+  <div class="splash-title">
+    <img class="splash-logo" src="assets/imagens/comunica-logo.png" alt="Comunica"
+      onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+    <span class="splash-title-name" style="display:none">Comunica</span>
+  </div>
   <div class="splash-mascot-wrap" id="splashMascotWrap">
     <img src="assets/imagens/mascote-inicio.png" alt="Mascote Guri" class="mascot-img" id="splashMascotImg"
       data-size="220" data-mood="happy">
@@ -3125,7 +3297,7 @@ body[data-color-vision="on"][data-color-vision-type="protanopia"] > :not(script)
 <script>
 
 /* =========================================================
-   ComunicA — App de Comunicação Alternativa e Aumentativa
+   Comunica — App de Comunicação Alternativa e Aumentativa
    Melhorias: mascote "Guri", acessibilidade (WCAG),
    responsividade para tablet/celular e ajustes de fonte.
    ========================================================= */
@@ -3517,7 +3689,7 @@ const MASCOT_TIPS = {
   challenge: 'Vamos brincar! Monte a frase certa para ganhar uma estrela.',
   profile: 'Aqui você vê seu nome e suas conquistas.',
   settings: 'Aqui você ajusta o tamanho da letra e a voz.',
-  about: 'O ComunicA ajuda você a se comunicar com frases montadas por toque.'
+  about: 'O Comunica ajuda você a se comunicar com frases montadas por toque.'
 };
 
 const MASCOT_NAME = 'Guri';
@@ -4023,7 +4195,7 @@ function handleMascotImgError(imgEl) {
 function mascotHeroHtml() {
   return `
     <img class="home-logo" src="assets/imagens/comunica-logo.png"
-      alt="Logo ComunicA" onerror="this.style.display='none'">
+      alt="Logo Comunica" onerror="this.style.display='none'">
   `;
 }
 
@@ -5043,7 +5215,7 @@ function renderProfile() {
   return `
     <div class="topbar">
       <button class="icon-btn" data-go="home" aria-label="Voltar para o início">←</button>
-      <div class="topbar-title">Meu ComunicA</div>
+      <div class="topbar-title">Meu Comunica</div>
       <div style="width:var(--tap-min)"></div>
     </div>
 
@@ -5215,7 +5387,7 @@ function renderAbout() {
 
     <div class="screen">
       <div class="info-block">
-        <strong>ComunicA</strong> é um aplicativo de Comunicação Alternativa e Aumentativa (CAA).
+        <strong>Comunica</strong> é um aplicativo de Comunicação Alternativa e Aumentativa (CAA).
         Ele ajuda pessoas a montar frases usando o carrossel de palavras e depois ouvir a frase em voz alta.
       </div>
       <div class="info-block">
@@ -5475,7 +5647,7 @@ function attachHandlers() {
         challenge: 'Desafio da comunicação',
         profile: 'Perfil',
         settings: 'Configurações',
-        about: 'Sobre o ComunicA'
+        about: 'Sobre o Comunica'
       };
       const isMainHomeButton = element.closest('.home-screen');
       if (menuTexts[target] && (target !== 'build' || isMainHomeButton)) {
@@ -5897,7 +6069,7 @@ function attachHandlers() {
 
   const testVoiceBtn = document.getElementById('testVoiceBtn');
   if (testVoiceBtn) testVoiceBtn.addEventListener('click', () => {
-    playMascotVoice('Oi! Esta é a minha voz no ComunicA.');
+    playMascotVoice('Oi! Esta é a minha voz no Comunica.');
   });
 
   /* Mascote na tela inicial */
