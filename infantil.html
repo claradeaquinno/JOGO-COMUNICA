@@ -25,7 +25,7 @@
   --radius: 16px;
   --font: 'Nunito', sans-serif;
   --font-title: 'Baloo 2', cursive;
-  --focus-ring: #ffd400;
+  --focus-ring: #f3d675;
 
   /* accessibility scale: multiplies base font/target sizes app-wide */
   --a11y-scale: 1;
@@ -188,10 +188,10 @@ button:focus-visible,
 #app select:hover,
 #app textarea:hover,
 #app .switch:hover {
-  outline: 5px solid #ffd400 !important;
-  outline-offset: 5px !important;
-  box-shadow: 0 0 0 2px #10283d, 0 0 0 9px rgba(255, 212, 0, .95), 0 8px 22px rgba(0, 0, 0, .55) !important;
-  background: #ffd400 !important;
+  outline: 3px solid #f3d675 !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 0 2px rgba(16, 40, 61, .35), 0 0 0 6px rgba(243, 214, 117, .55), 0 6px 14px rgba(0, 0, 0, .25) !important;
+  background: #fff2bf !important;
   color: #173a5e !important;
   position: relative;
   z-index: 20;
@@ -530,7 +530,8 @@ button:focus-visible,
 .menu-btn:hover, .card:hover { transform: translateY(-2px); }
 .menu-btn:active, .card:active { transform: scale(0.98); }
 
-.menu-btn.primary, .card.yellow {
+/* O botão principal (.menu-btn.primary) agora usa o mesmo azul dos demais. */
+.card.yellow {
   background: linear-gradient(180deg, #ffe08a, var(--yellow));
   border-color: var(--yellow-dark);
 }
@@ -579,17 +580,19 @@ button:focus-visible,
 }
 
 .icon-btn[data-go="home"],
-.icon-btn[data-go="categories"] {
+.icon-btn[data-go="categories"],
+.icon-btn[data-go="build"] {
   font-size: 0;
 }
 
 .icon-btn[data-go="home"]::before,
-.icon-btn[data-go="categories"]::before {
+.icon-btn[data-go="categories"]::before,
+.icon-btn[data-go="build"]::before {
   content: '';
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   display: block;
-  background: url('assets/imagens/icone-seta-topo.png') center / contain no-repeat;
+  background: url('assets/imagens/icone-voltar.png') center / contain no-repeat;
 }
 
 .menu-text, .card-text { flex: 1; min-width: 0; }
@@ -775,9 +778,9 @@ button:focus-visible,
 
 .mode-choice-screen { min-height: 100vh; width: 100%; padding: 24px; display: flex; flex-direction: column; }
 .mode-choice-back { align-self: flex-start; border: 0; border-radius: 999px; padding: 14px 20px; background: rgba(255,255,255,.94); color: var(--navy); font: 800 16px var(--font); cursor: pointer; }
-.mode-choice-content { width: min(100%, 760px); margin: auto; display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; }
-.mode-choice-content h1 { margin: 0 0 10px; color: #fff; font-size: clamp(28px,5vw,48px); text-shadow: 0 2px 5px rgba(23,58,94,.4); }
-.mode-choice-button { width: min(100%, 680px); min-height: 120px; border: 4px solid rgba(255,255,255,.9); border-radius: 28px; background: #fff; color: var(--navy); font: 900 clamp(24px,5vw,42px) var(--font); box-shadow: 0 10px 24px rgba(23,58,94,.2); cursor: pointer; transition: transform .15s ease, background .15s ease; }
+.mode-choice-content { width: min(100%, 760px); margin: auto; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; text-align: center; }
+.mode-choice-content h1 { width: min(100%, 420px); margin: 0 0 6px; color: #fff; font-family: var(--font-title); font-weight: 800; font-size: clamp(17px, 5.4vw, 26px); line-height: 1.15; text-wrap: balance; text-shadow: 0 2px 5px rgba(23,58,94,.4); }
+.mode-choice-button { width: min(100%, 420px); min-height: 72px; border: 1.5px solid var(--card-border); border-radius: var(--radius); background: var(--card); color: var(--navy); font: 800 clamp(18px,3.5vw,24px) var(--font-title); box-shadow: 0 3px 8px rgba(23,58,94,.12); cursor: pointer; transition: transform .15s ease, background .15s ease; }
 .mode-choice-button:hover { transform: scale(1.02); background: #fff4c9; }
 .mode-choice-button:active { transform: scale(.98); }
 
@@ -1217,7 +1220,7 @@ body[data-theme="dark"] .circular-mode-screen .buraco-central {
   position: absolute !important;
   z-index: 4 !important;
   transform: translate(-50%, -50%) !important;
-  background: #ffd447 !important;
+  background: #fff2bf !important;
   color: #102f48 !important;
   border-color: #102f48 !important;
   outline: 3px solid #ffffff !important;
@@ -1302,7 +1305,7 @@ body[data-theme="dark"] #app .personalize-keyboard-stage .anel-meio .tecla.scan-
   position: absolute !important;
   z-index: 4 !important;
   transform: translate(-50%, -50%) !important;
-  background: #ffd447 !important;
+  background: #fff2bf !important;
   color: #102f48 !important;
   border-color: #102f48 !important;
   outline: 3px solid #ffffff !important;
@@ -2320,26 +2323,29 @@ body[data-theme="dark"] #feedbackText {
 
 /* Escolha de modo: botões planos, sem o quadrado branco por trás. */
 .mode-choice-back {
-  background: #f7c94d !important;
-  color: #123b4d !important;
-  border: 2px solid #b98200 !important;
-  box-shadow: none !important;
+  background: var(--card) !important;
+  color: var(--navy) !important;
+  border: 1.5px solid var(--card-border) !important;
+  box-shadow: 0 3px 8px rgba(23,58,94,.12) !important;
+}
+
+body[data-theme="dark"] .mode-choice-back {
+  background: #1b344d !important;
+  color: #f1f7ff !important;
+  border-color: #3d6688 !important;
 }
 
 .mode-choice-button {
-  color: #123b4d !important;
-  box-shadow: none !important;
-  border-width: 3px !important;
+  background: var(--card) !important;
+  border: 1.5px solid var(--card-border) !important;
+  color: var(--navy) !important;
+  box-shadow: 0 3px 8px rgba(23,58,94,.12) !important;
 }
 
-.mode-choice-button[data-mode-screen="circularMode"] {
-  background: #f7c94d !important;
-  border-color: #b98200 !important;
-}
-
-.mode-choice-button[data-mode-screen="carouselMode"] {
-  background: #8bd3a8 !important;
-  border-color: #3f9b68 !important;
+body[data-theme="dark"] .mode-choice-button {
+  background: #1b344d !important;
+  border-color: #3d6688 !important;
+  color: #f1f7ff !important;
 }
 
 /* Carrossel infantil: texto e cartões com contraste estável nos dois temas. */
@@ -2496,8 +2502,168 @@ body[data-theme="dark"] .toast {
 .confirm-dialog-actions .confirm-dialog-cancel { background: #dbe5eb; }
 .confirm-dialog-actions button:focus-visible,
 .confirm-dialog-actions button.accessibility-focus {
-  outline: 4px solid #ffd400;
+  outline: 3px solid #f3d675;
   outline-offset: 3px;
+}
+
+/* Teclado circular: a palavra/letra em foco fica escura sobre o setor amarelo,
+   nos dois temas, para não parecer apagada. */
+#app .circular-mode-screen .tecla:focus,
+#app .circular-mode-screen .tecla:focus-visible {
+  color: #0d2c40 !important;
+  text-shadow: none !important;
+  font-weight: 800 !important;
+}
+
+/* Tema claro: as palavras da argola de dentro eram brancas sobre fundo claro. */
+body[data-theme="light"] .circular-mode-screen .anel-meio .tecla {
+  color: #123b4d;
+  text-shadow: none;
+}
+
+/* "Aa" central legível nos dois temas. */
+#app .circular-mode-screen .buraco-central {
+  color: #123b4d !important;
+  background: #ffffff !important;
+}
+
+
+/* Teclado circular: fonte em negrito e botões do menu orbital com o texto
+   inteiro dentro do círculo (principalmente "recarregar"). */
+#app .circular-mode-screen .tecla {
+  font-weight: 800 !important;
+}
+#app .circular-mode-screen .anel-meio .tecla { font-size: 11px; }
+#app .circular-mode-screen .anel-externo .tecla { font-size: 13px; }
+
+#app .circular-mode-screen .satelite {
+  width: 62px;
+  height: 62px;
+  padding: 0 !important;
+  display: grid;
+  place-items: center;
+  font-weight: 900 !important;
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: center;
+}
+#app .circular-mode-screen #recarregar {
+  font-size: 9.5px;
+  letter-spacing: -0.2px;
+}
+@media (max-width: 420px) {
+  #app .circular-mode-screen .satelite { width: 54px; height: 54px; font-size: 9.5px; }
+  #app .circular-mode-screen #recarregar { font-size: 8px; letter-spacing: -0.3px; }
+  #app .circular-mode-screen .anel-meio .tecla { font-size: 10px; }
+  #app .circular-mode-screen .anel-externo .tecla { font-size: 11px; }
+}
+
+
+/* "Voltar" do teclado circular padronizado com o resto (azul do menu). */
+#app .circular-mode-screen .mode-screen-back {
+  padding: 14px 20px;
+  font: 800 16px var(--font);
+  background: var(--card) !important;
+  color: var(--navy) !important;
+  border: 1.5px solid var(--card-border) !important;
+  box-shadow: 0 3px 8px rgba(23,58,94,.12) !important;
+}
+body[data-theme="dark"] #app .circular-mode-screen .mode-screen-back {
+  background: #1b344d !important;
+  color: #f1f7ff !important;
+  border-color: #3d6688 !important;
+}
+
+
+/* Todos os "voltar" usam a mesma seta (assets/imagens/icone-voltar.png), sem texto. */
+.back-icon {
+  display: block;
+  width: auto;
+  height: 30px;
+  object-fit: contain;
+  pointer-events: none;
+}
+.mode-choice-back,
+.mode-screen-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+#app .circular-mode-screen .mode-screen-back,
+.mode-choice-back {
+  padding: 10px 18px !important;
+}
+.satelite .back-icon { height: 26px; }
+@media (max-width: 420px) {
+  .satelite .back-icon { height: 22px; }
+}
+
+
+/* Setas de voltar: botão redondo, seta centralizada e sem esticar. */
+#app .circular-mode-screen .mode-screen-back,
+.mode-choice-back {
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  flex: 0 0 auto;
+}
+.back-icon {
+  flex: none;
+  width: 34px;
+  height: auto;
+  aspect-ratio: 256 / 179;
+  object-fit: contain;
+}
+.satelite .back-icon { width: 34px; height: auto; }
+@media (max-width: 420px) {
+  .satelite .back-icon { width: 28px; height: auto; }
+}
+.icon-btn[data-go="home"]::before,
+.icon-btn[data-go="categories"]::before,
+.icon-btn[data-go="build"]::before {
+  width: 30px;
+  height: 21px;
+  flex: none;
+}
+
+
+/* Aba "Ativar controle ocular": mesmo azul claro dos botões do menu.
+   A classe .ocular-tab é aplicada por um script abaixo, que localiza a aba pelo texto. */
+.ocular-tab {
+  background: var(--card) !important;
+  color: var(--navy) !important;
+  border: 1.5px solid var(--card-border) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: 0 3px 8px rgba(23,58,94,.12) !important;
+  font-family: var(--font-title) !important;
+  font-weight: 800 !important;
+  font-size: 14px !important;
+  line-height: 1.2 !important;
+  padding: 10px 16px !important;
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+}
+.ocular-tab * {
+  color: inherit !important;
+  font: inherit !important;
+}
+body[data-theme="dark"] .ocular-tab {
+  background: #1b344d !important;
+  color: #f1f7ff !important;
+  border-color: #3d6688 !important;
+}
+.ocular-tab:hover,
+.ocular-tab:focus-visible {
+  background: #fff2bf !important;
+  color: #173a5e !important;
+  border-color: #f3d675 !important;
+  outline: 3px solid #f3d675;
+  outline-offset: 2px;
 }
 
 </style>
@@ -3730,7 +3896,7 @@ function renderHome() {
 function renderBuild() {
   return `
     <div class="mode-choice-screen">
-      <button class="mode-choice-back" data-go="home" aria-label="Voltar ao início">← Voltar</button>
+      <button class="mode-choice-back" data-go="home" aria-label="Voltar ao início"><img class="back-icon" src="assets/imagens/icone-voltar.png" alt="" aria-hidden="true"></button>
       <div class="mode-choice-content">
         <h1>Como você quer se comunicar?</h1>
         <button class="mode-choice-button" type="button" data-mode-screen="circularMode">Teclado circular</button>
@@ -4124,7 +4290,7 @@ function circularKeyboardRings() {
 }
 
 function renderCircularKeyboard() {
-  return `<div class="mode-screen circular-mode-screen"><button class="mode-screen-back" data-go="build" aria-label="Voltar para escolha do modo">← Voltar</button><div class="circular-keyboard-reserved"><div class="phrase-stack"><div class="campo" aria-label="Frase formada"><span id="valor"></span></div><div class="frases-prontas" id="frasesProntas" data-rotulo="Palavras salvas" aria-label="Palavras salvas pelo usuário" aria-live="polite"></div></div><div class="teclado-area"><section class="teclado" id="teclado" aria-label="Teclado circular"><div class="anel anel-externo" id="anelExterno"></div><div class="anel anel-meio" id="anelMeio"></div></section><div class="satelites" id="menuOrbital" aria-label="Menu de ações"><button class="satelite" id="limpar" type="button" aria-label="Limpar">limpar</button><button class="satelite" id="excluir" type="button" aria-label="Excluir">excluir</button><button class="satelite" id="recarregar" type="button" aria-label="Recarregar sugestões ou conectar o Gemini" title="Recarregar sugestões ou conectar o Gemini">recarregar</button><button class="satelite" id="voltarInicio" type="button" aria-label="Voltar ao início">voltar</button><button class="satelite" id="falar" type="button" aria-label="Falar">falar</button><button class="satelite satelite-destaque" id="concluir" type="button" aria-label="Concluir">concluir</button></div></div></div></div>`;
+  return `<div class="mode-screen circular-mode-screen"><button class="mode-screen-back" data-go="build" aria-label="Voltar para escolha do modo"><img class="back-icon" src="assets/imagens/icone-voltar.png" alt="" aria-hidden="true"></button><div class="circular-keyboard-reserved"><div class="phrase-stack"><div class="campo" aria-label="Frase formada"><span id="valor"></span></div><div class="frases-prontas" id="frasesProntas" data-rotulo="Palavras salvas" aria-label="Palavras salvas pelo usuário" aria-live="polite"></div></div><div class="teclado-area"><section class="teclado" id="teclado" aria-label="Teclado circular"><div class="anel anel-externo" id="anelExterno"></div><div class="anel anel-meio" id="anelMeio"></div></section><div class="satelites" id="menuOrbital" aria-label="Menu de ações"><button class="satelite" id="limpar" type="button" aria-label="Limpar">limpar</button><button class="satelite" id="excluir" type="button" aria-label="Excluir">excluir</button><button class="satelite" id="recarregar" type="button" aria-label="Recarregar sugestões ou conectar o Gemini" title="Recarregar sugestões ou conectar o Gemini">recarregar</button><button class="satelite" id="voltarInicio" type="button" aria-label="Voltar ao início">voltar</button><button class="satelite" id="falar" type="button" aria-label="Falar">falar</button><button class="satelite satelite-destaque" id="concluir" type="button" aria-label="Concluir">concluir</button></div></div></div></div>`;
 }
 function renderCategories() {
   const categories = allCategories();
@@ -4637,7 +4803,7 @@ function initPersonalizeKeyboard() {
   function mostrarCunha(indice) {
     const abertura = 360 / teclas.length;
     const inicio = indice * abertura - abertura / 2;
-    cunha.style.background = `conic-gradient(from ${inicio}deg, rgb(247 201 77 / 55%) 0deg ${abertura}deg, transparent ${abertura}deg 360deg)`;
+    cunha.style.background = `conic-gradient(from ${inicio}deg, rgb(255 230 140 / 75%) 0deg ${abertura}deg, transparent ${abertura}deg 360deg)`;
     cunha.classList.add('ativa');
   }
 
@@ -6446,7 +6612,7 @@ function mostrarCunha(anel, posicao) {
     const abertura = 360 / anel.quantidade;
     const inicio = posicao * abertura - abertura / 2;
     aneis.forEach((outroAnel) => outroAnel.cunha.classList.remove("ativa"));
-    anel.cunha.style.background = `conic-gradient(from ${inicio}deg, rgb(247 201 77 / 55%) 0deg ${abertura}deg, transparent ${abertura}deg 360deg)`;
+    anel.cunha.style.background = `conic-gradient(from ${inicio}deg, rgb(255 230 140 / 85%) 0deg ${abertura}deg, transparent ${abertura}deg 360deg)`;
     anel.cunha.classList.add("ativa");
 }
 
@@ -6776,6 +6942,91 @@ function initCircularKeyboard() {
 loadData();
 initSplash();
 initGamepadControls();
+</script>
+<script>
+/* Aba "Ativar/Desativar controle ocular" (criada pelo ocular-tracking.js):
+   localizada pelo texto e pintada com o mesmo azul dos botões do app.
+   Os estilos são aplicados direto no elemento (inline + !important) para
+   vencer qualquer estilo definido pelo próprio ocular-tracking.js. */
+(function () {
+  const TRECHO = 'controle ocular';
+  let agendado = false;
+  let aplicando = false;
+
+  function cores(estado) {
+    const escuro = document.body.dataset.theme !== 'light';
+    if (estado === 'destaque') return { bg: '#fff2bf', cor: '#173a5e', borda: '#f3d675' };
+    return escuro
+      ? { bg: '#1b344d', cor: '#f1f7ff', borda: '#3d6688' }
+      : { bg: 'rgba(234, 246, 255, 0.95)', cor: '#173a5e', borda: '#cfe9f7' };
+  }
+
+  function estilizar(el, estado) {
+    const c = cores(estado);
+    const set = (prop, valor) => {
+      if (el.style.getPropertyValue(prop) !== valor || el.style.getPropertyPriority(prop) !== 'important') {
+        el.style.setProperty(prop, valor, 'important');
+      }
+    };
+    set('background', c.bg);
+    set('background-image', 'none');
+    set('color', c.cor);
+    set('border', '1.5px solid ' + c.borda);
+    set('border-radius', '16px');
+    set('box-shadow', '0 3px 8px rgba(23, 58, 94, 0.12)');
+    set('font-family', "'Baloo 2', cursive");
+    set('font-weight', '800');
+    set('font-size', '14px');
+    set('line-height', '1.2');
+    set('padding', '10px 16px');
+    set('text-shadow', 'none');
+    set('opacity', '1');
+    el.querySelectorAll('*').forEach(filho => {
+      if (filho.style.getPropertyValue('color') !== c.cor) filho.style.setProperty('color', c.cor, 'important');
+      if (filho.style.getPropertyValue('text-shadow') !== 'none') filho.style.setProperty('text-shadow', 'none', 'important');
+    });
+  }
+
+  function ehAbaOcular(el) {
+    const texto = (el.textContent || '').toLowerCase();
+    const rotulo = ((el.getAttribute && (el.getAttribute('aria-label') || el.getAttribute('title'))) || '').toLowerCase();
+    return (texto.length < 60 && texto.includes(TRECHO)) || rotulo.includes(TRECHO);
+  }
+
+  function marcarAbaOcular() {
+    agendado = false;
+    aplicando = true;
+    const candidatos = [...document.querySelectorAll('button, [role="button"], a, div, span, label')]
+      .filter(el => !el.closest('#app') && ehAbaOcular(el));
+    candidatos
+      .filter(el => !candidatos.some(outro => outro !== el && el.contains(outro)))
+      .forEach(el => {
+        const alvo = el.closest('button, [role="button"], a') || el;
+        alvo.classList.add('ocular-tab');
+        estilizar(alvo, alvo.matches(':hover, :focus-visible') ? 'destaque' : 'normal');
+        if (!alvo.dataset.ocularTabPronto) {
+          alvo.dataset.ocularTabPronto = '1';
+          ['mouseenter', 'focus'].forEach(ev => alvo.addEventListener(ev, () => estilizar(alvo, 'destaque')));
+          ['mouseleave', 'blur'].forEach(ev => alvo.addEventListener(ev, () => estilizar(alvo, 'normal')));
+        }
+      });
+    aplicando = false;
+  }
+
+  function agendar() {
+    if (agendado || aplicando) return;
+    agendado = true;
+    requestAnimationFrame(marcarAbaOcular);
+  }
+
+  new MutationObserver(agendar).observe(document.documentElement, {
+    childList: true, subtree: true, characterData: true,
+    attributes: true, attributeFilter: ['style', 'class', 'data-theme']
+  });
+  window.addEventListener('load', agendar);
+  setInterval(agendar, 1500);
+  agendar();
+})();
 </script>
 <script src="ocular-tracking.js" defer></script>
 
