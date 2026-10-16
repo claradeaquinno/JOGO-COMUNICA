@@ -2666,6 +2666,411 @@ body[data-theme="dark"] .ocular-tab {
   outline-offset: 2px;
 }
 
+
+/* Carrossel organizado: cartão central menor e setas coladas nos cartões. */
+.carousel-track {
+  width: auto;
+  flex: 0 1 auto;
+  gap: 6px;
+}
+#app .carousel-full-screen .carousel-wrap {
+  min-height: 0;
+  gap: 4px;
+  margin: 6px 0 14px;
+}
+#app .carousel-full-screen .carousel-arrow {
+  width: 44px;
+  height: 44px;
+  font-size: 26px;
+  line-height: 1;
+}
+#app .carousel-full-screen .carousel-card {
+  gap: 4px;
+  padding: 6px 4px;
+  text-align: center;
+}
+#app .carousel-full-screen .carousel-card.center {
+  width: 128px;
+  height: 148px;
+}
+#app .carousel-full-screen .carousel-card.side {
+  width: 80px;
+  height: 104px;
+  transform: none;
+  opacity: .75;
+}
+#app .carousel-full-screen .carousel-card.center .emoji { font-size: 38px; }
+#app .carousel-full-screen .carousel-card.side .emoji { font-size: 24px; }
+#app .carousel-full-screen .carousel-card .label {
+  max-width: 100%;
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+#app .carousel-full-screen .carousel-card.center .label { font-size: 15px; }
+#app .carousel-full-screen .carousel-card.side .label { font-size: 11px; }
+@media (max-width: 420px) {
+  .carousel-track { gap: 4px; }
+  #app .carousel-full-screen .carousel-wrap { gap: 2px; }
+  #app .carousel-full-screen .carousel-arrow { width: 36px; height: 36px; font-size: 22px; }
+  #app .carousel-full-screen .carousel-card.center { width: 100px; height: 124px; }
+  #app .carousel-full-screen .carousel-card.side { width: 58px; height: 86px; }
+  #app .carousel-full-screen .carousel-card.center .emoji { font-size: 32px; }
+  #app .carousel-full-screen .carousel-card.side .emoji { font-size: 20px; }
+  #app .carousel-full-screen .carousel-card.center .label { font-size: 13px; }
+  #app .carousel-full-screen .carousel-card.side .label { font-size: 9.5px; }
+}
+
+.emoji, .menu-emoji, .carousel-card .emoji, .cat-card .emoji, .word-card .emoji, .challenge-card .emoji { display: none !important; }
+.phrase-chip, .carousel-card .label { white-space: normal; }
+
+/* Carrossel: mesmo amarelo suave padrão da seleção */
+body[data-theme="light"] #app .carousel-card.center,
+body[data-theme="dark"] #app .carousel-card.center,
+#app .carousel-card.center:hover,
+#app .carousel-card:focus,
+#app .carousel-card:focus-visible,
+#app .carousel-card.accessibility-focus {
+  background: #fff2bf !important;
+  border-color: #f3d675 !important;
+  outline-color: #f3d675 !important;
+  box-shadow: 0 4px 12px rgba(23,58,94,.18) !important;
+}
+#app .carousel-card.center .label,
+#app .carousel-card:focus .label,
+#app .carousel-card.accessibility-focus .label { color: #123b4d !important; }
+
+/* ===== Configurações: fonte única e linhas alinhadas ===== */
+#app .form-block .settings-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: 14px;
+  padding: 14px 4px;
+  min-height: 72px;
+}
+#app .settings-label {
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 1.2;
+}
+#app .settings-desc {
+  font-family: var(--font-title);
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 1.3;
+  margin-top: 3px;
+}
+#app .settings-row .stepper,
+#app .settings-row .switch,
+#app .settings-row .ocular-setting-btn { justify-self: end; }
+#app .stepper { min-width: 164px; justify-content: space-between; }
+#app .stepper span {
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: 14px;
+  min-width: 72px;
+}
+#app .stepper button {
+  font-family: var(--font-title);
+  font-weight: 800;
+  width: 40px;
+  height: 40px;
+}
+#app .ocular-setting-btn {
+  min-width: 164px;
+  min-height: 44px;
+  padding: 8px 16px;
+  border-radius: 16px;
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: 15px;
+  cursor: pointer;
+  background: rgba(234, 246, 255, 0.95);
+  color: #173a5e;
+  border: 1.5px solid #cfe9f7;
+}
+body[data-theme="dark"] #app .ocular-setting-btn {
+  background: #1b344d;
+  color: #f1f7ff;
+  border-color: #3d6688;
+}
+#app .ocular-setting-btn.ligado { border-color: #f3d675; }
+#app .ocular-setting-btn:disabled { opacity: .6; cursor: default; }
+#app .ocular-setting-btn:hover:not(:disabled),
+#app .ocular-setting-btn:focus-visible {
+  background: #fff2bf !important;
+  border-color: #f3d675 !important;
+  color: #123b4d !important;
+}
+@media (max-width: 420px) {
+  #app .form-block .settings-row { grid-template-columns: 1fr; row-gap: 10px; }
+  #app .settings-row .stepper,
+  #app .settings-row .switch,
+  #app .settings-row .ocular-setting-btn { justify-self: start; }
+}
+
+/* ===== Prévia da paleta (daltonismo) ===== */
+#app .color-vision-preview {
+  margin: 4px 0 14px;
+  padding: 14px;
+  border-radius: 16px;
+  background: rgba(234, 246, 255, 0.95);
+  border: 1.5px solid #cfe9f7;
+  color: #173a5e;
+  font-family: var(--font-title);
+}
+body[data-theme="dark"] #app .color-vision-preview {
+  background: #1b344d;
+  border-color: #3d6688;
+  color: #f1f7ff;
+}
+#app .color-vision-preview-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+#app .color-vision-preview-title { font-weight: 800; font-size: 15px; }
+#app .color-vision-preview-badge {
+  font-weight: 800;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1.5px solid currentColor;
+  white-space: nowrap;
+}
+#app .color-vision-preview-items {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+#app .color-vision-swatch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 6px 8px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 13px;
+  text-align: center;
+  background: #fff;
+  color: #173a5e;
+  border: 2px solid #173a5e;
+}
+#app .color-vision-swatch--selected { background: #fff2bf; border-color: #f3d675; border-style: solid; }
+#app .color-vision-swatch--focus { background: #fff; border: 3px double #173a5e; }
+#app .color-vision-preview-note {
+  margin: 12px 0 0;
+  font-weight: 600;
+  font-size: 12.5px;
+  line-height: 1.4;
+  opacity: .9;
+}
+@media (max-width: 420px) {
+  #app .color-vision-preview-items { grid-template-columns: 1fr; }
+}
+.word-icon, img.word-icon { display: none !important; }
+.word-card { gap: 4px; }
+
+/* Botões de ação (Apagar, Limpar, Falar, Favoritar): cor neutra */
+body[data-theme] #app .action-row button,
+body[data-theme] #app .action-row .btn-erase,
+body[data-theme] #app .action-row .btn-clear,
+body[data-theme] #app .action-row .btn-speak,
+body[data-theme] #app .action-row .btn-fav,
+body[data-theme] #app .action-row .btn-fav-word {
+  background: #eef2f6 !important;
+  background-image: none !important;
+  color: #2b4a63 !important;
+  border: 1.5px solid #d3dce5 !important;
+  text-shadow: none !important;
+  box-shadow: 0 2px 6px rgba(23,58,94,.08) !important;
+}
+body[data-theme="dark"] #app .action-row button,
+body[data-theme="dark"] #app .action-row .btn-erase,
+body[data-theme="dark"] #app .action-row .btn-clear,
+body[data-theme="dark"] #app .action-row .btn-speak,
+body[data-theme="dark"] #app .action-row .btn-fav,
+body[data-theme="dark"] #app .action-row .btn-fav-word {
+  background: #2a3b4d !important;
+  color: #e6eef7 !important;
+  border-color: #46607a !important;
+}
+body[data-theme] #app .action-row button:hover:not(:disabled),
+body[data-theme] #app .action-row button:focus-visible {
+  background: #fff2bf !important;
+  border-color: #f3d675 !important;
+  color: #123b4d !important;
+}
+body[data-theme] #app .action-row button:disabled { opacity: .55 !important; filter: none !important; }
+
+/* ===== Modo para daltonismo (body[data-color-vision="on"]) =====
+   Paleta segura (azul var(--cv-accent) / laranja var(--cv-focus) / preto-branco), contorno grosso
+   e símbolos: o significado nunca depende só da cor. */
+body[data-color-vision="on"] {
+  --focus-ring: var(--cv-focus);
+  --card-border: #173a5e;
+  --green: var(--cv-accent);
+  --red: #7a2a00;
+}
+body[data-color-vision="on"][data-theme="dark"] { --card-border: #ffffff; }
+
+/* contorno forte em tudo que é clicável */
+body[data-color-vision="on"] #app button:not(.switch-track),
+body[data-color-vision="on"] #app .menu-btn,
+body[data-color-vision="on"] #app .card,
+body[data-color-vision="on"] #app .cat-card,
+body[data-color-vision="on"] #app .word-card,
+body[data-color-vision="on"] #app .carousel-card,
+body[data-color-vision="on"] #app .mode-choice-button {
+  border: var(--cv-border) solid #173a5e !important;
+}
+body[data-color-vision="on"][data-theme="dark"] #app button:not(.switch-track),
+body[data-color-vision="on"][data-theme="dark"] #app .menu-btn,
+body[data-color-vision="on"][data-theme="dark"] #app .card,
+body[data-color-vision="on"][data-theme="dark"] #app .cat-card,
+body[data-color-vision="on"][data-theme="dark"] #app .word-card,
+body[data-color-vision="on"][data-theme="dark"] #app .carousel-card,
+body[data-color-vision="on"][data-theme="dark"] #app .mode-choice-button {
+  border-color: #ffffff !important;
+}
+
+/* foco / hover: laranja + contorno duplo preto e branco + seta */
+body[data-color-vision="on"] #app button:hover:not(:disabled),
+body[data-color-vision="on"] #app button:focus-visible,
+body[data-color-vision="on"] #app .menu-btn:hover,
+body[data-color-vision="on"] #app .cat-card:hover,
+body[data-color-vision="on"] #app .cat-card:focus-visible,
+body[data-color-vision="on"] #app .word-card:hover,
+body[data-color-vision="on"] #app .word-card:focus-visible,
+body[data-color-vision="on"] #app .carousel-card:hover,
+body[data-color-vision="on"] #app .carousel-card:focus-visible,
+body[data-color-vision="on"] #app .accessibility-focus {
+  background: var(--cv-focus) !important;
+  background-image: none !important;
+  color: var(--cv-focus-text) !important;
+  border-color: #000 !important;
+  outline: 4px solid #fff !important;
+  outline-offset: 0 !important;
+  box-shadow: 0 0 0 7px #000 !important;
+}
+body[data-color-vision="on"] #app .accessibility-focus .label::before,
+body[data-color-vision="on"] #app .cat-card:focus-visible .label::before,
+body[data-color-vision="on"] #app .word-card:focus-visible .label::before {
+  content: "\25B6  ";
+}
+
+/* selecionado / ligado: azul sólido + texto branco + símbolo ✓ */
+body[data-color-vision="on"] #app .word-card.selected,
+body[data-color-vision="on"] #app .carousel-card.center,
+body[data-color-vision="on"] #app [aria-pressed="true"]:not(.switch-track) {
+  background: var(--cv-accent) !important;
+  background-image: none !important;
+  color: #fff !important;
+  border-color: #000 !important;
+}
+body[data-color-vision="on"] #app .carousel-card.center .label,
+body[data-color-vision="on"] #app .word-card.selected .label { color: #fff !important; }
+body[data-color-vision="on"] #app .carousel-card.center .label::before,
+body[data-color-vision="on"] #app .word-card.selected .label::before { content: "\2713  "; }
+body[data-color-vision="on"] #app .carousel-card.center:hover,
+body[data-color-vision="on"] #app .carousel-card.center:focus-visible { background: var(--cv-focus) !important; color: #000 !important; }
+body[data-color-vision="on"] #app .carousel-card.center:hover .label,
+body[data-color-vision="on"] #app .carousel-card.center:focus-visible .label { color: #000 !important; }
+
+/* botões de ação e interruptores */
+body[data-color-vision="on"] #app .action-row button {
+  background: #fff !important;
+  color: #000 !important;
+}
+body[data-color-vision="on"][data-theme="dark"] #app .action-row button {
+  background: #10283d !important;
+  color: #fff !important;
+}
+body[data-color-vision="on"] .switch input:checked + .switch-track { background: var(--cv-accent) !important; outline: 3px solid #000; }
+body[data-color-vision="on"] .switch input:not(:checked) + .switch-track { background: #888 !important; outline: 3px dashed #000; }
+body[data-color-vision="on"][data-theme="dark"] .switch input:checked + .switch-track { outline-color: #fff; }
+body[data-color-vision="on"][data-theme="dark"] .switch input:not(:checked) + .switch-track { outline-color: #fff; }
+
+/* texto sempre com contraste máximo */
+body[data-color-vision="on"] #app .settings-desc,
+body[data-color-vision="on"] #app .description,
+body[data-color-vision="on"] #app .count { opacity: 1 !important; font-weight: 700; }
+body[data-color-vision="on"][data-theme="light"] #app .settings-desc,
+body[data-color-vision="on"][data-theme="light"] #app .description { color: #0b2236 !important; }
+
+/* prévia reflete o modo */
+body[data-color-vision="on"] #app .color-vision-swatch--option { background: #fff; border: 3px solid #000; color: #000; }
+body[data-color-vision="on"] #app .color-vision-swatch--selected { background: var(--cv-accent); border: 3px solid #000; color: #fff; }
+body[data-color-vision="on"] #app .color-vision-swatch--focus { background: var(--cv-focus); border: 3px double #000; color: #000; box-shadow: 0 0 0 3px #fff, 0 0 0 5px #000; }
+
+/* paletas por tipo (aplicadas via body[data-color-vision-type]) */
+body[data-color-vision="on"][data-color-vision-type="deuteranomalia"] {
+  --cv-accent: #0072B2; --cv-focus: #E69F00; --cv-focus-text: #000; --cv-border: 3px;
+  --focus-ring: #E69F00; --green: #0072B2; --red: #7a4a00;
+}
+body[data-color-vision="on"][data-color-vision-type="protanomalia"] {
+  --cv-accent: #1A5FB4; --cv-focus: #F0E442; --cv-focus-text: #000; --cv-border: 3px;
+  --focus-ring: #F0E442; --green: #1A5FB4; --red: #333333;
+}
+body[data-color-vision="on"][data-color-vision-type="deuteranopia"] {
+  --cv-accent: #0B3D91; --cv-focus: #FFC20A; --cv-focus-text: #000; --cv-border: 4px;
+  --focus-ring: #FFC20A; --green: #0B3D91; --red: #5b4300;
+}
+body[data-color-vision="on"][data-color-vision-type="protanopia"] {
+  --cv-accent: #1B2F8F; --cv-focus: #FFF176; --cv-focus-text: #000; --cv-border: 4px;
+  --focus-ring: #FFF176; --green: #1B2F8F; --red: #222222;
+}
+/* botões principais sem verde/vermelho */
+body[data-color-vision="on"] #app .speak-btn,
+body[data-color-vision="on"] #app .confirm-btn,
+body[data-color-vision="on"] #app .submit-btn {
+  background: var(--cv-accent) !important;
+  background-image: none !important;
+  color: #fff !important;
+  border: var(--cv-border) solid #000 !important;
+  text-shadow: none !important;
+}
+body[data-color-vision="on"][data-theme="dark"] #app .speak-btn,
+body[data-color-vision="on"][data-theme="dark"] #app .confirm-btn,
+body[data-color-vision="on"][data-theme="dark"] #app .submit-btn { border-color: #fff !important; }
+body[data-color-vision="on"] #app .speak-btn:hover:not(:disabled),
+body[data-color-vision="on"] #app .confirm-btn:hover:not(:disabled),
+body[data-color-vision="on"] #app .submit-btn:hover:not(:disabled) {
+  background: var(--cv-focus) !important; color: var(--cv-focus-text) !important;
+}
+/* seletor de tipo */
+#app .cv-type-group { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 4px 0 12px; }
+#app .cv-type-btn {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
+  padding: 10px 12px; border-radius: 14px; text-align: left; cursor: pointer;
+  font-family: var(--font-title); font-weight: 800; font-size: 14px; line-height: 1.2;
+  background: rgba(234, 246, 255, 0.95); color: #173a5e; border: 1.5px solid #cfe9f7;
+}
+#app .cv-type-btn small { font-family: var(--font-title); font-weight: 600; font-size: 12px; }
+body[data-theme="dark"] #app .cv-type-btn { background: #1b344d; color: #f1f7ff; border-color: #3d6688; }
+#app .cv-type-btn[aria-checked="true"] { border-color: #f3d675; box-shadow: inset 0 0 0 2px #f3d675; }
+#app .cv-type-btn[aria-checked="true"] span::before { content: "\2713  "; }
+#app .cv-type-group[data-disabled="true"] { opacity: .55; }
+@media (max-width: 420px) { #app .cv-type-group { grid-template-columns: 1fr; } }
+
+/* ===== Correção de cor global por tipo de daltonismo =====
+   Filtro SVG (daltonização) aplicado em TODA a interface: telas, teclado circular,
+   carrossel, mascote, avisos. Aplicado em cada tela e não no body para não quebrar
+   elementos com position:fixed. */
+body[data-color-vision="on"][data-color-vision-type="deuteranomalia"] #app > *,
+body[data-color-vision="on"][data-color-vision-type="deuteranomalia"] > :not(script):not(style):not(link):not(svg):not(#app) { filter: url(#cv-deuteranomalia); }
+body[data-color-vision="on"][data-color-vision-type="protanomalia"] #app > *,
+body[data-color-vision="on"][data-color-vision-type="protanomalia"] > :not(script):not(style):not(link):not(svg):not(#app) { filter: url(#cv-protanomalia); }
+body[data-color-vision="on"][data-color-vision-type="deuteranopia"] #app > *,
+body[data-color-vision="on"][data-color-vision-type="deuteranopia"] > :not(script):not(style):not(link):not(svg):not(#app) { filter: url(#cv-deuteranopia); }
+body[data-color-vision="on"][data-color-vision-type="protanopia"] #app > *,
+body[data-color-vision="on"][data-color-vision-type="protanopia"] > :not(script):not(style):not(link):not(svg):not(#app) { filter: url(#cv-protanopia); }
 </style>
 </head>
 
@@ -2700,13 +3105,13 @@ body[data-theme="dark"] .ocular-tab {
    ========================================================= */
 
 const DEFAULT_CATEGORIES = [
-  { id: 'pessoas', label: 'Pessoas', emoji: '👥', custom: false },
-  { id: 'necessidades', label: 'Necessidades', emoji: '🧩', custom: false },
-  { id: 'comida', label: 'Comida', emoji: '🍎', custom: false },
-  { id: 'sentimentos', label: 'Sentimentos', emoji: '💛', custom: false },
-  { id: 'atividades', label: 'Atividades', emoji: '🎨', custom: false },
-  { id: 'lugares', label: 'Lugares', emoji: '📍', custom: false },
-  { id: 'acoes', label: 'Ações', emoji: '✅', custom: false }
+  { id: 'pessoas', label: 'Pessoas', emoji: '', custom: false },
+  { id: 'necessidades', label: 'Necessidades', emoji: '', custom: false },
+  { id: 'comida', label: 'Comida', emoji: '', custom: false },
+  { id: 'sentimentos', label: 'Sentimentos', emoji: '', custom: false },
+  { id: 'atividades', label: 'Atividades', emoji: '', custom: false },
+  { id: 'lugares', label: 'Lugares', emoji: '', custom: false },
+  { id: 'acoes', label: 'Ações', emoji: '', custom: false }
 ];
 
 const DEFAULT_WORDS = [
@@ -2715,7 +3120,7 @@ const DEFAULT_WORDS = [
   {
     id: 'eu',
     label: 'Eu',
-    emoji: '🙋',
+    emoji: '',
     description: 'Quem está falando',
     cat: 'pessoas'
   },
@@ -2723,7 +3128,7 @@ const DEFAULT_WORDS = [
   {
     id: 'voce',
     label: 'Você',
-    emoji: '🫵',
+    emoji: '',
     description: 'A pessoa com quem falo',
     cat: 'pessoas'
   },
@@ -2731,7 +3136,7 @@ const DEFAULT_WORDS = [
   {
     id: 'mae',
     label: 'Mãe',
-    emoji: '👩',
+    emoji: '',
     description: 'Minha mãe',
     cat: 'pessoas'
   },
@@ -2739,7 +3144,7 @@ const DEFAULT_WORDS = [
   {
     id: 'professor',
     label: 'Professor',
-    emoji: '👩‍🏫',
+    emoji: '',
     description: 'Meu professor',
     cat: 'pessoas'
   },
@@ -2747,7 +3152,7 @@ const DEFAULT_WORDS = [
   {
     id: 'amigo',
     label: 'Amigo',
-    emoji: '🤝',
+    emoji: '',
     description: 'Meu amigo',
     cat: 'pessoas'
   },
@@ -2756,7 +3161,7 @@ const DEFAULT_WORDS = [
   {
     id: 'quero',
     label: 'Quero',
-    emoji: '🙋',
+    emoji: '',
     description: 'Eu desejo algo',
     cat: 'acoes'
   },
@@ -2764,7 +3169,7 @@ const DEFAULT_WORDS = [
   {
     id: 'preciso',
     label: 'Preciso',
-    emoji: '❗',
+    emoji: '',
     description: 'Eu preciso de algo',
     cat: 'acoes'
   },
@@ -2772,7 +3177,7 @@ const DEFAULT_WORDS = [
   {
     id: 'estou',
     label: 'Estou',
-    emoji: '💭',
+    emoji: '',
     description: 'Como eu estou',
     cat: 'acoes'
   },
@@ -2780,7 +3185,7 @@ const DEFAULT_WORDS = [
   {
     id: 'gosto',
     label: 'Gosto',
-    emoji: '❤️',
+    emoji: '',
     description: 'Eu gosto de algo',
     cat: 'acoes'
   },
@@ -2788,7 +3193,7 @@ const DEFAULT_WORDS = [
   {
     id: 'vou',
     label: 'Vou',
-    emoji: '➡️',
+    emoji: '',
     description: 'Eu vou para algum lugar',
     cat: 'acoes'
   },
@@ -2797,7 +3202,7 @@ const DEFAULT_WORDS = [
   {
     id: 'agua',
     label: 'Água',
-    emoji: '💧',
+    emoji: '',
     description: 'Quero beber',
     cat: 'necessidades'
   },
@@ -2805,7 +3210,7 @@ const DEFAULT_WORDS = [
   {
     id: 'comida',
     label: 'Comida',
-    emoji: '🍽️',
+    emoji: '',
     description: 'Quero comer',
     cat: 'necessidades'
   },
@@ -2813,7 +3218,7 @@ const DEFAULT_WORDS = [
   {
     id: 'banheiro',
     label: 'Banheiro',
-    emoji: '🚻',
+    emoji: '',
     description: 'Preciso ir ao banheiro',
     cat: 'necessidades'
   },
@@ -2821,7 +3226,7 @@ const DEFAULT_WORDS = [
   {
     id: 'dormir',
     label: 'Dormir',
-    emoji: '😴',
+    emoji: '',
     description: 'Quero dormir',
     cat: 'necessidades'
   },
@@ -2829,7 +3234,7 @@ const DEFAULT_WORDS = [
   {
     id: 'descansar',
     label: 'Descansar',
-    emoji: '🛋️',
+    emoji: '',
     description: 'Quero descansar',
     cat: 'necessidades'
   },
@@ -2837,7 +3242,7 @@ const DEFAULT_WORDS = [
   {
     id: 'ajuda',
     label: 'Ajuda',
-    emoji: '🆘',
+    emoji: '',
     description: 'Preciso de ajuda',
     cat: 'necessidades'
   },
@@ -2846,7 +3251,7 @@ const DEFAULT_WORDS = [
   {
     id: 'feliz',
     label: 'Feliz',
-    emoji: '😊',
+    emoji: '',
     description: 'Estou feliz',
     cat: 'sentimentos'
   },
@@ -2854,7 +3259,7 @@ const DEFAULT_WORDS = [
   {
     id: 'triste',
     label: 'Triste',
-    emoji: '😢',
+    emoji: '',
     description: 'Estou triste',
     cat: 'sentimentos'
   },
@@ -2862,7 +3267,7 @@ const DEFAULT_WORDS = [
   {
     id: 'cansado',
     label: 'Cansado',
-    emoji: '😴',
+    emoji: '',
     description: 'Estou cansado',
     cat: 'sentimentos'
   },
@@ -2870,7 +3275,7 @@ const DEFAULT_WORDS = [
   {
     id: 'commedo',
     label: 'Com medo',
-    emoji: '😨',
+    emoji: '',
     description: 'Estou com medo',
     cat: 'sentimentos'
   },
@@ -2878,7 +3283,7 @@ const DEFAULT_WORDS = [
   {
     id: 'comdor',
     label: 'Com dor',
-    emoji: '🤕',
+    emoji: '',
     description: 'Estou com dor',
     cat: 'sentimentos'
   },
@@ -2886,7 +3291,7 @@ const DEFAULT_WORDS = [
   {
     id: 'bem',
     label: 'Bem',
-    emoji: '🙂',
+    emoji: '',
     description: 'Estou bem',
     cat: 'sentimentos'
   },
@@ -2895,7 +3300,7 @@ const DEFAULT_WORDS = [
   {
     id: 'brincar',
     label: 'Brincar',
-    emoji: '🧸',
+    emoji: '',
     description: 'Quero brincar',
     cat: 'atividades'
   },
@@ -2903,7 +3308,7 @@ const DEFAULT_WORDS = [
   {
     id: 'jogar',
     label: 'Jogar',
-    emoji: '🎮',
+    emoji: '',
     description: 'Quero jogar',
     cat: 'atividades'
   },
@@ -2911,7 +3316,7 @@ const DEFAULT_WORDS = [
   {
     id: 'assistir',
     label: 'Assistir',
-    emoji: '📺',
+    emoji: '',
     description: 'Quero assistir',
     cat: 'atividades'
   },
@@ -2919,7 +3324,7 @@ const DEFAULT_WORDS = [
   {
     id: 'desenhar',
     label: 'Desenhar',
-    emoji: '🖍️',
+    emoji: '',
     description: 'Quero desenhar',
     cat: 'atividades'
   },
@@ -2927,7 +3332,7 @@ const DEFAULT_WORDS = [
   {
     id: 'passear',
     label: 'Passear',
-    emoji: '🚶',
+    emoji: '',
     description: 'Quero passear',
     cat: 'atividades'
   },
@@ -2935,7 +3340,7 @@ const DEFAULT_WORDS = [
   {
     id: 'musica',
     label: 'Música',
-    emoji: '🎵',
+    emoji: '',
     description: 'Quero ouvir música',
     cat: 'atividades'
   },
@@ -2944,7 +3349,7 @@ const DEFAULT_WORDS = [
   {
     id: 'casa',
     label: 'Casa',
-    emoji: '🏠',
+    emoji: '',
     description: 'Minha casa',
     cat: 'lugares'
   },
@@ -2952,7 +3357,7 @@ const DEFAULT_WORDS = [
   {
     id: 'escola',
     label: 'Escola',
-    emoji: '🏫',
+    emoji: '',
     description: 'Minha escola',
     cat: 'lugares'
   },
@@ -2960,7 +3365,7 @@ const DEFAULT_WORDS = [
   {
     id: 'quarto',
     label: 'Quarto',
-    emoji: '🛏️',
+    emoji: '',
     description: 'Meu quarto',
     cat: 'lugares'
   },
@@ -2968,7 +3373,7 @@ const DEFAULT_WORDS = [
   {
     id: 'hospital',
     label: 'Hospital',
-    emoji: '🏥',
+    emoji: '',
     description: 'Preciso ir ao hospital',
     cat: 'lugares'
   },
@@ -2976,50 +3381,50 @@ const DEFAULT_WORDS = [
   {
     id: 'sair',
     label: 'Sair',
-    emoji: '🚪',
+    emoji: '',
     description: 'Quero sair',
     cat: 'lugares'
   }
 ];
 
 const AAC_EXTRA_WORDS = [
-  ['ele', 'Ele', '👤'], ['ela', 'Ela', '👤'], ['nos', 'Nós', '👥'], ['eles', 'Eles', '👥'],
-  ['elas', 'Elas', '👥'], ['isso', 'Isso', '👉'], ['aquilo', 'Aquilo', '👉'],
-  ['avo', 'Avô', '👴'], ['ava', 'Avó', '👵'], ['tio', 'Tio', '👨'], ['tia', 'Tia', '👩'],
-  ['irmao', 'Irmão', '👦'], ['irma', 'Irmã', '👧'],
-  ['bomDia', 'Bom dia', '🌞'], ['boaTarde', 'Boa tarde', '🌤️'], ['boaNoite', 'Boa noite', '🌙'],
-  ['ola', 'Olá', '👋'], ['oi', 'Oi', '👋'], ['tudoBem', 'Tudo bem?', '🙂'], ['comoVai', 'Como vai?', '😊'],
-  ['ateLogo', 'Até logo', '👋'], ['tchau', 'Tchau', '👋'], ['prazerConhecer', 'Prazer em conhecer você', '🤝'],
-  ['comoVoceEsta', 'Como você está?', '🙂'], ['muitoPrazer', 'Muito prazer', '🤝'],
-  ['vai', 'Vai', '➡️'], ['quer', 'Quer', '🙋'], ['nao', 'Não', '🚫'], ['acho', 'Acho', '💭'], ['trabalhar', 'Trabalhar', '💼'],
-  ['tenho', 'Tenho', '✋'], ['pode', 'Pode', '✅'], ['sabe', 'Sabe', '🧠'], ['tem', 'Tem', '📦'], ['temPlural', 'Têm', '📦'],
-  ['esta', 'Está', '💭'], ['foi', 'Foi', '⏮️'], ['e', 'É', '🔗'], ['faz', 'Faz', '🛠️'],
-  ['diz', 'Diz', '💬'], ['gosta', 'Gosta', '😊'], ['precisa', 'Precisa', '❗'], ['morava', 'Morava', '🏠'],
-  ['trabalha', 'Trabalha', '💼'], ['estuda', 'Estuda', '📚'], ['conhece', 'Conhece', '🤝'], ['entende', 'Entende', '💡'],
-  ['somos', 'Somos', '👥'], ['estamos', 'Estamos', '👥'], ['vamos', 'Vamos', '➡️'], ['temos', 'Temos', '📦'],
-  ['fomos', 'Fomos', '⏮️'], ['queremos', 'Queremos', '🙋'], ['podemos', 'Podemos', '✅'], ['sabemos', 'Sabemos', '🧠'],
-  ['fizemos', 'Fizemos', '🛠️'], ['precisamos', 'Precisamos', '❗'], ['sao', 'São', '👥'], ['estao', 'Estão', '👥'],
-  ['vao', 'Vão', '➡️'], ['foram', 'Foram', '⏮️'], ['querem', 'Querem', '🙋'], ['podem', 'Podem', '✅'],
-  ['sabem', 'Sabem', '🧠'], ['fizeram', 'Fizeram', '🛠️'], ['gostam', 'Gostam', '😊'], ['precisam', 'Precisam', '❗'],
-  ['sera', 'Será', '🔮'], ['parece', 'Parece', '👀'], ['deve', 'Deve', '📌'], ['funciona', 'Funciona', '⚙️'],
-  ['aconteceu', 'Aconteceu', '❓'], ['falar', 'Falar', '💬'], ['irBanheiro', 'Ir ao banheiro', '🚽'],
-  ['irCasa', 'Ir para casa', '🏠'], ['saber', 'Saber', '🧠'], ['parar', 'Parar', '🛑'], ['maisTempo', 'Mais tempo', '⏳'],
-  ['deAjuda', 'De ajuda', '🆘'], ['deAgua', 'De água', '💧'], ['deComida', 'De comida', '🍎'],
-  ['falarAlguem', 'Falar com alguém', '💬'], ['deRemedio', 'De remédio', '💊'], ['deTempo', 'De tempo', '⏳'],
-  ['entender', 'Entender', '💡'], ['comFome', 'Com fome', '🍽️'], ['comSede', 'Com sede', '💧'], ['cansados', 'Cansados', '😩'],
-  ['felizes', 'Felizes', '😄'], ['tristes', 'Tristes', '😢'], ['preocupado', 'Preocupado', '😟'], ['preocupados', 'Preocupados', '😟'], ['paraCasa', 'Para casa', '🏠'], ['embora', 'Embora', '🚶'],
-  ['tentar', 'Tentar', '💪'], ['comer', 'Comer', '🍽️'], ['certeza', 'Certeza', '✅'], ['duvida', 'Dúvida', '❓'],
-  ['medo', 'Medo', '😨'], ['fome', 'Fome', '🍽️'], ['sede', 'Sede', '💧'], ['sono', 'Sono', '😴'],
-  ['pressa', 'Pressa', '⏱️'], ['umProblema', 'Um problema', '⚠️'], ['meAjudar', 'Me ajudar', '🆘'],
-  ['esperar', 'Esperar', '⏳'], ['repetir', 'Repetir', '🔁'], ['virAqui', 'Vir aqui', '👋'],
-  ['falarDevagar', 'Falar mais devagar', '🐢'], ['explicar', 'Explicar', '💡'], ['porFavor', 'Por favor', '🙏'],
-  ['agora', 'Agora', '⏰'], ['paraMim', 'Para mim', '🙋'], ['comIsso', 'Com isso', '👉'], ['euPreciso', 'Eu preciso', '❗'],
-  ['naoConsigo', 'Não consigo', '😟'], ['estouComDor', 'Estou com dor', '🤕'], ['queroFalar', 'Quero falar', '💬'],
-  ['obrigado', 'Obrigado', '🙏'], ['dor', 'Dor', '🤕'], ['estouCom', 'Estou com', '💭'], ['muitaDor', 'Muita dor', '🤕'],
-  ['aqui', 'Aqui', '📍'], ['chameAlguem', 'Chame alguém', '📣'], ['remedio', 'Remédio', '💊'], ['umPouco', 'Um pouco', '🤏'],
-  ['ondeFica', 'Onde fica?', '📍'], ['urgente', 'Urgente', '🚨'], ['mais', 'Mais', '➕'], ['deNovo', 'De novo', '🔁'],
-  ['estaBem', 'Está bem', '👍'], ['naoEntendi', 'Não entendi', '❓'], ['queroIrCasa', 'Quero ir para casa', '🏠'],
-  ['precisoDeAgua', 'Preciso de água', '💧'], ['maisDevagar', 'Mais devagar', '🐢']
+  ['ele', 'Ele', ''], ['ela', 'Ela', ''], ['nos', 'Nós', ''], ['eles', 'Eles', ''],
+  ['elas', 'Elas', ''], ['isso', 'Isso', ''], ['aquilo', 'Aquilo', ''],
+  ['avo', 'Avô', ''], ['ava', 'Avó', ''], ['tio', 'Tio', ''], ['tia', 'Tia', ''],
+  ['irmao', 'Irmão', ''], ['irma', 'Irmã', ''],
+  ['bomDia', 'Bom dia', ''], ['boaTarde', 'Boa tarde', ''], ['boaNoite', 'Boa noite', ''],
+  ['ola', 'Olá', ''], ['oi', 'Oi', ''], ['tudoBem', 'Tudo bem?', ''], ['comoVai', 'Como vai?', ''],
+  ['ateLogo', 'Até logo', ''], ['tchau', 'Tchau', ''], ['prazerConhecer', 'Prazer em conhecer você', ''],
+  ['comoVoceEsta', 'Como você está?', ''], ['muitoPrazer', 'Muito prazer', ''],
+  ['vai', 'Vai', ''], ['quer', 'Quer', ''], ['nao', 'Não', ''], ['acho', 'Acho', ''], ['trabalhar', 'Trabalhar', ''],
+  ['tenho', 'Tenho', ''], ['pode', 'Pode', ''], ['sabe', 'Sabe', ''], ['tem', 'Tem', ''], ['temPlural', 'Têm', ''],
+  ['esta', 'Está', ''], ['foi', 'Foi', ''], ['e', 'É', ''], ['faz', 'Faz', ''],
+  ['diz', 'Diz', ''], ['gosta', 'Gosta', ''], ['precisa', 'Precisa', ''], ['morava', 'Morava', ''],
+  ['trabalha', 'Trabalha', ''], ['estuda', 'Estuda', ''], ['conhece', 'Conhece', ''], ['entende', 'Entende', ''],
+  ['somos', 'Somos', ''], ['estamos', 'Estamos', ''], ['vamos', 'Vamos', ''], ['temos', 'Temos', ''],
+  ['fomos', 'Fomos', ''], ['queremos', 'Queremos', ''], ['podemos', 'Podemos', ''], ['sabemos', 'Sabemos', ''],
+  ['fizemos', 'Fizemos', ''], ['precisamos', 'Precisamos', ''], ['sao', 'São', ''], ['estao', 'Estão', ''],
+  ['vao', 'Vão', ''], ['foram', 'Foram', ''], ['querem', 'Querem', ''], ['podem', 'Podem', ''],
+  ['sabem', 'Sabem', ''], ['fizeram', 'Fizeram', ''], ['gostam', 'Gostam', ''], ['precisam', 'Precisam', ''],
+  ['sera', 'Será', ''], ['parece', 'Parece', ''], ['deve', 'Deve', ''], ['funciona', 'Funciona', ''],
+  ['aconteceu', 'Aconteceu', ''], ['falar', 'Falar', ''], ['irBanheiro', 'Ir ao banheiro', ''],
+  ['irCasa', 'Ir para casa', ''], ['saber', 'Saber', ''], ['parar', 'Parar', ''], ['maisTempo', 'Mais tempo', ''],
+  ['deAjuda', 'De ajuda', ''], ['deAgua', 'De água', ''], ['deComida', 'De comida', ''],
+  ['falarAlguem', 'Falar com alguém', ''], ['deRemedio', 'De remédio', ''], ['deTempo', 'De tempo', ''],
+  ['entender', 'Entender', ''], ['comFome', 'Com fome', ''], ['comSede', 'Com sede', ''], ['cansados', 'Cansados', ''],
+  ['felizes', 'Felizes', ''], ['tristes', 'Tristes', ''], ['preocupado', 'Preocupado', ''], ['preocupados', 'Preocupados', ''], ['paraCasa', 'Para casa', ''], ['embora', 'Embora', ''],
+  ['tentar', 'Tentar', ''], ['comer', 'Comer', ''], ['certeza', 'Certeza', ''], ['duvida', 'Dúvida', ''],
+  ['medo', 'Medo', ''], ['fome', 'Fome', ''], ['sede', 'Sede', ''], ['sono', 'Sono', ''],
+  ['pressa', 'Pressa', ''], ['umProblema', 'Um problema', ''], ['meAjudar', 'Me ajudar', ''],
+  ['esperar', 'Esperar', ''], ['repetir', 'Repetir', ''], ['virAqui', 'Vir aqui', ''],
+  ['falarDevagar', 'Falar mais devagar', ''], ['explicar', 'Explicar', ''], ['porFavor', 'Por favor', ''],
+  ['agora', 'Agora', ''], ['paraMim', 'Para mim', ''], ['comIsso', 'Com isso', ''], ['euPreciso', 'Eu preciso', ''],
+  ['naoConsigo', 'Não consigo', ''], ['estouComDor', 'Estou com dor', ''], ['queroFalar', 'Quero falar', ''],
+  ['obrigado', 'Obrigado', ''], ['dor', 'Dor', ''], ['estouCom', 'Estou com', ''], ['muitaDor', 'Muita dor', ''],
+  ['aqui', 'Aqui', ''], ['chameAlguem', 'Chame alguém', ''], ['remedio', 'Remédio', ''], ['umPouco', 'Um pouco', ''],
+  ['ondeFica', 'Onde fica?', ''], ['urgente', 'Urgente', ''], ['mais', 'Mais', ''], ['deNovo', 'De novo', ''],
+  ['estaBem', 'Está bem', ''], ['naoEntendi', 'Não entendi', ''], ['queroIrCasa', 'Quero ir para casa', ''],
+  ['precisoDeAgua', 'Preciso de água', ''], ['maisDevagar', 'Mais devagar', '']
 ].map(([id, label, emoji]) => ({ id, label, emoji, description: label, cat: 'acoes' }));
 
 const AAC_FALLBACK = [
@@ -3068,11 +3473,11 @@ const SUGGESTIONS = {
 
 
 const CHALLENGES = [
-  { emoji: '💧', prompt: 'Você está com sede. O que você quer dizer?', target: ['eu', 'quero', 'agua'] },
-  { emoji: '🍎', prompt: 'Você está com fome.', target: ['eu', 'quero', 'comida'] },
-  { emoji: '😴', prompt: 'Você está cansado e quer descansar.', target: ['eu', 'estou', 'cansado'] },
-  { emoji: '🚽', prompt: 'Você precisa ir ao banheiro.', target: ['eu', 'preciso', 'banheiro'] },
-  { emoji: '🧸', prompt: 'Você quer se divertir um pouco.', target: ['eu', 'quero', 'brincar'] }
+  { emoji: '', prompt: 'Você está com sede. O que você quer dizer?', target: ['eu', 'quero', 'agua'] },
+  { emoji: '', prompt: 'Você está com fome.', target: ['eu', 'quero', 'comida'] },
+  { emoji: '', prompt: 'Você está cansado e quer descansar.', target: ['eu', 'estou', 'cansado'] },
+  { emoji: '', prompt: 'Você precisa ir ao banheiro.', target: ['eu', 'preciso', 'banheiro'] },
+  { emoji: '', prompt: 'Você quer se divertir um pouco.', target: ['eu', 'quero', 'brincar'] }
 ];
 
 /* Dicas do mascote por tela — usadas quando o botão flutuante é tocado */
@@ -3173,6 +3578,7 @@ let STATE = {
       fontStep: 2,        // 1..4 -> pequeno, médio, grande, extra grande
       darkTheme: true,
       colorVision: false,
+      colorVisionType: 'deuteranomalia',
       scanEnabled: false,
       scanSpeed: 1800,
       voiceRate: 1,
@@ -3197,11 +3603,59 @@ function wordById(id) {
     || (STATE.circularGeneratedWords || []).find(word => word.id === id);
 }
 
-function wordVisualHtml(word, className = 'word-icon') {
-  const source = WORD_ICON_SRC[word.id];
-  return source
-    ? `<img class="${className}" src="${source}" alt="" aria-hidden="true">`
-    : `<div class="emoji" aria-hidden="true">${word.emoji}</div>`;
+function wordVisualHtml() {
+  return '';
+}
+
+/* ---------- Filtros de daltonismo (daltonização, matrizes de Machado et al. 2009) ---------- */
+function criarFiltrosDaltonismo() {
+  if (document.getElementById('cvFiltros')) return;
+  // Simulação de cada deficiência (3x3). Anomalias = severidade 0.6; anopias = 1.0
+  const SIM = {
+    deuteranomalia: [[0.547494, 0.607765, -0.155259], [0.181692, 0.781742, 0.036566], [-0.010410, 0.027275, 0.983136]],
+    protanomalia:   [[0.385450, 0.769005, -0.154455], [0.100526, 0.829802, 0.069673], [-0.007442, -0.022190, 1.029632]],
+    deuteranopia:   [[0.367322, 0.860646, -0.227968], [0.280085, 0.672501, 0.047413], [-0.011820, 0.042940, 0.968881]],
+    protanopia:     [[0.152286, 1.052583, -0.204868], [0.114503, 0.786281, 0.099216], [-0.003882, -0.048116, 1.051998]]
+  };
+  const FORCA = { deuteranomalia: 0.85, protanomalia: 0.85, deuteranopia: 1, protanopia: 1 };
+  const CONTRASTE = { deuteranomalia: 1.08, protanomalia: 1.08, deuteranopia: 1.14, protanopia: 1.14 };
+  // Desloca o erro de vermelho/verde para os canais verde e azul
+  const SHIFT = [[0, 0, 0], [0.7, 1, 0], [0.7, 0, 1]];
+  const ns = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(ns, 'svg');
+  svg.id = 'cvFiltros';
+  svg.setAttribute('width', '0');
+  svg.setAttribute('height', '0');
+  svg.setAttribute('aria-hidden', 'true');
+  svg.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden;';
+  Object.keys(SIM).forEach(tipo => {
+    const S = SIM[tipo], k = FORCA[tipo], c = CONTRASTE[tipo];
+    const C = [0, 1, 2].map(i => [0, 1, 2].map(j => {
+      const erro = (i === j ? 1 : 0) - S[i][j];
+      let desloc = 0;
+      for (let m = 0; m < 3; m++) desloc += SHIFT[i][m] * ((m === j ? 1 : 0) - S[m][j]);
+      return (i === j ? 1 : 0) + k * desloc;
+    }));
+    const valores = C.map(l => l.map(v => v.toFixed(4)).join(' ') + ' 0 0').join(' ') + ' 0 0 0 1 0';
+    const filtro = document.createElementNS(ns, 'filter');
+    filtro.id = 'cv-' + tipo;
+    filtro.setAttribute('color-interpolation-filters', 'sRGB');
+    filtro.setAttribute('x', '0'); filtro.setAttribute('y', '0');
+    filtro.setAttribute('width', '100%'); filtro.setAttribute('height', '100%');
+    const m = document.createElementNS(ns, 'feColorMatrix');
+    m.setAttribute('type', 'matrix'); m.setAttribute('values', valores);
+    const t = document.createElementNS(ns, 'feComponentTransfer');
+    ['R', 'G', 'B'].forEach(canal => {
+      const f = document.createElementNS(ns, 'feFunc' + canal);
+      f.setAttribute('type', 'linear');
+      f.setAttribute('slope', String(c));
+      f.setAttribute('intercept', String(((1 - c) / 2).toFixed(4)));
+      t.appendChild(f);
+    });
+    filtro.appendChild(m); filtro.appendChild(t);
+    svg.appendChild(filtro);
+  });
+  document.body.appendChild(svg);
 }
 
 function loadData() {
@@ -3220,6 +3674,12 @@ function loadData() {
     console.error('Erro ao carregar os dados:', error);
   }
 
+  const semEmoji = txt => String(txt || '').replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{23E0}-\u{23FF}\u{FE0F}\u{200D}]/gu, '');
+  ['customWords', 'customCategories'].forEach(chave => {
+    (STATE.data[chave] || []).forEach(item => { item.emoji = semEmoji(item.emoji); });
+  });
+
+  criarFiltrosDaltonismo();
   applySettings();
   loadLayer();
   render();
@@ -3238,6 +3698,7 @@ function applySettings() {
   document.documentElement.style.setProperty('--a11y-scale', scale);
   document.body.dataset.theme = STATE.data.settings.darkTheme === false ? 'light' : 'dark';
   document.body.dataset.colorVision = STATE.data.settings.colorVision ? 'on' : 'off';
+  document.body.dataset.colorVisionType = STATE.data.settings.colorVisionType || 'deuteranomalia';
 }
 
 let scanTimer = null;
@@ -3608,7 +4069,7 @@ function favoritePhrase() {
   if (!STATE.data.favPhrases.includes(text)) {
     STATE.data.favPhrases.push(text);
     saveData();
-    showToast('Frase adicionada aos favoritos ⭐');
+    showToast('Frase adicionada aos favoritos ');
   } else {
     showToast('Essa frase já está nos favoritos.');
   }
@@ -3620,16 +4081,38 @@ function currentLayerKey() {
   return last ? last.id : '__start__';
 }
 
+/* O carrossel usa as mesmas palavras do teclado circular:
+   começa com as palavras-chave (eu, você, ele, ela...) e depois mostra as
+   continuações da última palavra escolhida (sugestoesPorPalavra). */
+let carouselSuggestionMapCache = null;
+function carouselSuggestionMap() {
+  if (!carouselSuggestionMapCache) {
+    carouselSuggestionMapCache = {};
+    Object.entries(sugestoesPorPalavra).forEach(([chave, lista]) => {
+      carouselSuggestionMapCache[normalizeCircularWord(chave)] = lista;
+    });
+  }
+  return carouselSuggestionMapCache;
+}
+
 function loadLayer() {
-  const key = currentLayerKey();
-  let suggestions = SUGGESTIONS[key] || AAC_FALLBACK;
+  const last = STATE.phrase[STATE.phrase.length - 1];
+  const used = new Set(STATE.phrase.map(word => normalizeCircularWord(word.label)));
+  const base = last
+    ? (carouselSuggestionMap()[normalizeCircularWord(last.label)] || sugestoesGenericas).concat(frasesRapidas, palavrasChave)
+    : palavrasChave.slice();
 
-  const customWords = STATE.data.customWords
-    .filter(word => !suggestions.includes(word.id))
-    .map(word => word.id);
+  const labels = [];
+  const addLabel = label => {
+    const key = normalizeCircularWord(label);
+    if (!key || used.has(key) || labels.some(item => normalizeCircularWord(item) === key)) return;
+    labels.push(label);
+  };
+  base.forEach(addLabel);
+  labels.length = Math.min(labels.length, 12);
+  STATE.data.customWords.forEach(word => addLabel(word.label));
 
-  const combined = suggestions.concat(customWords);
-  STATE.options = combined.filter(id => wordById(id));
+  STATE.options = circularSuggestionIds(labels).filter(id => wordById(id));
 
   if (STATE.carouselIndex >= STATE.options.length) {
     STATE.carouselIndex = 0;
@@ -3754,7 +4237,7 @@ function toggleFavoriteWord(wordId) {
     return;
   } else {
     STATE.data.favWords.push(wordId);
-    showToast('Palavra adicionada aos favoritos ⭐');
+    showToast('Palavra adicionada aos favoritos ');
   }
   saveData();
   render();
@@ -3928,13 +4411,13 @@ function renderCarouselMode() {
       if (!id) return `<div class="carousel-card ${type} empty"></div>`;
       const word = wordById(id);
       if (!word) return `<div class="carousel-card ${type} empty"></div>`;
-      return `<div class="carousel-card ${type}" data-pick="${id}" role="button" tabindex="${type === 'center' ? '0' : '-1'}" aria-label="${escapeCircularHtml(word.label)}"><div class="emoji">${escapeCircularHtml(word.emoji || '')}</div><div class="label">${escapeCircularHtml(word.label)}</div></div>`;
+      return `<div class="carousel-card ${type}" data-pick="${id}" role="button" tabindex="${type === 'center' ? '0' : '-1'}" aria-label="${escapeCircularHtml(word.label)}">${word.emoji ? `<div class="emoji">${escapeCircularHtml(word.emoji)}</div>` : ''}<div class="label">${escapeCircularHtml(word.label)}</div></div>`;
     };
     cardsHtml = `<button class="carousel-arrow" id="prevBtn" ${n < 2 ? 'disabled' : ''} aria-label="Palavra anterior">‹</button><div class="carousel-track">${card(prevId, 'side')}${card(curId, 'center')}${card(nextId, 'side')}</div><button class="carousel-arrow" id="nextBtn" ${n < 2 ? 'disabled' : ''} aria-label="Próxima palavra">›</button>`;
   }
 
   const layerLabel = STATE.phrase.length === 0 ? 'QUEM ESTÁ FALANDO?' : STATE.phrase.length === 1 ? 'O QUE VOCÊ QUER DIZER?' : 'COMPLETE A FRASE';
-  return `<div class="carousel-full-screen"><div class="carousel-full-topbar"><button class="icon-btn" data-go="build" aria-label="Voltar para escolha do modo">←</button><div class="topbar-title">Comunicar</div><button class="icon-btn" data-go="personalize" aria-label="Personalizar">⚙︎</button></div><div class="carousel-full-content"><div class="section-label">MINHA FRASE</div><div class="phrase-bar" role="group" aria-label="Minha frase">${chipHtml}</div><div class="layer-label">${layerLabel}</div><div class="carousel-wrap">${cardsHtml}</div><button class="confirm-btn" id="confirmBtn" ${n === 0 ? 'disabled' : ''}>✓ Selecionar</button><div class="action-row" role="toolbar" aria-label="Ações da frase"><button class="btn-erase" id="eraseBtn" aria-label="Apagar última palavra">Apagar</button><button class="btn-clear" id="clearBtn" aria-label="Limpar toda a frase">Limpar</button><button class="btn-speak" id="speakBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Falar a frase em voz alta">Falar</button><button class="btn-fav" id="favPhraseBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Favoritar esta frase">Favorizar frase</button><button class="btn-fav-word" id="favWordBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Favorizar palavra">Favorizar palavra</button></div><div class="back-link" data-go="categories" role="button" tabindex="0" style="margin-top:4px;">Ver todas as categorias</div><div class="hint">← → navega · Enter/Espaço seleciona · toque também funciona</div></div></div>`;
+  return `<div class="carousel-full-screen"><div class="carousel-full-topbar"><button class="icon-btn" data-go="build" aria-label="Voltar para escolha do modo">←</button><div class="topbar-title">Comunicar</div><button class="icon-btn" data-go="personalize" aria-label="Personalizar">+</button></div><div class="carousel-full-content"><div class="section-label">MINHA FRASE</div><div class="phrase-bar" role="group" aria-label="Minha frase">${chipHtml}</div><div class="layer-label">${layerLabel}</div><div class="carousel-wrap">${cardsHtml}</div><button class="confirm-btn" id="confirmBtn" ${n === 0 ? 'disabled' : ''}>Selecionar</button><div class="action-row" role="toolbar" aria-label="Ações da frase"><button class="btn-erase" id="eraseBtn" aria-label="Apagar última palavra">Apagar</button><button class="btn-clear" id="clearBtn" aria-label="Limpar toda a frase">Limpar</button><button class="btn-speak" id="speakBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Falar a frase em voz alta">Falar</button><button class="btn-fav" id="favPhraseBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Favoritar esta frase">Favorizar frase</button><button class="btn-fav-word" id="favWordBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Favorizar palavra">Favorizar palavra</button></div><div class="back-link" data-go="categories" role="button" tabindex="0" style="margin-top:4px;">Ver todas as categorias</div></div></div>`;
 }
 
 function fillCircularRingOptions(optionIds, quantity) {
@@ -4343,7 +4826,7 @@ function renderCategoryDetail() {
           <div class="phrase-bar">
             ${STATE.phrase.map(word => `<span class="phrase-chip">${word.emoji} ${word.label}</span>`).join('')}
           </div>
-          <button class="speak-btn" id="speakBtn" aria-label="Falar a frase em voz alta">🔊 FALAR</button>
+          <button class="speak-btn" id="speakBtn" aria-label="Falar a frase em voz alta">FALAR</button>
         </div>
       ` : ''}
     </div>
@@ -4364,11 +4847,11 @@ function renderFavorites() {
       <h2 class="section-label">FRASES FAVORITAS</h2>
 
       ${STATE.data.favPhrases.length === 0 ? `
-        <div class="empty-state">Nenhuma frase favoritada ainda.<br><br>Monte uma frase e toque em ⭐ Favoritar.</div>
+        <div class="empty-state">Nenhuma frase favoritada ainda.<br><br>Monte uma frase e toque em  Favoritar.</div>
       ` : STATE.data.favPhrases.map((phrase, index) => `
           <div class="fav-item">
-            <div class="txt">🗣️ ${phrase}</div>
-            <button class="fav-speak" data-speak="${phrase}" aria-label="Falar frase: ${phrase}">🔊 Falar</button>
+            <div class="txt"> ${phrase}</div>
+            <button class="fav-speak" data-speak="${phrase}" aria-label="Falar frase: ${phrase}">Falar</button>
             <button class="fav-remove" data-remove-phrase="${index}" aria-label="Remover frase dos favoritos: ${phrase}">✕</button>
           </div>
         `).join('')}
@@ -4413,7 +4896,7 @@ function renderPersonalize() {
     <div class="screen">
       <div class="form-block personalize-builder">
         <div class="personalize-main">
-        <h3>➕ Adicionar palavra</h3>
+        <h3>Adicionar palavra</h3>
         <label class="field-label" for="newWordLabel">Digite uma palavra e use o teclado circular</label>
         <input type="text" id="newWordLabel" placeholder="A palavra aparecerá aqui" aria-label="Palavra para salvar">
         <div class="personalize-keyboard-layout">
@@ -4472,7 +4955,7 @@ function renderChallenge() {
     </div>
 
     <div class="screen">
-      <div class="stars" role="status">⭐ ${STATE.data.profile.stars} estrelas</div>
+      <div class="stars" role="status"> ${STATE.data.profile.stars} estrelas</div>
 
       <div class="challenge-card">
         <div class="emoji" aria-hidden="true">${challenge.emoji}</div>
@@ -4487,8 +4970,8 @@ function renderChallenge() {
       </div>
 
       <div class="action-row" role="toolbar" aria-label="Ações do desafio">
-        <button class="btn-erase" id="eraseBtn" aria-label="Apagar última palavra">⌫ Apagar</button>
-        <button class="btn-clear" id="clearBtn" aria-label="Limpar frase">🗑️ Limpar</button>
+        <button class="btn-erase" id="eraseBtn" aria-label="Apagar última palavra">Apagar</button>
+        <button class="btn-clear" id="clearBtn" aria-label="Limpar frase">Limpar</button>
       </div>
 
       <h2 class="section-label">MONTE A RESPOSTA</h2>
@@ -4497,8 +4980,8 @@ function renderChallenge() {
       </div>
 
       ${done
-        ? `<button class="speak-btn" id="challengeWinBtn">🎉 Muito bem! Ganhar estrela</button>`
-        : `<button class="speak-btn" id="speakBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Ouvir minha frase">🔊 Ouvir minha frase</button>`}
+        ? `<button class="speak-btn" id="challengeWinBtn">Muito bem! Ganhar estrela</button>`
+        : `<button class="speak-btn" id="speakBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Ouvir minha frase">Ouvir minha frase</button>`}
 
       <div class="back-link" style="margin-top:14px;" id="skipChallenge" role="button" tabindex="0">↻ Tentar outro desafio</div>
     </div>
@@ -4513,11 +4996,11 @@ function renderProfile() {
   const summaryHtml = `
     <div class="info-block">
       <h3 style="margin:0 0 12px; color:#103d5d; font-weight:900; letter-spacing:0.02em;">Resumo</h3>
-      <div class="profile-stat"><span>⭐ Estrelas conquistadas</span><span>${profile.stars}</span></div>
-      <div class="profile-stat"><span>🗣️ Frases favoritas</span><span>${STATE.data.favPhrases.length}</span></div>
-      <div class="profile-stat"><span>💬 Palavras usadas</span><span>${wordsUsed}</span></div>
-      <div class="profile-stat"><span>💾 Palavras favoritas</span><span>${STATE.data.favWords.length}</span></div>
-      <div class="profile-stat" style="border-bottom:none;"><span>📁 Categorias criadas</span><span>${STATE.data.customCategories.length}</span></div>
+      <div class="profile-stat"><span> Estrelas conquistadas</span><span>${profile.stars}</span></div>
+      <div class="profile-stat"><span>Frases favoritas</span><span>${STATE.data.favPhrases.length}</span></div>
+      <div class="profile-stat"><span>Palavras usadas</span><span>${wordsUsed}</span></div>
+      <div class="profile-stat"><span>Palavras favoritas</span><span>${STATE.data.favWords.length}</span></div>
+      <div class="profile-stat" style="border-bottom:none;"><span>Categorias criadas</span><span>${STATE.data.customCategories.length}</span></div>
     </div>
   `;
 
@@ -4557,6 +5040,13 @@ function renderProfile() {
     </div>
   `;
 }
+
+const COLOR_VISION_TYPES = [
+  { id: 'deuteranomalia', nome: 'Deuteranomalia', desc: 'Verde pouco sensível; verdes parecem mais vermelhos' },
+  { id: 'protanomalia', nome: 'Protanomalia', desc: 'Vermelho pouco sensível; vermelhos parecem verdes e escuros' },
+  { id: 'deuteranopia', nome: 'Deuteranopia', desc: 'Não diferencia vermelho e verde (sem verde)' },
+  { id: 'protanopia', nome: 'Protanopia', desc: 'Não diferencia vermelho e verde (sem vermelho)' }
+];
 
 function renderSettings() {
   const s = STATE.data.settings;
@@ -4613,6 +5103,9 @@ function renderSettings() {
             <span class="switch-track"></span>
           </label>
         </div>
+<div class="cv-type-group" role="radiogroup" aria-label="Tipo de daltonismo" data-disabled="${s.colorVision ? 'false' : 'true'}">
+  ${COLOR_VISION_TYPES.map(t => `<button type="button" class="cv-type-btn" role="radio" data-cv-type="${t.id}" aria-checked="${(s.colorVisionType || 'deuteranomalia') === t.id}" ${s.colorVision ? '' : 'disabled'}><span>${t.nome}</span><small>${t.desc}</small></button>`).join('')}
+</div>
 <div class="color-vision-preview" role="group" aria-label="Prévia da paleta do modo para daltonismo">
   <div class="color-vision-preview-head">
     <span class="color-vision-preview-title">Prévia da paleta</span>
@@ -4671,9 +5164,17 @@ function renderSettings() {
             <span class="switch-track"></span>
           </label>
         </div>
+
+        <div class="settings-row">
+          <div>
+            <div class="settings-label">Controle ocular</div>
+            <div class="settings-desc">Usa a câmera para mover o cursor com o olhar</div>
+          </div>
+          <button type="button" class="ocular-setting-btn" id="ocularSettingsBtn" aria-label="Ativar controle ocular">Ativar</button>
+        </div>
       </div>
 
-      <button class="submit-btn" id="testVoiceBtn">🔊 Testar a voz</button>
+      <button class="submit-btn" id="testVoiceBtn">Testar a voz</button>
     </div>
   `;
 }
@@ -5127,7 +5628,7 @@ function attachHandlers() {
       const label = input.value.trim();
       let cat = category?.value || '';
       const chosen = document.querySelector('#emojiRowWord .chosen');
-      const emoji = chosen ? chosen.getAttribute('data-emoji') : '🔤';
+      const emoji = chosen ? chosen.getAttribute('data-emoji') : '';
 
       if (!label) {
         showToast('Digite uma palavra');
@@ -5174,7 +5675,7 @@ function attachHandlers() {
 
       const label = input.value.trim();
       const chosen = document.querySelector('#emojiRowCat .chosen');
-      const emoji = chosen ? chosen.getAttribute('data-emoji') : '📁';
+      const emoji = chosen ? chosen.getAttribute('data-emoji') : '';
 
       if (!label) {
         showToast('Digite um nome de categoria');
@@ -5268,7 +5769,7 @@ function attachHandlers() {
       STATE.data.profile.stars += 1;
       saveData();
       speak('Muito bem! Você ganhou uma estrela!');
-      showToast('🎉 Muito bem! +1 estrela');
+      showToast('Muito bem! +1 estrela');
       STATE.challenge = null;
       STATE.phrase = [];
       loadLayer();
@@ -5317,7 +5818,15 @@ function attachHandlers() {
     STATE.data.settings.colorVision = event.target.checked;
     applySettings();
     saveData();
+    render();
   });
+
+  document.querySelectorAll('[data-cv-type]').forEach(btn => btn.addEventListener('click', () => {
+    STATE.data.settings.colorVisionType = btn.getAttribute('data-cv-type');
+    applySettings();
+    saveData();
+    render();
+  }));
 
   const scanToggle = document.getElementById('scanToggle');
   if (scanToggle) scanToggle.addEventListener('change', event => {
@@ -6998,20 +7507,37 @@ initGamepadControls();
     aplicando = true;
     const candidatos = [...document.querySelectorAll('button, [role="button"], a, div, span, label')]
       .filter(el => !el.closest('#app') && ehAbaOcular(el));
-    candidatos
+    const abas = candidatos
       .filter(el => !candidatos.some(outro => outro !== el && el.contains(outro)))
-      .forEach(el => {
-        const alvo = el.closest('button, [role="button"], a') || el;
-        alvo.classList.add('ocular-tab');
-        estilizar(alvo, alvo.matches(':hover, :focus-visible') ? 'destaque' : 'normal');
-        if (!alvo.dataset.ocularTabPronto) {
-          alvo.dataset.ocularTabPronto = '1';
-          ['mouseenter', 'focus'].forEach(ev => alvo.addEventListener(ev, () => estilizar(alvo, 'destaque')));
-          ['mouseleave', 'blur'].forEach(ev => alvo.addEventListener(ev, () => estilizar(alvo, 'normal')));
-        }
-      });
+      .map(el => el.closest('button, [role="button"], a') || el);
+    abas.forEach(alvo => {
+      alvo.classList.add('ocular-tab-oculta');
+      alvo.style.setProperty('display', 'none', 'important');
+    });
+    window.__abaOcular = abas[0] || null;
+    sincronizarBotaoOcular();
     aplicando = false;
   }
+
+  function sincronizarBotaoOcular() {
+    const btn = document.getElementById('ocularSettingsBtn');
+    if (!btn) return;
+    const aba = window.__abaOcular;
+    const texto = aba ? (aba.textContent || '').toLowerCase() : '';
+    const ligado = texto.includes('desativar');
+    btn.disabled = !aba;
+    btn.textContent = !aba ? 'Indisponível' : (ligado ? 'Desativar' : 'Ativar');
+    btn.setAttribute('aria-label', !aba ? 'Controle ocular indisponível' : (ligado ? 'Desativar controle ocular' : 'Ativar controle ocular'));
+    btn.classList.toggle('ligado', ligado);
+  }
+
+  document.addEventListener('click', ev => {
+    const btn = ev.target.closest && ev.target.closest('#ocularSettingsBtn');
+    if (!btn || !window.__abaOcular) return;
+    window.__abaOcular.click();
+    setTimeout(agendar, 150);
+    setTimeout(agendar, 800);
+  });
 
   function agendar() {
     if (agendado || aplicando) return;
