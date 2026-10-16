@@ -825,6 +825,406 @@ button:focus-visible,
 .mode-screen-content h1 { margin: 0; font-size: clamp(28px, 5vw, 48px); }
 .mode-screen-content p { margin: 0; font-size: 16px; font-weight: 700; opacity: 0.9; }
 
+.circular-keyboard-reserved {
+  width: min(100%, 620px);
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 22px 18px 26px;
+  border-radius: 28px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.02));
+  box-shadow: 0 20px 44px rgba(9, 43, 59, 0.35);
+  backdrop-filter: blur(8px);
+  color: var(--white);
+}
+
+.circular-keyboard-reserved .campo {
+  width: 100%;
+  min-height: 56px;
+  background: #ffffff;
+  border: 2px solid var(--card-border);
+  border-radius: 16px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  font-family: var(--font);
+  font-weight: 800;
+  font-size: 18px;
+  color: #103d5d;
+  text-shadow: 0 1px 1px rgba(255,255,255,0.45);
+  box-shadow: 0 3px 8px rgba(23, 58, 94, 0.18);
+}
+
+.circular-keyboard-reserved .frases-prontas {
+  width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  gap: 8px;
+  min-height: 42px;
+  overflow-x: auto;
+  padding: 2px 1px 6px;
+  scrollbar-width: thin;
+}
+
+.circular-keyboard-reserved .frase-pronta {
+  border: 1.5px solid var(--card-border);
+  border-radius: 999px;
+  padding: 8px 14px;
+  background: #ffffff;
+  color: #103d5d !important;
+  font: 700 13px var(--font);
+  cursor: pointer;
+  white-space: nowrap;
+  flex: 0 0 auto;
+  transition: background .15s ease, color .15s ease, transform .1s ease;
+}
+
+.circular-keyboard-reserved .frase-pronta[data-selecionada="true"] {
+  background: #fff0b3;
+  border-color: #d9a314;
+  color: #103d5d !important;
+}
+
+.circular-keyboard-reserved .frases-prontas::before {
+  content: attr(data-rotulo);
+  align-self: center;
+  color: #fff;
+  font: 700 11px var(--font);
+  opacity: .8;
+  flex: 0 0 auto;
+  margin-right: 2px;
+}
+
+.circular-keyboard-reserved .frase-pronta:hover,
+.circular-keyboard-reserved .frase-pronta:focus-visible {
+  background: var(--yellow);
+  border-color: var(--yellow-dark);
+  color: var(--navy);
+  outline: none;
+}
+
+.teclado-area {
+  position: relative;
+  width: min(530px, 100%);
+  height: auto;
+  max-width: 100%;
+  aspect-ratio: 1 / 1;
+  margin: 12px 0 10px;
+}
+
+.teclado-area .teclado,
+.teclado-area .anel,
+.teclado-area .satelites {
+  position: absolute;
+  inset: 0;
+}
+
+.teclado-area .anel {
+  margin: auto;
+  border-radius: 50%;
+  transition: opacity .25s ease, transform .25s ease, background .2s ease;
+}
+
+/* Argola de sugestões (autocomplete): fica por fora e só aparece depois da
+   primeira palavra-chave escolhida, crescendo ao redor da argola interna. */
+.anel-externo {
+  width: 85%;
+  height: 85%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.78), rgba(238,246,252,0.68));
+  border: 2px solid var(--card-border);
+  box-shadow: 0 10px 26px rgba(9, 43, 59, 0.28);
+  opacity: 0;
+  transform: scale(0.85);
+  pointer-events: none;
+}
+
+.anel-externo.visivel {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+/* Argola de palavras-chave: fica por dentro e sempre visível. */
+.anel-meio {
+  width: 60%;
+  height: 60%;
+  background: var(--card);
+  border: 2px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 12px 30px rgba(9, 43, 59, 0.45), inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.cunha {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .16s ease;
+}
+
+.cunha.ativa {
+  opacity: 1;
+}
+
+/* Botão "Aa" no centro da argola inicial: alterna a argola de fora entre
+   sugestões de palavras e um teclado alfabético. */
+.buraco-central {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 28%;
+  height: 28%;
+  border: 0;
+  border-radius: 50%;
+  background: #ffffff;
+  color: var(--navy);
+  font: 800 15px var(--font);
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 4px 10px rgba(9, 43, 59, 0.28);
+  transition: background .15s ease, color .15s ease;
+}
+
+.buraco-central.ativo {
+  background: var(--yellow);
+  color: var(--navy);
+  box-shadow: 0 4px 12px rgba(174, 129, 0, 0.35);
+}
+
+.buraco-central:focus,
+.buraco-central:focus-visible {
+  outline: 3px solid var(--yellow);
+  outline-offset: 2px;
+}
+
+.tecla {
+  position: absolute;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  padding: 3px;
+  border: 0;
+  border-radius: 50%;
+  outline: none;
+  background: transparent;
+  color: var(--white);
+  font: 700 11px/1.05 var(--font);
+  text-align: center;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+  transition: color .12s ease;
+}
+
+.anel-externo .tecla { font-size: 12px; color: #103d5d; text-shadow: 0 1px 2px rgba(255,255,255,0.9); }
+.anel-meio .tecla { font-size: 10px; color: #ffffff; }
+
+/* Teclas menores para caber as 26 letras do modo alfabético na argola de dentro. */
+.tecla-compacta {
+  width: 32px;
+  height: 32px;
+  padding: 2px;
+}
+.anel-meio .tecla-compacta { font-size: 13px; }
+
+/* Indicação visual de foco, essencial para navegar com as setas do teclado físico.
+   O destaque principal é o setor (cunha) atrás da tecla; aqui só garantimos contraste do texto. */
+.tecla:focus,
+.tecla:focus-visible {
+  outline: none;
+  color: var(--navy);
+}
+
+.satelites {
+  z-index: 2;
+  pointer-events: none;
+}
+
+.satelite {
+  position: absolute;
+  width: 54px;
+  height: 54px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--navy);
+  font: 800 10px var(--font);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  box-shadow: 0 4px 10px rgba(9, 43, 59, 0.28);
+  /* left/top são calculados em JS (posicionarMenuOrbital), com a mesma
+     trigonometria usada nas teclas, para encaixar exatamente na
+     circunferência da argola visível no momento. */
+  transform: translate(-50%, -50%);
+  transition: left .2s ease, top .2s ease, opacity .16s ease, background .2s ease, color .2s ease;
+}
+
+.satelites.ativo .satelite {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.satelite:hover,
+.satelite:focus-visible {
+  background: var(--yellow);
+  color: var(--navy);
+  outline: 3px solid var(--yellow-dark);
+  outline-offset: 2px;
+}
+
+.satelite-destaque {
+  background: var(--yellow);
+  color: var(--navy);
+  border: 1px solid var(--yellow-dark);
+}
+
+@media (max-width: 420px) {
+  .teclado-area { width: 300px; height: 300px; }
+  .satelite { width: 46px; height: 46px; font-size: 9px; }
+}
+
+@media (max-width: 350px) {
+  .teclado-area { width: 270px; height: 270px; }
+}
+
+
+/* Teclado circular sênior: mantém o fundo da página visível e organiza a
+   área de composição ao lado do teclado em telas largas. */
+body[data-theme="light"] .mode-screen.circular-mode-screen,
+body[data-theme="dark"] .mode-screen.circular-mode-screen {
+  background: transparent !important;
+}
+
+body[data-theme="light"] .circular-mode-screen .circular-keyboard-reserved,
+body[data-theme="dark"] .circular-mode-screen .circular-keyboard-reserved {
+  width: min(1180px, 100%);
+  min-height: 0;
+  margin: auto;
+  padding: 8px 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+  grid-template-rows: minmax(0, 1fr);
+  grid-template-areas: "keyboard phrase-stack";
+  align-items: center;
+  justify-items: stretch;
+  column-gap: 28px;
+  border: 0;
+  border-radius: 0;
+  background: transparent !important;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.circular-mode-screen .circular-keyboard-reserved .teclado-area {
+  grid-area: keyboard;
+  width: min(620px, 100%);
+  margin: 0 auto;
+}
+
+.circular-mode-screen .circular-keyboard-reserved .phrase-stack {
+  grid-area: phrase-stack;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  gap: 4px;
+  width: 100%;
+  min-width: 0;
+}
+
+.circular-mode-screen .circular-keyboard-reserved .campo {
+  align-self: end;
+  min-height: 100px;
+}
+
+.circular-mode-screen .circular-keyboard-reserved .frases-prontas {
+  justify-content: flex-start;
+}
+
+@media (max-width: 760px) {
+  body[data-theme="light"] .circular-mode-screen .circular-keyboard-reserved,
+  body[data-theme="dark"] .circular-mode-screen .circular-keyboard-reserved {
+    width: 100%;
+    min-height: 0;
+    padding: 4px 0 12px;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    grid-template-areas: "phrase-stack" "keyboard";
+    gap: 10px;
+  }
+
+  .circular-mode-screen .circular-keyboard-reserved .campo {
+    min-height: 60px;
+    align-self: auto;
+  }
+
+  .circular-mode-screen .circular-keyboard-reserved .phrase-stack {
+    gap: 3px;
+  }
+
+  .circular-mode-screen .circular-keyboard-reserved .frases-prontas {
+    justify-content: center;
+  }
+
+  .circular-mode-screen .circular-keyboard-reserved .teclado-area {
+    width: min(530px, 100%);
+    height: auto;
+  }
+}
+
+/* Teclado circular infantil: usa a estrutura sênior com cores e contraste do perfil infantil. */
+body[data-theme="light"] .mode-screen.circular-mode-screen,
+body[data-theme="dark"] .mode-screen.circular-mode-screen {
+  background: transparent !important;
+  color: #f1f7ff;
+}
+body[data-theme="light"] .mode-screen.circular-mode-screen .mode-screen-back,
+body[data-theme="dark"] .mode-screen.circular-mode-screen .mode-screen-back {
+  background: #ffcf4d !important;
+  color: #123b4d !important;
+  border: 2px solid #d98c00;
+}
+body[data-theme="dark"] .circular-mode-screen .anel-meio .tecla {
+  color: #f1f7ff !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, .65);
+}
+body[data-theme="dark"] .circular-mode-screen .buraco-central {
+  color: #123b4d !important;
+}
+#app .circular-mode-screen .satelite {
+  position: absolute !important;
+  z-index: 3 !important;
+  background: #f4faff !important;
+  color: #123b4d !important;
+  border: 2px solid #123b4d !important;
+  box-shadow: 0 3px 9px rgba(5, 24, 38, .48) !important;
+  text-shadow: none !important;
+}
+#app .circular-mode-screen .satelite-destaque {
+  background: #ffcf4d !important;
+  color: #123b4d !important;
+  border-color: #8c5c00 !important;
+}
+#app .circular-mode-screen .satelite:hover,
+#app .circular-mode-screen .satelite:focus-visible,
+#app .circular-mode-screen .satelite.accessibility-focus,
+#app .circular-mode-screen .satelite.scan-active {
+  position: absolute !important;
+  z-index: 4 !important;
+  transform: translate(-50%, -50%) !important;
+  background: #ffd447 !important;
+  color: #102f48 !important;
+  border-color: #102f48 !important;
+  outline: 3px solid #ffffff !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 2px #102f48, 0 4px 12px rgba(5, 24, 38, .58) !important;
+  text-shadow: none !important;
+}
 .carousel-full-screen { position: fixed; inset: 0; z-index: 100; overflow: auto; min-height: 100vh; padding: 18px 24px 28px; background: linear-gradient(180deg, rgba(255,255,255,.1), rgba(23,58,94,.3)), url('assets/imagens/imagens-outrastelas.png') center / cover no-repeat; }
 .carousel-full-topbar { width: min(100%, 1100px); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
 .carousel-full-content { width: min(100%, 1020px); margin: 12px auto 0; }
@@ -2311,6 +2711,52 @@ const DEFAULT_WORDS = [
   }
 ];
 
+const AAC_EXTRA_WORDS = [
+  ['ele', 'Ele', '👤'], ['ela', 'Ela', '👤'], ['nos', 'Nós', '👥'], ['eles', 'Eles', '👥'],
+  ['elas', 'Elas', '👥'], ['isso', 'Isso', '👉'], ['aquilo', 'Aquilo', '👉'],
+  ['avo', 'Avô', '👴'], ['ava', 'Avó', '👵'], ['tio', 'Tio', '👨'], ['tia', 'Tia', '👩'],
+  ['irmao', 'Irmão', '👦'], ['irma', 'Irmã', '👧'],
+  ['bomDia', 'Bom dia', '🌞'], ['boaTarde', 'Boa tarde', '🌤️'], ['boaNoite', 'Boa noite', '🌙'],
+  ['ola', 'Olá', '👋'], ['oi', 'Oi', '👋'], ['tudoBem', 'Tudo bem?', '🙂'], ['comoVai', 'Como vai?', '😊'],
+  ['ateLogo', 'Até logo', '👋'], ['tchau', 'Tchau', '👋'], ['prazerConhecer', 'Prazer em conhecer você', '🤝'],
+  ['comoVoceEsta', 'Como você está?', '🙂'], ['muitoPrazer', 'Muito prazer', '🤝'],
+  ['vai', 'Vai', '➡️'], ['quer', 'Quer', '🙋'], ['nao', 'Não', '🚫'], ['acho', 'Acho', '💭'], ['trabalhar', 'Trabalhar', '💼'],
+  ['tenho', 'Tenho', '✋'], ['pode', 'Pode', '✅'], ['sabe', 'Sabe', '🧠'], ['tem', 'Tem', '📦'], ['temPlural', 'Têm', '📦'],
+  ['esta', 'Está', '💭'], ['foi', 'Foi', '⏮️'], ['e', 'É', '🔗'], ['faz', 'Faz', '🛠️'],
+  ['diz', 'Diz', '💬'], ['gosta', 'Gosta', '😊'], ['precisa', 'Precisa', '❗'], ['morava', 'Morava', '🏠'],
+  ['trabalha', 'Trabalha', '💼'], ['estuda', 'Estuda', '📚'], ['conhece', 'Conhece', '🤝'], ['entende', 'Entende', '💡'],
+  ['somos', 'Somos', '👥'], ['estamos', 'Estamos', '👥'], ['vamos', 'Vamos', '➡️'], ['temos', 'Temos', '📦'],
+  ['fomos', 'Fomos', '⏮️'], ['queremos', 'Queremos', '🙋'], ['podemos', 'Podemos', '✅'], ['sabemos', 'Sabemos', '🧠'],
+  ['fizemos', 'Fizemos', '🛠️'], ['precisamos', 'Precisamos', '❗'], ['sao', 'São', '👥'], ['estao', 'Estão', '👥'],
+  ['vao', 'Vão', '➡️'], ['foram', 'Foram', '⏮️'], ['querem', 'Querem', '🙋'], ['podem', 'Podem', '✅'],
+  ['sabem', 'Sabem', '🧠'], ['fizeram', 'Fizeram', '🛠️'], ['gostam', 'Gostam', '😊'], ['precisam', 'Precisam', '❗'],
+  ['sera', 'Será', '🔮'], ['parece', 'Parece', '👀'], ['deve', 'Deve', '📌'], ['funciona', 'Funciona', '⚙️'],
+  ['aconteceu', 'Aconteceu', '❓'], ['falar', 'Falar', '💬'], ['irBanheiro', 'Ir ao banheiro', '🚽'],
+  ['irCasa', 'Ir para casa', '🏠'], ['saber', 'Saber', '🧠'], ['parar', 'Parar', '🛑'], ['maisTempo', 'Mais tempo', '⏳'],
+  ['deAjuda', 'De ajuda', '🆘'], ['deAgua', 'De água', '💧'], ['deComida', 'De comida', '🍎'],
+  ['falarAlguem', 'Falar com alguém', '💬'], ['deRemedio', 'De remédio', '💊'], ['deTempo', 'De tempo', '⏳'],
+  ['entender', 'Entender', '💡'], ['comFome', 'Com fome', '🍽️'], ['comSede', 'Com sede', '💧'], ['cansados', 'Cansados', '😩'],
+  ['felizes', 'Felizes', '😄'], ['tristes', 'Tristes', '😢'], ['preocupado', 'Preocupado', '😟'], ['preocupados', 'Preocupados', '😟'], ['paraCasa', 'Para casa', '🏠'], ['embora', 'Embora', '🚶'],
+  ['tentar', 'Tentar', '💪'], ['comer', 'Comer', '🍽️'], ['certeza', 'Certeza', '✅'], ['duvida', 'Dúvida', '❓'],
+  ['medo', 'Medo', '😨'], ['fome', 'Fome', '🍽️'], ['sede', 'Sede', '💧'], ['sono', 'Sono', '😴'],
+  ['pressa', 'Pressa', '⏱️'], ['umProblema', 'Um problema', '⚠️'], ['meAjudar', 'Me ajudar', '🆘'],
+  ['esperar', 'Esperar', '⏳'], ['repetir', 'Repetir', '🔁'], ['virAqui', 'Vir aqui', '👋'],
+  ['falarDevagar', 'Falar mais devagar', '🐢'], ['explicar', 'Explicar', '💡'], ['porFavor', 'Por favor', '🙏'],
+  ['agora', 'Agora', '⏰'], ['paraMim', 'Para mim', '🙋'], ['comIsso', 'Com isso', '👉'], ['euPreciso', 'Eu preciso', '❗'],
+  ['naoConsigo', 'Não consigo', '😟'], ['estouComDor', 'Estou com dor', '🤕'], ['queroFalar', 'Quero falar', '💬'],
+  ['obrigado', 'Obrigado', '🙏'], ['dor', 'Dor', '🤕'], ['estouCom', 'Estou com', '💭'], ['muitaDor', 'Muita dor', '🤕'],
+  ['aqui', 'Aqui', '📍'], ['chameAlguem', 'Chame alguém', '📣'], ['remedio', 'Remédio', '💊'], ['umPouco', 'Um pouco', '🤏'],
+  ['ondeFica', 'Onde fica?', '📍'], ['urgente', 'Urgente', '🚨'], ['mais', 'Mais', '➕'], ['deNovo', 'De novo', '🔁'],
+  ['estaBem', 'Está bem', '👍'], ['naoEntendi', 'Não entendi', '❓'], ['queroIrCasa', 'Quero ir para casa', '🏠'],
+  ['precisoDeAgua', 'Preciso de água', '💧'], ['maisDevagar', 'Mais devagar', '🐢']
+].map(([id, label, emoji]) => ({ id, label, emoji, description: label, cat: 'acoes' }));
+
+const AAC_FALLBACK = [
+  'quero', 'preciso', 'porFavor', 'ajuda', 'agora', 'mais', 'deNovo', 'estaBem',
+  'naoEntendi', 'obrigado', 'ola', 'tudoBem', 'queroIrCasa', 'estouComDor',
+  'precisoDeAgua', 'maisDevagar', 'ateLogo'
+];
+
 const SUGGESTIONS = {
   __start__: ['eu', 'voce', 'mae', 'professor', 'amigo'],
   eu: ['quero', 'preciso', 'estou', 'gosto', 'vou'],
@@ -3095,6 +3541,10 @@ function render() {
 
   app.innerHTML = html;
 
+  if (STATE.screen === 'circularMode') {
+    initCircularKeyboard();
+  }
+
   if (STATE.screen === 'home') {
     document.body.classList.remove('bg-outras');
   } else {
@@ -3569,7 +4019,7 @@ function circularKeyboardRings() {
 }
 
 function renderCircularKeyboard() {
-  return `<div class="mode-screen circular-mode-screen"><button class="mode-screen-back" data-go="build" aria-label="Voltar para escolha do modo">← Voltar</button><div class="circular-keyboard-reserved"><h1>Teclado circular</h1><p>Área reservada para adicionar o teclado circular.</p></div></div>`;
+  return `<div class="mode-screen circular-mode-screen"><button class="mode-screen-back" data-go="build" aria-label="Voltar para escolha do modo">← Voltar</button><div class="circular-keyboard-reserved"><div class="phrase-stack"><div class="campo" aria-label="Frase formada"><span id="valor"></span></div><div class="frases-prontas" id="frasesProntas" data-rotulo="Palavras salvas" aria-label="Palavras salvas pelo usuário" aria-live="polite"></div></div><div class="teclado-area"><section class="teclado" id="teclado" aria-label="Teclado circular"><div class="anel anel-externo" id="anelExterno"></div><div class="anel anel-meio" id="anelMeio"></div></section><div class="satelites" id="menuOrbital" aria-label="Menu de ações"><button class="satelite" id="limpar" type="button" aria-label="Limpar">limpar</button><button class="satelite" id="excluir" type="button" aria-label="Excluir">excluir</button><button class="satelite" id="recarregar" type="button" aria-label="Recarregar sugestões ou conectar o Gemini" title="Recarregar sugestões ou conectar o Gemini">recarregar</button><button class="satelite" id="voltarInicio" type="button" aria-label="Voltar ao início">voltar</button><button class="satelite" id="falar" type="button" aria-label="Falar">falar</button><button class="satelite satelite-destaque" id="concluir" type="button" aria-label="Concluir">concluir</button></div></div></div></div>`;
 }
 function renderCategories() {
   const categories = allCategories();
