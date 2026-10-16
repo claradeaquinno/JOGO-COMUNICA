@@ -60,7 +60,7 @@ body[data-theme="dark"] .fav-item,
 body[data-theme="dark"] .challenge-card,
 body[data-theme="dark"] .profile-choice-card,
 body[data-theme="dark"] .menu-btn {
-  background: #17344d !important;
+
   color: #eff7ff !important;
   border-color: #3f6685 !important;
 }
@@ -661,21 +661,42 @@ body,.bg-outras{
 .circular-keyboard-reserved .frases-prontas {
   width: 100%;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
   gap: 8px;
-  min-height: 0;
+  min-height: 42px;
+  overflow-x: auto;
+  padding: 2px 1px 6px;
+  scrollbar-width: thin;
 }
 
 .circular-keyboard-reserved .frase-pronta {
   border: 1.5px solid var(--card-border);
   border-radius: 999px;
-  padding: 8px 16px;
+  padding: 8px 14px;
   background: #ffffff;
-  color: var(--navy);
+  color: #103d5d !important;
   font: 700 13px var(--font);
   cursor: pointer;
+  white-space: nowrap;
+  flex: 0 0 auto;
   transition: background .15s ease, color .15s ease, transform .1s ease;
+}
+
+.circular-keyboard-reserved .frase-pronta[data-selecionada="true"] {
+  background: #fff0b3;
+  border-color: #d9a314;
+  color: #103d5d !important;
+}
+
+.circular-keyboard-reserved .frases-prontas::before {
+  content: attr(data-rotulo);
+  align-self: center;
+  color: #fff;
+  font: 700 11px var(--font);
+  opacity: .8;
+  flex: 0 0 auto;
+  margin-right: 2px;
 }
 
 .circular-keyboard-reserved .frase-pronta:hover,
@@ -1355,7 +1376,7 @@ body,.bg-outras{
 
 .form-block {
   width: 100%;
-  background: var(--card);
+  background: transparent;
   border: 2px solid var(--card-border);
   border-radius: 18px;
   padding: 16px;
@@ -3091,6 +3112,12 @@ body[data-theme="dark"] .home-screen .menu-btn.primary {
   border-color: #3f6685 !important;
 }
 
+body[data-theme="dark"] .home-screen .menu-btn:not(.primary) {
+  background: #17344d !important;
+  border-color: #3f6685 !important;
+  color: #eff7ff !important;
+}
+
 body[data-theme="dark"] .home-screen .menu-btn.primary .menu-title,
 body[data-theme="dark"] .home-screen .menu-btn.primary .menu-sub,
 body[data-theme="dark"] .home-screen .menu-btn.primary .menu-arrow,
@@ -3211,6 +3238,89 @@ body[data-theme="light"] .carousel-full-screen {
 
 body[data-theme="dark"] .carousel-full-screen {
   background: linear-gradient(180deg, rgba(15, 41, 62, .88), rgba(23, 58, 94, .92)), url('img/imagem-adulto.jpg') center / cover no-repeat !important;
+}
+
+/* Teclado circular sênior: mantém o fundo da página visível e organiza a
+   área de composição ao lado do teclado em telas largas. */
+body[data-theme="light"] .mode-screen.circular-mode-screen,
+body[data-theme="dark"] .mode-screen.circular-mode-screen {
+  background: transparent !important;
+}
+
+body[data-theme="light"] .circular-mode-screen .circular-keyboard-reserved,
+body[data-theme="dark"] .circular-mode-screen .circular-keyboard-reserved {
+  width: min(1180px, 100%);
+  min-height: 0;
+  margin: auto;
+  padding: 8px 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+  grid-template-rows: minmax(0, 1fr);
+  grid-template-areas: "keyboard phrase-stack";
+  align-items: center;
+  justify-items: stretch;
+  column-gap: 28px;
+  border: 0;
+  border-radius: 0;
+  background: transparent !important;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.circular-mode-screen .circular-keyboard-reserved .teclado-area {
+  grid-area: keyboard;
+  width: min(620px, 100%);
+  margin: 0 auto;
+}
+
+.circular-mode-screen .circular-keyboard-reserved .phrase-stack {
+  grid-area: phrase-stack;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  gap: 4px;
+  width: 100%;
+  min-width: 0;
+}
+
+.circular-mode-screen .circular-keyboard-reserved .campo {
+  align-self: end;
+  min-height: 100px;
+}
+
+.circular-mode-screen .circular-keyboard-reserved .frases-prontas {
+  justify-content: flex-start;
+}
+
+@media (max-width: 760px) {
+  body[data-theme="light"] .circular-mode-screen .circular-keyboard-reserved,
+  body[data-theme="dark"] .circular-mode-screen .circular-keyboard-reserved {
+    width: 100%;
+    min-height: 0;
+    padding: 4px 0 12px;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    grid-template-areas: "phrase-stack" "keyboard";
+    gap: 10px;
+  }
+
+  .circular-mode-screen .circular-keyboard-reserved .campo {
+    min-height: 60px;
+    align-self: auto;
+  }
+
+  .circular-mode-screen .circular-keyboard-reserved .phrase-stack {
+    gap: 3px;
+  }
+
+  .circular-mode-screen .circular-keyboard-reserved .frases-prontas {
+    justify-content: center;
+  }
+
+  .circular-mode-screen .circular-keyboard-reserved .teclado-area {
+    width: min(530px, 100%);
+    height: auto;
+  }
 }
 
 body[data-theme="light"] .carousel-full-content .section-label,
@@ -3722,6 +3832,74 @@ body[data-theme="dark"] .carousel-full-content .phrase-placeholder {
   opacity: 1 !important;
 }
 
+/* Paleta de alto contraste para os controles do modo carrossel. */
+.carousel-full-screen .carousel-full-topbar .icon-btn,
+.carousel-full-screen .carousel-arrow {
+  background: #e3ebf0 !important;
+  color: #10283d !important;
+  border: 2px solid #8ddff0 !important;
+}
+.carousel-full-screen .carousel-card.side {
+  background: #17344d !important;
+  border-color: #6c91a8 !important;
+  opacity: .9 !important;
+}
+.carousel-full-screen .carousel-card.side .label {
+  color: #f1f7ff !important;
+  text-shadow: none !important;
+}
+.carousel-full-screen .carousel-card.center {
+  background: #f7c94d !important;
+  border-color: #a87500 !important;
+}
+.carousel-full-screen .carousel-card.center .label {
+  color: #10283d !important;
+  text-shadow: none !important;
+}
+.carousel-full-content .confirm-btn {
+  background: #f7c94d !important;
+  color: #10283d !important;
+  border: 2px solid #a87500 !important;
+  text-shadow: none !important;
+}
+.carousel-full-content .action-row .btn-erase {
+  background: #ffd4c3 !important;
+  color: #10283d !important;
+  border-color: #c65d35 !important;
+  text-shadow: none !important;
+}
+.carousel-full-content .action-row .btn-clear {
+  background: #f7c7cf !important;
+  color: #10283d !important;
+  border-color: #bd5266 !important;
+  text-shadow: none !important;
+}
+.carousel-full-content .action-row .btn-speak {
+  background: #bdebd0 !important;
+  color: #10283d !important;
+  border-color: #41895f !important;
+  text-shadow: none !important;
+}
+.carousel-full-content .action-row .btn-fav {
+  background: #ffe28a !important;
+  color: #10283d !important;
+  border-color: #a87500 !important;
+  text-shadow: none !important;
+}
+.carousel-full-content .action-row .btn-fav-word {
+  background: #d7e8f3 !important;
+  color: #10283d !important;
+  border-color: #628ba3 !important;
+  text-shadow: none !important;
+}
+.carousel-full-content .confirm-btn:disabled,
+.carousel-full-content .action-row button:disabled {
+  background: #dce5ea !important;
+  color: #526b79 !important;
+  border-color: #9bafb9 !important;
+  opacity: 1 !important;
+}
+
 /* O X dos favoritos não deve herdar o hover gigante da navegação acessível. */
 #app .favorite-toggle:hover,
 #app .favorite-toggle:focus-visible,
@@ -4210,7 +4388,6 @@ body { min-height: 100dvh; }
   .profile-choice-grid { grid-template-columns: 1fr; }
   .action-row button { font-size: clamp(11px, 3.1vw, 13px); }
 }
-
 </style>
 </head>
 
@@ -4244,6 +4421,7 @@ body { min-height: 100dvh; }
 const DEFAULT_CATEGORIES = [
   { id: 'pessoas', label: 'Pessoas', emoji: '👥', custom: false },
   { id: 'necessidades', label: 'Necessidades', emoji: '🧩', custom: false },
+  { id: 'comida', label: 'Comida', emoji: '🍎', custom: false },
   { id: 'sentimentos', label: 'Sentimentos', emoji: '💛', custom: false },
   { id: 'atividades', label: 'Atividades', emoji: '🎨', custom: false },
   { id: 'lugares', label: 'Lugares', emoji: '📍', custom: false },
@@ -5731,7 +5909,7 @@ function renderCarouselMode() {
 }
 
 function renderCircularKeyboard() {
-  return `<div class="mode-screen circular-mode-screen"><button class="mode-screen-back" data-go="build" aria-label="Voltar para escolha do modo">← Voltar</button><div class="circular-keyboard-reserved"><div class="campo" aria-label="Frase formada"><span id="valor"></span></div><div class="frases-prontas" id="frasesProntas" aria-label="Frases prontas sugeridas" aria-live="polite"></div><div class="teclado-area"><section class="teclado" id="teclado" aria-label="Teclado circular"><div class="anel anel-externo" id="anelExterno"></div><div class="anel anel-meio" id="anelMeio"></div></section><div class="satelites" id="menuOrbital" aria-label="Menu de ações"><button class="satelite" id="limpar" type="button" aria-label="Limpar">limpar</button><button class="satelite" id="excluir" type="button" aria-label="Excluir">excluir</button><button class="satelite" id="recarregar" type="button" aria-label="Recarregar sugestões">recarregar</button><button class="satelite" id="voltarInicio" type="button" aria-label="Voltar ao início">voltar</button><button class="satelite" id="falar" type="button" aria-label="Falar">falar</button><button class="satelite satelite-destaque" id="concluir" type="button" aria-label="Concluir">concluir</button></div></div></div></div>`;
+  return `<div class="mode-screen circular-mode-screen"><button class="mode-screen-back" data-go="build" aria-label="Voltar para escolha do modo">← Voltar</button><div class="circular-keyboard-reserved"><div class="phrase-stack"><div class="campo" aria-label="Frase formada"><span id="valor"></span></div><div class="frases-prontas" id="frasesProntas" data-rotulo="Palavras salvas" aria-label="Palavras salvas pelo usuário" aria-live="polite"></div></div><div class="teclado-area"><section class="teclado" id="teclado" aria-label="Teclado circular"><div class="anel anel-externo" id="anelExterno"></div><div class="anel anel-meio" id="anelMeio"></div></section><div class="satelites" id="menuOrbital" aria-label="Menu de ações"><button class="satelite" id="limpar" type="button" aria-label="Limpar">limpar</button><button class="satelite" id="excluir" type="button" aria-label="Excluir">excluir</button><button class="satelite" id="recarregar" type="button" aria-label="Recarregar sugestões ou conectar o Gemini" title="Recarregar sugestões ou conectar o Gemini">recarregar</button><button class="satelite" id="voltarInicio" type="button" aria-label="Voltar ao início">voltar</button><button class="satelite" id="falar" type="button" aria-label="Falar">falar</button><button class="satelite satelite-destaque" id="concluir" type="button" aria-label="Concluir">concluir</button></div></div></div></div>`;
 }
 
 function renderCategories() {
@@ -6051,12 +6229,14 @@ function renderPersonalize() {
   const customWordsHtml =
     STATE.data.customWords
       .map(
-        word => `
+        word => {
+          const category = allCategories().find((item) => item.id === word.cat);
+          return `
 
           <span class="custom-chip">
 
             ${word.emoji}
-            ${word.label}
+            ${word.label} <small>· ${category?.label || 'Sem categoria'}</small>
 
             <button
               type="button"
@@ -6070,7 +6250,8 @@ function renderPersonalize() {
 
           </span>
 
-        `
+        `;
+        }
       )
       .join('')
 
@@ -6088,76 +6269,13 @@ function renderPersonalize() {
         </span>
       `;
 
-  const customCategoriesHtml =
-    STATE.data.customCategories
-      .map(
-        category => `
-
-          <span class="custom-chip">
-
-            ${category.emoji}
-            ${category.label}
-
-            <button
-              type="button"
-              class="x"
-              data-del-cat="${category.id}"
-              aria-label="Excluir categoria ${category.label}"
-              title="Excluir categoria"
-            >
-              ✕
-            </button>
-
-          </span>
-
-        `
-      )
-      .join('')
-
-      ||
-
-      `
-        <span
-          style="
-            color:var(--navy-soft);
-            font-weight:600;
-            font-size:13px;
-          "
-        >
-          Nenhuma categoria personalizada ainda.
-        </span>
-      `;
-
-  const categoryOptions =
-    allCategories()
-      .map(
-        category => `
-
-          <option value="${category.id}">
-            ${category.emoji}
-            ${category.label}
-          </option>
-
-        `
-      )
-      .join('');
-
-  const emojiChoices = [
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    ''
-  ];
+  const letrasPersonalizar = [...'abcdefghijklmnopqrstuvwxyzç'];
+  const teclasPersonalizar = letrasPersonalizar.map((letra, indice) => {
+    const angulo = (indice / letrasPersonalizar.length) * Math.PI * 2 - Math.PI / 2;
+    const esquerda = 50 + Math.cos(angulo) * 36;
+    const topo = 50 + Math.sin(angulo) * 36;
+    return `<button type="button" class="tecla tecla-compacta personalize-letter-key" data-personalize-letter="${letra}" aria-label="Inserir ${letra}" style="left:${esquerda}%;top:${topo}%;transform:translate(-50%,-50%)">${letra}</button>`;
+  }).join('');
 
   return `
 
@@ -6180,69 +6298,26 @@ function renderPersonalize() {
 
     <div class="screen">
 
-      <div class="form-block">
-
-        <h3>
-           Adicionar palavra
-        </h3>
-
-        <div class="form-row">
-
-          <input
-            type="text"
-            id="newWordLabel"
-            placeholder="Ex: Bola"
-          >
-
-          <select id="newWordCat">
-            ${categoryOptions}
-          </select>
-
+      <div class="form-block personalize-builder">
+        <h3>Adicionar palavra</h3>
+        <label class="field-label" for="newWordLabel">Digite uma palavra e use o teclado circular</label>
+        <input type="text" id="newWordLabel" placeholder="A palavra aparecerá aqui" aria-label="Palavra para salvar">
+        <div class="field-label">O Gemini escolherá automaticamente entre Pessoas, Necessidades, Comida e as demais categorias.</div>
+        <div class="personalize-keyboard-layout">
+          <div class="personalize-keyboard-stage teclado-area" role="group" aria-label="Teclado circular alfabético">
+            <section class="teclado">
+              <div class="anel anel-meio personalize-letter-ring">${teclasPersonalizar}</div>
+              <span class="buraco-central personalize-wheel-center" aria-hidden="true">Aa</span>
+            </section>
+          </div>
+          <nav class="personalize-keyboard-menu" aria-label="Ações do teclado de personalização">
+            <button type="button" id="personalizeSaveBtn" class="personalize-action personalize-action-save">Salvar</button>
+            <button type="button" id="personalizeClearBtn" class="personalize-action personalize-action-clear">Limpar</button>
+            <button type="button" id="personalizeDeleteBtn" class="personalize-action personalize-action-delete">Excluir</button>
+            <button type="button" id="personalizeBackBtn" class="personalize-action personalize-action-back" data-go="home">Voltar</button>
+          </nav>
         </div>
-
-       
-
-        <button
-          class="submit-btn"
-          id="addWordBtn"
-        >
-          Adicionar palavra
-        </button>
-
-        <div class="custom-list">
-          ${customWordsHtml}
-        </div>
-
-      </div>
-
-      <div class="form-block">
-
-        <h3>
-           Criar categoria
-        </h3>
-
-        <div class="form-row">
-
-          <input
-            type="text"
-            id="newCatLabel"
-            placeholder="Ex: Minhas coisas"
-          >
-
-        </div>
-
-       
-        <button
-          class="submit-btn"
-          id="addCatBtn"
-        >
-          Criar categoria
-        </button>
-
-        <div class="custom-list">
-          ${customCategoriesHtml}
-        </div>
-
+        <div class="custom-list">${customWordsHtml}</div>
       </div>
 
     </div>
@@ -7345,35 +7420,56 @@ function attachHandlers() {
 
 
 
-  const addWordBtn =
-    document.getElementById(
-      'addWordBtn'
-    );
+  document.querySelectorAll('[data-personalize-letter]').forEach(button => {
+    button.addEventListener('click', () => {
+      const input = document.getElementById('newWordLabel');
+      if (!input) return;
+      const start = input.selectionStart ?? input.value.length;
+      const end = input.selectionEnd ?? start;
+      const letra = button.getAttribute('data-personalize-letter') || '';
+      input.setRangeText(letra, start, end, 'end');
+      input.focus();
+    });
+  });
+
+  const personalizeInput = document.getElementById('newWordLabel');
+  const personalizeClearBtn = document.getElementById('personalizeClearBtn');
+  if (personalizeClearBtn) personalizeClearBtn.addEventListener('click', () => {
+    if (!personalizeInput) return;
+    personalizeInput.value = '';
+    personalizeInput.focus();
+  });
+  const personalizeDeleteBtn = document.getElementById('personalizeDeleteBtn');
+  if (personalizeDeleteBtn) personalizeDeleteBtn.addEventListener('click', () => {
+    if (!personalizeInput) return;
+    const start = personalizeInput.selectionStart ?? personalizeInput.value.length;
+    const end = personalizeInput.selectionEnd ?? start;
+    if (start !== end) personalizeInput.setRangeText('', start, end, 'end');
+    else if (start > 0) personalizeInput.setRangeText('', start - 1, start, 'end');
+    personalizeInput.focus();
+  });
+
+  const addWordBtn = document.getElementById('personalizeSaveBtn') || document.getElementById('addWordBtn');
 
   if (addWordBtn) {
 
     addWordBtn.addEventListener(
       'click',
-      () => {
+      async () => {
 
         const input =
           document.getElementById(
             'newWordLabel'
           );
 
-        const category =
-          document.getElementById(
-            'newWordCat'
-          );
+        const category = document.getElementById('newWordCat');
 
-        if (!input || !category)
-          return;
+        if (!input) return;
 
         const label =
           input.value.trim();
 
-        const cat =
-          category.value;
+        let cat = category?.value || '';
 
         const chosen =
           document.querySelector(
@@ -7385,7 +7481,7 @@ function attachHandlers() {
             ? chosen.getAttribute(
                 'data-emoji'
               )
-            : '';
+            : '🔤';
 
         if (!label) {
 
@@ -7399,6 +7495,18 @@ function attachHandlers() {
 
           return;
 
+        }
+
+        addWordBtn.disabled = true;
+        addWordBtn.textContent = 'Categorizando...';
+        let categoriaGemini = null;
+        try {
+          categoriaGemini = await categorizarPalavraComGemini(label);
+          cat = categoriaGemini || '';
+          if (category) category.value = cat;
+        } finally {
+          addWordBtn.disabled = false;
+          addWordBtn.textContent = 'Salvar';
         }
 
         const id =
@@ -7435,7 +7543,9 @@ function attachHandlers() {
         saveData();
 
         showToast(
-          'Palavra adicionada!'
+          categoriaGemini
+            ? `Palavra adicionada em ${allCategories().find((item) => item.id === cat)?.label || 'sua categoria'}!`
+            : 'Palavra adicionada sem categoria porque o Gemini não respondeu.'
         );
 
         speak(label);
@@ -8278,19 +8388,6 @@ const frasesRapidas = [
     "preciso de água", "não entendi", "mais devagar", "até logo", "obrigado"
 ];
 
-// Saudações usadas pelo botão "recarregar" na argola de dentro, quando a
-// frase ainda está vazia (estado inicial) — dão outras formas de começar
-// uma conversa, além dos pronomes.
-const saudacoes = [
-    "Bom dia", "Boa tarde", "Boa noite", "Olá", "Oi", "Tudo bem?",
-    "Como vai?", "Até logo", "Tchau", "Prazer em conhecer você",
-    "Como você está?", "Muito prazer"
-];
-
-// No estado inicial, a argola de dentro só pode mostrar os pronomes
-// originais e as saudações acima — nada além disso.
-const opcoesArgolaInicial = palavrasChave.concat(saudacoes);
-
 // Sugestões da argola de fora (aparece após a 1ª palavra), tipo corretor automático.
 const sugestoesPorPalavra = {
     eu: ["vou", "quero", "não", "acho", "tenho", "preciso", "estou"],
@@ -8408,74 +8505,141 @@ function palavraAtual() {
     return normalizarPalavra(palavras.at(-1) || "");
 }
 
-function preencherAte(palavras, quantidade, reserva) {
-    const resultado = [...palavras];
-    reserva.forEach((palavra) => {
-        if (resultado.length < quantidade && !resultado.includes(palavra)) resultado.push(palavra);
-    });
-    return resultado.slice(0, quantidade);
+// Quando a IA responde com menos opções, completa com poucas palavras locais,
+// mantendo a maioria das teclas baseada na resposta do Gemini.
+function completarComMaioriaGemini(sugestoesIA, quantidade, reserva) {
+    const principais = [...new Set(sugestoesIA.filter((palavra) => typeof palavra === "string" && palavra.trim()))]
+        .slice(0, quantidade);
+    const limiteReserva = Math.min(3, Math.max(0, principais.length - 1), quantidade - principais.length);
+    const extras = [...new Set(reserva.filter((palavra) => !principais.includes(palavra)))].slice(0, limiteReserva);
+    return principais.concat(extras);
 }
 
 function atualizarTextoDasTeclas(anel, palavras) {
     anel.palavras = palavras;
     anel.teclas.forEach((tecla, indice) => {
-        const texto = palavras[indice];
+        const texto = palavras[indice] || "";
         tecla.textContent = texto;
         tecla.dataset.valor = texto;
-        tecla.setAttribute("aria-label", `Sugestão: ${texto}`);
+        tecla.setAttribute("aria-label", texto ? `Sugestão: ${texto}` : "Sem sugestão disponível");
     });
 }
 
-// ==== Integrações externas (opcionais) ====
-// Sugestões de continuação de frase via OpenAI e correção ortográfica/
-// gramatical via LanguageTool. Ambas são chamadas diretamente do navegador.
-//
-// ATENÇÃO sobre a chave da OpenAI: colocá-la aqui deixa a chave visível para
-// qualquer pessoa que abrir o código-fonte da página (F12 > rede/fontes).
-// Isso é aceitável para testes pessoais, mas se for publicar este teclado
-// para outras pessoas usarem, o recomendado é criar um pequeno servidor
-// (proxy) que guarde a chave em segredo e repasse as chamadas — nesse caso,
-// preencha OPENAI_PROXY_URL em vez de OPENAI_API_KEY (veja abaixo).
-const OPENAI_API_KEY = ""; // ex: "sk-..."
-const OPENAI_PROXY_URL = ""; // ex: "https://meu-servidor.com/api/sugestoes" (mais seguro)
-const OPENAI_MODELO = "gpt-4o-mini";
+// ==== Integração opcional com Gemini via proxy local ====
+try { sessionStorage.removeItem("comunica:gemini-key"); } catch (erro) { /* armazenamento indisponível */ }
+const GEMINI_API_URL = "/api/gemini";
+let geminiStatusPromise = null;
+
+function geminiDisponivel() {
+    if (!geminiStatusPromise) {
+        geminiStatusPromise = fetch("/api/gemini/status")
+            .then((resposta) => resposta.ok ? resposta.json() : null)
+            .then((dados) => dados?.configured === true)
+            .catch(() => false);
+    }
+    return geminiStatusPromise;
+}
+
+async function categorizarPalavraComGemini(palavra) {
+    if (!(await geminiDisponivel())) return null;
+    const categorias = allCategories().map(({ id, label }) => ({ id, label }));
+    if (!categorias.length) return null;
+    try {
+        const resposta = await fetch(GEMINI_API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                contents: [{ role: "user", parts: [{ text: `Classifique a palavra ou expressão para um teclado de Comunicação Alternativa em português do Brasil. Escolha somente uma categoria da lista, sem criar categorias. Palavra: ${JSON.stringify(palavra)}. Categorias: ${JSON.stringify(categorias)}. Responda somente JSON no formato {"id":"ID_DA_CATEGORIA"}.` }] }],
+                generationConfig: { temperature: 0.1, responseMimeType: "application/json" }
+            })
+        });
+        const dados = await resposta.json();
+        if (!resposta.ok) {
+            console.warn("Falha na categorização Gemini:", resposta.status, dados.error?.message || dados);
+            return null;
+        }
+        const texto = dados.candidates?.[0]?.content?.parts?.map((parte) => parte.text || "").join("").trim() || "";
+        const json = texto.match(/\{[\s\S]*\}/)?.[0];
+        if (!json) {
+            console.warn("Gemini retornou uma resposta sem JSON de categoria:", texto);
+            return null;
+        }
+        const id = JSON.parse(json).id;
+        return categorias.some((categoria) => categoria.id === id) ? id : null;
+    } catch (erro) {
+        console.warn("Não foi possível categorizar a palavra com Gemini:", erro);
+        return null;
+    }
+}
+
+function categoriaLocalAutomatica(palavra) {
+    const texto = normalizarPalavra(palavra);
+    const idsDisponiveis = new Set(allCategories().map((categoria) => categoria.id));
+    const regras = [
+        ["pessoas", /\b(eu|voce|ele|ela|eles|elas|mae|pai|avo|irma|irmao|tia|tio|amigo|amiga|filho|filha|professor|professora|familia)\b/],
+        ["comida", /\b(comida|agua|suco|leite|arroz|feijao|pao|fruta|maca|banana|carne|bolo|lanche|cafe|almoco|jantar)\b/],
+        ["necessidades", /\b(banheiro|ajuda|dor|sono|fome|sede|descanso|beber|comer|dormir|preciso)\b/],
+        ["sentimentos", /\b(feliz|triste|bravo|brava|medo|cansado|cansada|bem|mal|ansioso|ansiosa|saudade)\b/],
+        ["lugares", /\b(casa|escola|parque|hospital|quarto|cozinha|rua|banheiro|mercado|cidade)\b/],
+        ["atividades", /\b(brincar|jogar|assistir|ler|desenhar|cantar|passear|dancar|estudar|nadar)\b/],
+        ["acoes", /\b(quero|gosto|vou|estou|tenho|fazer|ir|vir|dar|ver|falar|preciso)\b/]
+    ];
+    const regra = regras.find(([id, padrao]) => idsDisponiveis.has(id) && padrao.test(texto));
+    if (regra) return regra[0];
+    if (idsDisponiveis.has("acoes") && /(?:ar|er|ir)$/.test(texto)) return "acoes";
+    return idsDisponiveis.has("necessidades") ? "necessidades" : allCategories()[0]?.id || "";
+}
 
 // Endpoint público do LanguageTool: não exige chave para uso moderado.
 const LANGUAGETOOL_URL = "https://api.languagetool.org/v2/check";
 const LANGUAGETOOL_IDIOMA = "pt-BR";
 
-// Pede à OpenAI (ou ao proxy configurado) palavras/expressões curtas para
-// continuar a frase atual. Retorna null se não há integração configurada
-// ou se a chamada falha, para que o código sempre tenha um caminho local
-// de reserva (o dicionário de sugestões já existente).
-async function sugerirComOpenAI(frase) {
-    if (!OPENAI_PROXY_URL && !OPENAI_API_KEY) return null;
+// Pede ao Gemini palavras/expressões curtas para continuar a frase atual.
+// Retorna null se não há chave ou se a chamada falha; nesse caso, a argola
+// externa usa o vocabulário local padrão e a barra usa palavras personalizadas.
+const geminiSuggestionCache = new Map();
+
+function sugerirComGemini(frase, tipo = "palavras", palavraSelecionada = "") {
+    const cacheKey = JSON.stringify([frase, tipo, palavraSelecionada]);
+    if (geminiSuggestionCache.has(cacheKey)) return geminiSuggestionCache.get(cacheKey);
+    const solicitacao = consultarGemini(frase, tipo, palavraSelecionada);
+    geminiSuggestionCache.set(cacheKey, solicitacao);
+    solicitacao.then((resultado) => {
+        if (!resultado) geminiSuggestionCache.delete(cacheKey);
+        while (geminiSuggestionCache.size > 24) {
+            geminiSuggestionCache.delete(geminiSuggestionCache.keys().next().value);
+        }
+    });
+    return solicitacao;
+}
+
+async function consultarGemini(frase, tipo, palavraSelecionada) {
+    if (!(await geminiDisponivel())) return null;
     try {
-        const corpoBase = {
-            model: OPENAI_MODELO,
-            temperature: 0.7,
-            messages: [
-                {
-                    role: "system",
-                    content: "Você ajuda um teclado de comunicação alternativa (AAC) em português do Brasil. Dada uma frase incompleta, sugira até 10 palavras ou expressões curtas (1 a 3 palavras) para continuar a frase de forma natural. Responda SOMENTE com um array JSON de strings, sem nenhum texto além disso."
-                },
-                { role: "user", content: frase || "(frase vazia, sugira palavras para começar uma frase)" }
-            ]
-        };
-
-        const url = OPENAI_PROXY_URL || "https://api.openai.com/v1/chat/completions";
-        const cabecalhos = { "Content-Type": "application/json" };
-        if (!OPENAI_PROXY_URL) cabecalhos.Authorization = `Bearer ${OPENAI_API_KEY}`;
-
-        const resposta = await fetch(url, { method: "POST", headers: cabecalhos, body: JSON.stringify(corpoBase) });
-        if (!resposta.ok) return null;
-
+        const generoContexto = tipo === "palavras" ? generoPronomeNaFrase(frase) : null;
+        const nomesPermitidos = generoContexto ? palavrasPersonalizadasPorGenero(generoContexto).map((word) => word.label) : [];
+        const prompt = tipo === "frases"
+            ? "Você ajuda um teclado de Comunicação Alternativa e Aumentativa em português do Brasil. Dada uma frase parcial, sugira até 4 frases completas, curtas e naturais que a pessoa provavelmente quer comunicar, usando as palavras escolhidas como base. Responda apenas um array JSON de strings."
+            : `Você sugere vocabulário para um teclado de Comunicação Alternativa e Aumentativa em português do Brasil. Use como contexto principal a palavra que a pessoa acabou de selecionar na argola interior: "${palavraSelecionada || "(não informada)"}". Considere também a frase parcial. ${generoContexto ? `Mantenha a concordância no gênero ${generoContexto}. Para sugerir nomes de pessoas, use somente estes nomes já cadastrados: ${JSON.stringify(nomesPermitidos)}.` : ""} Gere exatamente 10 palavras ou expressões curtas e naturais para continuar a comunicação, relacionadas à palavra selecionada. Não repita palavras já presentes. Responda apenas um array JSON de strings.`;
+        const resposta = await fetch(GEMINI_API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                contents: [{ role: "user", parts: [{ text: `${prompt}\nFrase parcial: ${frase || "(frase vazia; sugira palavras para começar)"}` }] }],
+                generationConfig: { temperature: 0.7, responseMimeType: "application/json" }
+            })
+        });
         const dados = await resposta.json();
-        const texto = dados.choices?.[0]?.message?.content?.trim() ?? "";
+        if (!resposta.ok) throw new Error(dados.error?.message || `Gemini HTTP ${resposta.status}`);
+        const texto = dados.candidates?.[0]?.content?.parts?.map((parte) => parte.text || "").join("").trim() || "";
         const lista = JSON.parse(texto);
-        return Array.isArray(lista) ? lista.filter((item) => typeof item === "string" && item.trim()) : null;
+        if (!Array.isArray(lista)) return null;
+        const jaUsadas = new Set(tipo === "palavras" ? frase.split(/\s+/).map(normalizarPalavra) : []);
+        return [...new Set(lista.filter((item) => typeof item === "string")
+            .map((item) => item.trim().replace(/^[-•\d.\s]+/, "").slice(0, 48))
+            .filter((item) => item && !jaUsadas.has(normalizarPalavra(item))))].slice(0, tipo === "frases" ? 4 : 10);
     } catch (erro) {
-        console.warn("Não foi possível buscar sugestões da OpenAI:", erro);
+        console.warn("Não foi possível buscar sugestões do Gemini:", erro);
         return null;
     }
 }
@@ -8511,73 +8675,182 @@ async function corrigirComLanguageTool(texto) {
     }
 }
 
-// Pede à OpenAI (ou ao proxy configurado) frases completas prontas, a
-// partir do conjunto de palavras já escolhido, para mostrar como atalho
-// abaixo do campo de texto. Mesmo caminho de configuração/limite de
-// segurança de sugerirComOpenAI.
-async function sugerirFrasesProntas(frase) {
-    if (!OPENAI_PROXY_URL && !OPENAI_API_KEY) return null;
+async function corrigirComGemini(texto) {
+    if (!texto || !(await geminiDisponivel())) return null;
+    const palavrasPersonalizadas = STATE.data.customWords.map((word) => word.label).filter(Boolean);
     try {
-        const corpo = {
-            model: OPENAI_MODELO,
-            temperature: 0.7,
-            messages: [
-                {
-                    role: "system",
-                    content: "Você ajuda um teclado de comunicação alternativa (AAC) em português do Brasil. Dado um conjunto de palavras ou frase parcial, sugira até 4 frases completas, curtas e naturais que a pessoa provavelmente quer dizer, usando essas palavras como base. Responda SOMENTE com um array JSON de strings, sem nenhum texto além disso."
-                },
-                { role: "user", content: frase }
-            ]
-        };
-
-        const url = OPENAI_PROXY_URL || "https://api.openai.com/v1/chat/completions";
-        const cabecalhos = { "Content-Type": "application/json" };
-        if (!OPENAI_PROXY_URL) cabecalhos.Authorization = `Bearer ${OPENAI_API_KEY}`;
-
-        const resposta = await fetch(url, { method: "POST", headers: cabecalhos, body: JSON.stringify(corpo) });
-        if (!resposta.ok) return null;
-
+        const resposta = await fetch(GEMINI_API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                contents: [{ role: "user", parts: [{ text: `Revise esta frase curta de Comunicação Alternativa em português do Brasil. Corrija concordância de gênero e número. Se um nome ou palavra cadastrada aparecer com erro de digitação, use a grafia exata da lista personalizada. Palavras personalizadas permitidas: ${JSON.stringify(palavrasPersonalizadas)}. Se um pronome como ela/ele estiver imediatamente antes do nome que identifica a mesma pessoa, retire a repetição do pronome e mantenha o nome exatamente como cadastrado. Preserve a intenção e não invente nomes nem informações. Retorne somente um objeto JSON no formato {"texto":"frase corrigida"}. Frase: ${texto}` }] }],
+                generationConfig: { temperature: 0.1, responseMimeType: "application/json" }
+            })
+        });
         const dados = await resposta.json();
-        const texto = dados.choices?.[0]?.message?.content?.trim() ?? "";
-        const lista = JSON.parse(texto);
-        return Array.isArray(lista) ? lista.filter((item) => typeof item === "string" && item.trim()) : null;
+        if (!resposta.ok) throw new Error(dados.error?.message || `Gemini HTTP ${resposta.status}`);
+        const conteudo = dados.candidates?.[0]?.content?.parts?.map((parte) => parte.text || "").join("").trim() || "";
+        const resultado = JSON.parse(conteudo);
+        return typeof resultado.texto === "string" && resultado.texto.trim() ? resultado.texto.trim() : null;
     } catch (erro) {
-        console.warn("Não foi possível buscar frases prontas da OpenAI:", erro);
+        console.warn("Não foi possível corrigir a frase com o Gemini:", erro);
         return null;
     }
 }
 
-// Renderiza (ou limpa) o painel de frases prontas abaixo do campo de texto.
-// Clicar numa delas substitui a frase atual por ela.
-function mostrarFrasesProntas(frases) {
+function distanciaEdicaoUnica(a, b) {
+    if (a === b) return 0;
+    if (Math.abs(a.length - b.length) > 1) return 2;
+    let i = 0;
+    let j = 0;
+    let diferencas = 0;
+    while (i < a.length && j < b.length) {
+        if (a[i] === b[j]) { i += 1; j += 1; continue; }
+        diferencas += 1;
+        if (diferencas > 1) return diferencas;
+        if (a.length > b.length) i += 1;
+        else if (b.length > a.length) j += 1;
+        else { i += 1; j += 1; }
+    }
+    if (i < a.length || j < b.length) diferencas += 1;
+    return diferencas;
+}
+
+function canonicalizarNomesPersonalizados(texto) {
+    const palavrasPessoas = STATE.data.customWords.filter((word) => {
+        const categoria = allCategories().find((item) => item.id === word.cat);
+        return word.cat === "pessoas" || /pessoa|famil|amig|relacion/.test(normalizarPalavra(categoria?.label || ""));
+    });
+    const tokens = [...texto.matchAll(/[\p{L}]+/gu)];
+    let indiceToken = 0;
+    return texto.replace(/[\p{L}]+/gu, (token) => {
+        const indiceAtual = indiceToken++;
+        const normalizado = normalizarPalavra(token);
+        const exato = palavrasPessoas.find((word) => normalizarPalavra(word.label) === normalizado);
+        if (exato) return exato.label;
+        const tokenAnterior = normalizarPalavra(tokens[indiceAtual - 1]?.[0] || "");
+        if (!["ela", "ele", "elas", "eles"].includes(tokenAnterior) || normalizado.length < 3) return token;
+        const aproximado = palavrasPessoas.find((word) => {
+            const nome = normalizarPalavra(word.label);
+            return !/\s/.test(nome) && distanciaEdicaoUnica(normalizado, nome) === 1;
+        });
+        return aproximado ? aproximado.label : token;
+    });
+}
+
+let atualizarBarraTimer = null;
+let sugestaoSelecionadaBarra = "";
+
+// Renderiza sugestões rápidas abaixo do campo. Cada opção completa a frase
+// atual, como a barra preditiva de um teclado convencional.
+function mostrarFrasesProntas(frases, fonte = "local") {
     if (!frasesProntasEl) return;
     frasesProntasEl.innerHTML = "";
+    const rotulo = fonte === "mista" ? "Sugestões Gemini e personalizadas" : fonte === "ia" ? "Sugestões Gemini" : fonte === "personalizadas" ? "Palavras personalizadas" : "Palavras salvas";
+    frasesProntasEl.dataset.rotulo = rotulo;
+    frasesProntasEl.setAttribute("aria-label", `${rotulo} de palavras e complementos`);
     if (!frases || !frases.length) return;
     frases.forEach((frase) => {
         const botao = document.createElement("button");
         botao.type = "button";
-        botao.className = "frase-pronta";
+        botao.className = "frase-pronta palavra-sugerida";
         botao.textContent = frase;
+        const selecionada = normalizarPalavra(frase) === normalizarPalavra(sugestaoSelecionadaBarra);
+        botao.dataset.selecionada = selecionada ? "true" : "false";
+        botao.setAttribute("aria-pressed", String(selecionada));
         botao.addEventListener("click", () => {
-            valor.textContent = frase;
+            sugestaoSelecionadaBarra = frase;
+            adicionarPalavra(frase);
         });
         frasesProntasEl.appendChild(botao);
     });
 }
 
-async function atualizarFrasesProntas() {
+function atualizarFrasesProntas() {
     const frase = valor.textContent.trim();
-    if (!frase) {
-        mostrarFrasesProntas(null);
+    clearTimeout(atualizarBarraTimer);
+    const genero = generoDoPronomeAtual();
+    if (genero) {
+        const palavras = palavrasPersonalizadasPorGenero(genero).map((word) => word.label);
+        const lista = [...new Set([sugestaoSelecionadaBarra, ...palavras].filter(Boolean))].slice(0, 3);
+        mostrarFrasesProntas(lista, "personalizadas");
         return;
     }
-    const frases = await sugerirFrasesProntas(frase);
-    // Só aplica se a frase não tiver mudado enquanto a resposta chegava.
-    if (valor.textContent.trim() === frase) mostrarFrasesProntas(frases);
+    const tokens = frase.split(/\s+/).filter(Boolean);
+    const ultima = normalizarPalavra(tokens.at(-1) || "");
+    const usadas = new Set(tokens.map(normalizarPalavra));
+    const baseLocal = STATE.data.customWords.map((word) => word.label).filter(Boolean);
+    const locais = [...new Set([sugestaoSelecionadaBarra, ...baseLocal
+        .filter((item) => !usadas.has(normalizarPalavra(item)))].filter(Boolean))].slice(0, 2);
+    mostrarFrasesProntas(locais);
+
+    // Espera a digitação parar antes de pedir ao Gemini. A argola externa e a
+    // barra reaproveitam a mesma resposta quando consultam a mesma frase.
+    atualizarBarraTimer = setTimeout(async () => {
+        const sugestoesGemini = await sugerirComGemini(frase, "palavras", tokens.at(-1) || "");
+        if (valor.textContent.trim() === frase && !generoDoPronomeAtual() && sugestoesGemini?.length) {
+            const sugestoesDaBarra = [...new Set([sugestaoSelecionadaBarra, ...sugestoesGemini.slice(0, 2), ...locais].filter(Boolean))].slice(0, 3);
+            const temPersonalizada = sugestoesDaBarra.some((item) => STATE.data.customWords.some((word) => normalizarPalavra(word.label) === normalizarPalavra(item)));
+            mostrarFrasesProntas(sugestoesDaBarra, temPersonalizada ? "mista" : "ia");
+        }
+    }, 450);
 }
 
 function atualizarAnelPalavrasChave() {
     atualizarTextoDasTeclas(aneis[0], palavrasChave);
+}
+
+function palavrasPersonalizadasPorGenero(genero) {
+    const termosFemininos = new Set([
+        "mae", "tia", "irma", "filha", "mulher", "menina", "amiga",
+        "professora", "doutora", "senhora", "rainha", "madrinha", "prima",
+        "alice", "beatriz", "carol", "ester", "ines", "isabel", "joyce",
+        "lais", "luz", "nicole", "rachel", "raquel", "sarah"
+    ]);
+    const termosMasculinos = new Set([
+        "pai", "tio", "irmao", "filho", "homem", "menino", "amigo",
+        "professor", "doutor", "senhor", "rei", "padrinho", "primo",
+        "gabriel", "miguel", "rafael", "daniel", "samuel", "jose", "davi"
+    ]);
+    return STATE.data.customWords.filter((word) => {
+        const categoria = allCategories().find((item) => item.id === word.cat);
+        const categoriaPessoas = word.cat === "pessoas" || /pessoa|famil|amig|relacion/.test(normalizarPalavra(categoria?.label || ""));
+        if (!categoriaPessoas) return false;
+        const nome = normalizarPalavra(word.label);
+        const nomeComAcento = String(word.label).toLocaleLowerCase("pt-BR");
+        if (genero === "feminino") return word.gender === "feminino" || word.gender === "female" || nomeComAcento === "avó" || termosFemininos.has(nome) || /a$/.test(nome);
+        return word.gender === "masculino" || word.gender === "male" || nomeComAcento === "avô" || termosMasculinos.has(nome) || /o$/.test(nome);
+    });
+}
+
+function generoPronomeNaFrase(texto) {
+    const tokens = String(texto || "").split(/\s+/).map(normalizarPalavra).filter(Boolean);
+    for (let indice = tokens.length - 1; indice >= 0; indice -= 1) {
+        if (["ela", "elas"].includes(tokens[indice])) return "feminino";
+        if (["ele", "eles"].includes(tokens[indice])) return "masculino";
+    }
+    return null;
+}
+
+function generoDoPronomeAtual() {
+    const ultima = palavraAtual();
+    if (["ela", "elas"].includes(ultima)) return "feminino";
+    if (["ele", "eles"].includes(ultima)) return "masculino";
+    return null;
+}
+
+function mostrarSugestoesPersonalizadasPorGenero(anel, genero, embaralharLista = false) {
+    const palavras = palavrasPersonalizadasPorGenero(genero).map((word) => word.label);
+    if (!palavras.length) {
+        showToast(`Adicione palavras ${genero === "feminino" ? "femininas" : "masculinas"} em Personalizar, na categoria Pessoas.`);
+        esconderAnelSugestoes();
+        return false;
+    }
+    const lista = (embaralharLista ? embaralhar(palavras) : palavras).slice(0, 10);
+    mostrarFrasesProntas(lista, "palavras");
+    if (anel.quantidade !== lista.length) criarTeclasDoAnel(anel, lista.length, false);
+    atualizarTextoDasTeclas(anel, lista);
+    return true;
 }
 
 // Preenche o anel indicado (0 ou 1) com sugestões para continuar a frase.
@@ -8585,19 +8858,44 @@ function atualizarAnelPalavrasChave() {
 // delas atualizar, em vez de mexer sempre na mesma.
 function atualizarSugestoesNoAnel(indiceAnel) {
     const anel = aneis[indiceAnel];
-    const base = sugestoesPorPalavra[palavraAtual()] || sugestoesGenericas;
-    const completas = preencherAte(base, anel.quantidade, frasesRapidas.concat(palavrasChave));
-    atualizarTextoDasTeclas(anel, completas);
+    const genero = generoDoPronomeAtual();
+    if (genero) {
+        const listaPersonalizada = palavrasPersonalizadasPorGenero(genero).map((word) => word.label);
+        mostrarFrasesProntas(listaPersonalizada, "palavras");
+    }
+    const base = (sugestoesPorPalavra[palavraAtual()] || sugestoesGenericas);
+    const usadas = new Set(valor.textContent.trim().split(/\s+/).map(normalizarPalavra));
+    const locais = [...new Set(base.concat(frasesRapidas, palavrasChave)
+        .filter((palavra) => !usadas.has(normalizarPalavra(palavra))))].slice(0, 6);
+    if (anel.quantidade !== locais.length) criarTeclasDoAnel(anel, locais.length, false);
+    atualizarTextoDasTeclas(anel, locais);
 
-    // Se a OpenAI estiver configurada, tenta melhorar essas sugestões com base
-    // na frase inteira assim que a resposta chegar (não bloqueia a exibição
-    // imediata das sugestões locais, que continuam servindo de reserva).
-    sugerirComOpenAI(valor.textContent.trim()).then((sugestoesIA) => {
-        if (modoAlfabeto) return;
-        if (sugestoesIA && sugestoesIA.length) {
-            atualizarTextoDasTeclas(anel, preencherAte(sugestoesIA, anel.quantidade, completas));
+    // Atualiza primeiro com o vocabulário local; quando o Gemini responder,
+    // troca as opções apenas se a frase ainda for a mesma.
+    const fraseSolicitada = valor.textContent.trim();
+    const palavraSelecionada = fraseSolicitada.split(/\s+/).filter(Boolean).at(-1) || "";
+    sugerirComGemini(fraseSolicitada, "palavras", palavraSelecionada).then((sugestoesIA) => {
+        if (modoAlfabeto || !valor || valor.textContent.trim() !== fraseSolicitada || !sugestoesVisiveis) return;
+        if (!sugestoesIA?.length) {
+            if (!locais.length) {
+                mostrarFrasesProntas([]);
+                showToast("Não há outras sugestões locais para esta palavra.");
+            }
+            return;
         }
+        const focoNaArgola = anel.teclas.includes(document.activeElement);
+        const palavrasSalvas = new Set(STATE.data.customWords.map((word) => normalizarPalavra(word.label)));
+        const opcoes = completarComMaioriaGemini(
+            sugestoesIA.filter((palavra) => !palavrasSalvas.has(normalizarPalavra(palavra))),
+            10,
+            []
+        );
+        if (!opcoes.length) return;
+        if (anel.quantidade !== opcoes.length) criarTeclasDoAnel(anel, opcoes.length, false);
+        atualizarTextoDasTeclas(anel, opcoes);
+        if (focoNaArgola) focarTecla(indiceAnel, Math.min(posicaoAtualIndice, opcoes.length - 1));
     });
+    return locais.length > 0;
 }
 
 function embaralhar(lista) {
@@ -8609,40 +8907,63 @@ function embaralhar(lista) {
     return copia;
 }
 
-// Botão "recarregar": age sobre a argola que estiver ativa no momento (a que
-// está exibindo sugestões agora, seja a de dentro ou a de fora). A argola de
-// dentro pode ser recarregada a qualquer momento, inclusive antes de
-// qualquer palavra ser escolhida (ela é sempre visível); a de fora só pode
-// ser recarregada depois de já ter aparecido pela primeira vez. Tenta
-// primeiro pedir novas sugestões à OpenAI (se configurada); se não houver
-// integração ou a chamada falhar, sorteia uma nova combinação local.
+// Botão "recarregar": gera novas opções para a argola externa depois que a
+// frase começou. O Gemini tem prioridade; sem resposta, mostra até seis
+// alternativas locais. A argola inicial permanece fixa.
 async function recarregarSugestoes() {
     // No modo alfabético não há o que recarregar (as 26 letras já estão
     // todas na argola); "recarregar" fica sem efeito até sair do modo.
     if (modoAlfabeto) return;
 
-    const indiceAnel = anelAtualIndice;
+    const frase = valor.textContent.trim();
+    if (!frase) {
+        showToast("Escolha uma palavra para receber sugestões do Gemini na argola externa.");
+        return;
+    }
+    const indiceAnel = 1;
+    anelAtualIndice = indiceAnel;
     if (indiceAnel === 1 && !sugestoesVisiveis) return;
     const anel = aneis[indiceAnel];
-    const frase = valor.textContent.trim();
 
-    // Estado inicial (frase ainda vazia): a argola de dentro sorteia uma
-    // mistura dos pronomes originais com as saudações, intercalando os dois.
-    if (indiceAnel === 0 && !frase) {
-        atualizarTextoDasTeclas(anel, embaralhar(opcoesArgolaInicial).slice(0, anel.quantidade));
-        return;
+    // Mantém as palavras personalizadas compatíveis com o pronome nos campos
+    // abaixo da frase; o recarregamento da argola continua sugerindo continuações.
+    const genero = generoDoPronomeAtual();
+    if (frase && genero) {
+        const palavras = palavrasPersonalizadasPorGenero(genero).map((word) => word.label);
+        mostrarFrasesProntas(palavras, "palavras");
     }
 
-    const sugestoesIA = await sugerirComOpenAI(`${frase} (sugira opções diferentes das mais óbvias)`);
+    if (!(await geminiDisponivel())) {
+        showToast("Gemini não configurado no servidor. Mantendo sugestões locais.");
+    }
+
+    const palavraSelecionada = frase.split(/\s+/).filter(Boolean).at(-1) || "";
+    const sugestoesIA = await sugerirComGemini(`${frase} (sugira opções diferentes das mais óbvias)`, "palavras", palavraSelecionada);
     if (sugestoesIA && sugestoesIA.length) {
-        atualizarTextoDasTeclas(anel, preencherAte(sugestoesIA, anel.quantidade, frasesRapidas.concat(palavrasChave)));
-        return;
+        const palavrasSalvas = new Set(STATE.data.customWords.map((word) => normalizarPalavra(word.label)));
+        const opcoes = completarComMaioriaGemini(
+            sugestoesIA.filter((palavra) => !palavrasSalvas.has(normalizarPalavra(palavra))),
+            10,
+            []
+        );
+        if (opcoes.length) {
+            if (anel.quantidade !== opcoes.length) criarTeclasDoAnel(anel, opcoes.length, false);
+            atualizarTextoDasTeclas(anel, opcoes);
+            return;
+        }
     }
 
-    const base = sugestoesPorPalavra[palavraAtual()] || sugestoesGenericas;
-    const baseEmbaralhada = embaralhar(base);
-    const extras = embaralhar(frasesRapidas.concat(palavrasChave).filter((palavra) => !base.includes(palavra)));
-    const novaLista = preencherAte(baseEmbaralhada, anel.quantidade, extras);
+    const base = (sugestoesPorPalavra[palavraAtual()] || sugestoesGenericas);
+    const usadas = new Set(frase.split(/\s+/).map(normalizarPalavra));
+    const novaLista = embaralhar([...new Set(base.concat(frasesRapidas, palavrasChave)
+        .filter((palavra) => !usadas.has(normalizarPalavra(palavra))))]).slice(0, 6);
+    if (!novaLista.length) {
+        criarTeclasDoAnel(anel, 0, false);
+        mostrarFrasesProntas([]);
+        showToast("Não há outras sugestões locais para esta palavra.");
+        return;
+    }
+    if (anel.quantidade !== novaLista.length) criarTeclasDoAnel(anel, novaLista.length, false);
     atualizarTextoDasTeclas(anel, novaLista);
 }
 
@@ -8656,7 +8977,8 @@ function voltarConfiguracaoInicial() {
     }
     atualizarAnelPalavrasChave();
     esconderAnelSugestoes();
-    mostrarFrasesProntas(null);
+    if (!valor?.textContent.trim()) sugestaoSelecionadaBarra = "";
+    atualizarFrasesProntas();
     novaPalavraAlfabeto = true;
     noBotaoCentral = false;
     anelAtualIndice = 0;
@@ -8724,15 +9046,9 @@ const alfabeto = "abcdefghijklmnopqrstuvwxyz".split("");
 let modoAlfabeto = false;
 let novaPalavraAlfabeto = true;
 
-// Restaura o conteúdo "normal" da argola de dentro, de acordo com o ponto
-// da frase em que o usuário está: palavras-chave se ainda não começou a
-// frase, ou sugestões baseadas na última palavra se já começou.
+// A argola interna mantém as palavras-chave; as continuações ficam na externa.
 function restaurarConteudoAnelInicial() {
-    if (valor.textContent.trim()) {
-        atualizarSugestoesNoAnel(0);
-    } else {
-        atualizarAnelPalavrasChave();
-    }
+    atualizarAnelPalavrasChave();
 }
 
 function entrarModoAlfabeto() {
@@ -8751,6 +9067,8 @@ function sairModoAlfabeto() {
     restaurarConteudoAnelInicial();
     anelAtualIndice = 0;
     posicaoAtualIndice = 0;
+    atualizarFrasesProntas();
+    if (valor.textContent.trim() && sugestoesVisiveis) atualizarSugestoesNoAnel(1);
     focarTecla(0, 0);
 }
 
@@ -8770,12 +9088,11 @@ function adicionarLetra(letra) {
     } else {
         valor.textContent += letra;
     }
+    atualizarFrasesProntas();
 }
 
-// Usada tanto pelo clique quanto pela tecla Enter/Espaço. Ao selecionar uma
-// palavra em uma argola, é a OUTRA argola que recebe novas sugestões para
-// continuar a frase e ganha o foco — as duas vão se revezando conforme a
-// frase cresce (dentro -> fora -> dentro -> fora...).
+// Usada tanto pelo clique quanto pela tecla Enter/Espaço. As palavras-chave
+// ficam na argola interna; as continuações permanecem sempre na argola externa.
 function selecionarPalavra(tecla) {
     const indiceReal = aneis.findIndex((anel) => anel.teclas.includes(tecla));
     if (indiceReal < 0) return;
@@ -8789,12 +9106,17 @@ function selecionarPalavra(tecla) {
         return;
     }
 
-    const anelOrigem = anelAtualIndice;
     adicionarPalavra(tecla.dataset.valor);
 
-    const anelDestino = anelOrigem === 0 ? 1 : 0;
-    if (anelDestino === 1 && !sugestoesVisiveis) mostrarAnelSugestoes();
-    atualizarSugestoesNoAnel(anelDestino);
+    const anelDestino = 1;
+    if (!sugestoesVisiveis) mostrarAnelSugestoes();
+    const temSugestoes = atualizarSugestoesNoAnel(anelDestino);
+    if (temSugestoes === false) {
+        anelAtualIndice = 0;
+        posicaoAtualIndice = 0;
+        focarTecla(0, 0);
+        return;
+    }
 
     anelAtualIndice = anelDestino;
     posicaoAtualIndice = 0;
@@ -8879,11 +9201,19 @@ function tratarSetaTecladoCircular(evento) {
     const focoNaTecla = anelFocado >= 0;
     const botaoCentral = document.querySelector(".botao-alfabeto");
     const focoNoCentro = elementoFocado === botaoCentral;
-    if (!focoNaTecla && !focoNoCentro) return;
+    const focoNoMenu = botoesMenu.includes(elementoFocado);
+    if (!focoNaTecla && !focoNoCentro) {
+        if (focoNoMenu) return;
+        if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(evento.key)) {
+            evento.preventDefault();
+            focarTecla(sugestoesVisiveis ? anelAtualIndice : 0, posicaoAtualIndice);
+        }
+        return;
+    }
     noBotaoCentral = focoNoCentro;
 
     // Se o foco estiver em um botão do menu lateral, quem cuida disso é o moverNoMenu.
-    if (botoesMenu.includes(document.activeElement)) return;
+    if (focoNoMenu) return;
 
     if (noBotaoCentral) {
         if (["Enter", " "].includes(evento.key)) {
@@ -8964,7 +9294,6 @@ function tratarSetaTecladoCircular(evento) {
 }
 
 let ckKeydownGlobalBound = false;
-let ckFocusFallbackPending = false;
 
 function moverNoMenu(evento, indiceAtual) {
     if (evento.key === "Escape") {
@@ -9042,6 +9371,7 @@ function initCircularKeyboard() {
     botoesMenu = [...menuOrbital.querySelectorAll(".satelite")];
 
     valor.textContent = "";
+    sugestaoSelecionadaBarra = "";
     mostrarFrasesProntas(null);
 
     teclaAtiva = null;
@@ -9117,27 +9447,30 @@ function initCircularKeyboard() {
     const btnConcluir = document.getElementById("concluir");
     if (btnConcluir) btnConcluir.addEventListener("click", async () => {
         const textoOriginal = valor.textContent.trim();
-        const textoCorrigido = await corrigirComLanguageTool(textoOriginal);
+        const textoComNomesSalvos = canonicalizarNomesPersonalizados(textoOriginal);
+        const textoCorrigido = await corrigirComGemini(textoComNomesSalvos) || await corrigirComLanguageTool(textoComNomesSalvos);
         valor.textContent = textoCorrigido;
         voltarConfiguracaoInicial();
     });
 
     atualizarAnelPalavrasChave();
+    atualizarFrasesProntas();
 
     if (!ckKeydownGlobalBound) {
         ckKeydownGlobalBound = true;
         document.addEventListener("keydown", tratarSetaTecladoCircular);
     }
 
-   
+    
     focarInicio();
-    if (!ckFocusFallbackPending) {
-        ckFocusFallbackPending = true;
-        document.addEventListener("pointerdown", () => {
-            ckFocusFallbackPending = false;
-            if (STATE.screen === "circularMode") focarInicio();
-        }, { capture: true, once: true });
-    }
+    requestAnimationFrame(() => {
+        const focoNaArgolaInicial = aneis[0]?.teclas.includes(document.activeElement);
+        const focoNoCentro = document.activeElement === document.querySelector(".botao-alfabeto");
+        const focoNoMenu = botoesMenu.includes(document.activeElement);
+        if (STATE.screen === "circularMode" && !sugestoesVisiveis && !focoNaArgolaInicial && !focoNoCentro && !focoNoMenu) {
+            focarInicio();
+        }
+    });
 }
 
 loadData();

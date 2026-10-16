@@ -943,392 +943,9 @@ button:focus-visible,
   border-radius: 50%;
   background: var(--navy);
   color: #ffffff;
-  gap: 3px;
-  pointer-events: none;
-  box-shadow: 0 6px 16px rgba(23, 58, 94, 0.25);
+  font-size: clamp(12px, 2vw, 18px);
+  font-weight: 900;
 }
-
-.circular-center-icon { font-size: clamp(22px, 4vw, 32px); }
-.circular-center-text { font-family: var(--font-title); font-size: clamp(9px, 1.6vw, 12px); font-weight: 800; padding: 0 10px; }
-
-.circular-empty { color: var(--navy); font-family: var(--font-title); font-weight: 800; padding: 40px 20px; text-align: center; }
-
-.circular-menu-layout {
-  position: relative;
-  container-type: inline-size;
-  width: min(82vw, 530px);
-  aspect-ratio: 1;
-  margin: 0 auto;
-}
-.circular-menu-layout .circular-keyboard-wrap {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-}
-.circular-menu-layout .circular-keyboard { width: 100%; height: 100%; }
-.circular-menu-layout .circular-empty { min-width: 0; }
- .circular-side-menu {
-  position: absolute;
-  inset: 0;
-  z-index: 6;
-  pointer-events: none;
-}
-
-/* O menu funciona como um único bloco. Ele não reposiciona cada botão
-   individualmente durante a navegação. */
-.circular-side-menu.ativo {
-  pointer-events: none;
-}
-.circular-side-menu .circular-menu-button {
-  position: absolute;
-  width: 58px;
-  height: 58px;
-  padding: 5px;
-  border: 2px solid var(--card-border);
-  border-radius: 50%;
-  background: var(--card);
-  color: var(--navy);
-  box-shadow: 0 3px 8px rgba(23, 58, 94, 0.12);
-  font: 900 11px/1.05 var(--font-title);
-  text-transform: lowercase;
-  cursor: pointer;
-  opacity: 0;
-  pointer-events: none;
-  transform: scale(.86);
-  transition: opacity .16s ease, transform .15s ease, background .2s ease, color .2s ease;
-}
-
-.circular-side-menu.ativo .circular-menu-button {
-  opacity: 1;
-  pointer-events: auto;
-  transform: scale(1);
-}
-
-/* Direções: o conjunto inteiro fica ao lado da argola externa,
-   com apenas um pequeno espaço entre teclado e menu. */
-.circular-side-menu.menu-direita .circular-menu-button,
-.circular-side-menu.menu-esquerda .circular-menu-button,
-.circular-side-menu.menu-cima .circular-menu-button,
-.circular-side-menu.menu-baixo .circular-menu-button {
-  position: static;
-  left: auto;
-  top: auto;
-}
-
-.circular-side-menu.menu-direita {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  width: 58px;
-  height: 100%;
-  left: calc(100% + 8px);
-  top: 0;
-  inset: auto auto auto calc(100% + 8px);
-}
-.circular-side-menu.menu-esquerda {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  width: 58px;
-  height: 100%;
-  left: auto;
-  right: calc(100% + 8px);
-  top: 0;
-  inset: auto calc(100% + 8px) auto auto;
-}
-.circular-side-menu.menu-cima {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  width: 100%;
-  height: 58px;
-  left: 0;
-  top: auto;
-  bottom: calc(100% + 8px);
-  inset: auto auto calc(100% + 8px) 0;
-}
-.circular-side-menu.menu-baixo {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  width: 100%;
-  height: 58px;
-  left: 0;
-  top: calc(100% + 8px);
-  bottom: auto;
-  inset: calc(100% + 8px) auto auto 0;
-}
-
-.circular-menu-button:hover,
-.circular-menu-button:focus-visible {
-  outline: 3px solid var(--yellow);
-  outline-offset: 2px;
-  background: var(--yellow);
-  transform: scale(1.04);
-}
-.circular-menu-button:active {
-  transform: scale(.96) !important;
-}
-.circular-menu-button.circular-menu-highlight {
-  background: #4a4a4a;
-  color: #ffffff;
-  border-color: #4a4a4a;
-}
-
-/* Menu orbital: os botões acompanham o mesmo ângulo da tecla ativa e
-   ficam distribuídos em um pequeno arco, como se estivessem orbitando a argola. */
-.circular-side-menu {
-  --menu-orbit-angle: -90deg;
-  inset: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  transform: none !important;
-  pointer-events: none;
-}
-.circular-side-menu .circular-menu-button {
-  position: absolute !important;
-  left: 50% !important;
-  top: 50% !important;
-  width: 58px;
-  height: 58px;
-  margin: -29px 0 0 -29px;
-  transform:
-    rotate(calc(var(--menu-orbit-angle) + var(--menu-offset, 0deg)))
-    translateY(calc(42.5cqw + 34px))
-    rotate(calc(-1 * (var(--menu-orbit-angle) + var(--menu-offset, 0deg))));
-  transform-origin: center center;
-}
-.circular-side-menu.ativo .circular-menu-button {
-  transform:
-    rotate(calc(var(--menu-orbit-angle) + var(--menu-offset, 0deg)))
-    translateY(calc(42.5cqw + 34px))
-    rotate(calc(-1 * (var(--menu-orbit-angle) + var(--menu-offset, 0deg))));
-}
-.circular-side-menu .circular-menu-button:nth-child(1) { --menu-offset: -30deg; }
-.circular-side-menu .circular-menu-button:nth-child(2) { --menu-offset: -18deg; }
-.circular-side-menu .circular-menu-button:nth-child(3) { --menu-offset: -6deg; }
-.circular-side-menu .circular-menu-button:nth-child(4) { --menu-offset: 6deg; }
-.circular-side-menu .circular-menu-button:nth-child(5) { --menu-offset: 18deg; }
-.circular-side-menu .circular-menu-button:nth-child(6) { --menu-offset: 30deg; }
-
-/* A distância do menu é proporcional ao teclado, para ele continuar orbitando
-   mesmo em telas menores. */
-@media (max-width: 560px) {
-  .circular-side-menu .circular-menu-button {
-    width: 50px;
-    height: 50px;
-    margin: -25px 0 0 -25px;
-    transform: rotate(calc(var(--menu-orbit-angle) + var(--menu-offset, 0deg))) translateY(calc(42.5cqw + 28px)) rotate(calc(-1 * (var(--menu-orbit-angle) + var(--menu-offset, 0deg))));
-  }
-  .circular-side-menu.ativo .circular-menu-button {
-    transform: rotate(calc(var(--menu-orbit-angle) + var(--menu-offset, 0deg))) translateY(calc(42.5cqw + 28px)) rotate(calc(-1 * (var(--menu-orbit-angle) + var(--menu-offset, 0deg))));
-  }
-}
-
-/* Geometria das duas argolas inspirada no teclado de referência, usando a
-   paleta e as fontes do layout infantil. */
-.circular-menu-layout .circular-keyboard {
-  container-type: inline-size;
-  overflow: visible;
-  background: transparent;
-  border: 0;
-  box-shadow: none;
-}
-.circular-ring {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  pointer-events: none;
-}
-.circular-ring:not(.circular-ring-hidden) .circular-key { pointer-events: auto; z-index: 2; }
-.circular-ring-outer {
-  width: 85%;
-  height: 85%;
-  background: rgba(29,29,29,.72);
-  border: 2px solid rgba(255,255,255,.16);
-  box-shadow: 0 10px 26px rgba(9,43,59,.28);
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
-  transition: opacity .25s ease, transform .25s ease;
-}
-/* Hover/seleção no formato da referência: a área inteira do segmento da
-   argola fica cinza, enquanto as demais áreas permanecem pretas. */
-.circular-ring::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 1;
-  background: conic-gradient(
-    from calc(var(--active-angle, -90deg) - var(--sector-size, 40deg) / 2),
-    var(--yellow) 0 var(--sector-size, 40deg),
-    transparent var(--sector-size, 40deg) 360deg
-  );
-  opacity: 0;
-}
-.circular-ring.circular-ring-active::after {
-  opacity: 1;
-}
-
-.circular-ring-outer.circular-ring-hidden {
-  opacity: 0;
-  transform: translate(-50%, -50%) scale(.85);
-  pointer-events: none;
-}
-.circular-ring-hidden .circular-key { pointer-events: none; }
-.circular-ring-inner {
-  width: 60%;
-  height: 60%;
-  background: #1f6fa8;
-  border: 2px solid rgba(255,255,255,.20);
-  box-shadow: 0 12px 30px rgba(9,43,59,.35), inset 0 0 0 1px rgba(255,255,255,.06);
-}
-#app .circular-menu-layout .circular-key {
-  z-index: 2;
-  left: 50%;
-  top: 50%;
-  width: 56px;
-  height: 56px;
-  min-height: 0;
-  padding: 3px;
-  border: 0;
-  border-radius: 50%;
-  background: transparent;
-  color: var(--navy);
-  box-shadow: none;
-  font-family: var(--font-title);
-  transform: translate(-50%, -50%) rotate(var(--key-angle)) translateY(var(--key-radius)) rotate(var(--key-inverse-angle)) !important;
-}
-#app .circular-menu-layout .circular-key-inner { color: #fff; }
-#app .circular-menu-layout .circular-key-letter { width: 24px; height: 24px; padding: 1px; }
-#app .circular-menu-layout .circular-key-label {
-  font: 900 clamp(11px, 2.8vw, 14px)/1.08 var(--font-title);
-  text-shadow: 0 1px 2px rgba(0,0,0,.35);
-  overflow-wrap: anywhere;
-}
-#app .circular-menu-layout .circular-key-letter .circular-key-label { font-size: 12px; }
-#app .circular-menu-layout .circular-key-current,
-#app .circular-menu-layout .circular-key:focus-visible {
-  z-index: 4;
-  outline: 0;
-  background: transparent;
-  box-shadow: none;
-}
-#app .circular-menu-layout .circular-key-current .circular-key-label {
-  color: #173a5e;
-  text-shadow: 0 1px 1px rgba(255,255,255,.45);
-}
-#app .circular-menu-layout .circular-key-outer {
-  width: clamp(42px, 12cqw, 64px);
-  height: 46px;
-  border-radius: 0;
-  background: transparent;
-}
-#app .circular-menu-layout .circular-key-outer .circular-key-label {
-  color: #ffffff;
-  font: 900 clamp(12px, 2.7vw, 15px)/1.08 var(--font-title);
-  text-shadow: 0 1px 2px rgba(0,0,0,.55), 0 0 5px rgba(0,0,0,.28);
-}
-#app .circular-menu-layout .circular-key-outer.circular-key-current,
-#app .circular-menu-layout .circular-key-outer:focus-visible {
-  outline: 0;
-  background: transparent;
-  box-shadow: none;
-}
-
-/* A palavra da argola externa permanece somente como texto.
-   Nenhum bloco, fundo ou borda arredondada é aplicado ao texto. */
-#app .circular-menu-layout .circular-key-outer .circular-key-label {
-  display: inline;
-  background: transparent !important;
-  border-radius: 0 !important;
-  padding: 0 !important;
-  color: #123a58;
-  text-decoration: none;
-  text-shadow: 0 1px 0 rgba(255,255,255,.98), 0 0 4px rgba(255,255,255,.9);
-}
-
-/* A seleção/navegação da argola externa usa apenas o efeito visual do hover,
-   sem transformar a palavra em um botão com fundo arredondado. */
-#app .circular-menu-layout .circular-key-outer:hover .circular-key-label,
-#app .circular-menu-layout .circular-key-outer.circular-key-current .circular-key-label,
-#app .circular-menu-layout .circular-key-outer:focus-visible .circular-key-label {
-  background: transparent !important;
-  border-radius: 0 !important;
-  padding: 0 !important;
-  color: #173a5e;
-  text-decoration: none;
-  text-shadow: 0 1px 1px rgba(255,255,255,.45);
-}
-
-/* A argola externa não ganha fundo nem raio ao ser selecionada. */
-#app .circular-menu-layout .circular-key-outer:hover,
-#app .circular-menu-layout .circular-key-outer.circular-key-current,
-#app .circular-menu-layout .circular-key-outer:focus-visible {
-  background: transparent !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  outline: 0 !important;
-}
-.circular-menu-layout .circular-keyboard-center {
-  z-index: 3;
-  width: 28%;
-  border: 0;
-  background: var(--white);
-  color: var(--navy);
-  font: 900 15px var(--font-title);
-  pointer-events: auto;
-  cursor: pointer;
-}
-.circular-menu-layout .circular-keyboard-center:focus-visible {
-  outline: 3px solid var(--yellow);
-  outline-offset: 2px;
-}
-@media (max-width: 560px) {
-  .circular-menu-layout {
-    width: min(calc(100vw - 36px), 340px);
-  }
-  .circular-menu-button {
-    width: 50px;
-    height: 50px;
-    font-size: 10px;
-  }
-  .circular-side-menu.menu-direita,
-  .circular-side-menu.menu-esquerda {
-    width: 50px;
-    gap: 6px;
-  }
-  .circular-side-menu.menu-cima,
-  .circular-side-menu.menu-baixo {
-    height: 50px;
-    gap: 6px;
-  }
-  #app .circular-menu-layout .circular-key {
-    width: 46px;
-    height: 46px;
-  }
-  #app .circular-menu-layout .circular-key-outer {
-    width: clamp(38px, 14cqw, 50px);
-    height: 42px;
-  }
-  #app .circular-menu-layout .circular-key-label {
-    font-size: clamp(10px, 3.2vw, 13px);
-  }
-}
-
 
 .carousel-mode-screen { background: #ffffff; }
 
@@ -2378,508 +1995,6 @@ body[data-theme="dark"] .toast {
   outline-offset: 3px;
 }
 
-
-/* Cor padrão das abas: branco com azul-claro suave. */
-body .menu-btn,
-body .mode-choice-button {
-  background: #eaf6ff !important;
-  border-color: #cfe9f7 !important;
-  color: #123b4d !important;
-}
-
-/* No carrossel, exibir somente o texto das palavras. */
-.carousel-card .emoji,
-.carousel-card img {
-  display: none !important;
-}
-
-/* Tela de escolha compacta: abas menores e melhor adaptação ao celular. */
-.mode-choice-screen {
-  padding: 14px;
-}
-.mode-choice-back {
-  padding: 8px 13px;
-  font-size: 12px;
-}
-.mode-choice-content {
-  width: min(100%, 440px);
-  gap: 10px;
-}
-.mode-choice-content h1 {
-  margin-bottom: 4px;
-  font-size: clamp(20px, 3.5vw, 28px);
-}
-.mode-choice-button {
-  width: min(100%, 400px);
-  min-height: 62px;
-  border-width: 2px;
-  border-radius: 15px;
-  font-size: clamp(16px, 3vw, 24px);
-}
-
-/* Abas brancas, como solicitado. */
-body .menu-btn,
-body .mode-choice-button {
-  background: #ffffff !important;
-  border-color: #d8cfc0 !important;
-  color: #123b4d !important;
-}
-body .mode-choice-button[data-mode-screen="circularMode"],
-body .mode-choice-button[data-mode-screen="carouselMode"],
-body .mode-choice-button[data-mode-screen="circularMode"]:hover,
-body .mode-choice-button[data-mode-screen="carouselMode"]:hover,
-body .mode-choice-button[data-mode-screen="circularMode"]:active,
-body .mode-choice-button[data-mode-screen="carouselMode"]:active,
-body .mode-choice-button[data-mode-screen="circularMode"]:focus-visible,
-body .mode-choice-button[data-mode-screen="carouselMode"]:focus-visible {
-  background: #ffffff !important;
-  border-color: #d8cfc0 !important;
-  color: #123b4d !important;
-}
-
-/* Contraste das palavras do teclado circular. */
-#app .circular-menu-layout .circular-key-label,
-#app .circular-menu-layout .circular-key-outer .circular-key-label,
-#app .circular-menu-layout .circular-key-current .circular-key-label {
-  color: #ffffff !important;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, .75), 0 0 4px rgba(0, 0, 0, .45) !important;
-}
-
-/* Menu circular: ações sempre disponíveis para toque e clique. */
-#app .circular-side-menu .circular-menu-button {
-  opacity: 1 !important;
-  pointer-events: auto !important;
-}
-
-/* Modo para daltonismo: paleta azul, amarelo e laranja de alto contraste. */
-body[data-color-vision="on"] {
-  background-color: #b6c3ce !important;
-  color: #10283d !important;
-  --card: #fffdf5;
-  --card-border: #0072b2;
-  --navy: #10283d;
-  --navy-soft: #304b62;
-}
-body[data-color-vision="on"] #app .form-block,
-body[data-color-vision="on"] #app .settings-panel,
-body[data-color-vision="on"] #app .info-block,
-body[data-color-vision="on"] #app .profile-card,
-body[data-color-vision="on"] #app .onboard-panel {
-  background-color: #fffdf5 !important;
-  color: #10283d !important;
-  border-color: #0072b2 !important;
-}
-body[data-color-vision="on"] #app .word-card,
-body[data-color-vision="on"] #app .cat-card,
-body[data-color-vision="on"] #app .circular-key,
-body[data-color-vision="on"] #app .carousel-card:not(.empty),
-body[data-color-vision="on"] #app .profile-choice-card,
-body[data-color-vision="on"] #app .favorite-choice-option {
-  background-color: #0072b2 !important;
-  color: #ffffff !important;
-  border: 3px solid #10283d !important;
-  box-shadow: 0 4px 0 #10283d !important;
-}
-body[data-color-vision="on"] #app .word-card .label,
-body[data-color-vision="on"] #app .word-card .description,
-body[data-color-vision="on"] #app .cat-card .label,
-body[data-color-vision="on"] #app .cat-card .count,
-body[data-color-vision="on"] #app .circular-key-label,
-body[data-color-vision="on"] #app .carousel-card .label,
-body[data-color-vision="on"] #app .profile-choice-card .title,
-body[data-color-vision="on"] #app .profile-choice-card .desc,
-body[data-color-vision="on"] #app .profile-choice-card .tag {
-  color: #ffffff !important;
-  text-shadow: none !important;
-}
-body[data-color-vision="on"] #app .topbar-title,
-body[data-color-vision="on"] #app .section-label,
-body[data-color-vision="on"] #app .layer-label,
-body[data-color-vision="on"] #app .settings-label,
-body[data-color-vision="on"] #app .settings-desc {
-  color: #10283d !important;
-  text-shadow: none !important;
-}
-body[data-color-vision="on"] #app .word-card.selected,
-body[data-color-vision="on"] #app .cat-card.selected,
-body[data-color-vision="on"] #app .circular-key.selected,
-body[data-color-vision="on"] #app .carousel-card.center,
-body[data-color-vision="on"] #app .profile-choice-card.selected {
-  background-color: #f0e442 !important;
-  color: #10283d !important;
-  border: 4px solid #111111 !important;
-  box-shadow: 0 0 0 3px #ffffff, 0 0 0 6px #111111 !important;
-}
-body[data-color-vision="on"] #app .word-card.selected .label,
-body[data-color-vision="on"] #app .word-card.selected .description,
-body[data-color-vision="on"] #app .carousel-card.center .label {
-  color: #10283d !important;
-  text-shadow: none !important;
-}
-body[data-color-vision="on"] #app .word-card.selected::after {
-  content: "✓" !important;
-  display: grid;
-  place-items: center;
-  width: 26px;
-  height: 26px;
-  border: 2px solid #111111;
-  border-radius: 50%;
-  background-color: #ffffff;
-  color: #111111 !important;
-  font-size: 18px;
-  font-weight: 900;
-}
-body[data-color-vision="on"] #app .submit-btn,
-body[data-color-vision="on"] #app .confirm-btn,
-body[data-color-vision="on"] #app .action-row button,
-body[data-color-vision="on"] #app .speak-btn {
-  background-color: #e69f00 !important;
-  color: #10283d !important;
-  border: 2px solid #10283d !important;
-}
-body[data-color-vision="on"] #app button:focus-visible,
-body[data-color-vision="on"] #app [role="button"]:focus-visible {
-  outline: 4px solid #e69f00 !important;
-  outline-offset: 3px !important;
-  box-shadow: 0 0 0 2px #111111 !important;
-}
-
-/* Cartão de prévia: documenta as cores e mostra que o estado não depende só delas. */
-.color-vision-preview {
-  margin: 0 0 14px;
-  padding: 14px;
-  border: 1px solid #c4d2df;
-  border-left: 4px solid #0072b2;
-  border-radius: 14px;
-  background-color: #f7f9fc;
-  color: #10283d;
-}
-.color-vision-preview-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-.color-vision-preview-title { font-size: 13px; font-weight: 900; color: #10283d; }
-.color-vision-preview-badge {
-  padding: 4px 8px;
-  border: 1px solid #0072b2;
-  border-radius: 999px;
-  background-color: #ffffff;
-  color: #10283d;
-  font-size: 10px;
-  font-weight: 900;
-  letter-spacing: .04em;
-  text-transform: uppercase;
-}
-.color-vision-preview-items {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
-  gap: 8px;
-}
-.color-vision-swatch {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  min-height: 42px;
-  padding: 8px 10px;
-  border-radius: 10px;
-  font-size: 12px;
-  font-weight: 800;
-}
-.color-vision-swatch--option { background-color: #0072b2; color: #ffffff; border: 2px solid #10283d; }
-.color-vision-swatch--selected { background-color: #f0e442; color: #10283d; border: 3px solid #111111; }
-.color-vision-swatch--focus { background-color: #ffffff; color: #10283d; border: 2px dashed #d98200; }
-.color-vision-preview-note { margin: 9px 0 0; color: #304b62; font-size: 11px; font-weight: 600; line-height: 1.45; }
-#colorVisionToggle:checked + .switch-track,
-#seniorColorVisionToggle:checked + .switch-track { background-color: #0072b2 !important; }
-@media (max-width: 420px) {
-  .color-vision-preview { padding: 11px; }
-  .color-vision-preview-items { grid-template-columns: 1fr; }
-}
-
-/* Ajustes do tema combinado: nenhum texto ativo fica esmaecido. */
-body[data-theme="dark"][data-color-vision="on"] #app .phrase-bar {
-  background-color: #fffdf5 !important;
-  color: #10283d !important;
-  border-color: #0072b2 !important;
-}
-body[data-theme="dark"][data-color-vision="on"] #app .phrase-chip {
-  background-color: #0072b2 !important;
-  color: #ffffff !important;
-  border: 2px solid #10283d !important;
-}
-body[data-theme="dark"][data-color-vision="on"] #app .phrase-chip *,
-body[data-theme="dark"][data-color-vision="on"] #app .phrase-chip span {
-  color: #ffffff !important;
-}
-body[data-theme="dark"][data-color-vision="on"] #app .phrase-placeholder {
-  color: #304b62 !important;
-  opacity: 1 !important;
-}
-body[data-theme="dark"][data-color-vision="on"] #app .carousel-card.side {
-  opacity: 1 !important;
-}
-body[data-theme="dark"][data-color-vision="on"] #app .carousel-card.side .label {
-  color: #ffffff !important;
-  text-shadow: none !important;
-}
-body[data-theme="dark"][data-color-vision="on"] #app .fav-item {
-  background-color: #fffdf5 !important;
-  color: #10283d !important;
-  border-color: #0072b2 !important;
-}
-body[data-theme="dark"][data-color-vision="on"] #app .fav-item .txt {
-  color: #10283d !important;
-}
-body[data-theme="dark"][data-color-vision="on"] #app .cat-card.selected .label,
-body[data-theme="dark"][data-color-vision="on"] #app .cat-card.selected .count,
-body[data-theme="dark"][data-color-vision="on"] #app .circular-key.selected .circular-key-label,
-body[data-theme="dark"][data-color-vision="on"] #app .profile-choice-card.selected .title,
-body[data-theme="dark"][data-color-vision="on"] #app .profile-choice-card.selected .desc,
-body[data-theme="dark"][data-color-vision="on"] #app .profile-choice-card.selected .tag {
-  color: #10283d !important;
-  text-shadow: none !important;
-}
-body[data-theme="dark"][data-color-vision="on"] #app button:disabled {
-  opacity: 1 !important;
-  background-color: #e3e8ed !important;
-  color: #304b62 !important;
-  border: 2px dashed #526778 !important;
-  cursor: not-allowed !important;
-}
-
-/* Fundo infantil menos luminoso no modo daltônico, mantendo as ilustrações originais. */
-body[data-color-vision="on"]:not(.bg-outras),
-body[data-color-vision="on"].bg-outras {
-  background-image: linear-gradient(180deg, rgba(16, 40, 61, .38) 0%, rgba(16, 40, 61, .52) 100%), url('assets/imagens/plano-inicio.png') !important;
-}
-body[data-color-vision="on"] #app .carousel-full-screen,
-body[data-color-vision="on"] #app .circular-full-screen {
-  background-image: linear-gradient(180deg, rgba(16, 40, 61, .38) 0%, rgba(16, 40, 61, .54) 100%), url('assets/imagens/plano-inicio.png') !important;
-}
-body[data-color-vision="on"] #app .carousel-full-topbar .topbar-title,
-body[data-color-vision="on"] #app .circular-full-topbar .topbar-title,
-body[data-color-vision="on"] #app .carousel-full-content .section-label,
-body[data-color-vision="on"] #app .carousel-full-content .layer-label,
-body[data-color-vision="on"] #app .circular-full-content .section-label,
-body[data-color-vision="on"] #app .circular-full-content .layer-label {
-  color: #ffffff !important;
-  text-shadow: 0 1px 4px #10283d !important;
-}
-
-
-/* Legibilidade completa quando tema escuro e modo para daltonismo são usados juntos. */
-body[data-color-vision="on"] #app .form-block h1,
-body[data-color-vision="on"] #app .form-block h2,
-body[data-color-vision="on"] #app .form-block h3,
-body[data-color-vision="on"] #app .form-block p,
-body[data-color-vision="on"] #app .form-block span,
-body[data-color-vision="on"] #app .form-block label,
-body[data-color-vision="on"] #app .form-block strong,
-body[data-color-vision="on"] #app .form-block small,
-body[data-color-vision="on"] #app .form-block .field-label,
-body[data-color-vision="on"] #app .settings-panel h1,
-body[data-color-vision="on"] #app .settings-panel h2,
-body[data-color-vision="on"] #app .settings-panel h3,
-body[data-color-vision="on"] #app .settings-panel p,
-body[data-color-vision="on"] #app .settings-panel span,
-body[data-color-vision="on"] #app .settings-panel label,
-body[data-color-vision="on"] #app .settings-panel strong,
-body[data-color-vision="on"] #app .settings-panel small,
-body[data-color-vision="on"] #app .info-block h1,
-body[data-color-vision="on"] #app .info-block h2,
-body[data-color-vision="on"] #app .info-block h3,
-body[data-color-vision="on"] #app .info-block p,
-body[data-color-vision="on"] #app .info-block span,
-body[data-color-vision="on"] #app .info-block label,
-body[data-color-vision="on"] #app .info-block strong,
-body[data-color-vision="on"] #app .info-block small,
-body[data-color-vision="on"] #app .profile-card h1,
-body[data-color-vision="on"] #app .profile-card h2,
-body[data-color-vision="on"] #app .profile-card h3,
-body[data-color-vision="on"] #app .profile-card p,
-body[data-color-vision="on"] #app .profile-card span,
-body[data-color-vision="on"] #app .profile-card label,
-body[data-color-vision="on"] #app .profile-card strong,
-body[data-color-vision="on"] #app .onboard-panel h1,
-body[data-color-vision="on"] #app .onboard-panel h2,
-body[data-color-vision="on"] #app .onboard-panel h3,
-body[data-color-vision="on"] #app .onboard-panel p,
-body[data-color-vision="on"] #app .onboard-panel span,
-body[data-color-vision="on"] #app .onboard-panel label,
-body[data-color-vision="on"] #app .onboard-panel strong {
-  color: #10283d !important;
-  text-shadow: none !important;
-  opacity: 1 !important;
-}
-body[data-color-vision="on"] #app .form-block input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
-body[data-color-vision="on"] #app .form-block select,
-body[data-color-vision="on"] #app .form-block textarea {
-  background-color: #ffffff !important;
-  color: #10283d !important;
-  border-color: #0072b2 !important;
-}
-body[data-color-vision="on"] #app .form-block input::placeholder,
-body[data-color-vision="on"] #app .form-block textarea::placeholder {
-  color: #526778 !important;
-  opacity: 1 !important;
-}
-body[data-color-vision="on"] #app .settings-panel .stepper button {
-  background-color: #ffffff !important;
-  color: #10283d !important;
-  border: 2px solid #0072b2 !important;
-}
-body[data-color-vision="on"] #app .form-block .custom-chip {
-  background-color: #0072b2 !important;
-  color: #ffffff !important;
-  border-color: #10283d !important;
-}
-body[data-color-vision="on"] #app .form-block .custom-chip * {
-  color: #ffffff !important;
-  text-shadow: none !important;
-}
-body[data-color-vision="on"] #app .form-block .custom-chip .x { color: #ffddd8 !important; }
-body[data-color-vision="on"] #app .form-block .emoji-pick,
-body[data-color-vision="on"] #app .form-block .emoji-pick * { color: #ffffff !important; }
-body[data-color-vision="on"] #app .form-block #logoutBtn { color: #ffffff !important; }
-body[data-color-vision="on"] #app .stepper span,
-body[data-color-vision="on"] #app .profile-stat,
-body[data-color-vision="on"] #app .profile-stat span,
-body[data-color-vision="on"] #app .profile-stat strong {
-  color: #10283d !important;
-  opacity: 1 !important;
-}
-body[data-color-vision="on"] #app .empty-state,
-body[data-color-vision="on"] #app .circular-empty {
-  display: block;
-  max-width: 760px;
-  margin: 10px auto;
-  padding: 16px 20px;
-  border: 2px solid #0072b2;
-  border-radius: 14px;
-  background-color: #fffdf5 !important;
-  color: #10283d !important;
-  text-align: center;
-  text-shadow: none !important;
-  opacity: 1 !important;
-}
-body[data-color-vision="on"] #app .empty-state *,
-body[data-color-vision="on"] #app .circular-empty * {
-  color: #10283d !important;
-  text-shadow: none !important;
-  opacity: 1 !important;
-}
-body[data-color-vision="on"] #app .topbar-title,
-body[data-color-vision="on"] #app .section-label,
-body[data-color-vision="on"] #app .layer-label,
-body[data-color-vision="on"] #app .hint,
-body[data-color-vision="on"] #app .mode-choice-hint,
-body[data-color-vision="on"] #app .about-link,
-body[data-color-vision="on"] #app .back-link {
-  display: inline-block;
-  padding: 5px 10px;
-  border: 2px solid #0072b2 !important;
-  border-radius: 10px;
-  background-color: #fffdf5 !important;
-  color: #10283d !important;
-  text-shadow: none !important;
-  opacity: 1 !important;
-}
-body[data-color-vision="on"] #app .section-label,
-body[data-color-vision="on"] #app .layer-label {
-  display: table;
-  margin-left: auto;
-  margin-right: auto;
-}
-body[data-color-vision="on"] #app .mode-choice-content h1 {
-  display: table;
-  margin: 0 auto 12px;
-  padding: 10px 14px;
-  border: 2px solid #0072b2;
-  border-radius: 12px;
-  background-color: #fffdf5 !important;
-  color: #10283d !important;
-  text-shadow: none !important;
-}
-body[data-color-vision="on"] #app .mode-screen {
-  background-color: #fffdf5 !important;
-  color: #10283d !important;
-}
-body[data-color-vision="on"] #app .mode-screen h1,
-body[data-color-vision="on"] #app .mode-screen h2,
-body[data-color-vision="on"] #app .mode-screen h3,
-body[data-color-vision="on"] #app .mode-screen p,
-body[data-color-vision="on"] #app .mode-screen span {
-  color: #10283d !important;
-  text-shadow: none !important;
-  opacity: 1 !important;
-}
-body[data-color-vision="on"] #app .color-vision-preview-title,
-body[data-color-vision="on"] #app .color-vision-preview-badge,
-body[data-color-vision="on"] #app .color-vision-preview-note,
-body[data-color-vision="on"] #app .color-vision-swatch--selected,
-body[data-color-vision="on"] #app .color-vision-swatch--selected *,
-body[data-color-vision="on"] #app .color-vision-swatch--focus,
-body[data-color-vision="on"] #app .color-vision-swatch--focus * {
-  color: #10283d !important;
-  text-shadow: none !important;
-  opacity: 1 !important;
-}
-body[data-color-vision="on"] #app .color-vision-swatch--option,
-body[data-color-vision="on"] #app .color-vision-swatch--option * {
-  color: #ffffff !important;
-  text-shadow: none !important;
-  opacity: 1 !important;
-}
-
-
-/* Ações da conta: mesma aparência, mantendo comportamentos distintos. */
-body[data-color-vision="on"] #app .form-block #switchProfileBtn,
-body[data-color-vision="on"] #app .form-block #logoutBtn {
-  background-color: #e69f00 !important;
-  color: #10283d !important;
-  border: 2px solid #10283d !important;
-}
-
-/* ===== Responsividade compartilhada ===== */
-html { min-height: 100%; }
-body { min-height: 100dvh; }
-#app, #app > *, .screen, .settings-panel, .form-block,
-.carousel-full-content, .circular-full-content, .mode-screen-content {
-  min-width: 0;
-}
-.settings-row > :first-child { min-width: 0; flex: 1 1 auto; }
-.settings-row > .switch, .settings-row > .stepper { flex: 0 0 auto; }
-.action-row > * { min-width: 0; }
-.carousel-track { min-width: 0; }
-
-@media (max-width: 560px) {
-  #app, .app { padding-inline: max(10px, env(safe-area-inset-left)) max(10px, env(safe-area-inset-right)); }
-  .topbar, .app-header { gap: 8px; }
-  .topbar-title { min-width: 0; overflow-wrap: anywhere; }
-  .settings-row { align-items: flex-start; }
-  .settings-row > :first-child { max-width: calc(100% - 58px); }
-  .settings-row .stepper { gap: 4px; }
-  .stepper button { width: 40px; height: 40px; }
-  .form-row { flex-wrap: wrap; }
-  .form-row > * { flex: 1 1 100%; }
-  .action-row button { flex: 1 1 calc(50% - 5px); min-height: 48px; }
-  .carousel-full-screen, .circular-full-screen, .mode-screen, .mode-choice-screen {
-    padding: max(12px, env(safe-area-inset-top)) max(10px, env(safe-area-inset-right))
-      max(24px, env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left));
-  }
-}
-
-@media (max-width: 380px) {
-  .word-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-  .word-card { min-height: 120px; }
-  .phrase-bar { font-size: 16px; }
-  .profile-choice-grid { grid-template-columns: 1fr; }
-  .action-row button { font-size: clamp(11px, 3.1vw, 13px); }
-}
-
 </style>
 </head>
 
@@ -2915,143 +2030,325 @@ body { min-height: 100dvh; }
 
 const DEFAULT_CATEGORIES = [
   { id: 'pessoas', label: 'Pessoas', emoji: '👥', custom: false },
-  { id: 'necessidades', label: 'Necessidades', emoji: '🍎', custom: false },
-  { id: 'sentimentos', label: 'Sentimentos', emoji: '❤️', custom: false },
-  { id: 'atividades', label: 'Atividades', emoji: '🎮', custom: false },
-  { id: 'lugares', label: 'Lugares', emoji: '🏠', custom: false },
-  { id: 'acoes', label: 'Ações', emoji: '⚡', custom: false }
+  { id: 'necessidades', label: 'Necessidades', emoji: '🧩', custom: false },
+  { id: 'comida', label: 'Comida', emoji: '🍎', custom: false },
+  { id: 'sentimentos', label: 'Sentimentos', emoji: '💛', custom: false },
+  { id: 'atividades', label: 'Atividades', emoji: '🎨', custom: false },
+  { id: 'lugares', label: 'Lugares', emoji: '📍', custom: false },
+  { id: 'acoes', label: 'Ações', emoji: '✅', custom: false }
 ];
 
 const DEFAULT_WORDS = [
-  { id: 'eu', label: 'Eu', emoji: '👤', description: 'Quem está falando', cat: 'pessoas' },
-  { id: 'voce', label: 'Você', emoji: '👤', description: 'A pessoa com quem falo', cat: 'pessoas' },
-  { id: 'mae', label: 'Mãe', emoji: '👩', description: 'Minha mãe', cat: 'pessoas' },
-  { id: 'pai', label: 'Pai', emoji: '👨', description: 'Meu pai', cat: 'pessoas' },
-  { id: 'professor', label: 'Professor', emoji: '🧑‍🏫', description: 'Meu professor', cat: 'pessoas' },
-  { id: 'amigo', label: 'Amigo', emoji: '🧑‍🤝‍🧑', description: 'Meu amigo', cat: 'pessoas' },
 
-  { id: 'quero', label: 'Quero', emoji: '🙋', description: 'Eu desejo algo', cat: 'acoes' },
-  { id: 'preciso', label: 'Preciso', emoji: '❗', description: 'Eu preciso de algo', cat: 'acoes' },
-  { id: 'estou', label: 'Estou', emoji: '💭', description: 'Como eu estou', cat: 'acoes' },
-  { id: 'gosto', label: 'Gosto', emoji: '😊', description: 'Eu gosto de algo', cat: 'acoes' },
-  { id: 'vou', label: 'Vou', emoji: '➡️', description: 'Eu vou para algum lugar', cat: 'acoes' },
+  /* Pessoas */
+  {
+    id: 'eu',
+    label: 'Eu',
+    emoji: '🙋',
+    description: 'Quem está falando',
+    cat: 'pessoas'
+  },
 
-  { id: 'agua', label: 'Água', emoji: '💧', description: 'Quero beber', cat: 'necessidades' },
-  { id: 'comida', label: 'Comida', emoji: '🍎', description: 'Quero comer', cat: 'necessidades' },
-  { id: 'banheiro', label: 'Banheiro', emoji: '🚽', description: 'Preciso ir ao banheiro', cat: 'necessidades' },
-  { id: 'dormir', label: 'Dormir', emoji: '😴', description: 'Quero dormir', cat: 'necessidades' },
-  { id: 'descansar', label: 'Descansar', emoji: '🛌', description: 'Quero descansar', cat: 'necessidades' },
-  { id: 'ajuda', label: 'Ajuda', emoji: '🆘', description: 'Preciso de ajuda', cat: 'necessidades' },
+  {
+    id: 'voce',
+    label: 'Você',
+    emoji: '🫵',
+    description: 'A pessoa com quem falo',
+    cat: 'pessoas'
+  },
 
-  { id: 'feliz', label: 'Feliz', emoji: '😄', description: 'Estou feliz', cat: 'sentimentos' },
-  { id: 'triste', label: 'Triste', emoji: '😢', description: 'Estou triste', cat: 'sentimentos' },
-  { id: 'cansado', label: 'Cansado', emoji: '😩', description: 'Estou cansado', cat: 'sentimentos' },
-  { id: 'commedo', label: 'Com medo', emoji: '😨', description: 'Estou com medo', cat: 'sentimentos' },
-  { id: 'comdor', label: 'Com dor', emoji: '🤕', description: 'Estou com dor', cat: 'sentimentos' },
-  { id: 'bem', label: 'Bem', emoji: '🙂', description: 'Estou bem', cat: 'sentimentos' },
+  {
+    id: 'mae',
+    label: 'Mãe',
+    emoji: '👩',
+    description: 'Minha mãe',
+    cat: 'pessoas'
+  },
 
-  { id: 'brincar', label: 'Brincar', emoji: '🧸', description: 'Quero brincar', cat: 'atividades' },
-  { id: 'jogar', label: 'Jogar', emoji: '🎮', description: 'Quero jogar', cat: 'atividades' },
-  { id: 'assistir', label: 'Assistir', emoji: '📺', description: 'Quero assistir', cat: 'atividades' },
-  { id: 'desenhar', label: 'Desenhar', emoji: '🎨', description: 'Quero desenhar', cat: 'atividades' },
-  { id: 'passear', label: 'Passear', emoji: '🚶', description: 'Quero passear', cat: 'atividades' },
-  { id: 'musica', label: 'Música', emoji: '🎵', description: 'Quero ouvir música', cat: 'atividades' },
+  {
+    id: 'professor',
+    label: 'Professor',
+    emoji: '👩‍🏫',
+    description: 'Meu professor',
+    cat: 'pessoas'
+  },
 
-  { id: 'casa', label: 'Casa', emoji: '🏠', description: 'Minha casa', cat: 'lugares' },
-  { id: 'escola', label: 'Escola', emoji: '🏫', description: 'Minha escola', cat: 'lugares' },
-  { id: 'quarto', label: 'Quarto', emoji: '🛏️', description: 'Meu quarto', cat: 'lugares' },
-  { id: 'hospital', label: 'Hospital', emoji: '🏥', description: 'Preciso ir ao hospital', cat: 'lugares' },
-  { id: 'sair', label: 'Sair', emoji: '🚪', description: 'Quero sair', cat: 'lugares' }
-];
+  {
+    id: 'amigo',
+    label: 'Amigo',
+    emoji: '🤝',
+    description: 'Meu amigo',
+    cat: 'pessoas'
+  },
 
-const AAC_EXTRA_WORDS = [
-  ['ele', 'Ele', '👤'], ['ela', 'Ela', '👤'], ['nos', 'Nós', '👥'], ['eles', 'Eles', '👥'],
-  ['elas', 'Elas', '👥'], ['isso', 'Isso', '👉'], ['aquilo', 'Aquilo', '👉'],
-  ['avo', 'Avô', '👴'], ['ava', 'Avó', '👵'], ['tio', 'Tio', '👨'], ['tia', 'Tia', '👩'],
-  ['irmao', 'Irmão', '👦'], ['irma', 'Irmã', '👧'],
-  ['bomDia', 'Bom dia', '🌞'], ['boaTarde', 'Boa tarde', '🌤️'], ['boaNoite', 'Boa noite', '🌙'],
-  ['ola', 'Olá', '👋'], ['oi', 'Oi', '👋'], ['tudoBem', 'Tudo bem?', '🙂'], ['comoVai', 'Como vai?', '😊'],
-  ['ateLogo', 'Até logo', '👋'], ['tchau', 'Tchau', '👋'], ['prazerConhecer', 'Prazer em conhecer você', '🤝'],
-  ['comoVoceEsta', 'Como você está?', '🙂'], ['muitoPrazer', 'Muito prazer', '🤝'],
-  ['vai', 'Vai', '➡️'], ['quer', 'Quer', '🙋'], ['nao', 'Não', '🚫'], ['acho', 'Acho', '💭'], ['trabalhar', 'Trabalhar', '💼'],
-  ['tenho', 'Tenho', '✋'], ['pode', 'Pode', '✅'], ['sabe', 'Sabe', '🧠'], ['tem', 'Tem', '📦'], ['temPlural', 'Têm', '📦'],
-  ['esta', 'Está', '💭'], ['foi', 'Foi', '⏮️'], ['e', 'É', '🔗'], ['faz', 'Faz', '🛠️'],
-  ['diz', 'Diz', '💬'], ['gosta', 'Gosta', '😊'], ['precisa', 'Precisa', '❗'], ['morava', 'Morava', '🏠'],
-  ['trabalha', 'Trabalha', '💼'], ['estuda', 'Estuda', '📚'], ['conhece', 'Conhece', '🤝'], ['entende', 'Entende', '💡'],
-  ['somos', 'Somos', '👥'], ['estamos', 'Estamos', '👥'], ['vamos', 'Vamos', '➡️'], ['temos', 'Temos', '📦'],
-  ['fomos', 'Fomos', '⏮️'], ['queremos', 'Queremos', '🙋'], ['podemos', 'Podemos', '✅'], ['sabemos', 'Sabemos', '🧠'],
-  ['fizemos', 'Fizemos', '🛠️'], ['precisamos', 'Precisamos', '❗'], ['sao', 'São', '👥'], ['estao', 'Estão', '👥'],
-  ['vao', 'Vão', '➡️'], ['foram', 'Foram', '⏮️'], ['querem', 'Querem', '🙋'], ['podem', 'Podem', '✅'],
-  ['sabem', 'Sabem', '🧠'], ['fizeram', 'Fizeram', '🛠️'], ['gostam', 'Gostam', '😊'], ['precisam', 'Precisam', '❗'],
-  ['sera', 'Será', '🔮'], ['parece', 'Parece', '👀'], ['deve', 'Deve', '📌'], ['funciona', 'Funciona', '⚙️'],
-  ['aconteceu', 'Aconteceu', '❓'], ['falar', 'Falar', '💬'], ['irBanheiro', 'Ir ao banheiro', '🚽'],
-  ['irCasa', 'Ir para casa', '🏠'], ['saber', 'Saber', '🧠'], ['parar', 'Parar', '🛑'], ['maisTempo', 'Mais tempo', '⏳'],
-  ['deAjuda', 'De ajuda', '🆘'], ['deAgua', 'De água', '💧'], ['deComida', 'De comida', '🍎'],
-  ['falarAlguem', 'Falar com alguém', '💬'], ['deRemedio', 'De remédio', '💊'], ['deTempo', 'De tempo', '⏳'],
-  ['entender', 'Entender', '💡'], ['comFome', 'Com fome', '🍽️'], ['comSede', 'Com sede', '💧'], ['cansados', 'Cansados', '😩'],
-  ['felizes', 'Felizes', '😄'], ['tristes', 'Tristes', '😢'], ['preocupado', 'Preocupado', '😟'], ['preocupados', 'Preocupados', '😟'], ['paraCasa', 'Para casa', '🏠'], ['embora', 'Embora', '🚶'],
-  ['tentar', 'Tentar', '💪'], ['comer', 'Comer', '🍽️'], ['certeza', 'Certeza', '✅'], ['duvida', 'Dúvida', '❓'],
-  ['medo', 'Medo', '😨'], ['fome', 'Fome', '🍽️'], ['sede', 'Sede', '💧'], ['sono', 'Sono', '😴'],
-  ['pressa', 'Pressa', '⏱️'], ['umProblema', 'Um problema', '⚠️'], ['meAjudar', 'Me ajudar', '🆘'],
-  ['esperar', 'Esperar', '⏳'], ['repetir', 'Repetir', '🔁'], ['virAqui', 'Vir aqui', '👋'],
-  ['falarDevagar', 'Falar mais devagar', '🐢'], ['explicar', 'Explicar', '💡'], ['porFavor', 'Por favor', '🙏'],
-  ['agora', 'Agora', '⏰'], ['paraMim', 'Para mim', '🙋'], ['comIsso', 'Com isso', '👉'], ['euPreciso', 'Eu preciso', '❗'],
-  ['naoConsigo', 'Não consigo', '😟'], ['estouComDor', 'Estou com dor', '🤕'], ['queroFalar', 'Quero falar', '💬'],
-  ['obrigado', 'Obrigado', '🙏'], ['dor', 'Dor', '🤕'], ['estouCom', 'Estou com', '💭'], ['muitaDor', 'Muita dor', '🤕'],
-  ['aqui', 'Aqui', '📍'], ['chameAlguem', 'Chame alguém', '📣'], ['remedio', 'Remédio', '💊'], ['umPouco', 'Um pouco', '🤏'],
-  ['ondeFica', 'Onde fica?', '📍'], ['urgente', 'Urgente', '🚨'], ['mais', 'Mais', '➕'], ['deNovo', 'De novo', '🔁'],
-  ['estaBem', 'Está bem', '👍'], ['naoEntendi', 'Não entendi', '❓'], ['queroIrCasa', 'Quero ir para casa', '🏠'],
-  ['precisoDeAgua', 'Preciso de água', '💧'], ['maisDevagar', 'Mais devagar', '🐢']
-].map(([id, label, emoji]) => ({ id, label, emoji, description: label, cat: 'acoes' }));
+  /* Ações */
+  {
+    id: 'quero',
+    label: 'Quero',
+    emoji: '🙋',
+    description: 'Eu desejo algo',
+    cat: 'acoes'
+  },
 
-const AAC_FALLBACK = [
-  'quero', 'preciso', 'porFavor', 'ajuda', 'agora', 'mais', 'deNovo', 'estaBem',
-  'naoEntendi', 'obrigado', 'ola', 'tudoBem', 'queroIrCasa', 'estouComDor',
-  'precisoDeAgua', 'maisDevagar', 'ateLogo'
+  {
+    id: 'preciso',
+    label: 'Preciso',
+    emoji: '❗',
+    description: 'Eu preciso de algo',
+    cat: 'acoes'
+  },
+
+  {
+    id: 'estou',
+    label: 'Estou',
+    emoji: '💭',
+    description: 'Como eu estou',
+    cat: 'acoes'
+  },
+
+  {
+    id: 'gosto',
+    label: 'Gosto',
+    emoji: '❤️',
+    description: 'Eu gosto de algo',
+    cat: 'acoes'
+  },
+
+  {
+    id: 'vou',
+    label: 'Vou',
+    emoji: '➡️',
+    description: 'Eu vou para algum lugar',
+    cat: 'acoes'
+  },
+
+
+  {
+    id: 'agua',
+    label: 'Água',
+    emoji: '💧',
+    description: 'Quero beber',
+    cat: 'necessidades'
+  },
+
+  {
+    id: 'comida',
+    label: 'Comida',
+    emoji: '🍽️',
+    description: 'Quero comer',
+    cat: 'necessidades'
+  },
+
+  {
+    id: 'banheiro',
+    label: 'Banheiro',
+    emoji: '🚻',
+    description: 'Preciso ir ao banheiro',
+    cat: 'necessidades'
+  },
+
+  {
+    id: 'dormir',
+    label: 'Dormir',
+    emoji: '😴',
+    description: 'Quero dormir',
+    cat: 'necessidades'
+  },
+
+  {
+    id: 'descansar',
+    label: 'Descansar',
+    emoji: '🛋️',
+    description: 'Quero descansar',
+    cat: 'necessidades'
+  },
+
+  {
+    id: 'ajuda',
+    label: 'Ajuda',
+    emoji: '🆘',
+    description: 'Preciso de ajuda',
+    cat: 'necessidades'
+  },
+
+
+  {
+    id: 'feliz',
+    label: 'Feliz',
+    emoji: '😊',
+    description: 'Estou feliz',
+    cat: 'sentimentos'
+  },
+
+  {
+    id: 'triste',
+    label: 'Triste',
+    emoji: '😢',
+    description: 'Estou triste',
+    cat: 'sentimentos'
+  },
+
+  {
+    id: 'cansado',
+    label: 'Cansado',
+    emoji: '😴',
+    description: 'Estou cansado',
+    cat: 'sentimentos'
+  },
+
+  {
+    id: 'commedo',
+    label: 'Com medo',
+    emoji: '😨',
+    description: 'Estou com medo',
+    cat: 'sentimentos'
+  },
+
+  {
+    id: 'comdor',
+    label: 'Com dor',
+    emoji: '🤕',
+    description: 'Estou com dor',
+    cat: 'sentimentos'
+  },
+
+  {
+    id: 'bem',
+    label: 'Bem',
+    emoji: '🙂',
+    description: 'Estou bem',
+    cat: 'sentimentos'
+  },
+
+
+  {
+    id: 'brincar',
+    label: 'Brincar',
+    emoji: '🧸',
+    description: 'Quero brincar',
+    cat: 'atividades'
+  },
+
+  {
+    id: 'jogar',
+    label: 'Jogar',
+    emoji: '🎮',
+    description: 'Quero jogar',
+    cat: 'atividades'
+  },
+
+  {
+    id: 'assistir',
+    label: 'Assistir',
+    emoji: '📺',
+    description: 'Quero assistir',
+    cat: 'atividades'
+  },
+
+  {
+    id: 'desenhar',
+    label: 'Desenhar',
+    emoji: '🖍️',
+    description: 'Quero desenhar',
+    cat: 'atividades'
+  },
+
+  {
+    id: 'passear',
+    label: 'Passear',
+    emoji: '🚶',
+    description: 'Quero passear',
+    cat: 'atividades'
+  },
+
+  {
+    id: 'musica',
+    label: 'Música',
+    emoji: '🎵',
+    description: 'Quero ouvir música',
+    cat: 'atividades'
+  },
+
+
+  {
+    id: 'casa',
+    label: 'Casa',
+    emoji: '🏠',
+    description: 'Minha casa',
+    cat: 'lugares'
+  },
+
+  {
+    id: 'escola',
+    label: 'Escola',
+    emoji: '🏫',
+    description: 'Minha escola',
+    cat: 'lugares'
+  },
+
+  {
+    id: 'quarto',
+    label: 'Quarto',
+    emoji: '🛏️',
+    description: 'Meu quarto',
+    cat: 'lugares'
+  },
+
+  {
+    id: 'hospital',
+    label: 'Hospital',
+    emoji: '🏥',
+    description: 'Preciso ir ao hospital',
+    cat: 'lugares'
+  },
+
+  {
+    id: 'sair',
+    label: 'Sair',
+    emoji: '🚪',
+    description: 'Quero sair',
+    cat: 'lugares'
+  }
 ];
 
 const SUGGESTIONS = {
-  __start__: ['eu', 'voce', 'ele', 'ela', 'nos', 'eles', 'elas', 'isso', 'aquilo', 'mae', 'pai', 'professor', 'avo', 'ava', 'tio', 'tia', 'irmao', 'irma', 'bomDia', 'boaTarde', 'boaNoite', 'ola', 'oi', 'tudoBem', 'comoVai', 'ateLogo', 'tchau', 'prazerConhecer', 'comoVoceEsta', 'muitoPrazer'],
-  eu: ['vou', 'quero', 'nao', 'acho', 'tenho', 'preciso', 'estou'],
-  voce: ['vai', 'quer', 'pode', 'sabe', 'tem', 'esta', 'foi', 'e', 'faz', 'diz', 'gosta', 'precisa', 'morava', 'trabalha', 'estuda', 'conhece', 'entende'],
-  ele: ['vai', 'quer', 'pode', 'sabe', 'tem', 'esta', 'foi', 'e', 'faz', 'diz', 'gosta', 'precisa', 'morava', 'trabalha', 'estuda', 'conhece', 'entende'],
-  ela: ['vai', 'quer', 'pode', 'sabe', 'tem', 'esta', 'foi', 'e', 'faz', 'diz', 'gosta', 'precisa', 'morava', 'trabalha', 'estuda', 'conhece', 'entende'],
-  nos: ['somos', 'estamos', 'vamos', 'temos', 'fomos', 'queremos', 'podemos', 'sabemos', 'fizemos', 'precisamos'],
-  eles: ['sao', 'estao', 'vao', 'temPlural', 'foram', 'querem', 'podem', 'sabem', 'fizeram', 'gostam', 'precisam'],
-  elas: ['sao', 'estao', 'vao', 'temPlural', 'foram', 'querem', 'podem', 'sabem', 'fizeram', 'gostam', 'precisam'],
-  isso: ['e', 'esta', 'foi', 'sera', 'parece', 'pode', 'deve', 'funciona', 'aconteceu'],
-  aquilo: ['e', 'esta', 'foi', 'sera', 'parece', 'pode', 'deve', 'funciona', 'aconteceu'],
-  quero: ['agua', 'comida', 'irBanheiro', 'ajuda', 'falar', 'irCasa', 'descansar', 'saber', 'parar', 'maisTempo'],
-  quer: ['agua', 'comida', 'irBanheiro', 'ajuda', 'falar', 'irCasa', 'descansar', 'saber', 'parar', 'maisTempo'],
-  preciso: ['deAjuda', 'deAgua', 'deComida', 'irBanheiro', 'descansar', 'falarAlguem', 'deRemedio', 'irCasa', 'deTempo', 'entender'],
-  precisa: ['deAjuda', 'deAgua', 'deComida', 'irBanheiro', 'descansar', 'falarAlguem', 'deRemedio', 'irCasa', 'deTempo', 'entender'],
-  precisam: ['deAjuda', 'deAgua', 'deComida', 'irBanheiro', 'descansar', 'falarAlguem', 'deRemedio', 'irCasa', 'deTempo', 'entender'],
-  estou: ['bem', 'cansado', 'comFome', 'comSede', 'comdor', 'feliz', 'triste', 'preocupado'],
-  estamos: ['bem', 'cansados', 'comFome', 'comSede', 'comdor', 'felizes', 'tristes', 'preocupados'],
-  esta: ['bem', 'cansado', 'comFome', 'comSede', 'comdor', 'feliz', 'triste', 'preocupado'],
-  estao: ['bem', 'cansados', 'comFome', 'comSede', 'comdor', 'felizes', 'tristes', 'preocupados'],
-  vou: ['paraCasa', 'embora', 'tentar', 'dormir', 'comer', 'trabalhar', 'sair'],
-  vamos: ['paraCasa', 'embora', 'tentar', 'dormir', 'comer', 'trabalhar', 'sair'],
-  vai: ['paraCasa', 'embora', 'tentar', 'dormir', 'comer', 'trabalhar', 'sair'],
-  tenho: ['certeza', 'duvida', 'medo', 'fome', 'sede', 'sono', 'pressa', 'umProblema'],
-  tem: ['certeza', 'medo', 'fome', 'sede', 'sono', 'pressa', 'umProblema'],
-  temPlural: ['certeza', 'medo', 'fome', 'sede', 'sono', 'pressa', 'umProblema'],
-  pode: ['meAjudar', 'esperar', 'repetir', 'virAqui', 'falarDevagar', 'explicar'],
-  podem: ['meAjudar', 'esperar', 'repetir', 'virAqui', 'falarDevagar', 'explicar'],
-  ajuda: ['porFavor', 'agora', 'paraMim', 'comIsso', 'euPreciso', 'naoConsigo', 'estouComDor', 'queroFalar', 'obrigado'],
-  dor: ['estouCom', 'muitaDor', 'aqui', 'precisoDeAgua', 'agora', 'porFavor', 'naoEntendi', 'chameAlguem', 'remedio', 'obrigado'],
-  agua: ['porFavor', 'euPreciso', 'agora', 'umPouco', 'ondeFica', 'urgente', 'obrigado'],
-  comida: ['porFavor', 'euPreciso', 'agora', 'umPouco', 'ondeFica', 'urgente', 'obrigado'],
-  banheiro: ['porFavor', 'euPreciso', 'agora', 'ondeFica', 'urgente', 'obrigado'],
-  deAjuda: ['agora', 'porFavor', 'paraMim', 'comIsso', 'obrigado'],
-  deAgua: ['agora', 'porFavor', 'umPouco', 'urgente', 'obrigado'],
-  deComida: ['agora', 'porFavor', 'umPouco', 'urgente', 'obrigado'],
-  irBanheiro: ['agora', 'porFavor', 'ondeFica', 'urgente', 'obrigado'],
-  irCasa: ['agora', 'porFavor', 'obrigado'],
-  paraCasa: ['agora', 'porFavor', 'obrigado'],
-  queroFalar: ['porFavor', 'agora', 'paraMim', 'obrigado'],
-  estouComDor: ['agora', 'porFavor', 'chameAlguem', 'remedio', 'obrigado']
+  __start__: ['eu', 'voce', 'mae', 'professor', 'amigo'],
+  eu: ['quero', 'preciso', 'estou', 'gosto', 'vou'],
+  voce: ['quero', 'preciso', 'estou', 'gosto', 'vou'],
+  mae: ['quero', 'preciso', 'estou', 'gosto', 'vou'],
+  professor: ['quero', 'preciso', 'estou', 'gosto', 'vou'],
+  amigo: ['quero', 'preciso', 'estou', 'gosto', 'vou'],
+  quero: ['agua', 'comida', 'brincar', 'jogar', 'assistir', 'desenhar', 'passear', 'musica', 'dormir', 'sair', 'casa'],
+  preciso: ['agua', 'comida', 'banheiro', 'dormir', 'descansar', 'ajuda', 'hospital'],
+  estou: ['feliz', 'triste', 'cansado', 'comdor', 'commedo', 'bem'],
+  gosto: ['brincar', 'jogar', 'desenhar', 'assistir', 'passear', 'musica'],
+  vou: ['casa', 'escola', 'passear', 'dormir', 'banheiro', 'hospital'],
+  agua: ['quero', 'gosto', 'preciso'],
+  comida: ['quero', 'gosto', 'preciso'],
+  banheiro: ['preciso', 'quero'],
+  dormir: ['quero', 'preciso', 'estou'],
+  descansar: ['quero', 'preciso', 'estou'],
+  ajuda: ['preciso', 'quero'],
+  feliz: ['eu', 'gosto', 'quero'],
+  triste: ['eu', 'preciso', 'quero'],
+  cansado: ['eu', 'quero', 'preciso'],
+  commedo: ['eu', 'preciso', 'ajuda'],
+  comdor: ['eu', 'preciso', 'ajuda'],
+  bem: ['eu', 'gosto', 'quero'],
+  brincar: ['eu', 'quero', 'gosto'],
+  jogar: ['eu', 'quero', 'gosto'],
+  assistir: ['eu', 'quero', 'gosto'],
+  desenhar: ['eu', 'quero', 'gosto'],
+  passear: ['eu', 'quero', 'vou'],
+  musica: ['eu', 'quero', 'gosto'],
+  casa: ['eu', 'vou', 'quero'],
+  escola: ['eu', 'vou', 'quero'],
+  quarto: ['eu', 'vou', 'quero'],
+  hospital: ['eu', 'vou', 'preciso'],
+  sair: ['eu', 'quero', 'vou']
 };
+
+
 
 const CHALLENGES = [
   { emoji: '💧', prompt: 'Você está com sede. O que você quer dizer?', target: ['eu', 'quero', 'agua'] },
@@ -3133,6 +2430,15 @@ let STATE = {
   options: [],
   carouselIndex: 0,
   inputMode: 'carousel',
+  circularGeneratedWords: [],
+  circularRefreshedOptions: null,
+  circularLatestSuggestions: null,
+  circularSuggestionsVisible: false,
+  circularInitialRequestStarted: false,
+  circularActiveRing: 0,
+  circularCursorIndex: 0,
+  circularAlphabetMode: false,
+  circularNewWord: true,
 
   data: {
     favWords: [],
@@ -3170,7 +2476,8 @@ function allWords() {
 }
 
 function wordById(id) {
-  return allWords().find(word => word.id === id);
+  return allWords().find(word => word.id === id)
+    || (STATE.circularGeneratedWords || []).find(word => word.id === id);
 }
 
 function wordVisualHtml(word, className = 'word-icon') {
@@ -3529,104 +2836,11 @@ function go(screen, extra = {}) {
 function addWordToPhrase(word) {
   if (!word) return;
   STATE.phrase.push(word);
+  STATE.data.profile.wordsUsed = (STATE.data.profile.wordsUsed || 0) + 1;
+  saveData();
   loadLayer();
   render();
   announcePhrase();
-}
-
-function focusCircularActiveKey() {
-  const ring = STATE.circularActiveRing ?? 0;
-  const index = STATE.circularCursorIndex || 0;
-  document.querySelector(`.circular-key[data-circular-ring="${ring}"][data-circular-index="${index}"]`)?.focus();
-}
-
-function circularDirectionFromAngle(angle) {
-  const radians = angle * Math.PI / 180;
-  const x = Math.cos(radians);
-  const y = Math.sin(radians);
-  return Math.abs(x) >= Math.abs(y)
-    ? (x >= 0 ? 'direita' : 'esquerda')
-    : (y >= 0 ? 'baixo' : 'cima');
-}
-
-function circularOuterRingIsOpen() {
-  return STATE.phrase.length > 0 && !STATE.circularAlphabetMode;
-}
-
-function setCircularNavigationKey(element) {
-  document.querySelectorAll('.circular-key-current').forEach(key => key.classList.remove('circular-key-current'));
-  document.querySelectorAll('.circular-ring.circular-ring-active').forEach(ring => ring.classList.remove('circular-ring-active'));
-
-  element.classList.add('circular-key-current');
-  const ringIndex = Number(element.dataset.circularRing);
-  const index = Number(element.dataset.circularIndex);
-  const ring = element.closest('.circular-ring');
-  const angle = Number.parseFloat(element.style.getPropertyValue('--key-angle'));
-  const keyCount = ring ? ring.querySelectorAll('.circular-key').length : 1;
-
-  if (ring) {
-    ring.classList.add('circular-ring-active');
-    ring.style.setProperty('--active-angle', `${Number.isFinite(angle) ? angle : -90}deg`);
-    ring.style.setProperty('--sector-size', `${360 / keyCount}deg`);
-  }
-
-  STATE.circularActiveRing = ringIndex;
-  STATE.circularCursorIndex = index;
-  circularMenuReturnRing = STATE.circularActiveRing;
-  circularMenuReturnIndex = STATE.circularCursorIndex;
-  positionCircularMenu(element);
-}
-
-function positionCircularMenu(key) {
-  const menu = document.querySelector('.circular-side-menu');
-  const buttons = [...(menu?.querySelectorAll('.circular-menu-button') || [])];
-  if (!menu || !buttons.length) return;
-
-  if (key) {
-    const angle = Number.parseFloat(key.style.getPropertyValue('--key-angle'));
-    if (Number.isFinite(angle)) {
-      circularMenuDirection = circularDirectionFromAngle(angle);
-      menu.style.setProperty('--menu-orbit-angle', `${angle}deg`);
-    }
-  }
-
-  menu.classList.remove('menu-direita', 'menu-esquerda', 'menu-cima', 'menu-baixo');
-  menu.classList.add(`menu-${circularMenuDirection}`);
-  buttons.forEach(button => {
-    button.style.left = '';
-    button.style.top = '';
-    button.tabIndex = 0;
-  });
-  menu.classList.add('ativo');
-}
-
-function selectCircularKeyboardKey(element) {
-  const ring = Number(element.dataset.circularRing);
-  const index = Number(element.dataset.circularIndex);
-  if (element.dataset.letter) {
-    const last = STATE.phrase[STATE.phrase.length - 1];
-    if (STATE.circularNewWord !== false || !last?.id?.startsWith('typed_')) {
-      STATE.phrase.push({ id: `typed_${Date.now()}`, label: element.dataset.letter, emoji: '', description: '', cat: 'custom' });
-      STATE.circularNewWord = false;
-    } else {
-      last.label += element.dataset.letter;
-    }
-    STATE.circularActiveRing = 0;
-    STATE.circularCursorIndex = index;
-  } else {
-    const word = wordById(element.dataset.word);
-    if (!word) return;
-    STATE.phrase.push(word);
-    STATE.circularRefreshedOptions = null;
-    STATE.circularNewWord = true;
-    STATE.circularActiveRing = ring === 0 ? 1 : 0;
-    STATE.circularCursorIndex = 0;
-    playCircularWordAudio(word);
-  }
-  loadLayer();
-  render();
-  announcePhrase();
-  focusCircularActiveKey();
 }
 
 function eraseLast() {
@@ -3637,10 +2851,6 @@ function eraseLast() {
   const focusedControlId = document.activeElement?.id;
   speak('Apagar');
   STATE.phrase.pop();
-  STATE.circularActiveRing = STATE.phrase.length % 2;
-  STATE.circularCursorIndex = 0;
-  STATE.circularAlphabetMode = false;
-  STATE.circularNewWord = true;
   loadLayer();
   renderKeepingFocus(focusedControlId);
   announcePhrase();
@@ -3658,10 +2868,6 @@ function clearPhrase() {
 function clearPhraseConfirmed(focusedControlId = document.activeElement?.id) {
   if (STATE.phrase.length > 0) speak('Limpar frase');
   STATE.phrase = [];
-  STATE.circularActiveRing = 0;
-  STATE.circularCursorIndex = 0;
-  STATE.circularAlphabetMode = false;
-  STATE.circularNewWord = true;
   loadLayer();
   renderKeepingFocus(focusedControlId);
   announcePhrase();
@@ -3718,18 +2924,6 @@ function moveCarousel(delta) {
   const total = STATE.options.length;
   STATE.carouselIndex = (STATE.carouselIndex + delta + total) % total;
   renderKeepingFocus();
-}
-
-function refreshCircularSuggestions() {
-  const focusedId = document.activeElement?.id || 'circularRefreshBtn';
-  const options = [...(STATE.options.length ? STATE.options : (SUGGESTIONS.__start__ || []))];
-  for (let i = options.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [options[i], options[j]] = [options[j], options[i]];
-  }
-  STATE.circularRefreshedOptions = options;
-  STATE.carouselIndex = 0;
-  renderKeepingFocus(focusedId);
 }
 
 function restoreFocusedControl(focusedControlId) {
@@ -3801,6 +2995,8 @@ function confirmSelection() {
   if (!word) return;
 
   STATE.phrase.push(word);
+  STATE.data.profile.wordsUsed = (STATE.data.profile.wordsUsed || 0) + 1;
+  saveData();
 
   if (CIRCULAR_WORD_AUDIO_SRC[word.id]) {
     playCircularWordAudio(word);
@@ -3818,7 +3014,11 @@ function confirmSelection() {
 
 function speakPhrase() {
   const text = currentPhraseText();
-  if (text) speak(text);
+  if (!text) return;
+  const spokenWords = text.trim().split(/\s+/).filter(Boolean).length;
+  STATE.data.profile.wordsUsed = (STATE.data.profile.wordsUsed || 0) + spokenWords;
+  saveData();
+  speak(text);
 }
 
 function isFavoriteWord(wordId) {
@@ -3902,7 +3102,6 @@ function render() {
   }
 
   attachHandlers();
-  if (STATE.screen === 'circularMode') focusCircularActiveKey();
   scheduleScan();
   announcePhrase();
 }
@@ -3993,7 +3192,7 @@ function renderModeScreen(mode) {
 
 function renderCarouselMode() {
   const chipHtml = STATE.phrase.length
-    ? STATE.phrase.map(word => `<span class="phrase-chip">${word.emoji} ${word.label}</span>`).join('')
+    ? STATE.phrase.map(word => `<span class="phrase-chip">${escapeCircularHtml(word.emoji || '')} ${escapeCircularHtml(word.label)}</span>`).join('')
     : `<span class="phrase-placeholder">Escolha uma palavra no carrossel...</span>`;
   const n = STATE.options.length;
   let cardsHtml = '';
@@ -4008,13 +3207,341 @@ function renderCarouselMode() {
       if (!id) return `<div class="carousel-card ${type} empty"></div>`;
       const word = wordById(id);
       if (!word) return `<div class="carousel-card ${type} empty"></div>`;
-      return `<div class="carousel-card ${type}" data-pick="${id}" role="button" tabindex="${type === 'center' ? '0' : '-1'}" aria-label="${word.label}">${wordVisualHtml(word)}<div class="label">${word.label}</div></div>`;
+      return `<div class="carousel-card ${type}" data-pick="${id}" role="button" tabindex="${type === 'center' ? '0' : '-1'}" aria-label="${escapeCircularHtml(word.label)}"><div class="emoji">${escapeCircularHtml(word.emoji || '')}</div><div class="label">${escapeCircularHtml(word.label)}</div></div>`;
     };
-    cardsHtml = `<button class="carousel-arrow" id="prevBtn" ${n < 2 ? 'disabled' : ''} aria-label="Palavra anterior"><img src="assets/imagens/icone-seta-voltar.png" alt=""></button><div class="carousel-track">${card(prevId, 'side')}${card(curId, 'center')}${card(nextId, 'side')}</div><button class="carousel-arrow" id="nextBtn" ${n < 2 ? 'disabled' : ''} aria-label="Próxima palavra"><img src="assets/imagens/icone-seta-ir.png" alt=""></button>`;
+    cardsHtml = `<button class="carousel-arrow" id="prevBtn" ${n < 2 ? 'disabled' : ''} aria-label="Palavra anterior">‹</button><div class="carousel-track">${card(prevId, 'side')}${card(curId, 'center')}${card(nextId, 'side')}</div><button class="carousel-arrow" id="nextBtn" ${n < 2 ? 'disabled' : ''} aria-label="Próxima palavra">›</button>`;
   }
 
   const layerLabel = STATE.phrase.length === 0 ? 'QUEM ESTÁ FALANDO?' : STATE.phrase.length === 1 ? 'O QUE VOCÊ QUER DIZER?' : 'COMPLETE A FRASE';
-  return `<div class="carousel-full-screen"><div class="carousel-full-topbar"><button class="icon-btn" data-go="build" aria-label="Voltar para escolha do modo">←</button><div class="topbar-title">Comunicar</div><button class="icon-btn" data-go="personalize" aria-label="Personalizar palavras"><img class="menu-icon" src="assets/imagens/icone-configuracoes.png" alt=""></button></div><div class="carousel-full-content"><div class="section-label">MINHA FRASE</div><div class="phrase-bar" role="group" aria-label="Minha frase">${chipHtml}</div><div class="layer-label">${layerLabel}</div><div class="carousel-wrap">${cardsHtml}</div><button class="confirm-btn" id="confirmBtn" ${n === 0 ? 'disabled' : ''}>✓ Selecionar</button><div class="action-row" role="toolbar" aria-label="Ações da frase"><button class="btn-erase" id="eraseBtn" aria-label="Apagar última palavra"><img class="action-icon" src="assets/imagens/icone-apagar.png" alt="">Apagar</button><button class="btn-clear" id="clearBtn" aria-label="Limpar toda a frase"><img class="action-icon" src="assets/imagens/icone-limpar.png" alt="">Limpar</button><button class="btn-speak" id="speakBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Falar a frase em voz alta"><img class="action-icon" src="assets/imagens/icone-falar.png" alt="">Falar</button><button class="btn-fav" id="favPhraseBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Favoritar esta frase"><img class="action-icon" src="assets/imagens/icone-estrela.png" alt="">⭐ Favoritar frase</button><button class="btn-fav-word" id="favWordBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Favorizar palavra"><img class="action-icon" src="assets/imagens/icone-estrela.png" alt="">⭐ Favoritar palavra</button></div><div class="back-link" data-go="categories" role="button" tabindex="0" style="margin-top:4px;"><img class="action-icon" src="assets/imagens/icone-livros.png" alt="">Ver todas as categorias</div><div class="hint">← → navega · Enter/Espaço seleciona · toque também funciona</div></div></div>`;
+  return `<div class="carousel-full-screen"><div class="carousel-full-topbar"><button class="icon-btn" data-go="build" aria-label="Voltar para escolha do modo">←</button><div class="topbar-title">Comunicar</div><button class="icon-btn" data-go="personalize" aria-label="Personalizar">⚙︎</button></div><div class="carousel-full-content"><div class="section-label">MINHA FRASE</div><div class="phrase-bar" role="group" aria-label="Minha frase">${chipHtml}</div><div class="layer-label">${layerLabel}</div><div class="carousel-wrap">${cardsHtml}</div><button class="confirm-btn" id="confirmBtn" ${n === 0 ? 'disabled' : ''}>✓ Selecionar</button><div class="action-row" role="toolbar" aria-label="Ações da frase"><button class="btn-erase" id="eraseBtn" aria-label="Apagar última palavra">Apagar</button><button class="btn-clear" id="clearBtn" aria-label="Limpar toda a frase">Limpar</button><button class="btn-speak" id="speakBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Falar a frase em voz alta">Falar</button><button class="btn-fav" id="favPhraseBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Favoritar esta frase">Favorizar frase</button><button class="btn-fav-word" id="favWordBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Favorizar palavra">Favorizar palavra</button></div><div class="back-link" data-go="categories" role="button" tabindex="0" style="margin-top:4px;">Ver todas as categorias</div><div class="hint">← → navega · Enter/Espaço seleciona · toque também funciona</div></div></div>`;
+}
+
+function fillCircularRingOptions(optionIds, quantity) {
+  const result = [...new Set(optionIds.filter(id => wordById(id)))];
+  const fallbackIds = allWords().map(word => word.id);
+  fallbackIds.forEach(id => {
+    if (result.length < quantity && !result.includes(id)) result.push(id);
+  });
+  return result.slice(0, quantity);
+}
+
+try { sessionStorage.removeItem('comunica:gemini-key'); } catch (error) { /* armazenamento indisponível */ }
+const CIRCULAR_GEMINI_API_URL = '/api/gemini';
+let circularGeminiStatusPromise = null;
+
+function circularGeminiDisponivel() {
+  if (!circularGeminiStatusPromise) {
+    circularGeminiStatusPromise = fetch('/api/gemini/status')
+      .then(response => response.ok ? response.json() : null)
+      .then(data => data?.configured === true)
+      .catch(() => false);
+  }
+  return circularGeminiStatusPromise;
+}
+
+async function categorizarPalavraComGemini(palavra) {
+  if (!(await circularGeminiDisponivel())) return null;
+  const categorias = allCategories().map(({ id, label }) => ({ id, label }));
+  if (!categorias.length) return null;
+  try {
+    const response = await fetch(CIRCULAR_GEMINI_API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ role: 'user', parts: [{ text: `Classifique a palavra ou expressão para um teclado infantil de Comunicação Alternativa em português do Brasil. Escolha somente uma categoria da lista, sem criar categorias. Palavra: ${JSON.stringify(palavra)}. Categorias: ${JSON.stringify(categorias)}. Responda somente JSON no formato {"id":"ID_DA_CATEGORIA"}.` }] }],
+        generationConfig: { temperature: 0.1, responseMimeType: 'application/json' }
+      })
+    });
+    const data = await response.json();
+    if (!response.ok) return null;
+    const text = data.candidates?.[0]?.content?.parts?.map(part => part.text || '').join('').trim() || '';
+    const id = JSON.parse(text).id;
+    return categorias.some(category => category.id === id) ? id : null;
+  } catch (error) {
+    console.warn('Não foi possível categorizar a palavra com Gemini:', error);
+    return null;
+  }
+}
+
+function categoriaLocalAutomatica(palavra) {
+  const texto = normalizeCircularWord(palavra).normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const idsDisponiveis = new Set(allCategories().map(category => category.id));
+  const regras = [
+    ['pessoas', /\b(eu|voce|ele|ela|eles|elas|mae|pai|avo|irma|irmao|tia|tio|amigo|amiga|filho|filha|professor|professora|familia)\b/],
+    ['comida', /\b(comida|agua|suco|leite|arroz|feijao|pao|fruta|maca|banana|carne|bolo|lanche|cafe|almoco|jantar)\b/],
+    ['necessidades', /\b(banheiro|ajuda|dor|sono|fome|sede|descanso|beber|comer|dormir|preciso)\b/],
+    ['sentimentos', /\b(feliz|triste|bravo|brava|medo|cansado|cansada|bem|mal|ansioso|ansiosa|saudade)\b/],
+    ['lugares', /\b(casa|escola|parque|hospital|quarto|cozinha|rua|banheiro|mercado|cidade)\b/],
+    ['atividades', /\b(brincar|jogar|assistir|ler|desenhar|cantar|passear|dancar|estudar|nadar)\b/],
+    ['acoes', /\b(quero|gosto|vou|estou|tenho|fazer|ir|vir|dar|ver|falar|preciso)\b/]
+  ];
+  const regra = regras.find(([id, padrao]) => idsDisponiveis.has(id) && padrao.test(texto));
+  if (regra) return regra[0];
+  if (idsDisponiveis.has('acoes') && /(?:ar|er|ir)$/.test(texto)) return 'acoes';
+  return idsDisponiveis.has('necessidades') ? 'necessidades' : allCategories()[0]?.id || '';
+}
+
+function normalizeCircularWord(text) {
+  return String(text || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+}
+
+function circularSuggestionIds(labels) {
+  return [...new Set(labels.map(label => {
+    const normalized = normalizeCircularWord(label);
+    const existing = allWords().find(word => normalizeCircularWord(word.label) === normalized || normalizeCircularWord(word.id) === normalized);
+    if (existing) return existing.id;
+    let generated = STATE.circularGeneratedWords.find(word => normalizeCircularWord(word.label) === normalized);
+    if (!generated) {
+      const id = `circular_ai_${normalized.replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '')}`;
+      generated = { id, label: label.trim(), emoji: '', description: '', cat: 'custom' };
+      STATE.circularGeneratedWords.push(generated);
+    }
+    return generated.id;
+  }))];
+}
+
+function personalizedWordsByCircularGender(gender) {
+  const feminineTerms = new Set(['mae', 'tia', 'irma', 'filha', 'mulher', 'menina', 'amiga', 'professora', 'doutora', 'senhora', 'rainha', 'madrinha', 'prima', 'alice', 'beatriz', 'carol', 'ester', 'ines', 'isabel', 'joyce', 'lais', 'luz', 'nicole', 'rachel', 'raquel', 'sarah']);
+  const masculineTerms = new Set(['pai', 'tio', 'irmao', 'filho', 'homem', 'menino', 'amigo', 'professor', 'doutor', 'senhor', 'rei', 'padrinho', 'primo', 'gabriel', 'miguel', 'rafael', 'daniel', 'samuel', 'jose', 'davi']);
+  return STATE.data.customWords.filter(word => {
+    const category = allCategories().find(item => item.id === word.cat);
+    const isPerson = word.cat === 'pessoas' || /pessoa|famil|amig|relacion/.test(normalizeCircularWord(category?.label || ''));
+    if (!isPerson) return false;
+    const name = normalizeCircularWord(word.label);
+    const original = String(word.label).toLocaleLowerCase('pt-BR');
+    if (gender === 'feminino') return word.gender === 'feminino' || word.gender === 'female' || original === 'avó' || feminineTerms.has(name) || /a$/.test(name);
+    return word.gender === 'masculino' || word.gender === 'male' || original === 'avô' || masculineTerms.has(name) || /o$/.test(name);
+  });
+}
+
+function circularPronounGender() {
+  const lastWord = normalizeCircularWord(STATE.phrase.at(-1)?.label || '');
+  if (['ela', 'elas'].includes(lastWord)) return 'feminino';
+  if (['ele', 'eles'].includes(lastWord)) return 'masculino';
+  return null;
+}
+
+function circularPhraseSuggestionLabels() {
+  const used = new Set(STATE.phrase.map(word => normalizeCircularWord(word.label)));
+  const gender = circularPronounGender();
+  if (gender) {
+    return [...new Set(personalizedWordsByCircularGender(gender)
+      .map(word => word.label).filter(label => !used.has(normalizeCircularWord(label))))].slice(0, 3);
+  }
+  const saved = STATE.data.customWords.map(word => word.label)
+    .filter(label => label && !used.has(normalizeCircularWord(label)));
+  const ai = (STATE.circularLatestSuggestions || [])
+    .filter(label => label && !used.has(normalizeCircularWord(label))
+      && !saved.some(item => normalizeCircularWord(item) === normalizeCircularWord(label)))
+    .slice(0, 2);
+  return [...new Set([...ai, ...saved])].slice(0, 3);
+}
+
+function escapeCircularHtml(value) {
+  return String(value).replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[character]));
+}
+
+function circularPhraseSuggestionsHtml() {
+  const gender = circularPronounGender();
+  const labels = circularPhraseSuggestionLabels();
+  const label = gender ? 'Palavras salvas' : (STATE.circularLatestSuggestions?.length ? 'Sugestões Gemini e palavras salvas' : 'Palavras salvas');
+  return `<div class="circular-phrase-suggestions" id="circularPhraseSuggestions" data-rotulo="${label}" aria-label="${label}" aria-live="polite">${labels.map((word, index) => `<button type="button" data-circular-phrase-suggestion="${index}">${escapeCircularHtml(word)}</button>`).join('')}</div>`;
+}
+
+function addCircularPhraseSuggestion(label) {
+  const id = circularSuggestionIds([label])[0];
+  const word = wordById(id);
+  if (!word) return;
+  STATE.phrase.push(word);
+  STATE.circularRefreshedOptions = null;
+  STATE.circularLatestSuggestions = null;
+  STATE.circularSuggestionsVisible = true;
+  STATE.circularActiveRing = 1;
+  STATE.circularCursorIndex = 0;
+  STATE.circularNewWord = true;
+  render();
+  announcePhrase();
+  focusCircularActiveKey();
+  updateCircularSuggestionsFromGemini(word.label);
+}
+
+function canonicalizeCircularPersonalNames(text) {
+  const people = STATE.data.customWords.filter(word => {
+    const category = allCategories().find(item => item.id === word.cat);
+    return word.cat === 'pessoas' || /pessoa|famil|amig|relacion/.test(normalizeCircularWord(category?.label || ''));
+  });
+  const tokens = [...String(text || '').matchAll(/[\p{L}]+/gu)];
+  let tokenIndex = 0;
+  return String(text || '').replace(/[\p{L}]+/gu, token => {
+    const current = tokenIndex++;
+    const normalized = normalizeCircularWord(token);
+    const saved = people.find(word => normalizeCircularWord(word.label) === normalized);
+    if (saved) return saved.label;
+    const previous = normalizeCircularWord(tokens[current - 1]?.[0] || '');
+    if (!['ela', 'ele', 'elas', 'eles'].includes(previous) || normalized.length < 3) return token;
+    const near = people.find(word => {
+      const name = normalizeCircularWord(word.label);
+      if (/\s/.test(name) || Math.abs(name.length - normalized.length) > 1) return false;
+      let i = 0, j = 0, differences = 0;
+      while (i < normalized.length && j < name.length) {
+        if (normalized[i] === name[j]) { i++; j++; continue; }
+        if (++differences > 1) return false;
+        if (normalized.length > name.length) i++;
+        else if (name.length > normalized.length) j++;
+        else { i++; j++; }
+      }
+      return differences + ((i < normalized.length || j < name.length) ? 1 : 0) === 1;
+    });
+    return near ? near.label : token;
+  });
+}
+
+async function correctCircularPhraseWithGemini(text) {
+  if (!text || !(await circularGeminiDisponivel())) return null;
+  const savedWords = STATE.data.customWords.map(word => word.label).filter(Boolean);
+  try {
+    const response = await fetch(CIRCULAR_GEMINI_API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ role: 'user', parts: [{ text: `Revise esta frase curta de Comunicação Alternativa em português do Brasil. Corrija ortografia e concordância de gênero e número. Se um nome ou palavra personalizada aparecer com erro de digitação, use exatamente a grafia da lista. Palavras personalizadas: ${JSON.stringify(savedWords)}. Se ela/ele estiver imediatamente antes do nome que identifica a mesma pessoa, remova a repetição do pronome e preserve o nome cadastrado. Preserve a intenção, sem inventar informações. Responda somente JSON no formato {"texto":"frase corrigida"}. Frase: ${text}` }] }],
+        generationConfig: { temperature: 0.1, responseMimeType: 'application/json' }
+      })
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error?.message || `Gemini HTTP ${response.status}`);
+    const resultText = data.candidates?.[0]?.content?.parts?.map(part => part.text || '').join('').trim() || '';
+    const json = resultText.match(/\{[\s\S]*\}/)?.[0];
+    const corrected = json ? JSON.parse(json).texto : '';
+    return typeof corrected === 'string' && corrected.trim() ? corrected.trim() : null;
+  } catch (error) {
+    console.warn('Não foi possível revisar a frase do teclado infantil com o Gemini:', error);
+    return null;
+  }
+}
+
+async function correctCircularPhraseWithLanguageTool(text) {
+  if (!text) return text;
+  try {
+    const body = new URLSearchParams({ text, language: 'pt-BR' });
+    const response = await fetch('https://api.languagetool.org/v2/check', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body
+    });
+    if (!response.ok) return text;
+    const data = await response.json();
+    let corrected = text;
+    [...(data.matches || [])].sort((a, b) => b.offset - a.offset).forEach(match => {
+      const replacement = match.replacements?.[0]?.value;
+      if (replacement !== undefined) corrected = corrected.slice(0, match.offset) + replacement + corrected.slice(match.offset + match.length);
+    });
+    return corrected;
+  } catch (error) {
+    console.warn('Não foi possível revisar a frase do teclado infantil:', error);
+    return text;
+  }
+}
+
+async function concludeCircularPhrase() {
+  const original = currentPhraseText().trim();
+  if (!original) {
+    showToast('Monte uma frase antes de concluir.');
+    return;
+  }
+  const canonical = canonicalizeCircularPersonalNames(original);
+  const corrected = await correctCircularPhraseWithGemini(canonical) || await correctCircularPhraseWithLanguageTool(canonical);
+  STATE.phrase = corrected.split(/\s+/).filter(Boolean).map((label, index) => {
+    const existing = allWords().find(word => normalizeCircularWord(word.label) === normalizeCircularWord(label));
+    return existing || { id: `typed_corrected_${Date.now()}_${index}`, label, emoji: '', description: '', cat: 'custom' };
+  });
+  STATE.circularRefreshedOptions = null;
+  STATE.circularLatestSuggestions = null;
+  STATE.circularSuggestionsVisible = false;
+  STATE.circularActiveRing = 0;
+  STATE.circularCursorIndex = 0;
+  STATE.circularAlphabetMode = false;
+  STATE.circularNewWord = true;
+  render();
+  announcePhrase();
+  focusCircularActiveKey();
+  showToast(corrected === original ? 'Frase revisada.' : 'Frase corrigida e pronta para comunicar.');
+}
+
+function seniorSuggestionsForCircularWord(word) {
+  const key = normalizeCircularWord(word?.label || word?.id);
+  return CIRCULAR_SENIOR_SUGGESTIONS[key] || CIRCULAR_SENIOR_MORE[key] || CIRCULAR_SENIOR_MORE[word?.id] || CIRCULAR_SENIOR_SUGGESTIONS.__generica__;
+}
+
+async function suggestCircularWordsWithGemini(selectedWord, phraseText) {
+  if (!(await circularGeminiDisponivel())) return null;
+  try {
+    const pronoun = [...phraseText.split(/\s+/)].reverse().map(normalizeCircularWord).find(word => ['ela', 'elas', 'ele', 'eles'].includes(word));
+    const gender = pronoun ? (['ela', 'elas'].includes(pronoun) ? 'feminino' : 'masculino') : null;
+    const permittedNames = gender ? personalizedWordsByCircularGender(gender).map(word => word.label) : [];
+    const context = selectedWord
+      ? `A tecla escolhida foi ${JSON.stringify(selectedWord)}. Use-a como contexto principal.`
+      : 'A pessoa ainda está começando a frase. Sugira palavras úteis para iniciar uma comunicação.';
+    const response = await fetch(CIRCULAR_GEMINI_API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ role: 'user', parts: [{ text: `Você sugere vocabulário para um teclado de Comunicação Alternativa e Aumentativa em português do Brasil. ${context} Considere a frase parcial ${JSON.stringify(phraseText || '')}. ${gender ? `Mantenha a concordância no gênero ${gender}. Para sugerir nomes de pessoas, use somente estes nomes salvos: ${JSON.stringify(permittedNames)}.` : ''} Gere exatamente 10 palavras ou expressões curtas e naturais para continuar a comunicação. Não repita palavras já presentes na frase. Responda apenas um array JSON de strings.` }] }],
+        generationConfig: { temperature: 0.7, responseMimeType: 'application/json' }
+      })
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error?.message || `Gemini HTTP ${response.status}`);
+    const text = data.candidates?.[0]?.content?.parts?.map(part => part.text || '').join('').trim() || '';
+    const labels = JSON.parse(text);
+    if (!Array.isArray(labels)) return null;
+    const used = new Set(phraseText.split(/\s+/).map(normalizeCircularWord));
+    const personalized = new Set(STATE.data.customWords.map(word => normalizeCircularWord(word.label)));
+    return labels.filter(label => typeof label === 'string')
+      .map(label => label.trim().slice(0, 48))
+      .filter(label => label && !used.has(normalizeCircularWord(label)) && !personalized.has(normalizeCircularWord(label)))
+      .slice(0, 10);
+  } catch (error) {
+    console.warn('Não foi possível buscar sugestões do Gemini para o teclado infantil:', error);
+    return null;
+  }
+}
+
+async function updateCircularSuggestionsFromGemini(selectedWord, askForKey = false) {
+  const phraseText = currentPhraseText();
+  if (!(await circularGeminiDisponivel())) {
+    if (askForKey) showToast('Gemini não configurado no servidor. Configure GEMINI_API_KEY no arquivo .env local.');
+    return null;
+  }
+  const labels = await suggestCircularWordsWithGemini(selectedWord, phraseText);
+  if (currentPhraseText() !== phraseText || STATE.screen !== 'circularMode') return null;
+  if (!labels?.length) {
+    if (!phraseText) STATE.circularLatestSuggestions = null;
+    return null;
+  }
+  STATE.circularLatestSuggestions = labels;
+  if (phraseText) STATE.circularRefreshedOptions = circularSuggestionIds(labels);
+  if (phraseText) STATE.circularSuggestionsVisible = true;
+  STATE.circularCursorIndex = 0;
+  render();
+  if (phraseText) focusCircularActiveKey();
+  return labels;
+}
+
+function circularKeyboardRings() {
+  const initial = fillCircularRingOptions(circularSuggestionIds(CIRCULAR_INITIAL_KEYWORDS), 9);
+  const lastWord = STATE.phrase[STATE.phrase.length - 1];
+  const used = new Set(STATE.phrase.map(word => normalizeCircularWord(word.label)));
+  const localOptions = [...new Set(seniorSuggestionsForCircularWord(lastWord || { label: '' })
+    .concat(CIRCULAR_SENIOR_QUICK_PHRASES, CIRCULAR_INITIAL_KEYWORDS)
+    .filter(label => !used.has(normalizeCircularWord(label))))].slice(0, 6);
+  const outerSuggestions = !lastWord
+    ? []
+    : (STATE.circularRefreshedOptions
+      ? STATE.circularRefreshedOptions.slice(0, 10)
+      : circularSuggestionIds(localOptions));
+  const rings = [initial, lastWord ? outerSuggestions : []];
+  return rings;
 }
 
 function fillCircularRingOptions(optionIds, quantity) {
@@ -4042,51 +3569,8 @@ function circularKeyboardRings() {
 }
 
 function renderCircularKeyboard() {
-  const chipHtml = STATE.phrase.length
-    ? STATE.phrase.map(word => `<span class="phrase-chip">${word.label}</span>`).join('')
-    : `<span class="phrase-placeholder">Toque em uma palavra do círculo...</span>`;
-  const layerLabel = STATE.phrase.length === 0 ? 'QUEM ESTÁ FALANDO?' : STATE.phrase.length === 1 ? 'O QUE VOCÊ QUER DIZER?' : 'COMPLETE A FRASE';
-  const rings = circularKeyboardRings();
-  const activeRing = STATE.circularActiveRing ?? (STATE.phrase.length % 2);
-  STATE.circularActiveRing = activeRing;
-  const cursorIndex = STATE.circularCursorIndex || 0;
-  const ringHtml = (ringIndex, options, hidden = false) => {
-    const quantity = ringIndex === 0 ? 9 : 10;
-    const radius = ringIndex === 0 ? 'calc(0px - 22cqw)' : 'calc(0px - 36.25cqw)';
-    const keys = options.map((id, index) => {
-      const word = wordById(id);
-      if (!word) return '';
-      const angle = Math.round((360 / options.length) * index) - 90;
-      const isCurrent = ringIndex === activeRing && index === cursorIndex;
-    return `<button class="circular-key circular-key-outer ${isCurrent ? 'circular-key-current' : ''}" data-word="${word.id}" data-circular-index="${index}" data-circular-ring="${ringIndex}" type="button" tabindex="${isCurrent ? '0' : '-1'}" aria-label="${word.label}" style="--key-angle:${angle}deg;--key-inverse-angle:${-angle}deg;--key-radius:${radius};"><span class="circular-key-label">${word.label}</span></button>`;
-    }).join('');
-    const isActiveRing = ringIndex === activeRing;
-    const activeKeyAngle = isActiveRing && options.length ? Math.round((360 / options.length) * cursorIndex) - 90 : -90;
-    const ringClass = ringIndex === 0 ? 'inner' : 'outer';
-    const activeClass = isActiveRing ? 'circular-ring-active' : '';
-    const activeAngleStyle = isActiveRing ? ` style="--active-angle:${activeKeyAngle}deg;--sector-size:${360 / Math.max(options.length, 1)}deg;"` : '';
-    return `<div class="circular-ring circular-ring-${ringClass} ${hidden ? 'circular-ring-hidden' : ''} ${activeClass}" data-circular-ring="${ringIndex}" aria-label="${ringIndex === 0 ? 'Palavras principais' : 'Sugestões'}"${activeAngleStyle}>${keys}</div>`;
-  };
-
-  const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
-  const innerOptions = STATE.circularAlphabetMode ? alphabet : rings[0];
-  const innerHtml = innerOptions.map((value, index) => {
-    const word = STATE.circularAlphabetMode ? null : wordById(value);
-    const angle = Math.round((360 / innerOptions.length) * index) - 90;
-    const isCurrent = activeRing === 0 && index === cursorIndex;
-    const letterRadius = STATE.circularAlphabetMode
-      ? 'calc(0px - 36cqw)'
-      : 'calc(0px - 22cqw)';
-    return `<button class="circular-key circular-key-inner ${STATE.circularAlphabetMode ? 'circular-key-letter' : ''} ${isCurrent ? 'circular-key-current' : ''}" ${word ? `data-word="${word.id}"` : `data-letter="${value}"`} data-circular-index="${index}" data-circular-ring="0" type="button" tabindex="${isCurrent ? '0' : '-1'}" aria-label="${word?.label || value}" style="--key-angle:${angle}deg;--key-inverse-angle:${-angle}deg;--key-radius:${letterRadius};">${word ? `<span class="circular-key-label">${word.label}</span>` : `<span class="circular-key-label">${value}</span>`}</button>`;
-  }).join('');
-  const outerHtml = ringHtml(1, rings[1], !circularOuterRingIsOpen());
-  const wheelHtml = `<div class="circular-keyboard-wrap"><div class="circular-keyboard" aria-label="Teclado circular">${outerHtml}<div class="circular-ring circular-ring-inner" data-circular-ring="0" aria-label="Palavras principais">${innerHtml}</div><button type="button" id="circularAlphabetBtn" class="circular-keyboard-center" aria-label="Alternar teclado alfabético">Aa</button></div></div>`;
-
-  const circularMenuHtml = `<nav class="circular-side-menu" aria-label="Menu orbital do teclado circular"><button class="circular-menu-button" id="circularClearBtn" type="button">limpar</button><button class="circular-menu-button" id="circularEraseBtn" type="button">excluir</button><button class="circular-menu-button" id="circularRefreshBtn" type="button">recarregar</button><button class="circular-menu-button" id="circularBackBtn" type="button">voltar</button><button class="circular-menu-button" id="circularSpeakBtn" type="button">falar</button><button class="circular-menu-button circular-menu-highlight" id="circularDoneBtn" type="button">concluir</button></nav>`;
-  const wheelAndMenuHtml = `<div class="circular-menu-layout">${wheelHtml}${circularMenuHtml}</div>`;
-  return `<div class="circular-full-screen"><div class="circular-full-topbar"><button class="icon-btn" data-go="build" aria-label="Voltar para escolha do modo">←</button><div class="topbar-title">Teclado circular</div><button class="icon-btn" data-go="personalize" aria-label="Personalizar palavras"><img class="menu-icon" src="assets/imagens/icone-configuracoes.png" alt=""></button></div><div class="circular-full-content"><div class="section-label">MINHA FRASE</div><div class="phrase-bar" role="group" aria-label="Minha frase">${chipHtml}</div><div class="layer-label">${layerLabel}</div>${wheelAndMenuHtml}<div class="hint">Setas percorrem as argolas e os botões do menu · Tab acessa o menu · Enter/Espaço ou clique seleciona</div></div></div>`;
+  return `<div class="mode-screen circular-mode-screen"><button class="mode-screen-back" data-go="build" aria-label="Voltar para escolha do modo">← Voltar</button><div class="circular-keyboard-reserved"><h1>Teclado circular</h1><p>Área reservada para adicionar o teclado circular.</p></div></div>`;
 }
-
 function renderCategories() {
   const categories = allCategories();
   return `
@@ -4184,23 +3668,18 @@ function renderFavorites() {
 function renderPersonalize() {
   const customWordsHtml = STATE.data.customWords.map(word => `
       <span class="custom-chip">
-        ${word.emoji} ${word.label}
+        ${word.emoji} ${word.label} <small>· ${allCategories().find(category => category.id === word.cat)?.label || 'Sem categoria'}</small>
         <button type="button" class="x" data-del-word="${word.id}" aria-label="Excluir palavra ${word.label}" title="Excluir palavra">✕</button>
       </span>
     `).join('') || `<span style="color:var(--navy-soft);font-weight:600;font-size:13px;">Nenhuma palavra personalizada ainda.</span>`;
 
-  const customCategoriesHtml = STATE.data.customCategories.map(category => `
-      <span class="custom-chip">
-        ${category.emoji} ${category.label}
-        <button type="button" class="x" data-del-cat="${category.id}" aria-label="Excluir categoria ${category.label}" title="Excluir categoria">✕</button>
-      </span>
-    `).join('') || `<span style="color:var(--navy-soft);font-weight:600;font-size:13px;">Nenhuma categoria personalizada ainda.</span>`;
-
-  const categoryOptions = allCategories().map(category => `
-      <option value="${category.id}">${category.emoji} ${category.label}</option>
-    `).join('');
-
-  const emojiChoices = ['⭐','🎈','⚽','📱','🧦','🧴','🚗','🐶','🐱','📖','🍰','🎧','🧩','🛁'];
+  const letrasPersonalizar = [...'abcdefghijklmnopqrstuvwxyzç'];
+  const teclasPersonalizar = letrasPersonalizar.map((letra, indice) => {
+    const angulo = (indice / letrasPersonalizar.length) * Math.PI * 2 - Math.PI / 2;
+    const esquerda = 50 + Math.cos(angulo) * 36;
+    const topo = 50 + Math.sin(angulo) * 36;
+    return `<button type="button" class="tecla tecla-compacta personalize-letter-key" data-personalize-letter="${letra}" aria-label="Inserir ${letra}" tabindex="${indice === 0 ? 0 : -1}" style="left:${esquerda}%;top:${topo}%;transform:translate(-50%,-50%)">${letra}</button>`;
+  }).join('');
 
   return `
     <div class="topbar">
@@ -4210,47 +3689,28 @@ function renderPersonalize() {
     </div>
 
     <div class="screen">
-      <div class="form-block">
+      <div class="form-block personalize-builder">
         <h3>➕ Adicionar palavra</h3>
-
-        <label class="field-label" for="newWordLabel">Nome da palavra</label>
-        <div class="form-row">
-          <input type="text" id="newWordLabel" placeholder="Ex: Bola" aria-label="Nome da nova palavra">
-          <label class="visually-hidden" for="newWordCat">Categoria da palavra</label>
-          <select id="newWordCat" aria-label="Categoria da nova palavra">${categoryOptions}</select>
+        <label class="field-label" for="newWordLabel">Digite uma palavra e use o teclado circular</label>
+        <input type="text" id="newWordLabel" placeholder="A palavra aparecerá aqui" aria-label="Palavra para salvar">
+        <div class="field-label">O Gemini escolherá automaticamente entre Pessoas, Necessidades, Comida e as demais categorias.</div>
+        <div class="personalize-keyboard-layout">
+          <div class="personalize-keyboard-stage teclado-area" role="group" aria-label="Teclado circular alfabético">
+            <section class="teclado">
+              <div class="anel anel-meio personalize-letter-ring">${teclasPersonalizar}</div>
+              <span class="buraco-central personalize-wheel-center" aria-hidden="true">Aa</span>
+            </section>
+          </div>
+          <nav class="personalize-keyboard-menu" aria-label="Ações do teclado de personalização">
+            <button type="button" id="personalizeClearBtn" class="personalize-action personalize-action-clear">Limpar</button>
+            <button type="button" id="personalizeDeleteBtn" class="personalize-action personalize-action-delete">Excluir</button>
+            <button type="button" id="personalizeSaveBtn" class="personalize-action personalize-action-save">Salvar</button>
+            <button type="button" id="personalizeBackBtn" class="personalize-action personalize-action-back" data-go="home">Voltar</button>
+          </nav>
         </div>
-
-        <span class="field-label">Escolha um ícone</span>
-        <div class="emoji-row" id="emojiRowWord" role="radiogroup" aria-label="Ícone da palavra">
-          ${emojiChoices.map((emoji, index) => `
-            <div class="emoji-pick ${index === 0 ? 'chosen' : ''}" data-emoji="${emoji}"
-              role="radio" tabindex="0" aria-checked="${index === 0}" aria-label="Ícone ${emoji}">${emoji}</div>
-          `).join('')}
-        </div>
-
-        <button class="submit-btn" id="addWordBtn">Adicionar palavra</button>
         <div class="custom-list">${customWordsHtml}</div>
       </div>
 
-      <div class="form-block">
-        <h3>📁 Criar categoria</h3>
-
-        <label class="field-label" for="newCatLabel">Nome da categoria</label>
-        <div class="form-row">
-          <input type="text" id="newCatLabel" placeholder="Ex: Minhas coisas" aria-label="Nome da nova categoria">
-        </div>
-
-        <span class="field-label">Escolha um ícone</span>
-        <div class="emoji-row" id="emojiRowCat" role="radiogroup" aria-label="Ícone da categoria">
-          ${emojiChoices.map((emoji, index) => `
-            <div class="emoji-pick ${index === 0 ? 'chosen' : ''}" data-emoji="${emoji}"
-              role="radio" tabindex="0" aria-checked="${index === 0}" aria-label="Ícone ${emoji}">${emoji}</div>
-          `).join('')}
-        </div>
-
-        <button class="submit-btn" id="addCatBtn">Criar categoria</button>
-        <div class="custom-list">${customCategoriesHtml}</div>
-      </div>
     </div>
   `;
 }
@@ -4665,31 +4125,6 @@ function attachHandlers() {
   const clearBtn = document.getElementById('clearBtn');
   if (clearBtn) clearBtn.addEventListener('click', clearPhrase);
 
-  const circularClearBtn = document.getElementById('circularClearBtn');
-  if (circularClearBtn) circularClearBtn.addEventListener('click', clearPhrase);
-  const circularEraseBtn = document.getElementById('circularEraseBtn');
-  if (circularEraseBtn) circularEraseBtn.addEventListener('click', eraseLast);
-  const circularRefreshBtn = document.getElementById('circularRefreshBtn');
-  if (circularRefreshBtn) circularRefreshBtn.addEventListener('click', refreshCircularSuggestions);
-  const circularBackBtn = document.getElementById('circularBackBtn');
-  if (circularBackBtn) circularBackBtn.addEventListener('click', () => go('build'));
-  const circularSpeakBtn = document.getElementById('circularSpeakBtn');
-  if (circularSpeakBtn) circularSpeakBtn.addEventListener('click', speakPhrase);
-  const circularDoneBtn = document.getElementById('circularDoneBtn');
-  if (circularDoneBtn) circularDoneBtn.addEventListener('click', () => {
-    speakPhrase();
-    go('build');
-  });
-  const circularAlphabetBtn = document.getElementById('circularAlphabetBtn');
-  if (circularAlphabetBtn) circularAlphabetBtn.addEventListener('click', () => {
-    STATE.circularAlphabetMode = !STATE.circularAlphabetMode;
-    STATE.circularNewWord = true;
-    STATE.circularActiveRing = 0;
-    STATE.circularCursorIndex = 0;
-    render();
-    focusCircularActiveKey();
-  });
-
   const favPhraseBtn = document.getElementById('favPhraseBtn');
   if (favPhraseBtn) favPhraseBtn.addEventListener('click', favoritePhrase);
 
@@ -4741,17 +4176,48 @@ function attachHandlers() {
   wireEmojiRow('#emojiRowWord .emoji-pick');
   wireEmojiRow('#emojiRowCat .emoji-pick');
 
-  const addWordBtn = document.getElementById('addWordBtn');
+  document.querySelectorAll('[data-personalize-letter]').forEach(button => {
+    button.addEventListener('click', event => {
+      document.querySelectorAll('[data-personalize-letter]').forEach(key => key.tabIndex = key === button ? 0 : -1);
+      const input = document.getElementById('newWordLabel');
+      if (!input) return;
+      const start = input.selectionStart ?? input.value.length;
+      const end = input.selectionEnd ?? start;
+      const letter = button.getAttribute('data-personalize-letter') || '';
+      input.setRangeText(letter, start, end, 'end');
+      if (event.detail === 0) button.focus();
+      else input.focus();
+    });
+  });
+
+  const personalizeInput = document.getElementById('newWordLabel');
+  const personalizeClearBtn = document.getElementById('personalizeClearBtn');
+  if (personalizeClearBtn) personalizeClearBtn.addEventListener('click', () => {
+    if (!personalizeInput) return;
+    personalizeInput.value = '';
+    personalizeInput.focus();
+  });
+  const personalizeDeleteBtn = document.getElementById('personalizeDeleteBtn');
+  if (personalizeDeleteBtn) personalizeDeleteBtn.addEventListener('click', () => {
+    if (!personalizeInput) return;
+    const start = personalizeInput.selectionStart ?? personalizeInput.value.length;
+    const end = personalizeInput.selectionEnd ?? start;
+    if (start !== end) personalizeInput.setRangeText('', start, end, 'end');
+    else if (start > 0) personalizeInput.setRangeText('', start - 1, start, 'end');
+    personalizeInput.focus();
+  });
+
+  const addWordBtn = document.getElementById('personalizeSaveBtn') || document.getElementById('addWordBtn');
   if (addWordBtn) {
-    addWordBtn.addEventListener('click', () => {
+    addWordBtn.addEventListener('click', async () => {
       const input = document.getElementById('newWordLabel');
       const category = document.getElementById('newWordCat');
-      if (!input || !category) return;
+      if (!input) return;
 
       const label = input.value.trim();
-      const cat = category.value;
+      let cat = category?.value || '';
       const chosen = document.querySelector('#emojiRowWord .chosen');
-      const emoji = chosen ? chosen.getAttribute('data-emoji') : '⭐';
+      const emoji = chosen ? chosen.getAttribute('data-emoji') : '🔤';
 
       if (!label) {
         showToast('Digite uma palavra');
@@ -4759,11 +4225,25 @@ function attachHandlers() {
         return;
       }
 
+      addWordBtn.disabled = true;
+      addWordBtn.textContent = 'Categorizando...';
+      let categoriaGemini = null;
+      try {
+        categoriaGemini = await categorizarPalavraComGemini(label);
+      } finally {
+        addWordBtn.disabled = false;
+        addWordBtn.textContent = 'Salvar';
+      }
+      cat = categoriaGemini || '';
+      if (category) category.value = cat;
+
       const id = 'c_' + label.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '_') + '_' + Date.now();
 
       STATE.data.customWords.push({ id, label, emoji, description: `Toque para usar "${label}"`, cat });
       saveData();
-      showToast('Palavra adicionada!');
+      showToast(categoriaGemini
+        ? `Palavra adicionada em ${allCategories().find(item => item.id === cat)?.label || 'sua categoria'}!`
+        : 'Palavra adicionada sem categoria porque o Gemini não respondeu.');
       speak(label);
       loadLayer();
       render();
@@ -5011,7 +4491,6 @@ document.addEventListener('keydown', event => {
 
 /* Navegação por teclado/switch na tela de montagem de frase */
 document.addEventListener('keydown', event => {
-  if (event.defaultPrevented) return;
   if (STATE.screen !== 'carouselMode'
       && STATE.data.settings.scanEnabled && (event.key === 'Enter' || event.key === ' ')) {
     const active = document.activeElement;
@@ -5038,73 +4517,6 @@ document.addEventListener('keydown', event => {
         confirmButtons[nextIndex].classList.add('accessibility-focus');
       } else if (event.key === 'Enter' || event.key === ' ') {
         (activeIndex >= 0 ? confirmButtons[activeIndex] : confirmButtons[0]).click();
-      }
-      return;
-    }
-  }
-
-  if (STATE.screen === 'circularMode') {
-    const circularKeys = [...document.querySelectorAll('.circular-key[data-circular-index]')];
-    const menuButtons = [...document.querySelectorAll('.circular-side-menu .circular-menu-button')];
-    const activeMenuIndex = menuButtons.indexOf(document.activeElement);
-    if (activeMenuIndex >= 0) {
-      if (event.key === 'Escape') {
-        event.preventDefault();
-        circularKeys.find(key => Number(key.dataset.circularRing) === circularMenuReturnRing && Number(key.dataset.circularIndex) === circularMenuReturnIndex)?.focus();
-      } else if (['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown'].includes(event.key)) {
-        event.preventDefault();
-        const returnArrow = { direita: 'ArrowLeft', esquerda: 'ArrowRight', cima: 'ArrowDown', baixo: 'ArrowUp' }[circularMenuDirection];
-        if (event.key === returnArrow) {
-          circularKeys.find(key => Number(key.dataset.circularRing) === circularMenuReturnRing && Number(key.dataset.circularIndex) === circularMenuReturnIndex)?.focus();
-        } else {
-          const step = event.key === 'ArrowLeft' || event.key === 'ArrowUp' ? -1 : 1;
-          menuButtons[(activeMenuIndex + step + menuButtons.length) % menuButtons.length]?.focus();
-        }
-      }
-      return;
-    }
-
-    if (document.activeElement?.id === 'circularAlphabetBtn') {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        document.activeElement.click();
-      } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
-        event.preventDefault();
-        focusCircularActiveKey();
-      }
-      return;
-    }
-
-    if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key) && circularKeys.length) {
-      event.preventDefault();
-      const currentRing = STATE.circularActiveRing ?? 0;
-      const ringKeys = circularKeys.filter(key => Number(key.dataset.circularRing) === currentRing);
-      const currentIndex = Math.min(STATE.circularCursorIndex || 0, ringKeys.length - 1);
-      let destinationRing = currentRing;
-      let destinationIndex = currentIndex;
-
-      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-        const step = event.key === 'ArrowLeft' ? -1 : 1;
-        destinationIndex = (currentIndex + step + ringKeys.length) % ringKeys.length;
-      } else if (event.key === 'ArrowUp' && currentRing === 1) {
-        destinationRing = 0;
-        const innerKeys = circularKeys.filter(key => Number(key.dataset.circularRing) === 0);
-        destinationIndex = Math.round(currentIndex * innerKeys.length / ringKeys.length) % innerKeys.length;
-      } else if (event.key === 'ArrowDown' && currentRing === 0 && circularOuterRingIsOpen()) {
-        destinationRing = 1;
-        const outerKeys = circularKeys.filter(key => Number(key.dataset.circularRing) === 1);
-        destinationIndex = Math.round(currentIndex * outerKeys.length / ringKeys.length) % outerKeys.length;
-      } else if (event.key === 'ArrowUp' && currentRing === 0) {
-        document.getElementById('circularAlphabetBtn')?.focus();
-        return;
-      }
-
-      const targetKeys = circularKeys.filter(key => Number(key.dataset.circularRing) === destinationRing);
-      circularKeys.forEach(key => key.tabIndex = -1);
-      const target = targetKeys[destinationIndex];
-      if (target) {
-        target.tabIndex = 0;
-        target.focus();
       }
       return;
     }
@@ -5481,6 +4893,1134 @@ function initGamepadControls() {
   };
 
   requestAnimationFrame(poll);
+}
+
+// Palavras-chave da argola de dentro (sempre visível), para começar uma frase.
+const palavrasChave = ["eu", "você", "ele", "ela", "nós", "eles", "elas", "isso", "aquilo"];
+
+// Pool de reserva usado quando faltam sugestões específicas para completar a argola de fora.
+const frasesRapidas = [
+    "olá", "tudo bem", "pode ajudar", "quero ir para casa", "estou com dor",
+    "preciso de água", "não entendi", "mais devagar", "até logo", "obrigado"
+];
+
+// Sugestões da argola de fora (aparece após a 1ª palavra), tipo corretor automático.
+const sugestoesPorPalavra = {
+    eu: ["vou", "quero", "não", "acho", "tenho", "preciso", "estou"],
+    voce: ["vai", "quer", "pode", "sabe", "tem", "está", "foi"],
+    ela: [
+        "é", "está", "vai", "tem", "foi", "quer", "pode", "sabe", "fez", "disse",
+        "chegou", "gosta", "precisa", "queria", "estava", "era", "ficou", "começou",
+        "terminou", "mora", "trabalha", "estuda", "faz", "diz", "acha", "pensa",
+        "conhece", "entende", "viu", "falou", "ligou", "mandou", "pegou", "deu",
+        "saiu", "voltou", "entrou"
+    ],
+    nos: [
+        "somos", "estamos", "vamos", "temos", "fomos", "queremos", "podemos",
+        "sabemos", "fizemos", "dissemos", "chegamos", "gostamos", "precisamos",
+        "queríamos", "estávamos", "éramos", "ficamos", "começamos", "terminamos",
+        "moramos", "trabalhamos", "estudamos", "fazemos", "dizemos", "achamos",
+        "pensamos", "conhecemos", "entendemos", "vimos", "falamos", "ligamos",
+        "mandamos", "pegamos", "demos", "saímos", "voltamos", "entramos",
+        "iremos", "teremos", "poderemos"
+    ],
+    eles: [
+        "são", "estão", "vão", "têm", "foram", "querem", "podem", "sabem",
+        "fizeram", "disseram", "chegaram", "gostam", "precisam", "queriam",
+        "estavam", "eram", "ficaram", "começaram", "terminaram", "moram",
+        "trabalham", "estudam", "fazem", "dizem", "acham", "pensam", "conhecem",
+        "entendem", "viram", "falaram", "ligaram", "mandaram", "pegaram", "deram",
+        "saíram", "voltaram", "entraram", "irão", "terão", "poderão"
+    ],
+    quero: ["água", "comida", "ir ao banheiro", "ajuda", "falar", "ir para casa", "descansar", "saber", "parar", "mais tempo"],
+    preciso: ["de ajuda", "de água", "de comida", "ir ao banheiro", "descansar", "falar com alguém", "de remédio", "ir para casa", "de tempo", "entender"],
+    não: ["quero", "sei", "entendi", "posso", "estou bem", "gosto", "preciso", "consigo", "tenho certeza", "obrigado"],
+    sim: ["por favor", "eu quero", "eu posso", "está bem", "obrigado", "vamos", "agora", "quero isso", "entendi", "claro"],
+    isso: [
+        "é", "está", "foi", "será", "era", "parece", "pode", "poderia", "deve",
+        "deveria", "tem", "tinha", "vai", "vai ser", "seria", "significa",
+        "aconteceu", "acontece", "funciona", "funcionou", "faz", "fez", "fica",
+        "ficou", "está certo", "está errado", "está acontecendo", "não", "sim",
+        "mesmo", "muito", "bem", "melhor", "pior", "importante", "necessário",
+        "possível", "verdade", "fácil", "difícil", "bom", "ruim", "incrível",
+        "interessante", "estranho"
+    ],
+    ajuda: ["por favor", "agora", "para mim", "com isso", "eu preciso", "não consigo", "estou com dor", "quero falar", "por aqui", "obrigado"],
+    agua: ["por favor", "eu quero", "preciso de", "agora", "um pouco", "mais água", "para beber", "obrigado", "estou com sede", "quero beber"],
+    comida: ["por favor", "eu quero", "preciso de", "agora", "um pouco", "mais comida", "para comer", "obrigado", "estou com fome", "quero comer"],
+    banheiro: ["por favor", "quero ir", "preciso ir", "agora", "onde fica", "me acompanhe", "com ajuda", "obrigado", "urgente", "vamos"],
+    dor: ["estou com", "muita dor", "aqui", "preciso de ajuda", "agora", "por favor", "não estou bem", "chame alguém", "remédio", "obrigado"],
+
+    // Continuações para os verbos mais comuns das listas de "eu" e de
+    // "você/ele/ela", para a frase continuar fazendo sentido depois deles.
+    vou: ["para casa", "embora", "tentar", "dormir", "comer", "trabalhar", "sair", "ficar bem", "voltar", "fazer isso"],
+    acho: ["que sim", "que não", "bom", "estranho", "engraçado", "difícil", "interessante", "melhor assim", "isso certo", "isso errado"],
+    tenho: ["certeza", "dúvida", "medo", "fome", "sede", "sono", "pressa", "um problema", "uma pergunta", "saudade"],
+    estou: ["bem", "cansado", "com fome", "com sede", "com dor", "feliz", "triste", "preocupado", "com pressa", "com sono"],
+    vai: ["ficar bem", "dar certo", "chover", "sair", "embora", "dormir", "comer", "trabalhar", "demorar", "voltar"],
+    quer: ["água", "comida", "ajuda", "ir embora", "descansar", "falar", "saber", "parar", "dormir", "sair"],
+    pode: ["me ajudar", "esperar", "repetir", "vir aqui", "falar mais devagar", "ser", "ficar", "entrar", "sair", "continuar"],
+    sabe: ["onde fica", "como fazer", "o que aconteceu", "de que estou falando", "a resposta", "que horas são", "por quê", "quando", "quem foi", "o que fazer"],
+    tem: ["certeza", "razão", "um problema", "tempo", "fome", "sede", "medo", "pressa", "paciência", "cuidado"],
+    esta: ["bem", "certo", "errado", "acontecendo", "ótimo", "difícil", "tudo bem", "cansado", "com fome", "com dor"],
+    foi: ["embora", "bom", "difícil", "rápido", "um erro", "sem querer", "sozinho", "com ela", "com ele", "ontem"],
+    e: ["verdade", "importante", "difícil", "fácil", "isso mesmo", "sério", "engraçado", "possível", "necessário", "estranho"],
+    faz: ["tempo", "sentido", "isso", "um favor", "calor", "frio", "bem", "mal", "diferença", "falta"],
+    diz: ["que sim", "que não", "a verdade", "para eu esperar", "olá", "obrigado", "desculpa", "por favor", "tchau", "não sei"],
+    gosta: ["muito", "disso", "de mim", "de você", "de música", "de comer", "de ler", "de conversar", "de passear", "de ajudar"],
+    precisa: ["de ajuda", "de água", "descansar", "ir embora", "de tempo", "de remédio", "de mim", "de calma", "conversar", "entender"],
+
+    // O mesmo, para as formas no plural das listas de "nós" e de "eles/elas".
+    vamos: ["embora", "comer", "sair", "para casa", "tentar", "ver", "conversar", "esperar", "começar", "descansar"],
+    estamos: ["bem", "com fome", "cansados", "com pressa", "quase lá", "juntos", "esperando", "prontos", "atrasados", "bem aqui"],
+    vao: ["embora", "chegar", "ficar bem", "dar certo", "voltar", "sair", "demorar", "entender", "ajudar", "conseguir"],
+    querem: ["ajuda", "água", "ir embora", "saber", "descansar", "falar", "comer", "sair", "entender", "parar"],
+    podem: ["vir", "esperar", "ajudar", "entrar", "ficar", "continuar", "sair", "repetir", "explicar", "tentar"],
+    sabem: ["onde fica", "o que fazer", "a resposta", "que horas são", "por quê", "quando", "quem foi", "como funciona", "o que aconteceu", "de que se trata"]
+};
+
+// "ele" usa a mesma conjugação de "ela" (3ª pessoa do singular).
+// "elas" e "aquilo" usam as mesmas sugestões de "eles" e "isso".
+sugestoesPorPalavra.ele = sugestoesPorPalavra.ela;
+sugestoesPorPalavra.elas = sugestoesPorPalavra.eles;
+sugestoesPorPalavra.aquilo = sugestoesPorPalavra.isso;
+
+// Sugestão genérica quando a última palavra não tem lista específica.
+const sugestoesGenericas = [
+    "quero", "preciso", "por favor", "ajuda", "agora", "mais",
+    "de novo", "está bem", "não entendi", "obrigado"
+];
+
+// Referências de DOM e estado do teclado circular — recriados a cada
+// entrada na tela "circularMode" pela função initCircularKeyboard().
+let valor = null;
+let menuOrbital = null;
+let botoesMenu = [];
+let frasesProntasEl = null;
+
+// Argola 0: palavras-chave, fica por dentro e sempre visível.
+// Argola 1: sugestões (autocomplete), fica por fora e só aparece ao redor
+// da argola 0 depois que a primeira palavra-chave é escolhida.
+let aneis = [];
+
+let teclaAtiva = null;
+let direcaoAtiva = "cima";
+let sugestoesVisiveis = false;
+
+// Cursor de navegação controlado pelo próprio código (não depende só do
+// foco real do navegador, que pode falhar em certos ambientes de exibição).
+let anelAtualIndice = 0;
+let posicaoAtualIndice = 0;
+
+function normalizarPalavra(texto) {
+    return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+}
+
+function palavraAtual() {
+    const palavras = valor.textContent.trim().split(/\s+/);
+    return normalizarPalavra(palavras.at(-1) || "");
+}
+
+// Quando a IA responde com menos opções, completa com poucas palavras locais,
+// mantendo a maioria das teclas baseada na resposta do Gemini.
+function completarComMaioriaGemini(sugestoesIA, quantidade, reserva) {
+    const principais = [...new Set(sugestoesIA.filter((palavra) => typeof palavra === "string" && palavra.trim()))]
+        .slice(0, quantidade);
+    const limiteReserva = Math.min(3, Math.max(0, principais.length - 1), quantidade - principais.length);
+    const extras = [...new Set(reserva.filter((palavra) => !principais.includes(palavra)))].slice(0, limiteReserva);
+    return principais.concat(extras);
+}
+
+function atualizarTextoDasTeclas(anel, palavras) {
+    anel.palavras = palavras;
+    anel.teclas.forEach((tecla, indice) => {
+        const texto = palavras[indice] || "";
+        tecla.textContent = texto;
+        tecla.dataset.valor = texto;
+        tecla.setAttribute("aria-label", texto ? `Sugestão: ${texto}` : "Sem sugestão disponível");
+    });
+}
+
+// ==== Integração opcional com Gemini via proxy local ====
+try { sessionStorage.removeItem("comunica:gemini-key"); } catch (erro) { /* armazenamento indisponível */ }
+const GEMINI_API_URL = "/api/gemini";
+let geminiStatusPromise = null;
+
+function geminiDisponivel() {
+    if (!geminiStatusPromise) {
+        geminiStatusPromise = fetch("/api/gemini/status")
+            .then((resposta) => resposta.ok ? resposta.json() : null)
+            .then((dados) => dados?.configured === true)
+            .catch(() => false);
+    }
+    return geminiStatusPromise;
+}
+
+async function categorizarPalavraComGemini(palavra) {
+    if (!(await geminiDisponivel())) return null;
+    const categorias = allCategories().map(({ id, label }) => ({ id, label }));
+    if (!categorias.length) return null;
+    try {
+        const resposta = await fetch(GEMINI_API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                contents: [{ role: "user", parts: [{ text: `Classifique a palavra ou expressão para um teclado de Comunicação Alternativa em português do Brasil. Escolha somente uma categoria da lista, sem criar categorias. Palavra: ${JSON.stringify(palavra)}. Categorias: ${JSON.stringify(categorias)}. Responda somente JSON no formato {"id":"ID_DA_CATEGORIA"}.` }] }],
+                generationConfig: { temperature: 0.1, responseMimeType: "application/json" }
+            })
+        });
+        const dados = await resposta.json();
+        if (!resposta.ok) {
+            console.warn("Falha na categorização Gemini:", resposta.status, dados.error?.message || dados);
+            return null;
+        }
+        const texto = dados.candidates?.[0]?.content?.parts?.map((parte) => parte.text || "").join("").trim() || "";
+        const json = texto.match(/\{[\s\S]*\}/)?.[0];
+        if (!json) {
+            console.warn("Gemini retornou uma resposta sem JSON de categoria:", texto);
+            return null;
+        }
+        const id = JSON.parse(json).id;
+        return categorias.some((categoria) => categoria.id === id) ? id : null;
+    } catch (erro) {
+        console.warn("Não foi possível categorizar a palavra com Gemini:", erro);
+        return null;
+    }
+}
+
+function categoriaLocalAutomatica(palavra) {
+    const texto = normalizarPalavra(palavra);
+    const idsDisponiveis = new Set(allCategories().map((categoria) => categoria.id));
+    const regras = [
+        ["pessoas", /\b(eu|voce|ele|ela|eles|elas|mae|pai|avo|irma|irmao|tia|tio|amigo|amiga|filho|filha|professor|professora|familia)\b/],
+        ["comida", /\b(comida|agua|suco|leite|arroz|feijao|pao|fruta|maca|banana|carne|bolo|lanche|cafe|almoco|jantar)\b/],
+        ["necessidades", /\b(banheiro|ajuda|dor|sono|fome|sede|descanso|beber|comer|dormir|preciso)\b/],
+        ["sentimentos", /\b(feliz|triste|bravo|brava|medo|cansado|cansada|bem|mal|ansioso|ansiosa|saudade)\b/],
+        ["lugares", /\b(casa|escola|parque|hospital|quarto|cozinha|rua|banheiro|mercado|cidade)\b/],
+        ["atividades", /\b(brincar|jogar|assistir|ler|desenhar|cantar|passear|dancar|estudar|nadar)\b/],
+        ["acoes", /\b(quero|gosto|vou|estou|tenho|fazer|ir|vir|dar|ver|falar|preciso)\b/]
+    ];
+    const regra = regras.find(([id, padrao]) => idsDisponiveis.has(id) && padrao.test(texto));
+    if (regra) return regra[0];
+    if (idsDisponiveis.has("acoes") && /(?:ar|er|ir)$/.test(texto)) return "acoes";
+    return idsDisponiveis.has("necessidades") ? "necessidades" : allCategories()[0]?.id || "";
+}
+
+// Endpoint público do LanguageTool: não exige chave para uso moderado.
+const LANGUAGETOOL_URL = "https://api.languagetool.org/v2/check";
+const LANGUAGETOOL_IDIOMA = "pt-BR";
+
+// Pede ao Gemini palavras/expressões curtas para continuar a frase atual.
+// Retorna null se não há chave ou se a chamada falha; nesse caso, a argola
+// externa usa o vocabulário local padrão e a barra usa palavras personalizadas.
+const geminiSuggestionCache = new Map();
+
+function sugerirComGemini(frase, tipo = "palavras", palavraSelecionada = "") {
+    const cacheKey = JSON.stringify([frase, tipo, palavraSelecionada]);
+    if (geminiSuggestionCache.has(cacheKey)) return geminiSuggestionCache.get(cacheKey);
+    const solicitacao = consultarGemini(frase, tipo, palavraSelecionada);
+    geminiSuggestionCache.set(cacheKey, solicitacao);
+    solicitacao.then((resultado) => {
+        if (!resultado) geminiSuggestionCache.delete(cacheKey);
+        while (geminiSuggestionCache.size > 24) {
+            geminiSuggestionCache.delete(geminiSuggestionCache.keys().next().value);
+        }
+    });
+    return solicitacao;
+}
+
+async function consultarGemini(frase, tipo, palavraSelecionada) {
+    if (!(await geminiDisponivel())) return null;
+    try {
+        const generoContexto = tipo === "palavras" ? generoPronomeNaFrase(frase) : null;
+        const nomesPermitidos = generoContexto ? palavrasPersonalizadasPorGenero(generoContexto).map((word) => word.label) : [];
+        const prompt = tipo === "frases"
+            ? "Você ajuda um teclado de Comunicação Alternativa e Aumentativa em português do Brasil. Dada uma frase parcial, sugira até 4 frases completas, curtas e naturais que a pessoa provavelmente quer comunicar, usando as palavras escolhidas como base. Responda apenas um array JSON de strings."
+            : `Você sugere vocabulário para um teclado de Comunicação Alternativa e Aumentativa em português do Brasil. Use como contexto principal a palavra que a pessoa acabou de selecionar na argola interior: "${palavraSelecionada || "(não informada)"}". Considere também a frase parcial. ${generoContexto ? `Mantenha a concordância no gênero ${generoContexto}. Para sugerir nomes de pessoas, use somente estes nomes já cadastrados: ${JSON.stringify(nomesPermitidos)}.` : ""} Gere exatamente 10 palavras ou expressões curtas e naturais para continuar a comunicação, relacionadas à palavra selecionada. Não repita palavras já presentes. Responda apenas um array JSON de strings.`;
+        const resposta = await fetch(GEMINI_API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                contents: [{ role: "user", parts: [{ text: `${prompt}\nFrase parcial: ${frase || "(frase vazia; sugira palavras para começar)"}` }] }],
+                generationConfig: { temperature: 0.7, responseMimeType: "application/json" }
+            })
+        });
+        const dados = await resposta.json();
+        if (!resposta.ok) throw new Error(dados.error?.message || `Gemini HTTP ${resposta.status}`);
+        const texto = dados.candidates?.[0]?.content?.parts?.map((parte) => parte.text || "").join("").trim() || "";
+        const lista = JSON.parse(texto);
+        if (!Array.isArray(lista)) return null;
+        const jaUsadas = new Set(tipo === "palavras" ? frase.split(/\s+/).map(normalizarPalavra) : []);
+        return [...new Set(lista.filter((item) => typeof item === "string")
+            .map((item) => item.trim().replace(/^[-•\d.\s]+/, "").slice(0, 48))
+            .filter((item) => item && !jaUsadas.has(normalizarPalavra(item))))].slice(0, tipo === "frases" ? 4 : 10);
+    } catch (erro) {
+        console.warn("Não foi possível buscar sugestões do Gemini:", erro);
+        return null;
+    }
+}
+
+// Envia o texto ao LanguageTool e devolve a versão corrigida, aplicando a
+// primeira sugestão de cada erro encontrado. Se a chamada falhar, devolve
+// o texto original sem alterações.
+async function corrigirComLanguageTool(texto) {
+    if (!texto) return texto;
+    try {
+        const corpo = new URLSearchParams({ text: texto, language: LANGUAGETOOL_IDIOMA });
+        const resposta = await fetch(LANGUAGETOOL_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: corpo
+        });
+        if (!resposta.ok) return texto;
+
+        const dados = await resposta.json();
+        let corrigido = texto;
+        // Aplica as correções de trás para frente, para não bagunçar os índices dos erros seguintes.
+        const erros = [...(dados.matches || [])].sort((a, b) => b.offset - a.offset);
+        erros.forEach((erro) => {
+            const sugestao = erro.replacements?.[0]?.value;
+            if (sugestao !== undefined) {
+                corrigido = corrigido.slice(0, erro.offset) + sugestao + corrigido.slice(erro.offset + erro.length);
+            }
+        });
+        return corrigido;
+    } catch (erro) {
+        console.warn("Não foi possível corrigir o texto com o LanguageTool:", erro);
+        return texto;
+    }
+}
+
+async function corrigirComGemini(texto) {
+    if (!texto || !(await geminiDisponivel())) return null;
+    const palavrasPersonalizadas = STATE.data.customWords.map((word) => word.label).filter(Boolean);
+    try {
+        const resposta = await fetch(GEMINI_API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                contents: [{ role: "user", parts: [{ text: `Revise esta frase curta de Comunicação Alternativa em português do Brasil. Corrija concordância de gênero e número. Se um nome ou palavra cadastrada aparecer com erro de digitação, use a grafia exata da lista personalizada. Palavras personalizadas permitidas: ${JSON.stringify(palavrasPersonalizadas)}. Se um pronome como ela/ele estiver imediatamente antes do nome que identifica a mesma pessoa, retire a repetição do pronome e mantenha o nome exatamente como cadastrado. Preserve a intenção e não invente nomes nem informações. Retorne somente um objeto JSON no formato {"texto":"frase corrigida"}. Frase: ${texto}` }] }],
+                generationConfig: { temperature: 0.1, responseMimeType: "application/json" }
+            })
+        });
+        const dados = await resposta.json();
+        if (!resposta.ok) throw new Error(dados.error?.message || `Gemini HTTP ${resposta.status}`);
+        const conteudo = dados.candidates?.[0]?.content?.parts?.map((parte) => parte.text || "").join("").trim() || "";
+        const resultado = JSON.parse(conteudo);
+        return typeof resultado.texto === "string" && resultado.texto.trim() ? resultado.texto.trim() : null;
+    } catch (erro) {
+        console.warn("Não foi possível corrigir a frase com o Gemini:", erro);
+        return null;
+    }
+}
+
+function distanciaEdicaoUnica(a, b) {
+    if (a === b) return 0;
+    if (Math.abs(a.length - b.length) > 1) return 2;
+    let i = 0;
+    let j = 0;
+    let diferencas = 0;
+    while (i < a.length && j < b.length) {
+        if (a[i] === b[j]) { i += 1; j += 1; continue; }
+        diferencas += 1;
+        if (diferencas > 1) return diferencas;
+        if (a.length > b.length) i += 1;
+        else if (b.length > a.length) j += 1;
+        else { i += 1; j += 1; }
+    }
+    if (i < a.length || j < b.length) diferencas += 1;
+    return diferencas;
+}
+
+function canonicalizarNomesPersonalizados(texto) {
+    const palavrasPessoas = STATE.data.customWords.filter((word) => {
+        const categoria = allCategories().find((item) => item.id === word.cat);
+        return word.cat === "pessoas" || /pessoa|famil|amig|relacion/.test(normalizarPalavra(categoria?.label || ""));
+    });
+    const tokens = [...texto.matchAll(/[\p{L}]+/gu)];
+    let indiceToken = 0;
+    return texto.replace(/[\p{L}]+/gu, (token) => {
+        const indiceAtual = indiceToken++;
+        const normalizado = normalizarPalavra(token);
+        const exato = palavrasPessoas.find((word) => normalizarPalavra(word.label) === normalizado);
+        if (exato) return exato.label;
+        const tokenAnterior = normalizarPalavra(tokens[indiceAtual - 1]?.[0] || "");
+        if (!["ela", "ele", "elas", "eles"].includes(tokenAnterior) || normalizado.length < 3) return token;
+        const aproximado = palavrasPessoas.find((word) => {
+            const nome = normalizarPalavra(word.label);
+            return !/\s/.test(nome) && distanciaEdicaoUnica(normalizado, nome) === 1;
+        });
+        return aproximado ? aproximado.label : token;
+    });
+}
+
+let atualizarBarraTimer = null;
+let sugestaoSelecionadaBarra = "";
+
+// Renderiza sugestões rápidas abaixo do campo. Cada opção completa a frase
+// atual, como a barra preditiva de um teclado convencional.
+function mostrarFrasesProntas(frases, fonte = "local") {
+    if (!frasesProntasEl) return;
+    frasesProntasEl.innerHTML = "";
+    const rotulo = fonte === "mista" ? "Sugestões Gemini e personalizadas" : fonte === "ia" ? "Sugestões Gemini" : fonte === "personalizadas" ? "Palavras personalizadas" : "Palavras salvas";
+    frasesProntasEl.dataset.rotulo = rotulo;
+    frasesProntasEl.setAttribute("aria-label", `${rotulo} de palavras e complementos`);
+    if (!frases || !frases.length) return;
+    frases.forEach((frase) => {
+        const botao = document.createElement("button");
+        botao.type = "button";
+        botao.className = "frase-pronta palavra-sugerida";
+        botao.textContent = frase;
+        const selecionada = normalizarPalavra(frase) === normalizarPalavra(sugestaoSelecionadaBarra);
+        botao.dataset.selecionada = selecionada ? "true" : "false";
+        botao.setAttribute("aria-pressed", String(selecionada));
+        botao.addEventListener("click", () => {
+            sugestaoSelecionadaBarra = frase;
+            adicionarPalavra(frase);
+        });
+        frasesProntasEl.appendChild(botao);
+    });
+}
+
+function atualizarFrasesProntas() {
+    const frase = valor.textContent.trim();
+    clearTimeout(atualizarBarraTimer);
+    const genero = generoDoPronomeAtual();
+    if (genero) {
+        const palavras = palavrasPersonalizadasPorGenero(genero).map((word) => word.label);
+        const lista = [...new Set([sugestaoSelecionadaBarra, ...palavras].filter(Boolean))].slice(0, 3);
+        mostrarFrasesProntas(lista, "personalizadas");
+        return;
+    }
+    const tokens = frase.split(/\s+/).filter(Boolean);
+    const ultima = normalizarPalavra(tokens.at(-1) || "");
+    const usadas = new Set(tokens.map(normalizarPalavra));
+    const baseLocal = STATE.data.customWords.map((word) => word.label).filter(Boolean);
+    const locais = [...new Set([sugestaoSelecionadaBarra, ...baseLocal
+        .filter((item) => !usadas.has(normalizarPalavra(item)))].filter(Boolean))].slice(0, 2);
+    mostrarFrasesProntas(locais);
+
+    // Espera a digitação parar antes de pedir ao Gemini. A argola externa e a
+    // barra reaproveitam a mesma resposta quando consultam a mesma frase.
+    atualizarBarraTimer = setTimeout(async () => {
+        const sugestoesGemini = await sugerirComGemini(frase, "palavras", tokens.at(-1) || "");
+        if (valor.textContent.trim() === frase && !generoDoPronomeAtual() && sugestoesGemini?.length) {
+            const sugestoesDaBarra = [...new Set([sugestaoSelecionadaBarra, ...sugestoesGemini.slice(0, 2), ...locais].filter(Boolean))].slice(0, 3);
+            const temPersonalizada = sugestoesDaBarra.some((item) => STATE.data.customWords.some((word) => normalizarPalavra(word.label) === normalizarPalavra(item)));
+            mostrarFrasesProntas(sugestoesDaBarra, temPersonalizada ? "mista" : "ia");
+        }
+    }, 450);
+}
+
+function atualizarAnelPalavrasChave() {
+    atualizarTextoDasTeclas(aneis[0], palavrasChave);
+}
+
+function palavrasPersonalizadasPorGenero(genero) {
+    const termosFemininos = new Set([
+        "mae", "tia", "irma", "filha", "mulher", "menina", "amiga",
+        "professora", "doutora", "senhora", "rainha", "madrinha", "prima",
+        "alice", "beatriz", "carol", "ester", "ines", "isabel", "joyce",
+        "lais", "luz", "nicole", "rachel", "raquel", "sarah"
+    ]);
+    const termosMasculinos = new Set([
+        "pai", "tio", "irmao", "filho", "homem", "menino", "amigo",
+        "professor", "doutor", "senhor", "rei", "padrinho", "primo",
+        "gabriel", "miguel", "rafael", "daniel", "samuel", "jose", "davi"
+    ]);
+    return STATE.data.customWords.filter((word) => {
+        const categoria = allCategories().find((item) => item.id === word.cat);
+        const categoriaPessoas = word.cat === "pessoas" || /pessoa|famil|amig|relacion/.test(normalizarPalavra(categoria?.label || ""));
+        if (!categoriaPessoas) return false;
+        const nome = normalizarPalavra(word.label);
+        const nomeComAcento = String(word.label).toLocaleLowerCase("pt-BR");
+        if (genero === "feminino") return word.gender === "feminino" || word.gender === "female" || nomeComAcento === "avó" || termosFemininos.has(nome) || /a$/.test(nome);
+        return word.gender === "masculino" || word.gender === "male" || nomeComAcento === "avô" || termosMasculinos.has(nome) || /o$/.test(nome);
+    });
+}
+
+function generoPronomeNaFrase(texto) {
+    const tokens = String(texto || "").split(/\s+/).map(normalizarPalavra).filter(Boolean);
+    for (let indice = tokens.length - 1; indice >= 0; indice -= 1) {
+        if (["ela", "elas"].includes(tokens[indice])) return "feminino";
+        if (["ele", "eles"].includes(tokens[indice])) return "masculino";
+    }
+    return null;
+}
+
+function generoDoPronomeAtual() {
+    const ultima = palavraAtual();
+    if (["ela", "elas"].includes(ultima)) return "feminino";
+    if (["ele", "eles"].includes(ultima)) return "masculino";
+    return null;
+}
+
+function mostrarSugestoesPersonalizadasPorGenero(anel, genero, embaralharLista = false) {
+    const palavras = palavrasPersonalizadasPorGenero(genero).map((word) => word.label);
+    if (!palavras.length) {
+        showToast(`Adicione palavras ${genero === "feminino" ? "femininas" : "masculinas"} em Personalizar, na categoria Pessoas.`);
+        esconderAnelSugestoes();
+        return false;
+    }
+    const lista = (embaralharLista ? embaralhar(palavras) : palavras).slice(0, 10);
+    mostrarFrasesProntas(lista, "palavras");
+    if (anel.quantidade !== lista.length) criarTeclasDoAnel(anel, lista.length, false);
+    atualizarTextoDasTeclas(anel, lista);
+    return true;
+}
+
+// Preenche o anel indicado (0 ou 1) com sugestões para continuar a frase.
+// Como as duas argolas se revezam nesse papel, essa função recebe qual
+// delas atualizar, em vez de mexer sempre na mesma.
+function atualizarSugestoesNoAnel(indiceAnel) {
+    const anel = aneis[indiceAnel];
+    const genero = generoDoPronomeAtual();
+    if (genero) {
+        const listaPersonalizada = palavrasPersonalizadasPorGenero(genero).map((word) => word.label);
+        mostrarFrasesProntas(listaPersonalizada, "palavras");
+    }
+    const base = (sugestoesPorPalavra[palavraAtual()] || sugestoesGenericas);
+    const usadas = new Set(valor.textContent.trim().split(/\s+/).map(normalizarPalavra));
+    const locais = [...new Set(base.concat(frasesRapidas, palavrasChave)
+        .filter((palavra) => !usadas.has(normalizarPalavra(palavra))))].slice(0, 6);
+    if (anel.quantidade !== locais.length) criarTeclasDoAnel(anel, locais.length, false);
+    atualizarTextoDasTeclas(anel, locais);
+
+    // Atualiza primeiro com o vocabulário local; quando o Gemini responder,
+    // troca as opções apenas se a frase ainda for a mesma.
+    const fraseSolicitada = valor.textContent.trim();
+    const palavraSelecionada = fraseSolicitada.split(/\s+/).filter(Boolean).at(-1) || "";
+    sugerirComGemini(fraseSolicitada, "palavras", palavraSelecionada).then((sugestoesIA) => {
+        if (modoAlfabeto || !valor || valor.textContent.trim() !== fraseSolicitada || !sugestoesVisiveis) return;
+        if (!sugestoesIA?.length) {
+            if (!locais.length) {
+                mostrarFrasesProntas([]);
+                showToast("Não há outras sugestões locais para esta palavra.");
+            }
+            return;
+        }
+        const focoNaArgola = anel.teclas.includes(document.activeElement);
+        const palavrasSalvas = new Set(STATE.data.customWords.map((word) => normalizarPalavra(word.label)));
+        const opcoes = completarComMaioriaGemini(
+            sugestoesIA.filter((palavra) => !palavrasSalvas.has(normalizarPalavra(palavra))),
+            10,
+            []
+        );
+        if (!opcoes.length) return;
+        if (anel.quantidade !== opcoes.length) criarTeclasDoAnel(anel, opcoes.length, false);
+        atualizarTextoDasTeclas(anel, opcoes);
+        if (focoNaArgola) focarTecla(indiceAnel, Math.min(posicaoAtualIndice, opcoes.length - 1));
+    });
+    return locais.length > 0;
+}
+
+function embaralhar(lista) {
+    const copia = [...lista];
+    for (let i = copia.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copia[i], copia[j]] = [copia[j], copia[i]];
+    }
+    return copia;
+}
+
+// Botão "recarregar": gera novas opções para a argola externa depois que a
+// frase começou. O Gemini tem prioridade; sem resposta, mostra até seis
+// alternativas locais. A argola inicial permanece fixa.
+async function recarregarSugestoes() {
+    // No modo alfabético não há o que recarregar (as 26 letras já estão
+    // todas na argola); "recarregar" fica sem efeito até sair do modo.
+    if (modoAlfabeto) return;
+
+    const frase = valor.textContent.trim();
+    if (!frase) {
+        showToast("Escolha uma palavra para receber sugestões do Gemini na argola externa.");
+        return;
+    }
+    const indiceAnel = 1;
+    anelAtualIndice = indiceAnel;
+    if (indiceAnel === 1 && !sugestoesVisiveis) return;
+    const anel = aneis[indiceAnel];
+
+    // Mantém as palavras personalizadas compatíveis com o pronome nos campos
+    // abaixo da frase; o recarregamento da argola continua sugerindo continuações.
+    const genero = generoDoPronomeAtual();
+    if (frase && genero) {
+        const palavras = palavrasPersonalizadasPorGenero(genero).map((word) => word.label);
+        mostrarFrasesProntas(palavras, "palavras");
+    }
+
+    if (!(await geminiDisponivel())) {
+        showToast("Gemini não configurado no servidor. Mantendo sugestões locais.");
+    }
+
+    const palavraSelecionada = frase.split(/\s+/).filter(Boolean).at(-1) || "";
+    const sugestoesIA = await sugerirComGemini(`${frase} (sugira opções diferentes das mais óbvias)`, "palavras", palavraSelecionada);
+    if (sugestoesIA && sugestoesIA.length) {
+        const palavrasSalvas = new Set(STATE.data.customWords.map((word) => normalizarPalavra(word.label)));
+        const opcoes = completarComMaioriaGemini(
+            sugestoesIA.filter((palavra) => !palavrasSalvas.has(normalizarPalavra(palavra))),
+            10,
+            []
+        );
+        if (opcoes.length) {
+            if (anel.quantidade !== opcoes.length) criarTeclasDoAnel(anel, opcoes.length, false);
+            atualizarTextoDasTeclas(anel, opcoes);
+            return;
+        }
+    }
+
+    const base = (sugestoesPorPalavra[palavraAtual()] || sugestoesGenericas);
+    const usadas = new Set(frase.split(/\s+/).map(normalizarPalavra));
+    const novaLista = embaralhar([...new Set(base.concat(frasesRapidas, palavrasChave)
+        .filter((palavra) => !usadas.has(normalizarPalavra(palavra))))]).slice(0, 6);
+    if (!novaLista.length) {
+        criarTeclasDoAnel(anel, 0, false);
+        mostrarFrasesProntas([]);
+        showToast("Não há outras sugestões locais para esta palavra.");
+        return;
+    }
+    if (anel.quantidade !== novaLista.length) criarTeclasDoAnel(anel, novaLista.length, false);
+    atualizarTextoDasTeclas(anel, novaLista);
+}
+
+// Reseta o teclado para a configuração inicial: argola de dentro volta a
+// mostrar as palavras-chave e a argola de fora desaparece de novo.
+function voltarConfiguracaoInicial() {
+    if (modoAlfabeto) {
+        criarTeclasDoAnel(aneis[0], 9, false);
+        modoAlfabeto = false;
+        document.querySelectorAll(".botao-alfabeto").forEach((botao) => botao.classList.remove("ativo"));
+    }
+    atualizarAnelPalavrasChave();
+    esconderAnelSugestoes();
+    if (!valor?.textContent.trim()) sugestaoSelecionadaBarra = "";
+    atualizarFrasesProntas();
+    novaPalavraAlfabeto = true;
+    noBotaoCentral = false;
+    anelAtualIndice = 0;
+    posicaoAtualIndice = 0;
+    focarTecla(0, 0);
+}
+
+// Posiciona os botões do menu lateral com a mesma trigonometria usada nas
+// teclas (ângulo + raio a partir do centro), formando um arco que encaixa
+// exatamente na circunferência da argola visível no momento — mais perto
+// da borda da argola de dentro (raio 36%) e mais longe quando a argola de
+// fora está aberta (raio 46%, acompanhando o tamanho maior dela).
+const ANGULO_BASE_MENU = { direita: 0, baixo: 90, esquerda: 180, cima: -90 };
+const ARCO_MENU_GRAUS = 110;
+
+function posicionarMenuOrbital() {
+    if (!menuOrbital || !botoesMenu.length) return;
+
+    const anguloBase = ANGULO_BASE_MENU[direcaoAtiva] ?? 0;
+    const area = menuOrbital.getBoundingClientRect();
+    const tecladoRect = document.getElementById("teclado")?.getBoundingClientRect();
+    if (!area.width || !area.height || !tecladoRect?.width || !tecladoRect?.height) return;
+    // O menu e o teclado compartilham o mesmo centro. Calcula-se um único
+    // raio que caiba com todos os botões; limitar cada botão separadamente
+    // fazia vários deles se acumularem na borda quando a argola abria.
+    const centroX = tecladoRect.left + tecladoRect.width / 2 - area.left;
+    const centroY = tecladoRect.top + tecladoRect.height / 2 - area.top;
+    const raioDesejado = tecladoRect.width * (sugestoesVisiveis ? 0.52 : 0.43);
+    const total = botoesMenu.length;
+
+    const angulos = botoesMenu.map((_, indice) => {
+        const offset = total > 1
+            ? (indice - (total - 1) / 2) * (ARCO_MENU_GRAUS / (total - 1))
+            : 0;
+        return anguloBase + offset;
+    });
+    const raioSeguro = botoesMenu.reduce((limite, botao, indice) => {
+        const anguloRad = angulos[indice] * Math.PI / 180;
+        const cos = Math.cos(anguloRad);
+        const sin = Math.sin(anguloRad);
+        const metadeLargura = (botao.offsetWidth || 54) / 2;
+        const metadeAltura = (botao.offsetHeight || 54) / 2;
+        let limiteBotao = Infinity;
+
+        if (cos > 0.001) limiteBotao = Math.min(limiteBotao, (area.width - metadeLargura - 4 - centroX) / cos);
+        else if (cos < -0.001) limiteBotao = Math.min(limiteBotao, (centroX - metadeLargura - 4) / -cos);
+        if (sin > 0.001) limiteBotao = Math.min(limiteBotao, (area.height - metadeAltura - 4 - centroY) / sin);
+        else if (sin < -0.001) limiteBotao = Math.min(limiteBotao, (centroY - metadeAltura - 4) / -sin);
+        return Math.min(limite, limiteBotao);
+    }, Infinity);
+    const raio = Math.max(0, Math.min(raioDesejado, raioSeguro));
+
+    botoesMenu.forEach((botao, indice) => {
+        const anguloGraus = angulos[indice];
+        const anguloRad = anguloGraus * Math.PI / 180;
+        const xDesejado = centroX + Math.cos(anguloRad) * raio;
+        const yDesejado = centroY + Math.sin(anguloRad) * raio;
+
+        botao.style.left = `${xDesejado}px`;
+        botao.style.top = `${yDesejado}px`;
+        botao.dataset.angulo = String(anguloGraus);
+    });
+}
+
+let menuOrbitalResizeFrame = 0;
+window.addEventListener('resize', () => {
+    cancelAnimationFrame(menuOrbitalResizeFrame);
+    menuOrbitalResizeFrame = requestAnimationFrame(posicionarMenuOrbital);
+});
+
+function mostrarAnelSugestoes() {
+    sugestoesVisiveis = true;
+    aneis[1].elemento.classList.add("visivel");
+    posicionarMenuOrbital();
+}
+
+function esconderAnelSugestoes() {
+    sugestoesVisiveis = false;
+    aneis[1].elemento.classList.remove("visivel");
+    aneis[1].cunha.classList.remove("ativa");
+    aneis[1].teclas.forEach((tecla) => (tecla.tabIndex = -1));
+    posicionarMenuOrbital();
+}
+
+function adicionarPalavra(texto) {
+    if (!texto) return;
+    valor.textContent = `${valor.textContent.trim()} ${texto}`.trim();
+    atualizarFrasesProntas();
+}
+
+// ==== Modo alfabético (botão "Aa" no centro da argola de dentro) ====
+// Reconstrói a própria argola de dentro (a "argola inicial") com as 26
+// letras do alfabeto, no lugar do que ela estivesse mostrando (palavras-
+// chave ou sugestões). Só entra nesse modo quando o botão central é clicado.
+const alfabeto = "abcdefghijklmnopqrstuvwxyz".split("");
+let modoAlfabeto = false;
+let novaPalavraAlfabeto = true;
+
+// A argola interna mantém as palavras-chave; as continuações ficam na externa.
+function restaurarConteudoAnelInicial() {
+    atualizarAnelPalavrasChave();
+}
+
+function entrarModoAlfabeto() {
+    modoAlfabeto = true;
+    novaPalavraAlfabeto = true;
+    criarTeclasDoAnel(aneis[0], alfabeto.length, true);
+    atualizarTextoDasTeclas(aneis[0], alfabeto);
+    anelAtualIndice = 0;
+    posicaoAtualIndice = 0;
+    focarTecla(0, 0);
+}
+
+function sairModoAlfabeto() {
+    modoAlfabeto = false;
+    criarTeclasDoAnel(aneis[0], 9, false);
+    restaurarConteudoAnelInicial();
+    anelAtualIndice = 0;
+    posicaoAtualIndice = 0;
+    atualizarFrasesProntas();
+    if (valor.textContent.trim() && sugestoesVisiveis) atualizarSugestoesNoAnel(1);
+    focarTecla(0, 0);
+}
+
+function alternarModoAlfabeto() {
+    noBotaoCentral = false;
+    if (modoAlfabeto) sairModoAlfabeto(); else entrarModoAlfabeto();
+    document.querySelectorAll(".botao-alfabeto").forEach((botao) => botao.classList.toggle("ativo", modoAlfabeto));
+}
+
+// Digita uma letra na palavra atual: a primeira letra depois de entrar no
+// modo alfabético começa uma palavra nova (com espaço); as seguintes
+// grudam direto na anterior, sem espaço, até o usuário sair do modo.
+function adicionarLetra(letra) {
+    if (novaPalavraAlfabeto) {
+        valor.textContent = `${valor.textContent.trim()} ${letra}`.trim();
+        novaPalavraAlfabeto = false;
+    } else {
+        valor.textContent += letra;
+    }
+    atualizarFrasesProntas();
+}
+
+// Usada tanto pelo clique quanto pela tecla Enter/Espaço. As palavras-chave
+// ficam na argola interna; as continuações permanecem sempre na argola externa.
+function selecionarPalavra(tecla) {
+    const indiceReal = aneis.findIndex((anel) => anel.teclas.includes(tecla));
+    if (indiceReal < 0) return;
+    anelAtualIndice = indiceReal;
+    posicaoAtualIndice = aneis[indiceReal].teclas.indexOf(tecla);
+
+    if (modoAlfabeto) {
+        // No modo alfabético só a própria argola de dentro (agora com as
+        // letras) responde; a de fora fica bloqueada até sair do modo.
+        if (aneis[0].teclas.includes(tecla)) adicionarLetra(tecla.dataset.valor);
+        return;
+    }
+
+    adicionarPalavra(tecla.dataset.valor);
+
+    const anelDestino = 1;
+    if (!sugestoesVisiveis) mostrarAnelSugestoes();
+    const temSugestoes = atualizarSugestoesNoAnel(anelDestino);
+    if (temSugestoes === false) {
+        anelAtualIndice = 0;
+        posicaoAtualIndice = 0;
+        focarTecla(0, 0);
+        return;
+    }
+
+    anelAtualIndice = anelDestino;
+    posicaoAtualIndice = 0;
+    focarTecla(anelDestino, 0);
+}
+
+function direcaoDoAngulo(angulo) {
+    const x = Math.cos(angulo * Math.PI / 180);
+    const y = Math.sin(angulo * Math.PI / 180);
+    if (Math.abs(x) >= Math.abs(y)) return x >= 0 ? "direita" : "esquerda";
+    return y >= 0 ? "baixo" : "cima";
+}
+
+function indiceMaisProximoNoAnel(origem, destino, posicao) {
+    const anguloOrigem = (posicao / origem.teclas.length) * 2 * Math.PI - Math.PI / 2;
+    let melhorIndice = 0;
+    let menorDistancia = Infinity;
+    destino.teclas.forEach((_, indice) => {
+        const anguloDestino = (indice / destino.teclas.length) * 2 * Math.PI - Math.PI / 2;
+        const distancia = Math.abs(Math.atan2(Math.sin(anguloDestino - anguloOrigem), Math.cos(anguloDestino - anguloOrigem)));
+        if (distancia < menorDistancia) {
+            menorDistancia = distancia;
+            melhorIndice = indice;
+        }
+    });
+    return melhorIndice;
+}
+
+function mostrarCunha(anel, posicao) {
+    const abertura = 360 / anel.quantidade;
+    const inicio = posicao * abertura - abertura / 2;
+    aneis.forEach((outroAnel) => outroAnel.cunha.classList.remove("ativa"));
+    anel.cunha.style.background = `conic-gradient(from ${inicio}deg, rgb(247 201 77 / 55%) 0deg ${abertura}deg, transparent ${abertura}deg 360deg)`;
+    anel.cunha.classList.add("ativa");
+}
+
+function selecionarTecla(tecla, anel, posicao) {
+    const indiceAnel = aneis.indexOf(anel);
+    if (teclaAtiva === tecla && anelAtualIndice === indiceAnel && posicaoAtualIndice === posicao) return;
+    aneis.forEach((outroAnel) => {
+        if (outroAnel.cunha) outroAnel.cunha.classList.remove("ativa");
+    });
+    teclaAtiva = tecla;
+    direcaoAtiva = tecla.dataset.direcao;
+    anelAtualIndice = indiceAnel;
+    posicaoAtualIndice = posicao;
+    menuOrbital.classList.add("ativo");
+    posicionarMenuOrbital();
+    mostrarCunha(anel, posicao);
+}
+
+function focarTecla(anelDestino, posicaoDestino) {
+    const anel = aneis[anelDestino];
+    if (!anel || (anelDestino === 1 && !sugestoesVisiveis) || !anel.teclas.length) return;
+
+    const indiceSeguro = ((posicaoDestino % anel.teclas.length) + anel.teclas.length) % anel.teclas.length;
+    aneis.forEach((item) => item.teclas.forEach((tecla) => (tecla.tabIndex = -1)));
+
+    const proximaTecla = anel.teclas[indiceSeguro];
+    posicaoAtualIndice = indiceSeguro;
+    proximaTecla.tabIndex = 0;
+    proximaTecla.focus();
+}
+
+// Navegação por seta do teclado físico: um único listener global (ligado
+// apenas uma vez, mais abaixo), que usa o cursor (anelAtualIndice/
+// posicaoAtualIndice) em vez de depender de qual elemento o navegador
+// considera "focado" — assim funciona mesmo quando o foco automático do
+// navegador não pega em algum ambiente de exibição. Ele só age quando a
+// tela do teclado circular está aberta.
+// Cursor extra: quando true, o foco está no botão "Aa" no centro da
+// argola de dentro (acessível pela seta para cima a partir dela).
+let noBotaoCentral = false;
+let teclaRetornoMenu = null;
+
+function tratarSetaTecladoCircular(evento) {
+    if (typeof STATE === "undefined" || STATE.screen !== "circularMode") return;
+    if (!aneis.length || !aneis[anelAtualIndice]) return;
+
+    const elementoFocado = document.activeElement;
+    const anelFocado = aneis.findIndex((anel) => anel.teclas.includes(elementoFocado));
+    const focoNaTecla = anelFocado >= 0;
+    const botaoCentral = document.querySelector(".botao-alfabeto");
+    const focoNoCentro = elementoFocado === botaoCentral;
+    const focoNoMenu = botoesMenu.includes(elementoFocado);
+    if (!focoNaTecla && !focoNoCentro) {
+        if (focoNoMenu) return;
+        if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(evento.key)) {
+            evento.preventDefault();
+            focarTecla(sugestoesVisiveis ? anelAtualIndice : 0, posicaoAtualIndice);
+        }
+        return;
+    }
+    noBotaoCentral = focoNoCentro;
+
+    // Se o foco estiver em um botão do menu lateral, quem cuida disso é o moverNoMenu.
+    if (focoNoMenu) return;
+
+    if (noBotaoCentral) {
+        if (["Enter", " "].includes(evento.key)) {
+            evento.preventDefault();
+            noBotaoCentral = false;
+            alternarModoAlfabeto();
+            return;
+        }
+        if (evento.key === "ArrowDown" || evento.key === "ArrowUp") {
+            evento.preventDefault();
+            noBotaoCentral = false;
+            focarTecla(anelAtualIndice, posicaoAtualIndice);
+        }
+        return;
+    }
+
+    // Tab pode entrar no menu sem alterar o comportamento circular das setas.
+    if (focoNaTecla && evento.key === "Tab" && !evento.shiftKey) {
+        evento.preventDefault();
+        teclaRetornoMenu = elementoFocado;
+        botoesMenu[0]?.focus();
+        return;
+    }
+
+    if (["Enter", " "].includes(evento.key)) {
+        evento.preventDefault();
+        selecionarPalavra(aneis[anelAtualIndice].teclas[posicaoAtualIndice]);
+        return;
+    }
+
+    anelAtualIndice = anelFocado;
+    const anelAtual = aneis[anelAtualIndice];
+    const indiceFocado = anelAtual.teclas.indexOf(elementoFocado);
+    if (indiceFocado >= 0) posicaoAtualIndice = indiceFocado;
+    let proximoAnel = anelAtualIndice;
+    let proximaPosicao = posicaoAtualIndice;
+
+    switch (evento.key) {
+        case "ArrowLeft":
+            proximaPosicao = (posicaoAtualIndice + anelAtual.teclas.length - 1) % anelAtual.teclas.length;
+            break;
+        case "ArrowRight":
+            proximaPosicao = (posicaoAtualIndice + 1) % anelAtual.teclas.length;
+            break;
+        case "ArrowUp":
+            if (anelAtualIndice === 1) {
+                proximoAnel = 0;
+                proximaPosicao = indiceMaisProximoNoAnel(anelAtual, aneis[0], posicaoAtualIndice);
+            } else if (anelAtualIndice === 0) {
+                evento.preventDefault();
+                const botaoCentral = document.querySelector(".botao-alfabeto");
+                if (botaoCentral) {
+                    evento.preventDefault();
+                    noBotaoCentral = true;
+                    botaoCentral.focus();
+                }
+                return;
+            }
+            break;
+        case "ArrowDown":
+            if (anelAtualIndice === 0 && sugestoesVisiveis && !modoAlfabeto) {
+                proximoAnel = 1;
+                proximaPosicao = indiceMaisProximoNoAnel(anelAtual, aneis[1], posicaoAtualIndice);
+            }
+            break;
+        default:
+            return;
+    }
+
+    if (proximoAnel === 1 && !sugestoesVisiveis) return;
+
+    evento.preventDefault();
+    if (proximoAnel !== anelAtualIndice || proximaPosicao !== posicaoAtualIndice) {
+        anelAtualIndice = proximoAnel;
+        posicaoAtualIndice = proximaPosicao;
+        focarTecla(proximoAnel, proximaPosicao);
+    }
+}
+
+let ckKeydownGlobalBound = false;
+
+function moverNoMenu(evento, indiceAtual) {
+    if (evento.key === "Escape") {
+        evento.preventDefault();
+        const destino = teclaRetornoMenu || aneis[anelAtualIndice]?.teclas?.[posicaoAtualIndice] || teclaAtiva || aneis[0]?.teclas?.[0];
+        if (destino) destino.focus();
+        teclaRetornoMenu = null;
+        return;
+    }
+}
+
+// Cria (ou recria) as teclas de uma argola com a quantidade indicada,
+// substituindo qualquer tecla que já existisse nela. Usada na montagem
+// inicial e para reconstruir a argola de dentro no modo alfabético, que
+// precisa de mais posições (26) do que as palavras-chave normais (9).
+function criarTeclasDoAnel(anel, quantidade, compacta) {
+    anel.teclas.forEach((tecla) => tecla.remove());
+    anel.teclas = [];
+    anel.quantidade = quantidade;
+
+    for (let posicao = 0; posicao < quantidade; posicao += 1) {
+        const tecla = document.createElement("button");
+        const angulo = (posicao / quantidade) * 360 - 90;
+        const x = 50 + Math.cos(angulo * Math.PI / 180) * anel.raio * 0.5;
+        const y = 50 + Math.sin(angulo * Math.PI / 180) * anel.raio * 0.5;
+        tecla.className = compacta ? "tecla tecla-compacta" : "tecla";
+        tecla.type = "button";
+        tecla.tabIndex = -1;
+        tecla.dataset.direcao = direcaoDoAngulo(angulo);
+        tecla.style.left = `${x}%`;
+        tecla.style.top = `${y}%`;
+        tecla.style.transform = "translate(-50%, -50%)";
+        tecla.addEventListener("click", (evento) => {
+            evento.stopPropagation();
+            selecionarTecla(tecla, anel, posicao);
+            selecionarPalavra(tecla);
+        });
+        tecla.addEventListener("focus", () => {
+            if (document.activeElement === tecla) selecionarTecla(tecla, anel, posicao);
+        });
+        anel.teclas.push(tecla);
+        anel.elemento.appendChild(tecla);
+    }
+}
+
+// Botão "falar": lê em voz alta a frase montada até agora.
+function falarFrase() {
+    const texto = valor.textContent.trim();
+    if (!texto) return;
+    if (!("speechSynthesis" in window)) {
+        showToast("Este navegador não tem suporte a leitura por voz.");
+        return;
+    }
+    const fala = new SpeechSynthesisUtterance(texto);
+    fala.lang = "pt-BR";
+    speechSynthesis.cancel();
+    speechSynthesis.speak(fala);
+}
+
+function focarInicio() {
+    if (aneis[0] && aneis[0].teclas[0]) aneis[0].teclas[0].focus();
+}
+
+// Monta (ou remonta) todo o teclado circular na tela "circularMode" atual.
+// Chamada pelo render() principal do app sempre que essa tela é exibida,
+// já que o app substitui o HTML da tela a cada navegação.
+function initCircularKeyboard() {
+    valor = document.getElementById("valor");
+    menuOrbital = document.getElementById("menuOrbital");
+    frasesProntasEl = document.getElementById("frasesProntas");
+    if (!valor || !menuOrbital) return;
+
+    botoesMenu = [...menuOrbital.querySelectorAll(".satelite")];
+
+    valor.textContent = "";
+    sugestaoSelecionadaBarra = "";
+    mostrarFrasesProntas(null);
+
+    teclaAtiva = null;
+    direcaoAtiva = "cima";
+    sugestoesVisiveis = false;
+    anelAtualIndice = 0;
+    posicaoAtualIndice = 0;
+    modoAlfabeto = false;
+    novaPalavraAlfabeto = true;
+    noBotaoCentral = false;
+
+    aneis = [
+        { elemento: document.getElementById("anelMeio"), quantidade: 9, teclas: [], palavras: palavrasChave, raio: 72, temBuraco: true },
+        { elemento: document.getElementById("anelExterno"), quantidade: 10, teclas: [], palavras: [], raio: 80 }
+    ];
+
+    aneis.forEach((anel) => {
+        const cunha = document.createElement("div");
+        cunha.className = "cunha";
+        anel.elemento.appendChild(cunha);
+        anel.cunha = cunha;
+
+        if (anel.temBuraco) {
+            const botaoAlfabeto = document.createElement("button");
+            botaoAlfabeto.type = "button";
+            botaoAlfabeto.className = "buraco-central botao-alfabeto";
+            botaoAlfabeto.textContent = "Aa";
+            botaoAlfabeto.setAttribute("aria-label", "Alternar para teclado alfabético");
+            botaoAlfabeto.addEventListener("click", alternarModoAlfabeto);
+            anel.elemento.appendChild(botaoAlfabeto);
+        }
+
+        criarTeclasDoAnel(anel, anel.quantidade, false);
+    });
+
+    aneis[0].teclas[0].tabIndex = 0;
+
+    botoesMenu.forEach((botao, indice) => {
+        // tabIndex 0 fixo: os botões do menu lateral ficam sempre alcançáveis
+        // pela tecla Tab do teclado físico, sem depender de gestos com as setas.
+        botao.tabIndex = 0;
+        botao.addEventListener("keydown", (evento) => moverNoMenu(evento, indice));
+    });
+
+    const btnLimpar = document.getElementById("limpar");
+    if (btnLimpar) btnLimpar.addEventListener("click", () => {
+        valor.textContent = "";
+        voltarConfiguracaoInicial();
+    });
+
+    const btnExcluir = document.getElementById("excluir");
+    if (btnExcluir) btnExcluir.addEventListener("click", () => {
+        const palavras = valor.textContent.trim().split(/\s+/).filter(Boolean);
+        palavras.pop();
+        valor.textContent = palavras.join(" ");
+        if (palavras.length === 0) {
+            voltarConfiguracaoInicial();
+        } else {
+            atualizarSugestoesNoAnel(anelAtualIndice);
+            atualizarFrasesProntas();
+        }
+    });
+
+    const btnRecarregar = document.getElementById("recarregar");
+    if (btnRecarregar) btnRecarregar.addEventListener("click", () => recarregarSugestoes());
+
+    const btnVoltarInicio = document.getElementById("voltarInicio");
+    if (btnVoltarInicio) btnVoltarInicio.addEventListener("click", () => voltarConfiguracaoInicial());
+
+    const btnFalar = document.getElementById("falar");
+    if (btnFalar) btnFalar.addEventListener("click", falarFrase);
+
+    // Botão "concluir": corrige a ortografia/gramática da frase com o
+    // LanguageTool, mostra o texto corrigido e devolve o teclado à
+    // configuração inicial (argola de dentro com as palavras-chave de novo).
+    const btnConcluir = document.getElementById("concluir");
+    if (btnConcluir) btnConcluir.addEventListener("click", async () => {
+        const textoOriginal = valor.textContent.trim();
+        const textoComNomesSalvos = canonicalizarNomesPersonalizados(textoOriginal);
+        const textoCorrigido = await corrigirComGemini(textoComNomesSalvos) || await corrigirComLanguageTool(textoComNomesSalvos);
+        valor.textContent = textoCorrigido;
+        voltarConfiguracaoInicial();
+    });
+
+    atualizarAnelPalavrasChave();
+    atualizarFrasesProntas();
+    posicionarMenuOrbital();
+
+    if (!ckKeydownGlobalBound) {
+        ckKeydownGlobalBound = true;
+        document.addEventListener("keydown", tratarSetaTecladoCircular);
+    }
+
+    // Pré-seleciona a primeira palavra ao abrir e confirma o foco depois que a
+    // renderização da tela termina, sem roubar o foco de uma tecla já escolhida.
+    focarInicio();
+    requestAnimationFrame(() => {
+        const focoNaArgolaInicial = aneis[0]?.teclas.includes(document.activeElement);
+        const focoNoCentro = document.activeElement === document.querySelector(".botao-alfabeto");
+        const focoNoMenu = botoesMenu.includes(document.activeElement);
+        if (STATE.screen === "circularMode" && !sugestoesVisiveis && !focoNaArgolaInicial && !focoNoCentro && !focoNoMenu) {
+            focarInicio();
+        }
+    });
 }
 
 loadData();
