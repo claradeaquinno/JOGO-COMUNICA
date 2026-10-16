@@ -3071,6 +3071,32 @@ body[data-color-vision="on"][data-color-vision-type="deuteranopia"] #app > *,
 body[data-color-vision="on"][data-color-vision-type="deuteranopia"] > :not(script):not(style):not(link):not(svg):not(#app) { filter: url(#cv-deuteranopia); }
 body[data-color-vision="on"][data-color-vision-type="protanopia"] #app > *,
 body[data-color-vision="on"][data-color-vision-type="protanopia"] > :not(script):not(style):not(link):not(svg):not(#app) { filter: url(#cv-protanopia); }
+
+/* Bolinha do mascote: só a cabeça */
+.mascot-float {
+  padding: 0 !important;
+  overflow: hidden;
+  background: var(--card) !important;
+  border: 3px solid var(--card-border) !important;
+}
+.mascot-float .mascot-head {
+  width: 88%;
+  height: 88%;
+  margin: auto;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+  display: block;
+  pointer-events: none;
+}
+/* sem a imagem própria da cabeça: recorta o topo da imagem inteira */
+.mascot-float .mascot-head.recortada {
+  width: 100%;
+  height: 100%;
+  object-position: 50% 8%;
+  transform: scale(1.8);
+  transform-origin: 50% 18%;
+}
 </style>
 </head>
 
@@ -5884,7 +5910,22 @@ function attachHandlers() {
 }
 
 /* Botão flutuante do mascote — disponível em todas as telas */
-document.getElementById('mascotFloatBtn').innerHTML = mascotImgHtml({ size: 46, mood: 'idle' });
+(function () {
+  // Bolinha flutuante: mostra só a cabeça do Guri.
+  // 1º tenta assets/imagens/mascote-cabeca.png; se não existir, recorta a cabeça da imagem inteira.
+  const btn = document.getElementById('mascotFloatBtn');
+  const img = document.createElement('img');
+  img.className = 'mascot-head';
+  img.alt = '';
+  img.setAttribute('aria-hidden', 'true');
+  img.src = 'assets/imagens/mascote-cabeca.png';
+  img.onerror = () => {
+    img.onerror = null;
+    img.classList.add('recortada');
+    img.src = MASCOT_IMG_SRC;
+  };
+  btn.appendChild(img);
+})();
 document.getElementById('mascotFloatBtn').addEventListener('click', () => {
   speakMascot(MASCOT_TIPS[STATE.screen] || MASCOT_TIPS.home);
 });
