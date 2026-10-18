@@ -3378,6 +3378,23 @@ body[data-theme="dark"] #app .ch-aviso { background: #1b344d; color: #f1f7ff; }
 #app .jor-regras { margin: 0; padding-left: 18px; display: grid; gap: 6px; font-size: 13.5px; font-weight: 600; font-family: var(--font-title); }
 body[data-theme="dark"] #app .jor-fase.ok { background: rgba(42,90,133,.45); }
 body[data-theme="dark"] #app .jor-fase.ok .jor-num { background: #2a5a85; color: #fff; border-color: #5b9bd0; }
+
+/* imagens do Guri por nível */
+#app .jor-fase { grid-template-columns: 40px 52px 1fr; }
+#app .jor-foto { width: 52px; height: 52px; display: flex; align-items: flex-end; justify-content: center; }
+#app .jor-img { max-width: 100%; max-height: 100%; object-fit: contain; }
+#app .jor-fase:not(.ok) .jor-img { filter: brightness(0) opacity(.35); }
+#app .guri-bicho .mascot-img { width: 100%; height: 100%; object-fit: contain; object-position: bottom; }
+
+/* Guri preenche o quadro: altura proporcional à altura do palco */
+#app .guri-palco { padding-bottom: 0; }
+#app .guri-bicho {
+  height: calc(var(--e, .9) * 100%);
+  width: auto;
+  aspect-ratio: 1 / 1;
+  max-width: 100%;
+}
+#app .guri-bicho .mascot-img { width: 100%; height: 100%; object-fit: contain; object-position: bottom; }
 </style>
 </head>
 
@@ -4579,6 +4596,24 @@ const GURI_NIVEIS = [
   { n: 9, nome: 'Lenda', xp: 1010 },
   { n: 10, nome: 'Guri Supremo', xp: 1300 }
 ];
+/* Imagem do Guri em cada nível (arquivos em assets/imagens/). O nível 1 usa o mascote original. */
+const GURI_IMAGENS = {
+  1: 'assets/imagens/mascote-inicio.png',
+  2: 'assets/imagens/guri-curioso-transparente.png',
+  3: 'assets/imagens/guri-falante-transparente.png',
+  4: 'assets/imagens/guri-explorador-transparente.png',
+  5: 'assets/imagens/guri-comunicador-transparente.png',
+  6: 'assets/imagens/guri-craque-transparente.png',
+  7: 'assets/imagens/guri-mestre-transparente.png',
+  8: 'assets/imagens/guri-campeao-transparente.png',
+  9: 'assets/imagens/guri-lenda-transparente.png',
+  10: 'assets/imagens/guri-supremo-transparente.png'
+};
+function guriImagemHtml(nivel, classe, alt) {
+  const src = GURI_IMAGENS[nivel] || GURI_IMAGENS[1];
+  // se a imagem do nível não existir, cai no mascote original
+  return `<img class="${classe}" src="${src}" alt="${alt}" onerror="this.onerror=null;this.src='${GURI_IMAGENS[1]}'">`;
+}
 const XP_FRASE_BASE = 5;        // XP mínimo por frase falada
 const XP_POR_PALAVRA = 2;       // + XP por palavra (limite abaixo)
 const XP_FRASE_MAX = 15;
@@ -4669,7 +4704,7 @@ function registrarFrase(texto) {
 function guriCardHtml(subiu) {
   const info = guriInfo(STATE.data.profile.xp);
   const perfil = STATE.data.profile;
-  const tam = Math.round(210 * info.escala);
+  const prop = (0.88 + (info.nivel - 1) * 0.013).toFixed(3); // 88% da altura do quadro no nível 1, 100% no nível 10
   const etapas = GURI_NIVEIS.map(nivel =>
     `<span class="guri-etapa${nivel.n <= info.nivel ? ' ok' : ''}${nivel.n === info.nivel ? ' atual' : ''}" title="Nível ${nivel.n}: ${nivel.nome}">${nivel.n}</span>`
   ).join('');
@@ -4677,8 +4712,8 @@ function guriCardHtml(subiu) {
     <section class="guri-card${subiu ? ' subiu' : ''}" aria-label="Evolução do Guri">
       ${subiu ? `<div class="guri-subiu" role="status">Subiu de nível!</div>` : ''}
       <div class="guri-palco">
-        <div class="guri-bicho" style="width:${tam}px;height:${tam}px;">
-          ${mascotImgHtml({ size: tam, mood: 'happy', alt: 'Guri' })}
+        <div class="guri-bicho" style="--e:${prop};">
+          ${guriImagemHtml(info.nivel, 'mascot-img', 'Guri ' + info.nome)}
         </div>
       </div>
       <div class="guri-titulo">
@@ -5517,11 +5552,11 @@ function renderJornada(subiu) {
     return `
       <li class="jor-fase${alcancado ? ' ok' : ''}${atual ? ' atual' : ''}">
         <span class="jor-num">${nivel.n}</span>
+        <span class="jor-foto">${guriImagemHtml(nivel.n, 'jor-img', alcancado ? nivel.nome : 'Fase ainda não desbloqueada')}</span>
         <span class="jor-info">
           <strong>${nivel.nome}${atual ? ' · você está aqui' : ''}</strong>
           <small>${nivel.xp} XP · ${quando}</small>
         </span>
-        <span class="jor-tam" aria-hidden="true">${Math.round(guriInfo(nivel.xp).escala * 100)}%</span>
       </li>`;
   }).join('');
 
@@ -5531,16 +5566,6 @@ function renderJornada(subiu) {
     <div class="form-block">
       <h3>Fases do Guri</h3>
       <ol class="jor-lista">${linhas}</ol>
-    </div>
-
-    <div class="form-block">
-      <h3>Como evoluir</h3>
-      <ul class="jor-regras">
-        <li>Falar uma frase vale ${XP_FRASE_BASE} XP, mais ${XP_POR_PALAVRA} por palavra (até ${XP_FRASE_MAX} XP).</li>
-        <li>A primeira frase de cada dia vale +${XP_PRIMEIRA_DO_DIA} XP e aumenta os dias seguidos.</li>
-        <li>Montar a frase certa no jogo vale ${XP_DESAFIO} XP mais ${2} por palavra da frase.</li>
-        <li>Frases maiores aparecem nos desafios conforme o Guri sobe de nível.</li>
-      </ul>
     </div>
 
     <div class="form-block">
