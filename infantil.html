@@ -3264,6 +3264,314 @@ body[data-theme="dark"] .splash-hint-text {
 .splash-title-sub { margin-top: 0; }
 .splash-mascot-wrap { margin-top: -4px; }
 .splash-hint { margin-top: 14px; }
+
+/* ===== Jogo: evolução do Guri ===== */
+#app .guri-card {
+  position: relative;
+  background: var(--card);
+  border: 1.5px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 14px 14px 16px;
+  margin-bottom: 14px;
+  text-align: center;
+  font-family: var(--font-title);
+  color: var(--navy);
+}
+#app .guri-palco {
+  height: 240px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(169,214,240,.35), rgba(169,214,240,.12));
+  overflow: hidden;
+  padding-bottom: 6px;
+}
+#app .guri-bicho {
+  transition: width .7s cubic-bezier(.34,1.56,.64,1), height .7s cubic-bezier(.34,1.56,.64,1);
+  filter: drop-shadow(0 8px 10px rgba(23,58,94,.25));
+}
+#app .guri-bicho .mascot-img { width: 100%; height: 100%; object-fit: contain; object-position: bottom; }
+#app .guri-card.subiu .guri-bicho { animation: guriPula .9s ease 2; }
+@keyframes guriPula { 0%,100% { transform: translateY(0); } 40% { transform: translateY(-18px) scale(1.04); } }
+#app .guri-subiu {
+  position: absolute; top: 22px; left: 50%; transform: translateX(-50%);
+  background: #fff2bf; color: #123b4d; border: 2px solid #f3d675;
+  font-weight: 800; font-size: 15px; padding: 6px 16px; border-radius: 999px; z-index: 2;
+  box-shadow: 0 4px 10px rgba(23,58,94,.2);
+}
+#app .guri-titulo { display: flex; align-items: baseline; justify-content: center; gap: 10px; margin: 12px 0 8px; }
+#app .guri-nivel { font-weight: 800; font-size: 22px; }
+#app .guri-nome { font-weight: 700; font-size: 17px; color: var(--navy-soft); }
+#app .guri-barra {
+  height: 16px; border-radius: 999px; background: rgba(23,58,94,.15);
+  border: 1.5px solid var(--card-border); overflow: hidden;
+}
+#app .guri-barra-cheia { height: 100%; background: #4a9bd4; border-radius: 999px; transition: width .6s ease; }
+#app .guri-xp { font-weight: 700; font-size: 14px; margin-top: 6px; }
+#app .guri-etapas { display: flex; justify-content: center; gap: 5px; margin: 12px 0; flex-wrap: wrap; }
+#app .guri-etapa {
+  width: 26px; height: 26px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 12px; border: 2px solid var(--card-border); opacity: .55;
+}
+#app .guri-etapa.ok { background: #a9d6f0; color: #123b5e; opacity: 1; border-color: #6fb2dc; }
+#app .guri-etapa.atual { outline: 3px solid #f3d675; outline-offset: 1px; }
+#app .guri-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 10px; }
+#app .guri-stats div {
+  display: flex; flex-direction: column; padding: 8px 4px; border-radius: 12px;
+  background: rgba(169,214,240,.3); border: 1.5px solid var(--card-border);
+}
+#app .guri-stats strong { font-size: 22px; font-weight: 800; line-height: 1.1; }
+#app .guri-stats span { font-size: 12px; font-weight: 700; }
+#app .guri-dica { margin: 0; font-size: 12.5px; font-weight: 600; line-height: 1.4; color: var(--navy-soft); }
+body[data-theme="dark"] #app .guri-stats div { background: rgba(42,90,133,.4); }
+body[data-theme="dark"] #app .guri-etapa.ok { background: #2a5a85; color: #fff; border-color: #5b9bd0; }
+body[data-theme="dark"] #app .guri-barra-cheia { background: #6fb2dc; }
+@media (max-width: 420px) { #app .guri-palco { height: 210px; } }
+@media (prefers-reduced-motion: reduce) {
+  #app .guri-card.subiu .guri-bicho { animation: none; }
+  #app .guri-bicho, #app .guri-barra-cheia { transition: none; }
+}
+
+/* ===== Desafio: abas, opções e jornada ===== */
+#app .ch-abas { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+#app .ch-aba {
+  min-height: 48px; border-radius: 14px; cursor: pointer;
+  font-family: var(--font-title); font-weight: 800; font-size: 16px;
+  background: rgba(234,246,255,.95); color: #173a5e; border: 1.5px solid #cfe9f7;
+}
+body[data-theme="dark"] #app .ch-aba { background: #1b344d; color: #f1f7ff; border-color: #3d6688; }
+#app .ch-aba[aria-selected="true"] { background: #a9d6f0; color: #123b5e; border-color: #6fb2dc; }
+body[data-theme="dark"] #app .ch-aba[aria-selected="true"] { background: #2a5a85; color: #fff; border-color: #5b9bd0; }
+#app .ch-dica { font-size: 13px !important; font-weight: 600 !important; color: var(--navy-soft); margin-top: 6px; }
+#app .ch-opcoes { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 6px 0 16px; }
+#app .ch-opcao {
+  min-height: 52px; padding: 10px 18px; border-radius: 16px; cursor: pointer;
+  font-family: var(--font-title); font-weight: 800; font-size: 19px;
+  background: #a9d6f0; color: #123b5e; border: 2px solid #6fb2dc;
+}
+body[data-theme="dark"] #app .ch-opcao { background: #2a5a85; color: #fff; border-color: #5b9bd0; }
+#app .ch-opcao:disabled { opacity: .35; cursor: default; }
+#app .ch-aviso {
+  margin: 8px 0; padding: 10px 14px; border-radius: 12px; font-weight: 800; font-size: 14px; text-align: center;
+  background: rgba(234,246,255,.95); color: #173a5e; border: 2px dashed #6fb2dc;
+}
+#app .ch-aviso.ch-ok { background: #fff2bf; border: 2px solid #f3d675; color: #123b4d; }
+body[data-theme="dark"] #app .ch-aviso { background: #1b344d; color: #f1f7ff; }
+#app .jor-lista { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+#app .jor-fase {
+  display: grid; grid-template-columns: 40px 1fr auto; align-items: center; gap: 12px;
+  padding: 10px 12px; border-radius: 14px; border: 1.5px solid var(--card-border); opacity: .6;
+  font-family: var(--font-title);
+}
+#app .jor-fase.ok { opacity: 1; background: rgba(169,214,240,.35); }
+#app .jor-fase.atual { outline: 3px solid #f3d675; outline-offset: 1px; }
+#app .jor-num {
+  width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-weight: 800; border: 2px solid var(--card-border);
+}
+#app .jor-fase.ok .jor-num { background: #a9d6f0; color: #123b5e; border-color: #6fb2dc; }
+#app .jor-info { display: flex; flex-direction: column; min-width: 0; }
+#app .jor-info strong { font-size: 16px; font-weight: 800; }
+#app .jor-info small { font-size: 12.5px; font-weight: 600; }
+#app .jor-tam { font-size: 12px; font-weight: 800; }
+#app .jor-regras { margin: 0; padding-left: 18px; display: grid; gap: 6px; font-size: 13.5px; font-weight: 600; font-family: var(--font-title); }
+body[data-theme="dark"] #app .jor-fase.ok { background: rgba(42,90,133,.45); }
+body[data-theme="dark"] #app .jor-fase.ok .jor-num { background: #2a5a85; color: #fff; border-color: #5b9bd0; }
+
+/* ===== Console: o jogo dentro da tela do console ===== */
+#app .cs-screen { max-width: none; padding-bottom: 20px; align-items: center; }
+#app .cs-console {
+  position: relative;
+  width: min(96vw, calc((100vh - 96px) * 1.7768));
+  aspect-ratio: 1672 / 941;
+  flex: none;
+}
+#app .cs-tela {
+  position: absolute;
+  left: 22.61%; top: 25.29%; width: 54.96%; height: 54.41%;
+  z-index: 1;
+  container-type: size;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f4fbff, #cfe9f7);
+  border-radius: 4px;
+}
+body[data-theme="dark"] #app .cs-tela { background: linear-gradient(180deg, #173a5e, #10283d); }
+#app .cs-moldura {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  z-index: 2; pointer-events: none; user-select: none;
+  filter: drop-shadow(0 10px 18px rgba(23,58,94,.35));
+}
+#app .cs-home {
+  position: absolute; z-index: 3; left: 85.41%; top: 66.95%;
+  width: 4.2%; aspect-ratio: 1; transform: translate(-50%, -50%);
+  border-radius: 50%; border: none; background: transparent; cursor: pointer; padding: 0;
+}
+#app .cs-home:focus-visible { outline: 3px solid #f3d675; }
+
+/* tudo dentro da tela é medido em em: 1em = 1/44 da largura da tela */
+#app .cs-inner {
+  font-family: var(--font-title);
+  font-size: calc(100cqw / 44);
+  width: 100%; height: 100%; box-sizing: border-box;
+  padding: .7em .9em .8em;
+  display: flex; flex-direction: column; gap: .5em;
+  color: var(--navy);
+}
+#app .cs-topo { display: flex; align-items: center; }
+#app .cs-abas { display: flex; gap: .5em; }
+#app .cs-aba, #app .cs-btn, #app .cs-opcao {
+  font-family: var(--font-title); font-weight: 800; cursor: pointer;
+  background: rgba(234,246,255,.95); color: #173a5e; border: .12em solid #8fc4e3;
+}
+#app .cs-aba {
+  font-size: 1.15em; min-height: 2.2em; padding: 0 1em; border-radius: .9em;
+}
+#app .cs-aba[aria-selected="true"], #app .cs-btn.cs-forte, #app .cs-opcao {
+  background: #a9d6f0; border-color: #6fb2dc; color: #123b5e;
+}
+body[data-theme="dark"] #app .cs-aba, body[data-theme="dark"] #app .cs-btn {
+  background: #1b344d; color: #f1f7ff; border-color: #3d6688;
+}
+body[data-theme="dark"] #app .cs-aba[aria-selected="true"],
+body[data-theme="dark"] #app .cs-btn.cs-forte,
+body[data-theme="dark"] #app .cs-opcao { background: #2a5a85; color: #fff; border-color: #5b9bd0; }
+#app .cs-opcao:disabled, #app .cs-btn:disabled { opacity: .4; cursor: default; }
+#app .cs-aba:hover, #app .cs-btn:hover:not(:disabled), #app .cs-opcao:hover:not(:disabled),
+#app .cs-aba:focus-visible, #app .cs-btn:focus-visible, #app .cs-opcao:focus-visible {
+  background: #fff2bf !important; border-color: #f3d675 !important; color: #123b4d !important;
+}
+
+#app .cs-corpo { flex: 1; min-height: 0; display: grid; grid-template-columns: 12.5em 1fr; gap: 1em; }
+
+/* Guri */
+#app .cs-guri { display: flex; flex-direction: column; min-height: 0; text-align: center; position: relative; }
+#app .cs-palco {
+  flex: 1; min-height: 0; display: flex; align-items: flex-end; justify-content: center; position: relative;
+  border-radius: .9em; background: rgba(169,214,240,.35); overflow: hidden; padding-bottom: .3em;
+}
+#app .cs-bicho { transition: width .7s cubic-bezier(.34,1.56,.64,1), height .7s cubic-bezier(.34,1.56,.64,1); filter: drop-shadow(0 .4em .5em rgba(23,58,94,.3)); }
+#app .cs-bicho .mascot-img { width: 100%; height: 100%; object-fit: contain; object-position: bottom; }
+#app .cs-guri.subiu .cs-bicho { animation: guriPula .9s ease 2; }
+#app .cs-subiu {
+  position: absolute; top: .5em; left: 50%; transform: translateX(-50%); z-index: 2; white-space: nowrap;
+  background: #fff2bf; color: #123b4d; border: .12em solid #f3d675; border-radius: 999px;
+  font-weight: 800; font-size: .95em; padding: .2em .8em;
+}
+#app .cs-titulo { display: flex; justify-content: center; align-items: baseline; gap: .5em; margin-top: .4em; }
+#app .cs-titulo strong { font-size: 1.35em; }
+#app .cs-titulo span { font-size: 1em; font-weight: 700; color: var(--navy-soft); }
+#app .cs-barra { height: .9em; border-radius: 999px; background: rgba(23,58,94,.15); border: .1em solid var(--card-border); overflow: hidden; margin-top: .3em; }
+#app .cs-barra div { height: 100%; background: #4a9bd4; border-radius: 999px; transition: width .6s ease; }
+body[data-theme="dark"] #app .cs-barra div { background: #6fb2dc; }
+#app .cs-xp { font-size: .95em; font-weight: 700; margin-top: .25em; }
+#app .cs-mini { display: flex; justify-content: space-between; gap: .3em; margin-top: .35em; font-size: .85em; font-weight: 700; }
+#app .cs-mini b { font-size: 1.15em; }
+
+/* Jogo */
+#app .cs-jogo { display: flex; flex-direction: column; gap: .45em; min-height: 0; }
+#app .cs-prompt { margin: 0; font-size: 1.5em; font-weight: 800; line-height: 1.15; }
+#app .cs-prompt span { display: block; font-size: .6em; font-weight: 600; color: var(--navy-soft); margin-top: .1em; }
+#app .cs-frase {
+  min-height: 2.9em; display: flex; flex-wrap: wrap; align-content: center; gap: .35em; padding: .4em .6em;
+  border-radius: .8em; background: rgba(255,255,255,.75); border: .12em solid var(--card-border);
+}
+body[data-theme="dark"] #app .cs-frase { background: rgba(16,40,61,.7); }
+#app .cs-chip { background: #fff2bf; color: #123b4d; border: .1em solid #f3d675; border-radius: .7em; padding: .15em .6em; font-size: 1.2em; font-weight: 800; }
+#app .cs-vazio { font-size: 1.05em; font-weight: 600; opacity: .7; }
+#app .cs-aviso { min-height: 1.6em; font-size: 1em; font-weight: 800; text-align: center; }
+#app .cs-aviso.ok { background: #fff2bf; color: #123b4d; border-radius: .6em; padding: .1em .5em; }
+#app .cs-opcoes { display: flex; flex-wrap: wrap; gap: .45em; flex: 1; align-content: flex-start; min-height: 0; overflow-y: auto; }
+#app .cs-opcao { font-size: 1.25em; padding: .3em .75em; border-radius: .8em; }
+#app .cs-acoes { display: flex; align-items: center; gap: .5em; }
+#app .cs-btn { font-size: 1.1em; min-height: 2.2em; padding: 0 1em; border-radius: .8em; }
+#app .cs-outro { margin-left: auto; font-size: .95em; font-weight: 800; text-decoration: underline; cursor: pointer; }
+
+/* Jornada */
+#app .cs-jornada { display: flex; flex-direction: column; gap: .5em; min-height: 0; overflow-y: auto; }
+#app .cs-fases { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: .4em .6em; }
+#app .cs-fase {
+  display: flex; align-items: center; gap: .6em; padding: .3em .5em; border-radius: .8em;
+  border: .1em solid var(--card-border); opacity: .6;
+}
+#app .cs-fase.ok { opacity: 1; background: rgba(169,214,240,.4); }
+#app .cs-fase.atual { outline: .15em solid #f3d675; }
+#app .cs-num {
+  width: 1.9em; height: 1.9em; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 1em; border: .12em solid var(--card-border); flex: none;
+}
+#app .cs-fase.ok .cs-num { background: #a9d6f0; color: #123b5e; border-color: #6fb2dc; }
+#app .cs-fase-info { display: flex; flex-direction: column; min-width: 0; line-height: 1.15; }
+#app .cs-fase-info strong { font-size: 1.05em; }
+#app .cs-fase-info small { font-size: .8em; font-weight: 600; }
+#app .cs-conquistas { display: flex; gap: 1em; font-size: .95em; font-weight: 700; flex-wrap: wrap; }
+#app .cs-conquistas b { font-size: 1.15em; }
+#app .cs-regras { margin: 0; font-size: .8em; font-weight: 600; line-height: 1.3; color: var(--navy-soft); }
+body[data-theme="dark"] #app .cs-fase.ok { background: rgba(42,90,133,.5); }
+body[data-theme="dark"] #app .cs-fase.ok .cs-num { background: #2a5a85; color: #fff; border-color: #5b9bd0; }
+@media (prefers-reduced-motion: reduce) {
+  #app .cs-guri.subiu .cs-bicho { animation: none; }
+  #app .cs-bicho, #app .cs-barra div { transition: none; }
+}
+
+body #app .cs-home, body[data-color-vision] #app .cs-home, body #app .cs-home:hover, body #app .cs-home:focus-visible {
+  border: none !important; background: transparent !important; box-shadow: none !important;
+}
+
+#app .cs-conquistas { align-items: center; }
+#app .cs-conquistas .cs-btn { margin-left: auto; min-height: 1.9em; font-size: 1em; }
+#app .cs-chip { color: #123b4d !important; }
+#app .cs-fase { padding: .2em .5em; }
+
+/* ===== Console compacto (tamanho de celular) ===== */
+#app .cs-console {
+  --cs-extra: 96px;
+  width: min(96vw, calc((100vh - var(--cs-extra)) * 1.7768), 640px);
+  width: min(96vw, calc((100dvh - var(--cs-extra)) * 1.7768), 640px);
+}
+@media (max-height: 520px) {
+  #app .cs-topbar { display: none; }
+  #app .cs-console { --cs-extra: 14px; }
+  #app .cs-screen { padding-top: 0; padding-bottom: 0; }
+  #app, .app { padding-top: 6px; padding-bottom: 6px; }
+}
+#app .cs-inner { --u: calc(100cqw / 37); font-size: var(--u); padding: .5em .7em .6em; gap: .35em; }
+#app .cs-topo { gap: .5em; }
+#app .cs-aba { font-size: 1.05em; min-height: 2em; padding: 0 .9em; }
+#app .cs-voltar {
+  margin-left: auto; width: calc(var(--u) * 2.1); height: calc(var(--u) * 2.1); min-width: 0; min-height: 0; padding: 0;
+  border-radius: 50%; font-size: 0; flex: none;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+#app .cs-voltar::before { width: calc(var(--u) * 1.4) !important; height: calc(var(--u) * 1) !important; }
+#app .cs-corpo { grid-template-columns: 10.5em 1fr; gap: .8em; }
+#app .cs-titulo strong { font-size: 1.2em; }
+#app .cs-titulo span { font-size: .95em; }
+#app .cs-xp { font-size: .9em; }
+#app .cs-mini { font-size: .8em; }
+#app .cs-jogo { gap: .35em; }
+#app .cs-prompt { font-size: 1.25em; line-height: 1.15; }
+#app .cs-prompt span { display: inline; font-size: .62em; margin-left: .4em; }
+#app .cs-frase { min-height: 2.4em; padding: .3em .5em; }
+#app .cs-chip { font-size: 1.1em; }
+#app .cs-aviso { min-height: 1.3em; font-size: .9em; }
+#app .cs-opcao { font-size: 1.1em; padding: .25em .65em; }
+#app .cs-btn { font-size: 1em; min-height: 2em; padding: 0 .9em; }
+#app .cs-outro { font-size: .9em; }
+#app .cs-fases { gap: .3em .5em; }
+#app .cs-fase { padding: .15em .4em; gap: .45em; }
+#app .cs-num { width: 1.7em; height: 1.7em; font-size: .9em; }
+#app .cs-fase-info strong { font-size: 1em; }
+#app .cs-fase-info small { font-size: .75em; }
+#app .cs-conquistas { font-size: .85em; gap: .8em; }
+#app .cs-regras { display: none; }
+
+#app .cs-jornada { gap: .35em; }
+#app .cs-fases { gap: .2em .4em; }
+#app .cs-fase { padding: .08em .4em; }
+#app .cs-num { width: 1.55em; height: 1.55em; font-size: .85em; }
+#app .cs-conquistas { flex-wrap: nowrap; font-size: .8em; gap: .6em; white-space: nowrap; }
+#app .cs-conquistas .cs-btn { min-height: 1.8em; font-size: .95em; padding: 0 .7em; }
 </style>
 </head>
 
@@ -3671,12 +3979,47 @@ const SUGGESTIONS = {
 
 
 const CHALLENGES = [
-  { emoji: '', prompt: 'Você está com sede. O que você quer dizer?', target: ['eu', 'quero', 'agua'] },
-  { emoji: '', prompt: 'Você está com fome.', target: ['eu', 'quero', 'comida'] },
-  { emoji: '', prompt: 'Você está cansado e quer descansar.', target: ['eu', 'estou', 'cansado'] },
-  { emoji: '', prompt: 'Você precisa ir ao banheiro.', target: ['eu', 'preciso', 'banheiro'] },
-  { emoji: '', prompt: 'Você quer se divertir um pouco.', target: ['eu', 'quero', 'brincar'] }
+  { prompt: 'Você está com sede.', frase: ['Eu', 'quero', 'beber', 'água'], extras: ['comer', 'casa', 'ao', 'estou'] },
+  { prompt: 'Você está com fome.', frase: ['Eu', 'estou', 'com', 'fome'], extras: ['sede', 'quero', 'dor', 'para'] },
+  { prompt: 'Você precisa ir ao banheiro.', frase: ['Eu', 'preciso', 'ir', 'ao', 'banheiro'], extras: ['quero', 'casa', 'para', 'comer'] },
+  { prompt: 'Você está cansado e quer descansar.', frase: ['Eu', 'estou', 'cansado', 'e', 'quero', 'descansar'], extras: ['brincar', 'com', 'fome', 'ir'] },
+  { prompt: 'Você quer ir embora para casa.', frase: ['Eu', 'quero', 'ir', 'para', 'casa'], extras: ['ao', 'banheiro', 'preciso', 'comer'] },
+  { prompt: 'Você quer brincar com um amigo.', frase: ['Eu', 'quero', 'brincar', 'com', 'meu', 'amigo'], extras: ['minha', 'comer', 'para', 'dormir'] },
+  { prompt: 'Você está com dor e precisa de ajuda.', frase: ['Eu', 'estou', 'com', 'dor', 'e', 'preciso', 'de', 'ajuda'], extras: ['fome', 'quero', 'ao', 'casa'] },
+  { prompt: 'Você precisa de ajuda.', frase: ['Eu', 'preciso', 'de', 'ajuda'], extras: ['quero', 'ir', 'com', 'água'] },
+  { prompt: 'Você quer falar com a sua mãe.', frase: ['Eu', 'quero', 'falar', 'com', 'a', 'minha', 'mãe'], extras: ['meu', 'pai', 'ir', 'ao'] },
+  { prompt: 'Você quer assistir televisão.', frase: ['Eu', 'quero', 'assistir', 'televisão'], extras: ['brincar', 'beber', 'estou', 'casa'] },
+  { prompt: 'Você precisa ir ao médico.', frase: ['Eu', 'preciso', 'ir', 'ao', 'médico'], extras: ['casa', 'quero', 'para', 'dor'] },
+  { prompt: 'Cumprimente alguém de manhã.', frase: ['Bom', 'dia', 'tudo', 'bem'], extras: ['noite', 'tchau', 'eu', 'quero'] },
+  { prompt: 'Agradeça a ajuda que recebeu.', frase: ['Muito', 'obrigado', 'pela', 'ajuda'], extras: ['por', 'favor', 'preciso', 'eu'] },
+  { prompt: 'Você quer comer uma fruta.', frase: ['Eu', 'quero', 'comer', 'uma', 'fruta'], extras: ['beber', 'um', 'água', 'ir'] },
+  { prompt: 'Você quer pedir para repetir mais devagar.', frase: ['Pode', 'repetir', 'mais', 'devagar', 'por', 'favor'], extras: ['obrigado', 'eu', 'quero', 'casa'] }
 ];
+
+/* Sorteia um desafio compatível com o nível do Guri (frases maiores só nos níveis mais altos) */
+function sortearDesafio() {
+  const nivel = guriInfo(STATE.data.profile.xp).nivel;
+  const limite = 3 + nivel; // nível 1 => até 4 palavras; nível 10 => até 13
+  let lista = CHALLENGES.filter(c => c.frase.length <= limite);
+  if (!lista.length) lista = CHALLENGES.slice().sort((a, b) => a.frase.length - b.frase.length).slice(0, 3);
+  const anterior = STATE.ultimoDesafio;
+  const candidatos = lista.length > 1 ? lista.filter(c => c.prompt !== anterior) : lista;
+  const c = candidatos[Math.floor(Math.random() * candidatos.length)];
+  STATE.ultimoDesafio = c.prompt;
+  // palavras da resposta + algumas que atrapalham, sem repetir, embaralhadas UMA vez
+  const vistos = new Set();
+  const pool = [];
+  c.frase.concat(c.extras).forEach(label => {
+    const chave = label.toLowerCase();
+    if (!vistos.has(chave)) { vistos.add(chave); pool.push(label); }
+  });
+  const opcoes = pool.map((label, idx) => ({ label, idx }));
+  for (let k = opcoes.length - 1; k > 0; k--) {
+    const r = Math.floor(Math.random() * (k + 1));
+    [opcoes[k], opcoes[r]] = [opcoes[r], opcoes[k]];
+  }
+  return { prompt: c.prompt, frase: c.frase.slice(), opcoes, xp: XP_DESAFIO + 2 * c.frase.length };
+}
 
 /* Dicas do mascote por tela — usadas quando o botão flutuante é tocado */
 const MASCOT_TIPS = {
@@ -3768,6 +4111,13 @@ let STATE = {
     profile: {
       name: '',
       stars: 0,
+      xp: 0,
+      niveisAlcancados: [],
+      desafiosVencidos: 0,
+      bestStreak: 0,
+      streak: 0,
+      lastDay: '',
+      phrasesSpoken: 0,
       wordsUsed: 0,
       wordsSaved: 0,
       feedback: ''
@@ -4204,7 +4554,7 @@ function go(screen, extra = {}) {
   cancelRefreshVoice();
   STATE.screen = screen;
   Object.assign(STATE, extra);
-  if (screen !== 'challenge') STATE.challenge = null;
+  if (screen !== 'challenge') { STATE.challenge = null; STATE.challengeTab = 'jogo'; STATE.chAcerto = null; clearTimeout(STATE.chTimer); }
   render();
   window.scrollTo(0, 0);
 }
@@ -4410,6 +4760,143 @@ function confirmSelection() {
   announcePhrase();
 }
 
+/* ---------- Jogo: evolução do Guri (XP, níveis, dias seguidos) ---------- */
+const GURI_NIVEIS = [
+  { n: 1, nome: 'Filhote', xp: 0 },
+  { n: 2, nome: 'Curioso', xp: 30 },
+  { n: 3, nome: 'Falante', xp: 80 },
+  { n: 4, nome: 'Explorador', xp: 150 },
+  { n: 5, nome: 'Comunicador', xp: 250 },
+  { n: 6, nome: 'Craque', xp: 380 },
+  { n: 7, nome: 'Mestre', xp: 550 },
+  { n: 8, nome: 'Campeão', xp: 760 },
+  { n: 9, nome: 'Lenda', xp: 1010 },
+  { n: 10, nome: 'Guri Supremo', xp: 1300 }
+];
+const XP_FRASE_BASE = 5;        // XP mínimo por frase falada
+const XP_POR_PALAVRA = 2;       // + XP por palavra (limite abaixo)
+const XP_FRASE_MAX = 15;
+const XP_PRIMEIRA_DO_DIA = 15;  // bônus na 1ª frase de cada dia
+const XP_DESAFIO = 25;          // desafio concluído
+const FRASE_INTERVALO_MS = 8000; // evita ganhar XP repetindo a mesma frase em sequência
+let ultimaFraseXp = { texto: '', hora: 0 };
+
+function guriInfo(xp) {
+  const total = Math.max(0, Number(xp) || 0);
+  let atual = GURI_NIVEIS[0];
+  GURI_NIVEIS.forEach(nivel => { if (total >= nivel.xp) atual = nivel; });
+  const proximo = GURI_NIVEIS.find(nivel => nivel.n === atual.n + 1) || null;
+  const pct = proximo ? Math.round(((total - atual.xp) / (proximo.xp - atual.xp)) * 100) : 100;
+  return {
+    xp: total,
+    nivel: atual.n,
+    nome: atual.nome,
+    base: atual.xp,
+    proximo,
+    faltam: proximo ? proximo.xp - total : 0,
+    pct,
+    escala: 0.6 + (atual.n - 1) * 0.06   // 0,60 no nível 1 até 1,14 no nível 10
+  };
+}
+
+function hojeISO() {
+  const d = new Date();
+  const dois = n => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${dois(d.getMonth() + 1)}-${dois(d.getDate())}`;
+}
+
+function ontemISO() {
+  const d = new Date();
+  d.setDate(d.getDate() - 1);
+  const dois = n => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${dois(d.getMonth() + 1)}-${dois(d.getDate())}`;
+}
+
+function ganharXp(quantidade, mensagemExtra, falarNivel) {
+  const perfil = STATE.data.profile;
+  const antes = guriInfo(perfil.xp).nivel;
+  perfil.xp = (Number(perfil.xp) || 0) + quantidade;
+  const depois = guriInfo(perfil.xp);
+  saveData();
+  const subiu = depois.nivel > antes;
+  if (subiu) {
+    perfil.niveisAlcancados = perfil.niveisAlcancados || [];
+    for (let n = antes + 1; n <= depois.nivel; n++) {
+      const nv = GURI_NIVEIS.find(x => x.n === n);
+      perfil.niveisAlcancados.push({ nivel: n, nome: nv.nome, dia: hojeISO(), xp: perfil.xp });
+    }
+    saveData();
+    STATE.guriSubiu = depois;
+    showToast(`Nível ${depois.nivel}! O Guri agora é ${depois.nome}`);
+    if (falarNivel) speak(`O Guri subiu de nível! Agora ele é ${depois.nome}.`);
+  } else {
+    showToast(`+${quantidade} XP${mensagemExtra ? ' · ' + mensagemExtra : ''}`);
+  }
+  return subiu;
+}
+
+// Chamada sempre que uma frase é falada em voz alta (carrossel, teclado circular, desafio).
+function registrarFrase(texto) {
+  const frase = String(texto || '').trim();
+  if (!frase) return;
+  const agora = Date.now();
+  if (frase.toLowerCase() === ultimaFraseXp.texto && agora - ultimaFraseXp.hora < FRASE_INTERVALO_MS) return;
+  ultimaFraseXp = { texto: frase.toLowerCase(), hora: agora };
+
+  const perfil = STATE.data.profile;
+  perfil.phrasesSpoken = (Number(perfil.phrasesSpoken) || 0) + 1;
+
+  let xp = Math.min(XP_FRASE_MAX, XP_FRASE_BASE + XP_POR_PALAVRA * frase.split(/\s+/).length);
+  let extra = '';
+  const hoje = hojeISO();
+  if (perfil.lastDay !== hoje) {
+    perfil.streak = perfil.lastDay === ontemISO() ? (Number(perfil.streak) || 0) + 1 : 1;
+    perfil.lastDay = hoje;
+    perfil.bestStreak = Math.max(Number(perfil.bestStreak) || 0, perfil.streak);
+    xp += XP_PRIMEIRA_DO_DIA;
+    extra = perfil.streak > 1 ? `${perfil.streak} dias seguidos` : 'primeira frase do dia';
+  }
+  ganharXp(xp, extra);
+  if (STATE.screen === 'challenge') render();
+}
+
+function guriCardHtml(subiu) {
+  const info = guriInfo(STATE.data.profile.xp);
+  const perfil = STATE.data.profile;
+  const tam = Math.round(210 * info.escala);
+  const etapas = GURI_NIVEIS.map(nivel =>
+    `<span class="guri-etapa${nivel.n <= info.nivel ? ' ok' : ''}${nivel.n === info.nivel ? ' atual' : ''}" title="Nível ${nivel.n}: ${nivel.nome}">${nivel.n}</span>`
+  ).join('');
+  return `
+    <section class="guri-card${subiu ? ' subiu' : ''}" aria-label="Evolução do Guri">
+      ${subiu ? `<div class="guri-subiu" role="status">Subiu de nível!</div>` : ''}
+      <div class="guri-palco">
+        <div class="guri-bicho" style="width:${tam}px;height:${tam}px;">
+          ${mascotImgHtml({ size: tam, mood: 'happy', alt: 'Guri' })}
+        </div>
+      </div>
+      <div class="guri-titulo">
+        <span class="guri-nivel">Nível ${info.nivel}</span>
+        <span class="guri-nome">${info.nome}</span>
+      </div>
+      <div class="guri-barra" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${info.pct}"
+        aria-label="Progresso para o próximo nível">
+        <div class="guri-barra-cheia" style="width:${info.pct}%"></div>
+      </div>
+      <div class="guri-xp">${info.proximo
+        ? `${info.xp} XP · faltam ${info.faltam} para o nível ${info.proximo.n}`
+        : `${info.xp} XP · nível máximo!`}</div>
+      <div class="guri-etapas" aria-hidden="true">${etapas}</div>
+      <div class="guri-stats">
+        <div><strong>${Number(perfil.streak) || 0}</strong><span>dias seguidos</span></div>
+        <div><strong>${Number(perfil.phrasesSpoken) || 0}</strong><span>frases faladas</span></div>
+        <div><strong>${perfil.stars || 0}</strong><span>estrelas</span></div>
+      </div>
+      <p class="guri-dica">Fale frases todos os dias para o Guri crescer. Cada frase vale XP, a primeira do dia vale mais e os desafios valem ${XP_DESAFIO} XP.</p>
+    </section>
+  `;
+}
+
 function speakPhrase() {
   const text = currentPhraseText();
   if (!text) return;
@@ -4417,6 +4904,7 @@ function speakPhrase() {
   STATE.data.profile.wordsUsed = (STATE.data.profile.wordsUsed || 0) + spokenWords;
   saveData();
   speak(text);
+  registrarFrase(text);
 }
 
 function isFavoriteWord(wordId) {
@@ -5125,63 +5613,258 @@ function renderPersonalize() {
   `;
 }
 
-function renderChallenge() {
-  if (!STATE.challenge) {
-    STATE.challenge = CHALLENGES[Math.floor(Math.random() * CHALLENGES.length)];
-    STATE.phrase = [];
+/* ---------- Modo console: o jogo roda dentro da tela do console (telas largas) ---------- */
+const CONSOLE_MQ = '(min-width: 560px) and (orientation: landscape), (min-width: 900px) and (min-height: 600px)';
+function usaConsole() {
+  return typeof window.matchMedia === 'function' && window.matchMedia(CONSOLE_MQ).matches;
+}
+if (typeof window.matchMedia === 'function') {
+  const mqConsole = window.matchMedia(CONSOLE_MQ);
+  const aoMudar = () => { if (typeof STATE !== 'undefined' && STATE.screen === 'challenge') render(); };
+  if (mqConsole.addEventListener) mqConsole.addEventListener('change', aoMudar);
+}
+
+function renderConsole(aba, subiu, ctx) {
+  const perfil = STATE.data.profile;
+  const info = guriInfo(perfil.xp);
+  const tam = (info.escala * 9.6).toFixed(2);
+
+  const abas = `
+    <div class="cs-abas" role="tablist" aria-label="Seções do desafio">
+      <button type="button" class="cs-aba" role="tab" data-ch-tab="jogo" aria-selected="${aba === 'jogo'}">Jogo</button>
+      <button type="button" class="cs-aba" role="tab" data-ch-tab="jornada" aria-selected="${aba === 'jornada'}">Jornada do Guri</button>
+    </div>`;
+
+  const guri = `
+    <section class="cs-guri${subiu ? ' subiu' : ''}" aria-label="Evolução do Guri">
+      <div class="cs-palco">
+        ${subiu ? `<div class="cs-subiu" role="status">Subiu de nível!</div>` : ''}
+        <div class="cs-bicho" style="width:${tam}em;height:${tam}em;">${mascotImgHtml({ size: 160, mood: 'happy', alt: 'Guri' })}</div>
+      </div>
+      <div class="cs-titulo"><strong>Nível ${info.nivel}</strong><span>${info.nome}</span></div>
+      <div class="cs-barra" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${info.pct}" aria-label="Progresso para o próximo nível">
+        <div style="width:${info.pct}%"></div>
+      </div>
+      <div class="cs-xp">${info.proximo ? `${info.xp} XP · faltam ${info.faltam}` : `${info.xp} XP · nível máximo`}</div>
+      <div class="cs-mini">
+        <span><b>${Number(perfil.streak) || 0}</b> dias</span>
+        <span><b>${Number(perfil.phrasesSpoken) || 0}</b> frases</span>
+        <span><b>${perfil.stars || 0}</b> estrelas</span>
+      </div>
+    </section>`;
+
+  let direita = '';
+  if (aba === 'jornada') {
+    const registro = {};
+    (perfil.niveisAlcancados || []).forEach(r => { registro[r.nivel] = r; });
+    const fases = GURI_NIVEIS.map(nivel => {
+      const ok = nivel.n <= info.nivel;
+      const atual = nivel.n === info.nivel;
+      const r = registro[nivel.n];
+      const quando = nivel.n === 1 ? 'início' : (ok ? (r ? formatarData(r.dia) : 'alcançado') : `faltam ${nivel.xp - info.xp} XP`);
+      return `<li class="cs-fase${ok ? ' ok' : ''}${atual ? ' atual' : ''}">
+        <span class="cs-num">${nivel.n}</span>
+        <span class="cs-fase-info"><strong>${nivel.nome}</strong><small>${nivel.xp} XP · ${quando}</small></span>
+      </li>`;
+    }).join('');
+    direita = `
+      <div class="cs-jornada">
+        <ol class="cs-fases">${fases}</ol>
+        <div class="cs-conquistas">
+          <span><b>${info.xp}</b> XP total</span>
+          <span><b>${Number(perfil.desafiosVencidos) || 0}</b> desafios vencidos</span>
+          <span><b>${Number(perfil.bestStreak) || 0}</b> maior sequência</span>
+          <button type="button" class="cs-btn" id="resetJogoBtn" aria-label="Recomeçar o jogo do zero" title="Recomeçar do zero">Recomeçar</button>
+        </div>
+        <p class="cs-regras">Frase falada: ${XP_FRASE_BASE} XP + ${XP_POR_PALAVRA} por palavra (até ${XP_FRASE_MAX}). Primeira do dia: +${XP_PRIMEIRA_DO_DIA} XP. Frase certa no jogo: ${XP_DESAFIO} XP + 2 por palavra.</p>
+      </div>`;
+  } else {
+    const { challenge, done, cheia, usados } = ctx;
+    direita = `
+      <div class="cs-jogo">
+        <p class="cs-prompt">${challenge.prompt} <span>Monte a frase com ${challenge.frase.length} palavras.</span></p>
+        <div class="cs-frase" aria-label="Minha frase">
+          ${STATE.phrase.length
+            ? STATE.phrase.map(word => `<span class="cs-chip">${word.label}</span>`).join('')
+            : `<span class="cs-vazio">Toque nas palavras abaixo...</span>`}
+        </div>
+        <div class="cs-aviso${done ? ' ok' : ''}" ${cheia ? 'role="alert"' : 'role="status"'}>${
+          done ? `Frase certa! +${STATE.chAcerto.xp} XP. Já vem a próxima...`
+          : cheia ? 'Quase! Confira as palavras e a ordem da frase.' : '&nbsp;'}</div>
+        <div class="cs-opcoes" role="list">
+          ${challenge.opcoes.map(op => {
+            const usada = usados.has('ch_' + op.idx);
+            return `<button type="button" class="cs-opcao" role="listitem" data-ch-opt="${op.idx}" ${usada || done ? 'disabled' : ''}>${op.label}</button>`;
+          }).join('')}
+        </div>
+        <div class="cs-acoes" role="toolbar" aria-label="Ações do desafio">
+          <button class="cs-btn" id="eraseBtn" aria-label="Apagar última palavra">Apagar</button>
+          <button class="cs-btn" id="clearBtn" aria-label="Limpar frase">Limpar</button>
+          ${done
+            ? `<button class="cs-btn cs-forte" id="nextChallengeBtn">Próxima frase</button>`
+            : `<button class="cs-btn cs-forte" id="speakBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Ouvir minha frase">Ouvir</button>`}
+          <div class="cs-outro" id="skipChallenge" role="button" tabindex="0">Outro desafio</div>
+        </div>
+      </div>`;
   }
 
-  const challenge = STATE.challenge;
-  const done = STATE.phrase.length > 0 &&
-    STATE.phrase.map(word => word.id).join(',') === challenge.target.join(',');
-
-  const targetWords = allWords().filter(word => challenge.target.includes(word.id));
-  const targetCategories = new Set(targetWords.map(word => word.cat));
-
-  const distractors = allWords()
-    .filter(word => targetCategories.has(word.cat) && !challenge.target.includes(word.id))
-    .slice(0, 5);
-
-  let options = targetWords.concat(distractors);
-  options = options.sort(() => Math.random() - 0.5);
-
   return `
-    <div class="topbar">
+    <div class="topbar cs-topbar">
       <button class="icon-btn" data-go="home" aria-label="Voltar para o início">←</button>
       <div class="topbar-title">Desafio</div>
       <div style="width:var(--tap-min)"></div>
     </div>
+    <div class="screen cs-screen">
+      <div class="cs-console">
+        <div class="cs-tela"><div class="cs-inner">
+          <div class="cs-topo">${abas}<button type="button" class="icon-btn cs-voltar" data-go="home" aria-label="Voltar para o início">←</button></div>
+          <div class="cs-corpo">${guri}${direita}</div>
+        </div></div>
+        <img class="cs-moldura" src="assets/imagens/console-guri.png" alt="" aria-hidden="true" onerror="this.style.display='none'">
+      </div>
+    </div>`;
+}
 
+function renderChallenge() {
+  const aba = STATE.challengeTab || 'jogo';
+  const subiu = !!STATE.guriSubiu;
+  STATE.guriSubiu = null;
+
+  const abasHtml = `
+    <div class="ch-abas" role="tablist" aria-label="Seções do desafio">
+      <button type="button" class="ch-aba" role="tab" data-ch-tab="jogo" aria-selected="${aba === 'jogo'}">Jogo</button>
+      <button type="button" class="ch-aba" role="tab" data-ch-tab="jornada" aria-selected="${aba === 'jornada'}">Jornada do Guri</button>
+    </div>`;
+
+  const topo = `
+    <div class="topbar">
+      <button class="icon-btn" data-go="home" aria-label="Voltar para o início">←</button>
+      <div class="topbar-title">Desafio</div>
+      <div style="width:var(--tap-min)"></div>
+    </div>`;
+
+  if (aba === 'jornada') {
+    if (usaConsole()) return renderConsole('jornada', subiu);
+    return `${topo}<div class="screen">${abasHtml}${renderJornada(subiu)}</div>`;
+  }
+
+  if (!STATE.challenge) {
+    STATE.challenge = sortearDesafio();
+    STATE.phrase = [];
+  }
+  const challenge = STATE.challenge;
+  const alvo = challenge.frase.map(p => p.toLowerCase()).join(' ');
+  const atual = STATE.phrase.map(w => String(w.label).toLowerCase()).join(' ');
+  const done = !!STATE.chAcerto;
+  const cheia = STATE.phrase.length >= challenge.frase.length && !done && atual !== alvo;
+  const usados = new Set(STATE.phrase.map(w => w.id));
+
+  if (usaConsole()) return renderConsole('jogo', subiu, { challenge, done, cheia, usados });
+
+  return `
+    ${topo}
     <div class="screen">
-      <div class="stars" role="status"> ${STATE.data.profile.stars} estrelas</div>
+      ${abasHtml}
+      ${guriCardHtml(subiu)}
 
       <div class="challenge-card">
-        <div class="emoji" aria-hidden="true">${challenge.emoji}</div>
         <p>${challenge.prompt}</p>
+        <p class="ch-dica">Monte a frase completa, com ${challenge.frase.length} palavras, na ordem certa.</p>
       </div>
 
       <h2 class="section-label">MINHA FRASE</h2>
       <div class="phrase-bar">
         ${STATE.phrase.length
-          ? STATE.phrase.map(word => `<span class="phrase-chip">${word.emoji} ${word.label}</span>`).join('')
-          : `<span class="phrase-placeholder">Monte a frase certa...</span>`}
+          ? STATE.phrase.map(word => `<span class="phrase-chip">${word.label}</span>`).join('')
+          : `<span class="phrase-placeholder">Toque nas palavras abaixo...</span>`}
       </div>
+      ${cheia ? `<div class="ch-aviso" role="alert">Quase! Confira as palavras e a ordem da frase.</div>` : ''}
+      ${done ? `<div class="ch-aviso ch-ok" role="status">Frase certa! +${STATE.chAcerto.xp} XP. Já vem a próxima...</div>` : ''}
 
       <div class="action-row" role="toolbar" aria-label="Ações do desafio">
         <button class="btn-erase" id="eraseBtn" aria-label="Apagar última palavra">Apagar</button>
         <button class="btn-clear" id="clearBtn" aria-label="Limpar frase">Limpar</button>
       </div>
 
-      <h2 class="section-label">MONTE A RESPOSTA</h2>
-      <div class="word-grid" role="list">
-        ${options.map(word => wordCardHtml(word)).join('')}
+      <h2 class="section-label">ESCOLHA AS PALAVRAS</h2>
+      <div class="ch-opcoes" role="list">
+        ${challenge.opcoes.map(op => {
+          const id = 'ch_' + op.idx;
+          const usada = usados.has(id);
+          return `<button type="button" class="ch-opcao" role="listitem" data-ch-opt="${op.idx}" ${usada || done ? 'disabled' : ''}>${op.label}</button>`;
+        }).join('')}
       </div>
 
       ${done
-        ? `<button class="speak-btn" id="challengeWinBtn">Muito bem! Ganhar estrela</button>`
+        ? `<button class="speak-btn" id="nextChallengeBtn">Próxima frase</button>`
         : `<button class="speak-btn" id="speakBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Ouvir minha frase">Ouvir minha frase</button>`}
 
-      <div class="back-link" style="margin-top:14px;" id="skipChallenge" role="button" tabindex="0">↻ Tentar outro desafio</div>
+      <div class="back-link" style="margin-top:14px;" id="skipChallenge" role="button" tabindex="0">Tentar outro desafio</div>
+    </div>
+  `;
+}
+
+function formatarData(iso) {
+  if (!iso) return '';
+  const [a, m, d] = String(iso).split('-');
+  return `${d}/${m}/${a}`;
+}
+
+function renderJornada(subiu) {
+  const perfil = STATE.data.profile;
+  const info = guriInfo(perfil.xp);
+  const registro = {};
+  (perfil.niveisAlcancados || []).forEach(r => { registro[r.nivel] = r; });
+
+  const linhas = GURI_NIVEIS.map(nivel => {
+    const alcancado = nivel.n <= info.nivel;
+    const atual = nivel.n === info.nivel;
+    const r = registro[nivel.n];
+    const quando = nivel.n === 1
+      ? 'Início da jornada'
+      : (alcancado ? (r ? `Alcançado em ${formatarData(r.dia)}` : 'Alcançado') : `Faltam ${nivel.xp - info.xp} XP`);
+    return `
+      <li class="jor-fase${alcancado ? ' ok' : ''}${atual ? ' atual' : ''}">
+        <span class="jor-num">${nivel.n}</span>
+        <span class="jor-info">
+          <strong>${nivel.nome}${atual ? ' · você está aqui' : ''}</strong>
+          <small>${nivel.xp} XP · ${quando}</small>
+        </span>
+        <span class="jor-tam" aria-hidden="true">${Math.round(guriInfo(nivel.xp).escala * 100)}%</span>
+      </li>`;
+  }).join('');
+
+  return `
+    ${guriCardHtml(subiu)}
+
+    <div class="form-block">
+      <h3>Fases do Guri</h3>
+      <ol class="jor-lista">${linhas}</ol>
+    </div>
+
+    <div class="form-block">
+      <h3>Como evoluir</h3>
+      <ul class="jor-regras">
+        <li>Falar uma frase vale ${XP_FRASE_BASE} XP, mais ${XP_POR_PALAVRA} por palavra (até ${XP_FRASE_MAX} XP).</li>
+        <li>A primeira frase de cada dia vale +${XP_PRIMEIRA_DO_DIA} XP e aumenta os dias seguidos.</li>
+        <li>Montar a frase certa no jogo vale ${XP_DESAFIO} XP mais ${2} por palavra da frase.</li>
+        <li>Frases maiores aparecem nos desafios conforme o Guri sobe de nível.</li>
+      </ul>
+    </div>
+
+    <div class="form-block">
+      <h3>Suas conquistas</h3>
+      <div class="profile-stat"><span>XP total</span><span>${info.xp}</span></div>
+      <div class="profile-stat"><span>Desafios vencidos</span><span>${Number(perfil.desafiosVencidos) || 0}</span></div>
+      <div class="profile-stat"><span>Frases faladas</span><span>${Number(perfil.phrasesSpoken) || 0}</span></div>
+      <div class="profile-stat"><span>Dias seguidos</span><span>${Number(perfil.streak) || 0}</span></div>
+      <div class="profile-stat" style="border-bottom:none;"><span>Maior sequência</span><span>${Number(perfil.bestStreak) || 0}</span></div>
+    </div>
+
+    <div class="form-block">
+      <h3>Recomeçar</h3>
+      <p style="margin:0 0 12px;font-size:12.5px;font-weight:600;">Zera o XP, o nível, as estrelas e os dias seguidos do Guri. Suas palavras e frases favoritas não mudam.</p>
+      <button type="button" class="submit-btn" id="resetJogoBtn">Recomeçar do zero</button>
     </div>
   `;
 }
@@ -5195,6 +5878,9 @@ function renderProfile() {
     <div class="info-block">
       <h3 style="margin:0 0 12px; color:#103d5d; font-weight:900; letter-spacing:0.02em;">Resumo</h3>
       <div class="profile-stat"><span> Estrelas conquistadas</span><span>${profile.stars}</span></div>
+      <div class="profile-stat"><span>Nível do Guri</span><span>${guriInfo(profile.xp).nivel} · ${guriInfo(profile.xp).nome}</span></div>
+      <div class="profile-stat"><span>XP total</span><span>${Number(profile.xp) || 0}</span></div>
+      <div class="profile-stat"><span>Dias seguidos</span><span>${Number(profile.streak) || 0}</span></div>
       <div class="profile-stat"><span>Frases favoritas</span><span>${STATE.data.favPhrases.length}</span></div>
       <div class="profile-stat"><span>Palavras usadas</span><span>${wordsUsed}</span></div>
       <div class="profile-stat"><span>Palavras favoritas</span><span>${STATE.data.favWords.length}</span></div>
@@ -5754,7 +6440,7 @@ function attachHandlers() {
   const speakBtn = document.getElementById('speakBtn');
   if (speakBtn) speakBtn.addEventListener('click', () => {
     const text = currentPhraseText();
-    if (text) speak(text);
+    if (text) { speak(text); registrarFrase(text); }
   });
 
   const eraseBtn = document.getElementById('eraseBtn');
@@ -5961,23 +6647,82 @@ function attachHandlers() {
     });
   }
 
-  const challengeWinBtn = document.getElementById('challengeWinBtn');
-  if (challengeWinBtn) {
-    challengeWinBtn.addEventListener('click', () => {
-      STATE.data.profile.stars += 1;
-      saveData();
-      speak('Muito bem! Você ganhou uma estrela!');
-      showToast('Muito bem! +1 estrela');
+  function proximoDesafio() {
+    clearTimeout(STATE.chTimer);
+    STATE.chAcerto = null;
+    STATE.challenge = null;
+    STATE.phrase = [];
+    loadLayer();
+    render();
+  }
+
+  const nextChallengeBtn = document.getElementById('nextChallengeBtn');
+  if (nextChallengeBtn) nextChallengeBtn.addEventListener('click', proximoDesafio);
+
+  document.querySelectorAll('[data-ch-opt]').forEach(btn => btn.addEventListener('click', () => {
+    if (!STATE.challenge || STATE.chAcerto) return;
+    const idx = Number(btn.getAttribute('data-ch-opt'));
+    const op = STATE.challenge.opcoes.find(o => o.idx === idx);
+    if (!op) return;
+    STATE.phrase.push({ id: 'ch_' + idx, label: op.label, emoji: '', description: '', cat: 'desafio' });
+
+    const alvo = STATE.challenge.frase.map(p => p.toLowerCase()).join(' ');
+    const atual = STATE.phrase.map(w => String(w.label).toLowerCase()).join(' ');
+    if (atual !== alvo) {
+      speak(op.label);
+      render();
+      return;
+    }
+
+    // Frase certa: ganha XP na hora, fala a frase inteira e avança sozinho para a próxima
+    const perfil = STATE.data.profile;
+    const desafio = STATE.challenge;
+    perfil.stars += 1;
+    perfil.desafiosVencidos = (Number(perfil.desafiosVencidos) || 0) + 1;
+    saveData();
+    ganharXp(desafio.xp, 'frase certa', false);
+    speak(desafio.frase.join(' '));
+    STATE.chAcerto = { xp: desafio.xp };
+    render();
+    clearTimeout(STATE.chTimer);
+    STATE.chTimer = setTimeout(() => {
+      if (STATE.screen === 'challenge' && STATE.challenge === desafio && STATE.chAcerto) proximoDesafio();
+    }, 3200);
+  }));
+
+  document.querySelectorAll('[data-ch-tab]').forEach(btn => btn.addEventListener('click', () => {
+    STATE.challengeTab = btn.getAttribute('data-ch-tab');
+    render();
+  }));
+
+  const resetJogoBtn = document.getElementById('resetJogoBtn');
+  if (resetJogoBtn) resetJogoBtn.addEventListener('click', () => {
+    showAccessibleConfirm('Recomeçar o jogo do zero? O XP, o nível, as estrelas e os dias seguidos do Guri serão zerados.', () => {
+      const perfil = STATE.data.profile;
+      perfil.xp = 0;
+      perfil.stars = 0;
+      perfil.streak = 0;
+      perfil.bestStreak = 0;
+      perfil.lastDay = '';
+      perfil.phrasesSpoken = 0;
+      perfil.desafiosVencidos = 0;
+      perfil.niveisAlcancados = [];
+      clearTimeout(STATE.chTimer);
+      STATE.chAcerto = null;
       STATE.challenge = null;
       STATE.phrase = [];
-      loadLayer();
+      ultimaFraseXp = { texto: '', hora: 0 };
+      saveData();
+      showToast('Jogo reiniciado. O Guri voltou ao nível 1.');
       render();
     });
-  }
+  });
 
   const skipChallenge = document.getElementById('skipChallenge');
   if (skipChallenge) {
     const activate = () => {
+      clearTimeout(STATE.chTimer);
+      STATE.chAcerto = null;
       STATE.challenge = null;
       STATE.phrase = [];
       loadLayer();
@@ -7536,6 +8281,7 @@ function falarFrase() {
     fala.lang = "pt-BR";
     speechSynthesis.cancel();
     speechSynthesis.speak(fala);
+    registrarFrase(texto);
 }
 
 function focarInicio() {
