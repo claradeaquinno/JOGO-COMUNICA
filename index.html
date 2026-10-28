@@ -4287,7 +4287,6 @@ body.profile-selection #app .onboard-wrap {
   margin: auto;
   padding-top: 0;
 }
-
 /* =====================================================================
    REDESIGN PASTEL — camada final (vence as regras anteriores).
    Tokens únicos para claro/escuro; o modo daltonismo fica intocado
@@ -4303,8 +4302,8 @@ body {
   --c-ink-soft: #4d6d88;
   --c-line: rgba(16, 61, 93, 0.12);
   --c-line-strong: rgba(16, 61, 93, 0.22);
-  --c-accent: #f7c94d;
-  --c-accent-soft: #fff3cc;
+  --c-accent: #FFF2BF;
+  --c-accent-soft: #FFF8DE;
   --c-accent-ink: #103d5d;
   --c-primary: #103d5d;
   --c-primary-ink: #ffffff;
@@ -4512,19 +4511,6 @@ body:not([data-color-vision="on"]) #app .menu-arrow {
   font-size: 1.6rem !important;
   margin-left: auto;
 }
-/* Ação principal em amarelo pastel */
-body:not([data-color-vision="on"]) #app .menu-btn.primary {
-  background: var(--c-accent) !important;
-  border-color: transparent !important;
-}
-body:not([data-color-vision="on"]) #app .menu-btn.primary .menu-title,
-body:not([data-color-vision="on"]) #app .menu-btn.primary .menu-sub,
-body:not([data-color-vision="on"]) #app .menu-btn.primary .menu-arrow {
-  color: #103d5d !important;
-}
-body:not([data-color-vision="on"]) #app .menu-btn.primary .menu-image {
-  background: rgba(255, 255, 255, 0.55) !important;
-}
 body:not([data-color-vision="on"]) #app .about-link,
 body:not([data-color-vision="on"]) #app .back-link {
   color: var(--c-ink-soft) !important;
@@ -4587,7 +4573,7 @@ body:not([data-color-vision="on"]) #app .action-row .btn-speak {
   background: var(--c-accent) !important;
   color: #103d5d !important;
   border: 0 !important;
-  box-shadow: 0 6px 18px rgba(217, 163, 20, 0.28) !important;
+  box-shadow: 0 6px 18px rgba(217, 163, 20, 0.14) !important;
 }
 /* secundários: superfície clara com contorno */
 body:not([data-color-vision="on"]) #app .action-row button:not(.btn-speak),
@@ -4633,11 +4619,7 @@ body:not([data-color-vision="on"]) #app .mode-choice-button {
   border-radius: var(--c-radius) !important;
   box-shadow: var(--c-shadow) !important;
 }
-body:not([data-color-vision="on"]) #app .mode-choice-button:first-of-type {
-  background: var(--c-accent) !important;
-  color: #103d5d !important;
-  border-color: transparent !important;
-}
+
 body:not([data-color-vision="on"]) #app .mode-choice-screen,
 body:not([data-color-vision="on"]) #app .mode-screen {
   background: transparent !important;
@@ -4730,7 +4712,7 @@ body:not([data-color-vision="on"]) #app .carousel-card .label { color: var(--c-i
 body:not([data-color-vision="on"]) #app .carousel-card.center {
   background: var(--c-accent) !important;
   border-color: transparent !important;
-  box-shadow: 0 12px 30px rgba(217, 163, 20, 0.35) !important;
+  box-shadow: 0 12px 30px rgba(217, 163, 20, 0.16) !important;
 }
 body:not([data-color-vision="on"]) #app .carousel-card.center .label { color: #103d5d !important; }
 body:not([data-color-vision="on"]) #app .carousel-card.side { opacity: 0.85; }
@@ -4937,6 +4919,91 @@ body:not([data-color-vision="on"]) #app .color-vision-swatch--focus {
   background: transparent !important;
   color: var(--c-ink) !important;
 }
+
+/* ---------- Sem emojis: cartões só com texto ---------- */
+body #app .emoji,
+body #app .menu-emoji { display: none !important; }
+body #app .word-card { min-height: 92px !important; display: flex !important; flex-direction: column; justify-content: center; }
+body #app .word-card .label { font-size: 1.1rem !important; margin-top: 0 !important; }
+body #app .cat-card { min-height: 88px !important; }
+body #app .cat-card .label { font-size: 1.1rem !important; }
+body #app .carousel-card .label { font-size: 1.05rem !important; }
+body #app .carousel-card.center .label { font-size: 1.6rem !important; }
+body #app .challenge-card p { margin: 0 !important; }
+.ocular-control-hidden { display: none !important; }
+body #app .word-card { padding-top: 30px !important; }
+
+/* ---------- Ícones do topo: mesmo tamanho, centralizados e sem encostar no título ---------- */
+body #app .icon-btn .app-line-icon {
+  display: block;
+  width: 24px !important;
+  height: 24px !important;
+  margin: 0 !important;
+  fill: none !important;
+  stroke-width: 1.8 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+}
+body #app .home-screen .brand-intro { padding-top: 44px !important; }
+
+/* ---------- Carrossel no celular: setas e cartões cabem lado a lado ---------- */
+@media (max-width: 560px) {
+  body #app .carousel-wrap {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    width: 100% !important;
+    padding: 0 !important;
+  }
+  body #app .carousel-arrow {
+    flex: 0 0 40px !important;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    font-size: 1.3rem !important;
+    margin: 0 !important;
+  }
+  body #app .carousel-track {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    overflow: visible !important;
+  }
+  body #app .carousel-card {
+    margin: 0 !important;
+    transform: none !important;
+    flex: 0 0 auto !important;
+    padding: 6px !important;
+  }
+  body #app .carousel-card.side {
+    width: 22% !important;
+    height: 96px !important;
+  }
+  body #app .carousel-card.center {
+    width: 48% !important;
+    height: 136px !important;
+  }
+  body #app .carousel-card.side .label { font-size: 0.78rem !important; line-height: 1.2; }
+  body #app .carousel-card.center .label { font-size: 1.35rem !important; }
+}
+
+/* ---------- Teste: amarelo claro #FFF2BF (contorno para não sumir no fundo claro) ---------- */
+body:not([data-color-vision="on"]) #app .speak-btn,
+body:not([data-color-vision="on"]) #app .confirm-btn,
+body:not([data-color-vision="on"]) #app .action-row .btn-speak,
+body:not([data-color-vision="on"]) #app .carousel-card.center,
+body:not([data-color-vision="on"]) #app .buraco-central.ativo,
+body:not([data-color-vision="on"]) #app .satelite.satelite-destaque,
+body:not([data-color-vision="on"]) #app .circular-keyboard-reserved .frase-pronta[data-selecionada="true"],
+body:not([data-color-vision="on"]) #app .word-card.selected {
+  border: 1.5px solid #e8c766 !important;
+}
+
+/* Sem o ✓ na palavra selecionada (modo daltonismo usa só cor + contorno). */
+body[data-color-vision="on"] #app .word-card.selected::after { content: none !important; display: none !important; }
 </style>
 </head>
 
@@ -4968,95 +5035,95 @@ body:not([data-color-vision="on"]) #app .color-vision-swatch--focus {
 
 
 const DEFAULT_CATEGORIES = [
-  { id: 'pessoas', label: 'Pessoas', emoji: '👥', custom: false },
-  { id: 'necessidades', label: 'Necessidades', emoji: '🧩', custom: false },
-  { id: 'comida', label: 'Comida', emoji: '🍎', custom: false },
-  { id: 'sentimentos', label: 'Sentimentos', emoji: '💛', custom: false },
-  { id: 'atividades', label: 'Atividades', emoji: '🎨', custom: false },
-  { id: 'lugares', label: 'Lugares', emoji: '📍', custom: false },
-  { id: 'acoes', label: 'Ações', emoji: '✅', custom: false }
+  { id: 'pessoas', label: 'Pessoas', emoji: '', custom: false },
+  { id: 'necessidades', label: 'Necessidades', emoji: '', custom: false },
+  { id: 'comida', label: 'Comida', emoji: '', custom: false },
+  { id: 'sentimentos', label: 'Sentimentos', emoji: '', custom: false },
+  { id: 'atividades', label: 'Atividades', emoji: '', custom: false },
+  { id: 'lugares', label: 'Lugares', emoji: '', custom: false },
+  { id: 'acoes', label: 'Ações', emoji: '', custom: false }
 ];
 
 const DEFAULT_WORDS = [
-  { id: 'eu', label: 'Eu', emoji: '👤', description: 'Quem está falando', cat: 'pessoas' },
-  { id: 'voce', label: 'Você', emoji: '👤', description: 'A pessoa com quem falo', cat: 'pessoas' },
-  { id: 'mae', label: 'Mãe', emoji: '👩', description: 'Minha mãe', cat: 'pessoas' },
-  { id: 'pai', label: 'Pai', emoji: '👨', description: 'Meu pai', cat: 'pessoas' },
-  { id: 'professor', label: 'Professor', emoji: '🧑‍🏫', description: 'Meu professor', cat: 'pessoas' },
-  { id: 'amigo', label: 'Amigo', emoji: '🧑‍🤝‍🧑', description: 'Meu amigo', cat: 'pessoas' },
+  { id: 'eu', label: 'Eu', emoji: '', description: 'Quem está falando', cat: 'pessoas' },
+  { id: 'voce', label: 'Você', emoji: '', description: 'A pessoa com quem falo', cat: 'pessoas' },
+  { id: 'mae', label: 'Mãe', emoji: '', description: 'Minha mãe', cat: 'pessoas' },
+  { id: 'pai', label: 'Pai', emoji: '', description: 'Meu pai', cat: 'pessoas' },
+  { id: 'professor', label: 'Professor', emoji: '', description: 'Meu professor', cat: 'pessoas' },
+  { id: 'amigo', label: 'Amigo', emoji: '', description: 'Meu amigo', cat: 'pessoas' },
 
-  { id: 'quero', label: 'Quero', emoji: '🙋', description: 'Eu desejo algo', cat: 'acoes' },
-  { id: 'preciso', label: 'Preciso', emoji: '❗', description: 'Eu preciso de algo', cat: 'acoes' },
-  { id: 'estou', label: 'Estou', emoji: '💭', description: 'Como eu estou', cat: 'acoes' },
-  { id: 'gosto', label: 'Gosto', emoji: '😊', description: 'Eu gosto de algo', cat: 'acoes' },
-  { id: 'vou', label: 'Vou', emoji: '➡️', description: 'Eu vou para algum lugar', cat: 'acoes' },
+  { id: 'quero', label: 'Quero', emoji: '', description: 'Eu desejo algo', cat: 'acoes' },
+  { id: 'preciso', label: 'Preciso', emoji: '', description: 'Eu preciso de algo', cat: 'acoes' },
+  { id: 'estou', label: 'Estou', emoji: '', description: 'Como eu estou', cat: 'acoes' },
+  { id: 'gosto', label: 'Gosto', emoji: '', description: 'Eu gosto de algo', cat: 'acoes' },
+  { id: 'vou', label: 'Vou', emoji: '', description: 'Eu vou para algum lugar', cat: 'acoes' },
 
-  { id: 'agua', label: 'Água', emoji: '💧', description: 'Quero beber', cat: 'necessidades' },
-  { id: 'comida', label: 'Comida', emoji: '🍎', description: 'Quero comer', cat: 'necessidades' },
-  { id: 'banheiro', label: 'Banheiro', emoji: '🚽', description: 'Preciso ir ao banheiro', cat: 'necessidades' },
-  { id: 'dormir', label: 'Dormir', emoji: '😴', description: 'Quero dormir', cat: 'necessidades' },
-  { id: 'descansar', label: 'Descansar', emoji: '🛌', description: 'Quero descansar', cat: 'necessidades' },
-  { id: 'ajuda', label: 'Ajuda', emoji: '🆘', description: 'Preciso de ajuda', cat: 'necessidades' },
+  { id: 'agua', label: 'Água', emoji: '', description: 'Quero beber', cat: 'necessidades' },
+  { id: 'comida', label: 'Comida', emoji: '', description: 'Quero comer', cat: 'necessidades' },
+  { id: 'banheiro', label: 'Banheiro', emoji: '', description: 'Preciso ir ao banheiro', cat: 'necessidades' },
+  { id: 'dormir', label: 'Dormir', emoji: '', description: 'Quero dormir', cat: 'necessidades' },
+  { id: 'descansar', label: 'Descansar', emoji: '', description: 'Quero descansar', cat: 'necessidades' },
+  { id: 'ajuda', label: 'Ajuda', emoji: '', description: 'Preciso de ajuda', cat: 'necessidades' },
 
-  { id: 'feliz', label: 'Feliz', emoji: '😄', description: 'Estou feliz', cat: 'sentimentos' },
-  { id: 'triste', label: 'Triste', emoji: '😢', description: 'Estou triste', cat: 'sentimentos' },
-  { id: 'cansado', label: 'Cansado', emoji: '😩', description: 'Estou cansado', cat: 'sentimentos' },
-  { id: 'commedo', label: 'Com medo', emoji: '😨', description: 'Estou com medo', cat: 'sentimentos' },
-  { id: 'comdor', label: 'Com dor', emoji: '🤕', description: 'Estou com dor', cat: 'sentimentos' },
-  { id: 'bem', label: 'Bem', emoji: '🙂', description: 'Estou bem', cat: 'sentimentos' },
+  { id: 'feliz', label: 'Feliz', emoji: '', description: 'Estou feliz', cat: 'sentimentos' },
+  { id: 'triste', label: 'Triste', emoji: '', description: 'Estou triste', cat: 'sentimentos' },
+  { id: 'cansado', label: 'Cansado', emoji: '', description: 'Estou cansado', cat: 'sentimentos' },
+  { id: 'commedo', label: 'Com medo', emoji: '', description: 'Estou com medo', cat: 'sentimentos' },
+  { id: 'comdor', label: 'Com dor', emoji: '', description: 'Estou com dor', cat: 'sentimentos' },
+  { id: 'bem', label: 'Bem', emoji: '', description: 'Estou bem', cat: 'sentimentos' },
 
-  { id: 'brincar', label: 'Brincar', emoji: '🧸', description: 'Quero brincar', cat: 'atividades' },
-  { id: 'jogar', label: 'Jogar', emoji: '🎮', description: 'Quero jogar', cat: 'atividades' },
-  { id: 'assistir', label: 'Assistir', emoji: '📺', description: 'Quero assistir', cat: 'atividades' },
-  { id: 'desenhar', label: 'Desenhar', emoji: '🎨', description: 'Quero desenhar', cat: 'atividades' },
-  { id: 'passear', label: 'Passear', emoji: '🚶', description: 'Quero passear', cat: 'atividades' },
-  { id: 'musica', label: 'Música', emoji: '🎵', description: 'Quero ouvir música', cat: 'atividades' },
+  { id: 'brincar', label: 'Brincar', emoji: '', description: 'Quero brincar', cat: 'atividades' },
+  { id: 'jogar', label: 'Jogar', emoji: '', description: 'Quero jogar', cat: 'atividades' },
+  { id: 'assistir', label: 'Assistir', emoji: '', description: 'Quero assistir', cat: 'atividades' },
+  { id: 'desenhar', label: 'Desenhar', emoji: '', description: 'Quero desenhar', cat: 'atividades' },
+  { id: 'passear', label: 'Passear', emoji: '', description: 'Quero passear', cat: 'atividades' },
+  { id: 'musica', label: 'Música', emoji: '', description: 'Quero ouvir música', cat: 'atividades' },
 
-  { id: 'casa', label: 'Casa', emoji: '🏠', description: 'Minha casa', cat: 'lugares' },
-  { id: 'escola', label: 'Escola', emoji: '🏫', description: 'Minha escola', cat: 'lugares' },
-  { id: 'quarto', label: 'Quarto', emoji: '🛏️', description: 'Meu quarto', cat: 'lugares' },
-  { id: 'hospital', label: 'Hospital', emoji: '🏥', description: 'Preciso ir ao hospital', cat: 'lugares' },
-  { id: 'sair', label: 'Sair', emoji: '🚪', description: 'Quero sair', cat: 'lugares' }
+  { id: 'casa', label: 'Casa', emoji: '', description: 'Minha casa', cat: 'lugares' },
+  { id: 'escola', label: 'Escola', emoji: '', description: 'Minha escola', cat: 'lugares' },
+  { id: 'quarto', label: 'Quarto', emoji: '', description: 'Meu quarto', cat: 'lugares' },
+  { id: 'hospital', label: 'Hospital', emoji: '', description: 'Preciso ir ao hospital', cat: 'lugares' },
+  { id: 'sair', label: 'Sair', emoji: '', description: 'Quero sair', cat: 'lugares' }
 ];
 
 const AAC_EXTRA_WORDS = [
-  ['ele', 'Ele', '👤'], ['ela', 'Ela', '👤'], ['nos', 'Nós', '👥'], ['eles', 'Eles', '👥'],
-  ['elas', 'Elas', '👥'], ['isso', 'Isso', '👉'], ['aquilo', 'Aquilo', '👉'],
-  ['avo', 'Avô', '👴'], ['ava', 'Avó', '👵'], ['tio', 'Tio', '👨'], ['tia', 'Tia', '👩'],
-  ['irmao', 'Irmão', '👦'], ['irma', 'Irmã', '👧'],
-  ['bomDia', 'Bom dia', '🌞'], ['boaTarde', 'Boa tarde', '🌤️'], ['boaNoite', 'Boa noite', '🌙'],
-  ['ola', 'Olá', '👋'], ['oi', 'Oi', '👋'], ['tudoBem', 'Tudo bem?', '🙂'], ['comoVai', 'Como vai?', '😊'],
-  ['ateLogo', 'Até logo', '👋'], ['tchau', 'Tchau', '👋'], ['prazerConhecer', 'Prazer em conhecer você', '🤝'],
-  ['comoVoceEsta', 'Como você está?', '🙂'], ['muitoPrazer', 'Muito prazer', '🤝'],
-  ['vai', 'Vai', '➡️'], ['quer', 'Quer', '🙋'], ['nao', 'Não', '🚫'], ['acho', 'Acho', '💭'], ['trabalhar', 'Trabalhar', '💼'],
-  ['tenho', 'Tenho', '✋'], ['pode', 'Pode', '✅'], ['sabe', 'Sabe', '🧠'], ['tem', 'Tem', '📦'], ['temPlural', 'Têm', '📦'],
-  ['esta', 'Está', '💭'], ['foi', 'Foi', '⏮️'], ['e', 'É', '🔗'], ['faz', 'Faz', '🛠️'],
-  ['diz', 'Diz', '💬'], ['gosta', 'Gosta', '😊'], ['precisa', 'Precisa', '❗'], ['morava', 'Morava', '🏠'],
-  ['trabalha', 'Trabalha', '💼'], ['estuda', 'Estuda', '📚'], ['conhece', 'Conhece', '🤝'], ['entende', 'Entende', '💡'],
-  ['somos', 'Somos', '👥'], ['estamos', 'Estamos', '👥'], ['vamos', 'Vamos', '➡️'], ['temos', 'Temos', '📦'],
-  ['fomos', 'Fomos', '⏮️'], ['queremos', 'Queremos', '🙋'], ['podemos', 'Podemos', '✅'], ['sabemos', 'Sabemos', '🧠'],
-  ['fizemos', 'Fizemos', '🛠️'], ['precisamos', 'Precisamos', '❗'], ['sao', 'São', '👥'], ['estao', 'Estão', '👥'],
-  ['vao', 'Vão', '➡️'], ['foram', 'Foram', '⏮️'], ['querem', 'Querem', '🙋'], ['podem', 'Podem', '✅'],
-  ['sabem', 'Sabem', '🧠'], ['fizeram', 'Fizeram', '🛠️'], ['gostam', 'Gostam', '😊'], ['precisam', 'Precisam', '❗'],
-  ['sera', 'Será', '🔮'], ['parece', 'Parece', '👀'], ['deve', 'Deve', '📌'], ['funciona', 'Funciona', '⚙️'],
-  ['aconteceu', 'Aconteceu', '❓'], ['falar', 'Falar', '💬'], ['irBanheiro', 'Ir ao banheiro', '🚽'],
-  ['irCasa', 'Ir para casa', '🏠'], ['saber', 'Saber', '🧠'], ['parar', 'Parar', '🛑'], ['maisTempo', 'Mais tempo', '⏳'],
-  ['deAjuda', 'De ajuda', '🆘'], ['deAgua', 'De água', '💧'], ['deComida', 'De comida', '🍎'],
-  ['falarAlguem', 'Falar com alguém', '💬'], ['deRemedio', 'De remédio', '💊'], ['deTempo', 'De tempo', '⏳'],
-  ['entender', 'Entender', '💡'], ['comFome', 'Com fome', '🍽️'], ['comSede', 'Com sede', '💧'], ['cansados', 'Cansados', '😩'],
-  ['felizes', 'Felizes', '😄'], ['tristes', 'Tristes', '😢'], ['preocupado', 'Preocupado', '😟'], ['preocupados', 'Preocupados', '😟'], ['paraCasa', 'Para casa', '🏠'], ['embora', 'Embora', '🚶'],
-  ['tentar', 'Tentar', '💪'], ['comer', 'Comer', '🍽️'], ['certeza', 'Certeza', '✅'], ['duvida', 'Dúvida', '❓'],
-  ['medo', 'Medo', '😨'], ['fome', 'Fome', '🍽️'], ['sede', 'Sede', '💧'], ['sono', 'Sono', '😴'],
-  ['pressa', 'Pressa', '⏱️'], ['umProblema', 'Um problema', '⚠️'], ['meAjudar', 'Me ajudar', '🆘'],
-  ['esperar', 'Esperar', '⏳'], ['repetir', 'Repetir', '🔁'], ['virAqui', 'Vir aqui', '👋'],
-  ['falarDevagar', 'Falar mais devagar', '🐢'], ['explicar', 'Explicar', '💡'], ['porFavor', 'Por favor', '🙏'],
-  ['agora', 'Agora', '⏰'], ['paraMim', 'Para mim', '🙋'], ['comIsso', 'Com isso', '👉'], ['euPreciso', 'Eu preciso', '❗'],
-  ['naoConsigo', 'Não consigo', '😟'], ['estouComDor', 'Estou com dor', '🤕'], ['queroFalar', 'Quero falar', '💬'],
-  ['obrigado', 'Obrigado', '🙏'], ['dor', 'Dor', '🤕'], ['estouCom', 'Estou com', '💭'], ['muitaDor', 'Muita dor', '🤕'],
-  ['aqui', 'Aqui', '📍'], ['chameAlguem', 'Chame alguém', '📣'], ['remedio', 'Remédio', '💊'], ['umPouco', 'Um pouco', '🤏'],
-  ['ondeFica', 'Onde fica?', '📍'], ['urgente', 'Urgente', '🚨'], ['mais', 'Mais', '➕'], ['deNovo', 'De novo', '🔁'],
-  ['estaBem', 'Está bem', '👍'], ['naoEntendi', 'Não entendi', '❓'], ['queroIrCasa', 'Quero ir para casa', '🏠'],
-  ['precisoDeAgua', 'Preciso de água', '💧'], ['maisDevagar', 'Mais devagar', '🐢']
+  ['ele', 'Ele', ''], ['ela', 'Ela', ''], ['nos', 'Nós', ''], ['eles', 'Eles', ''],
+  ['elas', 'Elas', ''], ['isso', 'Isso', ''], ['aquilo', 'Aquilo', ''],
+  ['avo', 'Avô', ''], ['ava', 'Avó', ''], ['tio', 'Tio', ''], ['tia', 'Tia', ''],
+  ['irmao', 'Irmão', ''], ['irma', 'Irmã', ''],
+  ['bomDia', 'Bom dia', ''], ['boaTarde', 'Boa tarde', ''], ['boaNoite', 'Boa noite', ''],
+  ['ola', 'Olá', ''], ['oi', 'Oi', ''], ['tudoBem', 'Tudo bem?', ''], ['comoVai', 'Como vai?', ''],
+  ['ateLogo', 'Até logo', ''], ['tchau', 'Tchau', ''], ['prazerConhecer', 'Prazer em conhecer você', ''],
+  ['comoVoceEsta', 'Como você está?', ''], ['muitoPrazer', 'Muito prazer', ''],
+  ['vai', 'Vai', ''], ['quer', 'Quer', ''], ['nao', 'Não', ''], ['acho', 'Acho', ''], ['trabalhar', 'Trabalhar', ''],
+  ['tenho', 'Tenho', ''], ['pode', 'Pode', ''], ['sabe', 'Sabe', ''], ['tem', 'Tem', ''], ['temPlural', 'Têm', ''],
+  ['esta', 'Está', ''], ['foi', 'Foi', ''], ['e', 'É', ''], ['faz', 'Faz', ''],
+  ['diz', 'Diz', ''], ['gosta', 'Gosta', ''], ['precisa', 'Precisa', ''], ['morava', 'Morava', ''],
+  ['trabalha', 'Trabalha', ''], ['estuda', 'Estuda', ''], ['conhece', 'Conhece', ''], ['entende', 'Entende', ''],
+  ['somos', 'Somos', ''], ['estamos', 'Estamos', ''], ['vamos', 'Vamos', ''], ['temos', 'Temos', ''],
+  ['fomos', 'Fomos', ''], ['queremos', 'Queremos', ''], ['podemos', 'Podemos', ''], ['sabemos', 'Sabemos', ''],
+  ['fizemos', 'Fizemos', ''], ['precisamos', 'Precisamos', ''], ['sao', 'São', ''], ['estao', 'Estão', ''],
+  ['vao', 'Vão', ''], ['foram', 'Foram', ''], ['querem', 'Querem', ''], ['podem', 'Podem', ''],
+  ['sabem', 'Sabem', ''], ['fizeram', 'Fizeram', ''], ['gostam', 'Gostam', ''], ['precisam', 'Precisam', ''],
+  ['sera', 'Será', ''], ['parece', 'Parece', ''], ['deve', 'Deve', ''], ['funciona', 'Funciona', ''],
+  ['aconteceu', 'Aconteceu', ''], ['falar', 'Falar', ''], ['irBanheiro', 'Ir ao banheiro', ''],
+  ['irCasa', 'Ir para casa', ''], ['saber', 'Saber', ''], ['parar', 'Parar', ''], ['maisTempo', 'Mais tempo', ''],
+  ['deAjuda', 'De ajuda', ''], ['deAgua', 'De água', ''], ['deComida', 'De comida', ''],
+  ['falarAlguem', 'Falar com alguém', ''], ['deRemedio', 'De remédio', ''], ['deTempo', 'De tempo', ''],
+  ['entender', 'Entender', ''], ['comFome', 'Com fome', ''], ['comSede', 'Com sede', ''], ['cansados', 'Cansados', ''],
+  ['felizes', 'Felizes', ''], ['tristes', 'Tristes', ''], ['preocupado', 'Preocupado', ''], ['preocupados', 'Preocupados', ''], ['paraCasa', 'Para casa', ''], ['embora', 'Embora', ''],
+  ['tentar', 'Tentar', ''], ['comer', 'Comer', ''], ['certeza', 'Certeza', ''], ['duvida', 'Dúvida', ''],
+  ['medo', 'Medo', ''], ['fome', 'Fome', ''], ['sede', 'Sede', ''], ['sono', 'Sono', ''],
+  ['pressa', 'Pressa', ''], ['umProblema', 'Um problema', ''], ['meAjudar', 'Me ajudar', ''],
+  ['esperar', 'Esperar', ''], ['repetir', 'Repetir', ''], ['virAqui', 'Vir aqui', ''],
+  ['falarDevagar', 'Falar mais devagar', ''], ['explicar', 'Explicar', ''], ['porFavor', 'Por favor', ''],
+  ['agora', 'Agora', ''], ['paraMim', 'Para mim', ''], ['comIsso', 'Com isso', ''], ['euPreciso', 'Eu preciso', ''],
+  ['naoConsigo', 'Não consigo', ''], ['estouComDor', 'Estou com dor', ''], ['queroFalar', 'Quero falar', ''],
+  ['obrigado', 'Obrigado', ''], ['dor', 'Dor', ''], ['estouCom', 'Estou com', ''], ['muitaDor', 'Muita dor', ''],
+  ['aqui', 'Aqui', ''], ['chameAlguem', 'Chame alguém', ''], ['remedio', 'Remédio', ''], ['umPouco', 'Um pouco', ''],
+  ['ondeFica', 'Onde fica?', ''], ['urgente', 'Urgente', ''], ['mais', 'Mais', ''], ['deNovo', 'De novo', ''],
+  ['estaBem', 'Está bem', ''], ['naoEntendi', 'Não entendi', ''], ['queroIrCasa', 'Quero ir para casa', ''],
+  ['precisoDeAgua', 'Preciso de água', ''], ['maisDevagar', 'Mais devagar', '']
 ].map(([id, label, emoji]) => ({ id, label, emoji, description: label, cat: 'acoes' }));
 
 const AAC_FALLBACK = [
@@ -5111,31 +5178,31 @@ const SUGGESTIONS = {
 const CHALLENGES = [
 
   {
-    emoji: '💧',
+    emoji: '',
     prompt: 'Você está com sede. O que você quer dizer?',
     target: ['eu', 'quero', 'agua']
   },
 
   {
-    emoji: '🍽️',
+    emoji: '',
     prompt: 'Você está com fome.',
     target: ['eu', 'quero', 'comida']
   },
 
   {
-    emoji: '😴',
+    emoji: '',
     prompt: 'Você está cansado e quer descansar.',
     target: ['eu', 'estou', 'cansado']
   },
 
   {
-    emoji: '🚻',
+    emoji: '',
     prompt: 'Você precisa ir ao banheiro.',
     target: ['eu', 'preciso', 'banheiro']
   },
 
   {
-    emoji: '🧸',
+    emoji: '',
     prompt: 'Você quer se divertir um pouco.',
     target: ['eu', 'quero', 'brincar']
   }
@@ -5206,7 +5273,8 @@ const SETTINGS_DEFAULTS = {
   scanEnabled: false,
   scanSpeed: 1800,
   voiceRate: 0.8,
-  colorVision: false
+  colorVision: false,
+  ocularControl: false
 };
 
 function getSettings() {
@@ -5280,6 +5348,104 @@ function scheduleScan() {
   const scanSpeed = Math.min(5000, Math.max(600, Number(settings.scanSpeed) || 1800));
   scanTimer = setTimeout(scheduleScan, scanSpeed);
 }
+
+
+// Ponte com o ocular-tracking.js (arquivo externo): o botão flutuante
+// "Ativar controle ocular" que ele cria fica sempre escondido e o interruptor
+// das Configurações passa a controlá-lo.
+// Só o texto do botão: não pega o ponto do olhar nem o vídeo da câmera.
+const OCULAR_PATTERN = /controle ocular/i;
+const OCULAR_CLICKABLE = 'button, a, [role="button"], [onclick], input[type="checkbox"]';
+
+function ocularCandidates() {
+  const app = document.getElementById('app');
+  return [...document.body.querySelectorAll('*')]
+    .filter(el => !app?.contains(el) && !el.closest('.splash-screen, #toast, script, style, audio'))
+    .filter(el => OCULAR_PATTERN.test(
+      `${el.getAttribute('aria-label') || ''} ${el.getAttribute('title') || ''} ${el.textContent}`
+    ));
+}
+
+function findOcularControl() {
+  // Prefere um elemento clicável; senão, o mais interno que contém o texto
+  // (o clique nele sobe até quem estiver ouvindo).
+  const candidates = ocularCandidates();
+  return candidates.find(el => el.matches(OCULAR_CLICKABLE))
+    || candidates.find(el => ![...el.children].some(child => candidates.includes(child)))
+    || null;
+}
+
+function forceHide(el) {
+  // Estilo em linha com !important: vence qualquer "display" que o script
+  // externo aplique quando o perfil Sênior é aberto.
+  if (el.style.getPropertyValue('display') !== 'none' || el.style.getPropertyPriority('display') !== 'important') {
+    el.style.setProperty('display', 'none', 'important');
+  }
+  if (!el.classList.contains('ocular-control-hidden')) el.classList.add('ocular-control-hidden');
+  if (el.getAttribute('aria-hidden') !== 'true') el.setAttribute('aria-hidden', 'true');
+}
+
+function hideOcularFloatingControl() {
+  const candidates = ocularCandidates();
+  const targets = candidates.filter(el =>
+    el.matches(OCULAR_CLICKABLE) || ![...el.children].some(child => candidates.includes(child))
+  );
+  targets.forEach(control => {
+    forceHide(control);
+    // Se estiver dentro de uma caixa flutuante só dele, esconde a caixa também.
+    let box = control.parentElement;
+    while (box && box !== document.body) {
+      if (box.textContent.trim() !== control.textContent.trim()) break;
+      const position = getComputedStyle(box).position;
+      if (position === 'fixed' || position === 'absolute' || position === 'sticky') forceHide(box);
+      box = box.parentElement;
+    }
+  });
+}
+
+function setOcularControl(enabled) {
+  const api = window.OcularTracking || window.ocularTracking || window.EyeTracking;
+  const names = enabled ? ['start', 'enable', 'ativar', 'iniciar'] : ['stop', 'disable', 'desativar', 'parar'];
+  const method = api && names.find(name => typeof api[name] === 'function');
+  if (method) {
+    api[method]();
+  } else {
+    findOcularControl()?.click();
+  }
+  window.dispatchEvent(new CustomEvent('comunica:ocular', { detail: { enabled } }));
+}
+
+let ocularHideQueued = false;
+function queueOcularHide() {
+  if (ocularHideQueued) return;
+  ocularHideQueued = true;
+  requestAnimationFrame(() => {
+    ocularHideQueued = false;
+    hideOcularFloatingControl();
+  });
+}
+
+// Observa a página inteira: o script pode criar, recriar ou reexibir o botão
+// a qualquer momento (por exemplo, ao entrar no perfil Sênior). As
+// re-renderizações do #app são ignoradas.
+new MutationObserver(mutations => {
+  const app = document.getElementById('app');
+  if (mutations.some(m => !app || (m.target !== app && !app.contains(m.target)))) queueOcularHide();
+}).observe(document.documentElement, {
+  childList: true,
+  subtree: true,
+  attributes: true,
+  attributeFilter: ['style', 'class', 'hidden']
+});
+
+// Rede de segurança caso alguma mudança escape do observador.
+setInterval(hideOcularFloatingControl, 1500);
+
+document.addEventListener('DOMContentLoaded', hideOcularFloatingControl);
+window.addEventListener('load', () => {
+  hideOcularFloatingControl();
+  if (getSettings().ocularControl) setOcularControl(true);
+});
 
 const STORAGE_KEY = 'comunica:data';
 
@@ -5787,7 +5953,7 @@ function toggleFavoriteWord(wordId) {
     return;
   } else {
     STATE.data.favWords.push(wordId);
-    showToast('Palavra adicionada aos favoritos ⭐');
+    showToast('Palavra adicionada aos favoritos');
   }
 
   saveData();
@@ -5830,7 +5996,7 @@ function wordCardHtml(word, selected = false, inFavorites = false) {
           title="Remover dos favoritos"
           data-delete-action="favorite-word">✕</button>
       ` : ''}
-      <div class="emoji">${word.emoji}</div>
+      <div class="emoji"></div>
       <div class="label">${word.label}</div>
       <div class="description">${word.description || 'Toque para adicionar'}</div>
     </div>
@@ -6009,7 +6175,7 @@ function renderLineIcons() {
   const icons = {
     back: '<svg class="app-line-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>',
     profile: '<svg class="app-line-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.25"/><path d="M5.5 20c.7-3.4 3.1-5.25 6.5-5.25s5.8 1.85 6.5 5.25"/></svg>',
-    settings: '<svg class="app-line-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.2 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.1 2.1-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.03 1.56v.1h-3v-.1a1.7 1.7 0 0 0-1.03-1.56 1.7 1.7 0 0 0-1.88.34l-.06.06-2.1-2.1.06-.06A1.7 1.7 0 0 0 6.86 15 1.7 1.7 0 0 0 5.3 14H5.2v-3h.1a1.7 1.7 0 0 0 1.56-1.03 1.7 1.7 0 0 0-.34-1.88l-.06-.06 2.1-2.1.06.06a1.7 1.7 0 0 0 1.88.34A1.7 1.7 0 0 0 11.5 4.8v-.1h3v.1a1.7 1.7 0 0 0 1.03 1.56 1.7 1.7 0 0 0 1.88-.34l.06-.06 2.1 2.1-.06.06A1.7 1.7 0 0 0 19.17 10a1.7 1.7 0 0 0 1.56 1h.1v3h-.1A1.7 1.7 0 0 0 19.2 15Z"/></svg>'
+    settings: '<svg class="app-line-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>'
   };
 
   document.querySelectorAll('.icon-btn').forEach(button => {
@@ -6314,7 +6480,7 @@ function renderModeScreen(mode) {
 
 function renderCarouselMode() {
   const chipHtml = STATE.phrase.length
-    ? STATE.phrase.map(word => `<span class="phrase-chip">${word.emoji} ${word.label}</span>`).join('')
+    ? STATE.phrase.map(word => `<span class="phrase-chip">${word.label}</span>`).join('')
     : `<span class="phrase-placeholder">Escolha uma palavra no carrossel...</span>`;
   const n = STATE.options.length;
   let cardsHtml = '';
@@ -6329,13 +6495,13 @@ function renderCarouselMode() {
       if (!id) return `<div class="carousel-card ${type} empty"></div>`;
       const word = wordById(id);
       if (!word) return `<div class="carousel-card ${type} empty"></div>`;
-      return `<div class="carousel-card ${type}" data-pick="${id}" role="button" tabindex="${type === 'center' ? '0' : '-1'}" aria-label="${word.label}"><div class="emoji">${word.emoji}</div><div class="label">${word.label}</div></div>`;
+      return `<div class="carousel-card ${type}" data-pick="${id}" role="button" tabindex="${type === 'center' ? '0' : '-1'}" aria-label="${word.label}"><div class="emoji"></div><div class="label">${word.label}</div></div>`;
     };
     cardsHtml = `<button class="carousel-arrow" id="prevBtn" ${n < 2 ? 'disabled' : ''} aria-label="Palavra anterior">‹</button><div class="carousel-track">${card(prevId, 'side')}${card(curId, 'center')}${card(nextId, 'side')}</div><button class="carousel-arrow" id="nextBtn" ${n < 2 ? 'disabled' : ''} aria-label="Próxima palavra">›</button>`;
   }
 
   const layerLabel = STATE.phrase.length === 0 ? 'QUEM ESTÁ FALANDO?' : STATE.phrase.length === 1 ? 'O QUE VOCÊ QUER DIZER?' : 'COMPLETE A FRASE';
-  return `<div class="carousel-full-screen"><div class="carousel-full-topbar"><button class="icon-btn" data-go="build" aria-label="Voltar para escolha do modo">←</button><div class="topbar-title">Comunicar</div><button class="icon-btn" data-go="personalize" aria-label="Personalizar">⚙︎</button></div><div class="carousel-full-content"><div class="section-label">MINHA FRASE</div><div class="phrase-bar" role="group" aria-label="Minha frase">${chipHtml}</div><div class="layer-label">${layerLabel}</div><div class="carousel-wrap">${cardsHtml}</div><button class="confirm-btn" id="confirmBtn" ${n === 0 ? 'disabled' : ''}>✓ Selecionar</button><div class="action-row"><button class="btn-erase" id="eraseBtn">Apagar</button><button class="btn-clear" id="clearBtn">Limpar</button><button class="btn-speak" id="speakBtn" ${STATE.phrase.length ? '' : 'disabled'}>Falar</button><button class="btn-fav" id="favPhraseBtn" ${STATE.phrase.length ? '' : 'disabled'}>Favorizar frase</button><button class="btn-fav-word" id="favWordBtn" ${STATE.phrase.length ? '' : 'disabled'}>Favoritar palavra</button></div><div class="back-link" data-go="categories" style="margin-top:4px;">Ver todas as categorias</div><div class="hint">← → navega · Enter/Espaço seleciona · toque também funciona</div></div></div>`;
+  return `<div class="carousel-full-screen"><div class="carousel-full-topbar"><button class="icon-btn" data-go="build" aria-label="Voltar para escolha do modo">←</button><div class="topbar-title">Comunicar</div><button class="icon-btn" data-go="personalize" aria-label="Personalizar">⚙︎</button></div><div class="carousel-full-content"><div class="section-label">MINHA FRASE</div><div class="phrase-bar" role="group" aria-label="Minha frase">${chipHtml}</div><div class="layer-label">${layerLabel}</div><div class="carousel-wrap">${cardsHtml}</div><button class="confirm-btn" id="confirmBtn" ${n === 0 ? 'disabled' : ''}>Selecionar</button><div class="action-row"><button class="btn-erase" id="eraseBtn">Apagar</button><button class="btn-clear" id="clearBtn">Limpar</button><button class="btn-speak" id="speakBtn" ${STATE.phrase.length ? '' : 'disabled'}>Falar</button><button class="btn-fav" id="favPhraseBtn" ${STATE.phrase.length ? '' : 'disabled'}>Favorizar frase</button><button class="btn-fav-word" id="favWordBtn" ${STATE.phrase.length ? '' : 'disabled'}>Favoritar palavra</button></div><div class="back-link" data-go="categories" style="margin-top:4px;">Ver todas as categorias</div></div></div>`;
 }
 
 function renderCircularKeyboard() {
@@ -6390,7 +6556,7 @@ function renderCategories() {
               >
 
                 <span class="emoji">
-                  ${category.emoji}
+                  
                 </span>
 
                 <div class="label">
@@ -6448,7 +6614,7 @@ function renderCategoryDetail() {
       <div class="topbar-title">
         ${
           category
-            ? `${category.emoji} ${category.label}`
+            ? `${category.label}`
             : 'Categoria'
         }
       </div>
@@ -6494,7 +6660,7 @@ function renderCategoryDetail() {
                   .map(
                     word => `
                       <span class="phrase-chip">
-                        ${word.emoji}
+                        
                         ${word.label}
                       </span>
                     `
@@ -6665,7 +6831,7 @@ function renderPersonalize() {
 
           <span class="custom-chip">
 
-            ${word.emoji}
+            
             ${word.label} <small>· ${category?.label || 'Sem categoria'}</small>
 
             <button
@@ -6855,7 +7021,7 @@ function renderChallenge() {
       <div class="challenge-card">
 
         <div class="emoji">
-          ${challenge.emoji}
+          
         </div>
 
         <p>
@@ -6878,7 +7044,7 @@ function renderChallenge() {
                   word => `
 
                     <span class="phrase-chip">
-                      ${word.emoji}
+                      
                       ${word.label}
                     </span>
 
@@ -6903,7 +7069,7 @@ function renderChallenge() {
           class="btn-erase"
           id="eraseBtn"
         >
-          ⌫ Apagar
+          Apagar
         </button>
 
         <button
@@ -6990,11 +7156,11 @@ function renderProfile() {
   const summaryHtml = `
     <div class="info-block">
       <h3 style="margin:0 0 12px; color:#ffffff; font-weight:900; letter-spacing:0.02em;">Resumo</h3>
-      <div class="profile-stat"><span style="color:#ffffff;">⭐ Estrelas conquistadas</span><span style="color:#ffffff;">${profile.stars}</span></div>
-      <div class="profile-stat"><span style="color:#ffffff;">🗣️ Frases favoritas</span><span style="color:#ffffff;">${STATE.data.favPhrases.length}</span></div>
-      <div class="profile-stat" style="border-bottom:none;"><span style="color:#ffffff;">💬 Palavras usadas</span><span style="color:#ffffff;">${wordsUsed}</span></div>
-      <div class="profile-stat"><span style="color:#ffffff;">💾 Palavras favoritas</span><span style="color:#ffffff;">${STATE.data.favWords.length}</span></div>
-      <div class="profile-stat" style="border-bottom:none;"><span style="color:#ffffff;">📁 Categorias criadas</span><span style="color:#ffffff;">${STATE.data.customCategories.length}</span></div>
+      <div class="profile-stat"><span style="color:#ffffff;">Estrelas conquistadas</span><span style="color:#ffffff;">${profile.stars}</span></div>
+      <div class="profile-stat"><span style="color:#ffffff;">Frases favoritas</span><span style="color:#ffffff;">${STATE.data.favPhrases.length}</span></div>
+      <div class="profile-stat" style="border-bottom:none;"><span style="color:#ffffff;">Palavras usadas</span><span style="color:#ffffff;">${wordsUsed}</span></div>
+      <div class="profile-stat"><span style="color:#ffffff;">Palavras favoritas</span><span style="color:#ffffff;">${STATE.data.favWords.length}</span></div>
+      <div class="profile-stat" style="border-bottom:none;"><span style="color:#ffffff;">Categorias criadas</span><span style="color:#ffffff;">${STATE.data.customCategories.length}</span></div>
     </div>
   `;
 
@@ -7087,7 +7253,7 @@ function renderSettings() {
         <div class="settings-row">
           <div>
             <div class="settings-label">Modo para daltonismo</div>
-            <div class="settings-desc" id="colorVisionDescription">Reforça o contraste e diferencia opções pela cor, pelo contorno e por símbolos.</div>
+            <div class="settings-desc" id="colorVisionDescription">Reforça o contraste e diferencia opções pela cor e pelo contorno.</div>
           </div>
           <label class="switch">
             <input id="seniorColorVisionToggle" type="checkbox" aria-label="Ativar modo para daltonismo" aria-describedby="colorVisionDescription" ${s.colorVision ? 'checked' : ''}>
@@ -7102,13 +7268,14 @@ function renderSettings() {
   </div>
   <div class="color-vision-preview-items">
     <span class="color-vision-swatch color-vision-swatch--option"><span aria-hidden="true">◆</span> Opção</span>
-    <span class="color-vision-swatch color-vision-swatch--selected"><span aria-hidden="true">✓</span> Selecionada</span>
+    <span class="color-vision-swatch color-vision-swatch--selected">Selecionada</span>
     <span class="color-vision-swatch color-vision-swatch--focus"><span aria-hidden="true">▣</span> Foco</span>
   </div>
-  <p class="color-vision-preview-note">A seleção também usa contorno e símbolo. As figuras e imagens do jogo são mantidas.</p>
+  <p class="color-vision-preview-note">A seleção também usa contorno. As figuras e imagens do jogo são mantidas.</p>
 </div>
         <div class="settings-row"><div><div class="settings-label">Modo de varredura</div><div class="settings-desc">O foco amarelo passa pelos controles. Pressione Enter, Espaço ou o centro do analógico para escolher o controle destacado.</div></div><label class="switch"><input id="seniorScanToggle" type="checkbox" ${s.scanEnabled ? 'checked' : ''}><span class="switch-track"></span></label></div>
         <div class="settings-row"><div><div class="settings-label">Velocidade da varredura</div><div class="settings-desc">Tempo em cada botão: ${(speed / 1000).toFixed(1)}s</div></div><div class="stepper"><button id="seniorScanSlow" aria-label="Deixar a varredura mais lenta">−</button><span aria-live="polite">${(speed / 1000).toFixed(1)}s</span><button id="seniorScanFast" aria-label="Deixar a varredura mais rápida">+</button></div></div>
+        <div class="settings-row"><div><div class="settings-label">Controle ocular</div><div class="settings-desc" id="ocularDescription">Use o movimento dos olhos para escolher os botões. A câmera será usada.</div></div><label class="switch"><input id="seniorOcularToggle" type="checkbox" aria-label="Ativar controle ocular" aria-describedby="ocularDescription" ${s.ocularControl ? 'checked' : ''}><span class="switch-track"></span></label></div>
         <div class="settings-row"><div><div class="settings-label">Velocidade da voz</div><div class="settings-desc">A voz lê a frase mais devagar ou mais depressa.</div></div><div class="stepper"><button id="seniorVoiceSlow" aria-label="Deixar a voz mais lenta">−</button><span aria-live="polite">${voiceLabel}</span><button id="seniorVoiceFast" aria-label="Deixar a voz mais rápida">+</button></div></div>
       </div>
     </div>`;
@@ -7198,6 +7365,11 @@ function attachHandlers() {
   if (darkToggle) darkToggle.addEventListener('change', event => updateAccessibilitySettings({ darkTheme: event.target.checked }));
   const colorVisionToggle = document.getElementById('seniorColorVisionToggle');
   if (colorVisionToggle) colorVisionToggle.addEventListener('change', event => updateAccessibilitySettings({ colorVision: event.target.checked }));
+  const ocularToggle = document.getElementById('seniorOcularToggle');
+  if (ocularToggle) ocularToggle.addEventListener('change', event => {
+    updateAccessibilitySettings({ ocularControl: event.target.checked });
+    setOcularControl(event.target.checked);
+  });
   const scanToggle = document.getElementById('seniorScanToggle');
   if (scanToggle) scanToggle.addEventListener('change', event => updateAccessibilitySettings({ scanEnabled: event.target.checked }));
   const scanSlow = document.getElementById('seniorScanSlow');
@@ -7823,7 +7995,7 @@ function attachHandlers() {
             ? chosen.getAttribute(
                 'data-emoji'
               )
-            : '🔤';
+            : '';
 
         if (!label) {
 
