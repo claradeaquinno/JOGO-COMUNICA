@@ -4302,8 +4302,8 @@ body {
   --c-ink-soft: #4d6d88;
   --c-line: rgba(16, 61, 93, 0.12);
   --c-line-strong: rgba(16, 61, 93, 0.22);
-  --c-accent: #FFF2BF;
-  --c-accent-soft: #FFF8DE;
+  --c-accent: #f7c94d;
+  --c-accent-soft: #fff3cc;
   --c-accent-ink: #103d5d;
   --c-primary: #103d5d;
   --c-primary-ink: #ffffff;
@@ -4573,7 +4573,7 @@ body:not([data-color-vision="on"]) #app .action-row .btn-speak {
   background: var(--c-accent) !important;
   color: #103d5d !important;
   border: 0 !important;
-  box-shadow: 0 6px 18px rgba(217, 163, 20, 0.14) !important;
+  box-shadow: 0 6px 18px rgba(217, 163, 20, 0.28) !important;
 }
 /* secundários: superfície clara com contorno */
 body:not([data-color-vision="on"]) #app .action-row button:not(.btn-speak),
@@ -4712,7 +4712,7 @@ body:not([data-color-vision="on"]) #app .carousel-card .label { color: var(--c-i
 body:not([data-color-vision="on"]) #app .carousel-card.center {
   background: var(--c-accent) !important;
   border-color: transparent !important;
-  box-shadow: 0 12px 30px rgba(217, 163, 20, 0.16) !important;
+  box-shadow: 0 12px 30px rgba(217, 163, 20, 0.35) !important;
 }
 body:not([data-color-vision="on"]) #app .carousel-card.center .label { color: #103d5d !important; }
 body:not([data-color-vision="on"]) #app .carousel-card.side { opacity: 0.85; }
@@ -4990,20 +4990,60 @@ body #app .home-screen .brand-intro { padding-top: 44px !important; }
   body #app .carousel-card.center .label { font-size: 1.35rem !important; }
 }
 
-/* ---------- Teste: amarelo claro #FFF2BF (contorno para não sumir no fundo claro) ---------- */
-body:not([data-color-vision="on"]) #app .speak-btn,
-body:not([data-color-vision="on"]) #app .confirm-btn,
-body:not([data-color-vision="on"]) #app .action-row .btn-speak,
-body:not([data-color-vision="on"]) #app .carousel-card.center,
-body:not([data-color-vision="on"]) #app .buraco-central.ativo,
-body:not([data-color-vision="on"]) #app .satelite.satelite-destaque,
-body:not([data-color-vision="on"]) #app .circular-keyboard-reserved .frase-pronta[data-selecionada="true"],
-body:not([data-color-vision="on"]) #app .word-card.selected {
-  border: 1.5px solid #e8c766 !important;
-}
-
 /* Sem o ✓ na palavra selecionada (modo daltonismo usa só cor + contorno). */
 body[data-color-vision="on"] #app .word-card.selected::after { content: none !important; display: none !important; }
+
+/* ---------- Personalizar: argola alfabética organizada ---------- */
+body #app .personalize-keyboard-layout { display: flex !important; flex-direction: column; align-items: center; gap: 18px; }
+body #app .personalize-keyboard-stage {
+  width: min(100%, 440px) !important;
+  aspect-ratio: 1 / 1;
+  margin: 8px auto 0 !important;
+}
+body #app .personalize-letter-ring {
+  width: 84% !important;
+  height: 84% !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+body #app .personalize-wheel-center {
+  width: 44% !important;
+  height: 44% !important;
+  display: grid !important;
+  place-items: center !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  font: 900 1.5rem/1 var(--c-font-title) !important;
+  pointer-events: none;
+}
+body #app .personalize-letter-key {
+  width: 36px !important;
+  height: 36px !important;
+  padding: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  font: 800 1.05rem/1 var(--c-font) !important;
+  border-radius: 50% !important;
+}
+@media (hover: hover) {
+  body:not([data-color-vision="on"]) #app .personalize-letter-key:hover { background: var(--c-surface) !important; color: var(--c-ink) !important; }
+}
+body:not([data-color-vision="on"]) #app .personalize-letter-key:focus-visible { background: var(--c-accent) !important; color: #103d5d !important; }
+body #app .personalize-keyboard-menu {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px !important;
+  width: min(100%, 440px);
+}
+@media (max-width: 560px) {
+  body #app .personalize-letter-key { width: 30px !important; height: 30px !important; font-size: 0.95rem !important; }
+  body #app .personalize-wheel-center { font-size: 1.2rem !important; }
+  body #app .personalize-keyboard-menu { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Só a estrela de favoritar (no canto); sai a estrela decorativa de baixo. */
+body #app .word-card:not(.selected)::after,
+body:not([data-color-vision="on"]) #app .word-card::after { content: none !important; display: none !important; }
 </style>
 </head>
 
@@ -5014,7 +5054,7 @@ body[data-color-vision="on"] #app .word-card.selected::after { content: none !im
   onclick="this.classList.add('splash-hidden'); setTimeout(() => this.style.display='none', 700);"
   onpointerdown="this.classList.add('splash-hidden'); setTimeout(() => this.style.display='none', 700);">
   <button class="splash-enter" type="button" aria-label="Entrar no Comunica">
-    <img class="splash-logo" src="img/comunica-tela.png" alt="ComuniCA">
+    <img class="splash-logo" src="img/comunica-tela.png" alt="Comunica">
   </button>
 </div>
 
@@ -6868,8 +6908,9 @@ function renderPersonalize() {
   const letrasPersonalizar = [...'abcdefghijklmnopqrstuvwxyzç'];
   const teclasPersonalizar = letrasPersonalizar.map((letra, indice) => {
     const angulo = (indice / letrasPersonalizar.length) * Math.PI * 2 - Math.PI / 2;
-    const esquerda = 50 + Math.cos(angulo) * 36;
-    const topo = 50 + Math.sin(angulo) * 36;
+    // 38% = meio da faixa entre o furo central (44%) e a borda da argola (84%).
+    const esquerda = 50 + Math.cos(angulo) * 38;
+    const topo = 50 + Math.sin(angulo) * 38;
     return `<button type="button" class="tecla tecla-compacta personalize-letter-key" data-personalize-letter="${letra}" aria-label="Inserir ${letra}" style="left:${esquerda}%;top:${topo}%;transform:translate(-50%,-50%)">${letra}</button>`;
   }).join('');
 
@@ -7186,7 +7227,7 @@ function renderProfile() {
       </button>
 
       <div class="topbar-title">
-        Meu ComunicA
+        Meu Comunica
       </div>
 
       <div style="width:44px"></div>
@@ -7314,7 +7355,7 @@ function renderAbout() {
 
       <div class="info-block">
 
-        <strong>ComunicA</strong>
+        <strong>Comunica</strong>
         é um aplicativo de
         Comunicação Alternativa e Aumentativa
         (CAA).
