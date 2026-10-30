@@ -5044,6 +5044,28 @@ body #app .personalize-keyboard-menu {
 /* Só a estrela de favoritar (no canto); sai a estrela decorativa de baixo. */
 body #app .word-card:not(.selected)::after,
 body:not([data-color-vision="on"]) #app .word-card::after { content: none !important; display: none !important; }
+
+/* ---------- Escolha de perfil no celular: cartões empilhados ---------- */
+@media (max-width: 600px) {
+  html body #app .onboard-wrap { padding: 32px 0 24px !important; }
+  html body #app .onboard-panel { padding: 22px 16px !important; }
+  html body #app .onboard-panel h2 { font-size: 1.35rem !important; }
+  html body #app .profile-choice-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+  html body #app .profile-choice-card {
+    width: 100% !important;
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 16px 18px !important;
+    text-align: left !important;
+  }
+  html body #app .profile-choice-card .tag { white-space: nowrap; }
+  html body #app .profile-choice-card .title { margin: 8px 0 4px !important; font-size: 1.3rem !important; }
+  html body #app .profile-choice-card .desc { font-size: 0.95rem !important; line-height: 1.4 !important; }
+}
 </style>
 </head>
 
