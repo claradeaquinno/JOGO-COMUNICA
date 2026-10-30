@@ -5066,6 +5066,71 @@ body:not([data-color-vision="on"]) #app .word-card::after { content: none !impor
   html body #app .profile-choice-card .title { margin: 8px 0 4px !important; font-size: 1.3rem !important; }
   html body #app .profile-choice-card .desc { font-size: 0.95rem !important; line-height: 1.4 !important; }
 }
+
+/* ---------- Escolha de perfil no celular: cabe numa tela só ---------- */
+@media (max-width: 600px) {
+  html body.profile-selection #app { min-height: 100svh; display: flex; flex-direction: column; justify-content: center; }
+  html body #app .onboard-wrap { padding: 16px 0 !important; margin: 0 auto !important; }
+  html body #app .onboard-title { font-size: 2rem !important; margin: 0 0 4px !important; }
+  html body #app .onboard-subtitle { font-size: 0.9rem !important; margin: 0 0 14px !important; }
+  html body #app .onboard-panel { padding: 16px 14px !important; }
+  html body #app .onboard-panel h2 { font-size: 1.15rem !important; margin: 0 0 4px !important; }
+  html body #app .onboard-panel > p { font-size: 0.8rem !important; margin: 0 0 12px !important; line-height: 1.35 !important; }
+  html body #app .profile-choice-grid { gap: 10px !important; }
+  html body #app .profile-choice-card { padding: 12px 14px !important; }
+  html body #app .profile-choice-card .tag { font-size: 0.62rem !important; padding: 2px 8px !important; }
+  html body #app .profile-choice-card .title { font-size: 1.1rem !important; margin: 6px 0 2px !important; }
+  html body #app .profile-choice-card .desc { font-size: 0.82rem !important; line-height: 1.35 !important; }
+  html body #app .onboard-hint { font-size: 0.75rem !important; margin-top: 10px !important; }
+}
+
+/* ---------- Escolha de perfil: dois botões limpos, sem descrição ---------- */
+html body #app .onboard-wrap {
+  width: min(100%, 440px) !important;
+  margin: 0 auto !important;
+  padding: 24px 0 !important;
+  text-align: center;
+}
+html body.profile-selection #app { min-height: 100svh; display: flex; flex-direction: column; justify-content: center; }
+html body #app .onboard-title { font-size: clamp(2.2rem, 9vw, 3rem) !important; margin: 0 0 6px !important; }
+html body #app .onboard-subtitle { font-size: 1rem !important; margin: 0 0 22px !important; }
+html body #app .onboard-panel { padding: 22px 18px 18px !important; }
+html body #app .onboard-panel h2 { font-size: 1.25rem !important; margin: 0 0 16px !important; }
+html body #app .profile-choice-grid {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 12px !important;
+}
+html body #app .profile-choice-card {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px;
+  width: 100% !important;
+  min-height: 84px !important;
+  height: auto !important;
+  padding: 16px 18px 16px 20px !important;
+  text-align: left !important;
+}
+html body #app .profile-choice-text { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+html body #app .profile-choice-card .tag { font-size: 0.68rem !important; padding: 3px 10px !important; white-space: nowrap; margin: 0 !important; }
+html body #app .profile-choice-card .title { font-size: 1.3rem !important; margin: 0 !important; line-height: 1.1; }
+html body:not([data-color-vision="on"]) #app .profile-choice-arrow {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--c-surface);
+  border: 1px solid var(--c-line);
+  color: var(--c-ink);
+  font-size: 1.5rem;
+  line-height: 1;
+  padding-bottom: 3px;
+}
+html body #app .profile-choice-card:focus-visible { outline: 3px solid #f7c94d !important; outline-offset: 3px !important; }
+html body #app .onboard-hint { font-size: 0.8rem !important; margin-top: 14px !important; }
 </style>
 </head>
 
@@ -6285,51 +6350,34 @@ function renderChooseProfile() {
           Quem vai usar o Comunica?
         </h2>
 
-        <p>
-          Escolha o tipo de perfil para continuar com o
-          cadastro certo para cada jornada.
-        </p>
-
         <div class="profile-choice-grid">
 
           <div
             class="profile-choice-card kids"
             data-profile-type="infantil"
+            role="button"
+            tabindex="0"
+            aria-label="Perfil Júnior, para a criança"
           >
-
-            <div class="tag">
-              Para a criança
+            <div class="profile-choice-text">
+              <div class="tag">Para a criança</div>
+              <div class="title">Perfil Júnior</div>
             </div>
-
-            <div class="title">
-              Perfil Júnior
-            </div>
-
-            <div class="desc">
-              Uma experiência visual, simples e segura
-              para aprender a se comunicar.
-            </div>
-
+            <span class="profile-choice-arrow" aria-hidden="true">›</span>
           </div>
 
           <div
             class="profile-choice-card adult"
             data-profile-type="adulto"
+            role="button"
+            tabindex="0"
+            aria-label="Perfil Sênior, para você"
           >
-
-            <div class="tag">
-              Para você
+            <div class="profile-choice-text">
+              <div class="tag">Para você</div>
+              <div class="title">Perfil Sênior</div>
             </div>
-
-            <div class="title">
-              Perfil Sênior
-            </div>
-
-            <div class="desc">
-              Acompanhe o desenvolvimento, organize
-              recursos e personalize a jornada.
-            </div>
-
+            <span class="profile-choice-arrow" aria-hidden="true">›</span>
           </div>
 
         </div>
