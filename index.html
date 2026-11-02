@@ -801,6 +801,16 @@ body,.bg-outras{
   outline-offset: 2px;
 }
 
+/* "Aa" da aba Personalizar é um <span>, não um <button>: centraliza o texto. */
+.buraco-central.personalize-wheel-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+  text-align: center;
+}
+
 .tecla {
   position: absolute;
   z-index: 1;
@@ -7009,7 +7019,6 @@ function renderPersonalize() {
         <h3>Adicionar palavra</h3>
         <label class="field-label" for="newWordLabel">Digite uma palavra e use o teclado circular</label>
         <input type="text" id="newWordLabel" placeholder="A palavra aparecerá aqui" aria-label="Palavra para salvar">
-        <div class="field-label">O Gemini escolherá automaticamente entre Pessoas, Necessidades, Comida e as demais categorias.</div>
         <div class="personalize-keyboard-layout">
           <div class="personalize-keyboard-stage teclado-area" role="group" aria-label="Teclado circular alfabético">
             <section class="teclado">
