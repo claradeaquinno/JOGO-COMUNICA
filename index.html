@@ -4940,7 +4940,6 @@ body #app .cat-card .label { font-size: 1.1rem !important; }
 body #app .carousel-card .label { font-size: 1.05rem !important; }
 body #app .carousel-card.center .label { font-size: 1.6rem !important; }
 body #app .challenge-card p { margin: 0 !important; }
-.ocular-control-hidden { display: none !important; }
 body #app .word-card { padding-top: 30px !important; }
 
 /* ---------- Ícones do topo: mesmo tamanho, centralizados e sem encostar no título ---------- */
@@ -5411,7 +5410,6 @@ const SETTINGS_DEFAULTS = {
   scanSpeed: 1800,
   voiceRate: 0.8,
   colorVision: false,
-  ocularControl: false
 };
 
 function getSettings() {
@@ -5486,103 +5484,6 @@ function scheduleScan() {
   scanTimer = setTimeout(scheduleScan, scanSpeed);
 }
 
-
-// Ponte com o ocular-tracking.js (arquivo externo): o botão flutuante
-// "Ativar controle ocular" que ele cria fica sempre escondido e o interruptor
-// das Configurações passa a controlá-lo.
-// Só o texto do botão: não pega o ponto do olhar nem o vídeo da câmera.
-const OCULAR_PATTERN = /controle ocular/i;
-const OCULAR_CLICKABLE = 'button, a, [role="button"], [onclick], input[type="checkbox"]';
-
-function ocularCandidates() {
-  const app = document.getElementById('app');
-  return [...document.body.querySelectorAll('*')]
-    .filter(el => !app?.contains(el) && !el.closest('.splash-screen, #toast, script, style, audio'))
-    .filter(el => OCULAR_PATTERN.test(
-      `${el.getAttribute('aria-label') || ''} ${el.getAttribute('title') || ''} ${el.textContent}`
-    ));
-}
-
-function findOcularControl() {
-  // Prefere um elemento clicável; senão, o mais interno que contém o texto
-  // (o clique nele sobe até quem estiver ouvindo).
-  const candidates = ocularCandidates();
-  return candidates.find(el => el.matches(OCULAR_CLICKABLE))
-    || candidates.find(el => ![...el.children].some(child => candidates.includes(child)))
-    || null;
-}
-
-function forceHide(el) {
-  // Estilo em linha com !important: vence qualquer "display" que o script
-  // externo aplique quando o perfil Sênior é aberto.
-  if (el.style.getPropertyValue('display') !== 'none' || el.style.getPropertyPriority('display') !== 'important') {
-    el.style.setProperty('display', 'none', 'important');
-  }
-  if (!el.classList.contains('ocular-control-hidden')) el.classList.add('ocular-control-hidden');
-  if (el.getAttribute('aria-hidden') !== 'true') el.setAttribute('aria-hidden', 'true');
-}
-
-function hideOcularFloatingControl() {
-  const candidates = ocularCandidates();
-  const targets = candidates.filter(el =>
-    el.matches(OCULAR_CLICKABLE) || ![...el.children].some(child => candidates.includes(child))
-  );
-  targets.forEach(control => {
-    forceHide(control);
-    // Se estiver dentro de uma caixa flutuante só dele, esconde a caixa também.
-    let box = control.parentElement;
-    while (box && box !== document.body) {
-      if (box.textContent.trim() !== control.textContent.trim()) break;
-      const position = getComputedStyle(box).position;
-      if (position === 'fixed' || position === 'absolute' || position === 'sticky') forceHide(box);
-      box = box.parentElement;
-    }
-  });
-}
-
-function setOcularControl(enabled) {
-  const api = window.OcularTracking || window.ocularTracking || window.EyeTracking;
-  const names = enabled ? ['start', 'enable', 'ativar', 'iniciar'] : ['stop', 'disable', 'desativar', 'parar'];
-  const method = api && names.find(name => typeof api[name] === 'function');
-  if (method) {
-    api[method]();
-  } else {
-    findOcularControl()?.click();
-  }
-  window.dispatchEvent(new CustomEvent('comunica:ocular', { detail: { enabled } }));
-}
-
-let ocularHideQueued = false;
-function queueOcularHide() {
-  if (ocularHideQueued) return;
-  ocularHideQueued = true;
-  requestAnimationFrame(() => {
-    ocularHideQueued = false;
-    hideOcularFloatingControl();
-  });
-}
-
-// Observa a página inteira: o script pode criar, recriar ou reexibir o botão
-// a qualquer momento (por exemplo, ao entrar no perfil Sênior). As
-// re-renderizações do #app são ignoradas.
-new MutationObserver(mutations => {
-  const app = document.getElementById('app');
-  if (mutations.some(m => !app || (m.target !== app && !app.contains(m.target)))) queueOcularHide();
-}).observe(document.documentElement, {
-  childList: true,
-  subtree: true,
-  attributes: true,
-  attributeFilter: ['style', 'class', 'hidden']
-});
-
-// Rede de segurança caso alguma mudança escape do observador.
-setInterval(hideOcularFloatingControl, 1500);
-
-document.addEventListener('DOMContentLoaded', hideOcularFloatingControl);
-window.addEventListener('load', () => {
-  hideOcularFloatingControl();
-  if (getSettings().ocularControl) setOcularControl(true);
-});
 
 const STORAGE_KEY = 'comunica:data';
 
@@ -7395,7 +7296,6 @@ function renderSettings() {
 </div>
         <div class="settings-row"><div><div class="settings-label">Modo de varredura</div><div class="settings-desc">O foco amarelo passa pelos controles. Pressione Enter, Espaço ou o centro do analógico para escolher o controle destacado.</div></div><label class="switch"><input id="seniorScanToggle" type="checkbox" ${s.scanEnabled ? 'checked' : ''}><span class="switch-track"></span></label></div>
         <div class="settings-row"><div><div class="settings-label">Velocidade da varredura</div><div class="settings-desc">Tempo em cada botão: ${(speed / 1000).toFixed(1)}s</div></div><div class="stepper"><button id="seniorScanSlow" aria-label="Deixar a varredura mais lenta">−</button><span aria-live="polite">${(speed / 1000).toFixed(1)}s</span><button id="seniorScanFast" aria-label="Deixar a varredura mais rápida">+</button></div></div>
-        <div class="settings-row"><div><div class="settings-label">Controle ocular</div><div class="settings-desc" id="ocularDescription">Use o movimento dos olhos para escolher os botões. A câmera será usada.</div></div><label class="switch"><input id="seniorOcularToggle" type="checkbox" aria-label="Ativar controle ocular" aria-describedby="ocularDescription" ${s.ocularControl ? 'checked' : ''}><span class="switch-track"></span></label></div>
         <div class="settings-row"><div><div class="settings-label">Velocidade da voz</div><div class="settings-desc">A voz lê a frase mais devagar ou mais depressa.</div></div><div class="stepper"><button id="seniorVoiceSlow" aria-label="Deixar a voz mais lenta">−</button><span aria-live="polite">${voiceLabel}</span><button id="seniorVoiceFast" aria-label="Deixar a voz mais rápida">+</button></div></div>
       </div>
     </div>`;
@@ -7485,11 +7385,6 @@ function attachHandlers() {
   if (darkToggle) darkToggle.addEventListener('change', event => updateAccessibilitySettings({ darkTheme: event.target.checked }));
   const colorVisionToggle = document.getElementById('seniorColorVisionToggle');
   if (colorVisionToggle) colorVisionToggle.addEventListener('change', event => updateAccessibilitySettings({ colorVision: event.target.checked }));
-  const ocularToggle = document.getElementById('seniorOcularToggle');
-  if (ocularToggle) ocularToggle.addEventListener('change', event => {
-    updateAccessibilitySettings({ ocularControl: event.target.checked });
-    setOcularControl(event.target.checked);
-  });
   const scanToggle = document.getElementById('seniorScanToggle');
   if (scanToggle) scanToggle.addEventListener('change', event => updateAccessibilitySettings({ scanEnabled: event.target.checked }));
   const scanSlow = document.getElementById('seniorScanSlow');
@@ -10116,7 +10011,5 @@ iniciarMusicaUmaVez();
 initGamepadControls();
 
 </script>
-<script src="ocular-tracking.js" defer></script>
-
 </body>
 </html>

@@ -11,10 +11,9 @@
   ];
 
   const STORAGE_KEY = "minha-voz-preferencias-v1";
-  const defaults = { dwellMs: 1200, sound: true };
-  const loadPreferences = () => { try { return { ...defaults, ...JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}") }; } catch { return { ...defaults }; } };
+  const defaults = { sound: true };
+  const loadPreferences = () => { try { return { ...defaults, sound: JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}").sound ?? defaults.sound }; } catch { return { ...defaults }; } };
   const preferences = loadPreferences();
-  window.OcularApp = { preferences, requestClear: null, announce: null };
 
   const categoryNav = document.getElementById("categories");
   const wordGrid = document.getElementById("wordGrid");
@@ -25,12 +24,12 @@
   const words = [];
   let activeCategory = localStorage.getItem("minha-voz-categoria") || "basico";
 
-  function say(message) { announce.textContent = message; window.OcularApp.announce?.(message); }
+  function say(message) { announce.textContent = message; }
   function persist() { localStorage.setItem(STORAGE_KEY, JSON.stringify(preferences)); document.getElementById("saveState").textContent = "Preferências salvas agora"; setTimeout(() => { document.getElementById("saveState").textContent = "Preferências salvas neste dispositivo"; }, 1800); }
   function renderPhrase() {
     phrase.replaceChildren(...words.map(word => { const chip = document.createElement("span"); chip.className = "phrase-word"; chip.textContent = word; return chip; }));
     const n = words.length; count.textContent = `${n} ${n === 1 ? "palavra" : "palavras"}`;
-    phraseTitle.textContent = words.length ? words.join(" ") : "Toque ou olhe para as palavras";
+    phraseTitle.textContent = words.length ? words.join(" ") : "Toque nas palavras";
   }
   function addWord(word) { words.push(word); renderPhrase(); say(`${word} adicionado.`); }
   function clearWords() { words.length = 0; window.speechSynthesis?.cancel(); renderPhrase(); say("Mensagem limpa."); }
@@ -54,16 +53,11 @@
     window.speechSynthesis.cancel(); const utterance = new SpeechSynthesisUtterance(words.join(" ")); utterance.lang = "pt-BR"; utterance.rate = 0.88; window.speechSynthesis.speak(utterance); say("Falando sua mensagem.");
   });
   document.getElementById("backspaceButton").addEventListener("click", () => { if (words.length) words.pop(); renderPhrase(); say("Última palavra apagada."); });
-  window.OcularApp.requestClear = () => { if (!words.length) return say("A mensagem já está vazia."); if (window.confirm("Limpar toda a mensagem?")) clearWords(); else say("Mensagem mantida."); };
-  document.getElementById("clearButton").addEventListener("click", window.OcularApp.requestClear);
+  document.getElementById("clearButton").addEventListener("click", () => { if (!words.length) return say("A mensagem já está vazia."); if (window.confirm("Limpar toda a mensagem?")) clearWords(); else say("Mensagem mantida."); });
 
-  const dwellRange = document.getElementById("dwellRange"); const dwellValue = document.getElementById("dwellValue"); const soundToggle = document.getElementById("soundToggle");
-  dwellRange.value = String(preferences.dwellMs); soundToggle.checked = Boolean(preferences.sound);
-  const updateDwellLabel = () => { preferences.dwellMs = Number(dwellRange.value); dwellValue.textContent = (preferences.dwellMs / 1000).toFixed(1).replace(".", ","); persist(); window.dispatchEvent(new CustomEvent("ocular:preferences", { detail: preferences })); };
-  dwellRange.addEventListener("input", updateDwellLabel); soundToggle.addEventListener("change", () => { preferences.sound = soundToggle.checked; persist(); }); updateDwellLabel();
-  document.getElementById("diagnosticsToggle").addEventListener("click", () => window.dispatchEvent(new Event("ocular:toggle-diagnostics")));
-  document.getElementById("diagnosticsClose").addEventListener("click", () => window.dispatchEvent(new Event("ocular:close-diagnostics")));
-  document.getElementById("recalibrateButton").addEventListener("click", () => window.dispatchEvent(new Event("ocular:recalibrate")));
+  const soundToggle = document.getElementById("soundToggle");
+  soundToggle.checked = Boolean(preferences.sound);
+  soundToggle.addEventListener("change", () => { preferences.sound = soundToggle.checked; persist(); });
   showCategory(activeCategory);
   renderPhrase();
 })();

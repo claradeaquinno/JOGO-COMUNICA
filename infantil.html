@@ -2632,41 +2632,6 @@ body[data-theme="dark"] #app .circular-mode-screen .mode-screen-back {
 }
 
 
-/* Aba "Ativar controle ocular": mesmo azul claro dos botões do menu.
-   A classe .ocular-tab é aplicada por um script abaixo, que localiza a aba pelo texto. */
-.ocular-tab {
-  background: var(--card) !important;
-  color: var(--navy) !important;
-  border: 1.5px solid var(--card-border) !important;
-  border-radius: var(--radius) !important;
-  box-shadow: 0 3px 8px rgba(23,58,94,.12) !important;
-  font-family: var(--font-title) !important;
-  font-weight: 800 !important;
-  font-size: 14px !important;
-  line-height: 1.2 !important;
-  padding: 10px 16px !important;
-  backdrop-filter: blur(6px);
-  cursor: pointer;
-}
-.ocular-tab * {
-  color: inherit !important;
-  font: inherit !important;
-}
-body[data-theme="dark"] .ocular-tab {
-  background: #1b344d !important;
-  color: #f1f7ff !important;
-  border-color: #3d6688 !important;
-}
-.ocular-tab:hover,
-.ocular-tab:focus-visible {
-  background: #fff2bf !important;
-  color: #173a5e !important;
-  border-color: #f3d675 !important;
-  outline: 3px solid #f3d675;
-  outline-offset: 2px;
-}
-
-
 /* Carrossel organizado: cartão central menor e setas coladas nos cartões. */
 .carousel-track {
   width: auto;
@@ -2764,7 +2729,6 @@ body[data-theme="dark"] #app .carousel-card.center,
 }
 #app .settings-row .stepper,
 #app .settings-row .switch,
-#app .settings-row .ocular-setting-btn { justify-self: end; }
 #app .stepper { min-width: 164px; justify-content: space-between; }
 #app .stepper span {
   font-family: var(--font-title);
@@ -2778,37 +2742,10 @@ body[data-theme="dark"] #app .carousel-card.center,
   width: 40px;
   height: 40px;
 }
-#app .ocular-setting-btn {
-  min-width: 164px;
-  min-height: 44px;
-  padding: 8px 16px;
-  border-radius: 16px;
-  font-family: var(--font-title);
-  font-weight: 800;
-  font-size: 15px;
-  cursor: pointer;
-  background: rgba(234, 246, 255, 0.95);
-  color: #173a5e;
-  border: 1.5px solid #cfe9f7;
-}
-body[data-theme="dark"] #app .ocular-setting-btn {
-  background: #1b344d;
-  color: #f1f7ff;
-  border-color: #3d6688;
-}
-#app .ocular-setting-btn.ligado { border-color: #f3d675; }
-#app .ocular-setting-btn:disabled { opacity: .6; cursor: default; }
-#app .ocular-setting-btn:hover:not(:disabled),
-#app .ocular-setting-btn:focus-visible {
-  background: #fff2bf !important;
-  border-color: #f3d675 !important;
-  color: #123b4d !important;
-}
 @media (max-width: 420px) {
   #app .form-block .settings-row { grid-template-columns: 1fr; row-gap: 10px; }
   #app .settings-row .stepper,
-  #app .settings-row .switch,
-  #app .settings-row .ocular-setting-btn { justify-self: start; }
+  #app .settings-row .switch { justify-self: start; }
 }
 
 /* ===== Prévia da paleta (daltonismo) ===== */
@@ -5765,13 +5702,6 @@ function renderSettings() {
           </label>
         </div>
 
-        <div class="settings-row">
-          <div>
-            <div class="settings-label">Controle ocular</div>
-            <div class="settings-desc">Usa a câmera para mover o cursor com o olhar</div>
-          </div>
-          <button type="button" class="ocular-setting-btn" id="ocularSettingsBtn" aria-label="Ativar controle ocular">Ativar</button>
-        </div>
       </div>
 
       <button class="submit-btn" id="testVoiceBtn">Testar a voz</button>
@@ -8127,109 +8057,5 @@ loadData();
 initSplash();
 initGamepadControls();
 </script>
-<script>
-/* Aba "Ativar/Desativar controle ocular" (criada pelo ocular-tracking.js):
-   localizada pelo texto e pintada com o mesmo azul dos botões do app.
-   Os estilos são aplicados direto no elemento (inline + !important) para
-   vencer qualquer estilo definido pelo próprio ocular-tracking.js. */
-(function () {
-  const TRECHO = 'controle ocular';
-  let agendado = false;
-  let aplicando = false;
-
-  function cores(estado) {
-    const escuro = document.body.dataset.theme !== 'light';
-    if (estado === 'destaque') return { bg: '#fff2bf', cor: '#173a5e', borda: '#f3d675' };
-    return escuro
-      ? { bg: '#1b344d', cor: '#f1f7ff', borda: '#3d6688' }
-      : { bg: 'rgba(234, 246, 255, 0.95)', cor: '#173a5e', borda: '#cfe9f7' };
-  }
-
-  function estilizar(el, estado) {
-    const c = cores(estado);
-    const set = (prop, valor) => {
-      if (el.style.getPropertyValue(prop) !== valor || el.style.getPropertyPriority(prop) !== 'important') {
-        el.style.setProperty(prop, valor, 'important');
-      }
-    };
-    set('background', c.bg);
-    set('background-image', 'none');
-    set('color', c.cor);
-    set('border', '1.5px solid ' + c.borda);
-    set('border-radius', '16px');
-    set('box-shadow', '0 3px 8px rgba(23, 58, 94, 0.12)');
-    set('font-family', "'Baloo 2', cursive");
-    set('font-weight', '800');
-    set('font-size', '14px');
-    set('line-height', '1.2');
-    set('padding', '10px 16px');
-    set('text-shadow', 'none');
-    set('opacity', '1');
-    el.querySelectorAll('*').forEach(filho => {
-      if (filho.style.getPropertyValue('color') !== c.cor) filho.style.setProperty('color', c.cor, 'important');
-      if (filho.style.getPropertyValue('text-shadow') !== 'none') filho.style.setProperty('text-shadow', 'none', 'important');
-    });
-  }
-
-  function ehAbaOcular(el) {
-    const texto = (el.textContent || '').toLowerCase();
-    const rotulo = ((el.getAttribute && (el.getAttribute('aria-label') || el.getAttribute('title'))) || '').toLowerCase();
-    return (texto.length < 60 && texto.includes(TRECHO)) || rotulo.includes(TRECHO);
-  }
-
-  function marcarAbaOcular() {
-    agendado = false;
-    aplicando = true;
-    const candidatos = [...document.querySelectorAll('button, [role="button"], a, div, span, label')]
-      .filter(el => !el.closest('#app') && ehAbaOcular(el));
-    const abas = candidatos
-      .filter(el => !candidatos.some(outro => outro !== el && el.contains(outro)))
-      .map(el => el.closest('button, [role="button"], a') || el);
-    abas.forEach(alvo => {
-      alvo.classList.add('ocular-tab-oculta');
-      alvo.style.setProperty('display', 'none', 'important');
-    });
-    window.__abaOcular = abas[0] || null;
-    sincronizarBotaoOcular();
-    aplicando = false;
-  }
-
-  function sincronizarBotaoOcular() {
-    const btn = document.getElementById('ocularSettingsBtn');
-    if (!btn) return;
-    const aba = window.__abaOcular;
-    const texto = aba ? (aba.textContent || '').toLowerCase() : '';
-    const ligado = texto.includes('desativar');
-    btn.disabled = !aba;
-    btn.textContent = !aba ? 'Indisponível' : (ligado ? 'Desativar' : 'Ativar');
-    btn.setAttribute('aria-label', !aba ? 'Controle ocular indisponível' : (ligado ? 'Desativar controle ocular' : 'Ativar controle ocular'));
-    btn.classList.toggle('ligado', ligado);
-  }
-
-  document.addEventListener('click', ev => {
-    const btn = ev.target.closest && ev.target.closest('#ocularSettingsBtn');
-    if (!btn || !window.__abaOcular) return;
-    window.__abaOcular.click();
-    setTimeout(agendar, 150);
-    setTimeout(agendar, 800);
-  });
-
-  function agendar() {
-    if (agendado || aplicando) return;
-    agendado = true;
-    requestAnimationFrame(marcarAbaOcular);
-  }
-
-  new MutationObserver(agendar).observe(document.documentElement, {
-    childList: true, subtree: true, characterData: true,
-    attributes: true, attributeFilter: ['style', 'class', 'data-theme']
-  });
-  window.addEventListener('load', agendar);
-  setInterval(agendar, 1500);
-  agendar();
-})();
-</script>
-<script src="ocular-tracking.js" defer></script>
-
 </body>
 </html>
