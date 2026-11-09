@@ -3378,6 +3378,64 @@ body #mascotFloatBtn.mascot-float.accessibility-focus {
   box-shadow: 0 0 0 2px rgba(16, 40, 61, .35), 0 0 0 6px rgba(243, 214, 117, .55), 0 6px 14px rgba(0, 0, 0, .25) !important;
   background: #fff2bf !important;
 }
+/* O Guri só aparece na tela inicial */
+body:not(.guri-no-inicio) #mascotFloatBtn,
+body:not(.guri-no-inicio) #mascotTip { display: none !important; }
+/* ===== Personalizar: interface mais clara ===== */
+#app .personalize-builder h3 {
+  font-family: var(--font-title); font-size: 20px; margin: 0 0 4px;
+}
+#app .personalize-builder .field-label {
+  font-size: 14px; font-weight: 700; color: var(--navy-soft); margin-bottom: 10px;
+}
+/* Campo da palavra: grande e centralizado, como a barra da frase */
+#app .personalize-builder #newWordLabel {
+  display: block; width: 100%; box-sizing: border-box;
+  min-height: 60px; padding: 10px 18px;
+  border: 2px solid var(--card-border); border-radius: 18px;
+  background: #ffffff; color: var(--navy);
+  font-family: var(--font-title); font-size: 26px; font-weight: 800;
+  text-align: center; letter-spacing: .5px;
+  box-shadow: inset 0 2px 6px rgba(23,58,94,.08);
+}
+#app .personalize-builder #newWordLabel::placeholder {
+  font-family: var(--font); font-size: 15px; font-weight: 600; color: #8aa6bd; letter-spacing: 0;
+}
+#app .personalize-builder #newWordLabel:focus { outline: none; border-color: var(--yellow-dark); }
+/* Roda: trilho visível e letras maiores */
+body:not([data-theme="dark"]) #app .personalize-keyboard-stage .personalize-letter-ring {
+  background: radial-gradient(circle, #ffffff 0 26%, #f2f9ff 27% 100%) !important;
+  box-shadow: inset 0 0 0 2px #cfe9f7, 0 10px 24px rgba(23,58,94,.18) !important;
+}
+#app .personalize-keyboard-stage .anel-meio .tecla,
+#app .personalize-keyboard-stage .anel-meio .tecla-compacta { font-size: 15px; }
+@media (min-width: 600px) {
+  #app .personalize-keyboard-stage .anel-meio .tecla,
+  #app .personalize-keyboard-stage .anel-meio .tecla-compacta { font-size: 18px; }
+}
+#app .personalize-keyboard-stage .buraco-central {
+  font-family: var(--font-title); font-size: 22px; font-weight: 800;
+  box-shadow: 0 3px 10px rgba(23,58,94,.15);
+}
+/* Botões em volta da roda: maiores e com texto legível */
+#app .personalize-keyboard-stage .satelite { font-weight: 800 !important; }
+@media (min-width: 600px) {
+  #app .personalize-keyboard-stage .satelite {
+    width: 60px !important; height: 60px !important; font-size: 12px !important;
+  }
+}
+/* Lista de palavras salvas */
+#app .personalize-words h3 { margin-bottom: 10px; }
+#app .personalize-words .custom-chip { font-size: 15px; padding: 4px 6px 4px 14px; }
+#app .custom-empty {
+  width: 100%; box-sizing: border-box;
+  display: flex; flex-direction: column; gap: 4px; align-items: center; text-align: center;
+  padding: 18px 14px; border: 2px dashed var(--card-border); border-radius: 16px;
+  color: var(--navy-soft); font-size: 14px; font-weight: 600;
+}
+#app .custom-empty strong { color: var(--navy); font-size: 15px; }
+body[data-theme="dark"] #app .custom-empty { border-color: #3d6688; color: #c9dced; }
+body[data-theme="dark"] #app .custom-empty strong { color: #f1f7ff; }
 </style>
 <link rel="stylesheet" href="../menu-inicial.css">
 </head>
@@ -4785,7 +4843,7 @@ function wordCardHtml(word, inFavorites = false) {
 }
 
 // Na tela inicial, o botão do Guri fica logo abaixo do botão de Configurações.
-// Nas outras telas ele volta para o canto de baixo, porque em cima fica a seta de voltar.
+// Nas outras telas ele fica escondido (ver CSS "O Guri só aparece na tela inicial").
 function posicionarMascoteNoInicio() {
   const btn = document.getElementById('mascotFloatBtn');
   if (!btn) return;
@@ -5414,7 +5472,7 @@ function renderPersonalize() {
         ${word.emoji} ${word.label} <small>· ${allCategories().find(category => category.id === word.cat)?.label || 'Sem categoria'}</small>
         <button type="button" class="x" data-del-word="${word.id}" aria-label="Excluir palavra ${word.label}" title="Excluir palavra">✕</button>
       </span>
-    `).join('') || `<span style="color:var(--navy-soft);font-weight:600;font-size:13px;">Nenhuma palavra personalizada ainda.</span>`;
+    `).join('') || `<div class="custom-empty"><strong>Nenhuma palavra ainda</strong><span>Monte uma palavra no teclado e toque em <b>salvar</b>. Ela aparece aqui.</span></div>`;
 
   const letrasPersonalizar = [...'abcdefghijklmnopqrstuvwxyzç'];
   const teclasPersonalizar = letrasPersonalizar.map((letra, indice) => {
