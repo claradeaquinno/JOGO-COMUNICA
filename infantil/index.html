@@ -4846,6 +4846,14 @@ function renderHome() {
           </div>
           <div class="menu-arrow" aria-hidden="true">›</div>
         </div>
+        <a class="menu-btn menu-btn-link" href="../infantil-nao-letrado/index.html" aria-label="Abrir a versão não letrada, só com figuras">
+          <img class="menu-icon" src="../assets/imagens/icone-nao-letrado.png" alt="" aria-hidden="true">
+          <div class="menu-text">
+            <div class="menu-title">VERSÃO NÃO LETRADA</div>
+            <div class="menu-sub">Só figuras e voz</div>
+          </div>
+          <div class="menu-arrow" aria-hidden="true">›</div>
+        </a>
       </nav>
 
       <div class="about-link" data-go="about" role="button" tabindex="0">SOBRE O COMUNICA</div>
@@ -4859,8 +4867,8 @@ function renderBuild() {
       <button class="mode-choice-back" data-go="home" aria-label="Voltar ao início"><img class="back-icon" src="../assets/imagens/icone-voltar.png" alt="" aria-hidden="true"></button>
       <div class="mode-choice-content">
         <h1>Como você quer se comunicar?</h1>
-        <button class="mode-choice-button" type="button" data-mode-screen="circularMode" aria-label="Teclado circular"><svg class="keyboard-choice-icon" viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="23"/><circle cx="28" cy="28" r="12"/><path d="M28 5v11m0 24v11M5 28h11m24 0h11M12 12l8 8m16 16 8 8m0-32-8 8M20 36l-8 8"/></svg><span class="label">Teclado circular</span></button>
-        <button class="mode-choice-button" type="button" data-mode-screen="carouselMode" aria-label="Carrossel"><svg class="keyboard-choice-icon" viewBox="0 0 56 56" aria-hidden="true"><rect x="17" y="10" width="22" height="36" rx="5"/><path d="M11 16H6v24h5m34-24h5v24h-5M24 23l8 5-8 5"/></svg><span class="label">Carrossel</span></button>
+        <button class="mode-choice-button" type="button" data-mode-screen="circularMode" aria-label="Teclado circular"><span class="label">Teclado circular</span></button>
+        <button class="mode-choice-button" type="button" data-mode-screen="carouselMode" aria-label="Carrossel"><span class="label">Carrossel</span></button>
       </div>
     </div>
   `;
@@ -5620,14 +5628,6 @@ function renderSettings() {
 
     <div class="screen">
       <div class="form-block">
-        <div class="settings-row">
-          <div>
-            <div class="settings-label">Versão infantil não letrada</div>
-            <div class="settings-desc">Para crianças que ainda não leem: só imagens e voz</div>
-          </div>
-          <a class="settings-link-btn" href="../infantil-nao-letrado/index.html">Abrir</a>
-        </div>
-
         <div class="settings-row">
           <div>
             <div class="settings-label">Tamanho da letra e dos botões</div>
