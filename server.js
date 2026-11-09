@@ -130,7 +130,7 @@ async function serveStatic(request, response, pathname) {
     sendJson(response, 404, { error: { message: 'Arquivo não encontrado.' } });
     return;
   }
-  if (decodedPath === '/') decodedPath = '/index.html';
+  if (decodedPath.endsWith('/')) decodedPath += 'index.html';
   const filePath = path.resolve(ROOT, `.${decodedPath}`);
   if (filePath !== ROOT && !filePath.startsWith(`${ROOT}${path.sep}`)) {
     sendJson(response, 403, { error: { message: 'Acesso negado.' } });

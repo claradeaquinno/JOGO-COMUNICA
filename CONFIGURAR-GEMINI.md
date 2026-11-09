@@ -13,7 +13,7 @@ O front-end não guarda nem envia a chave do Gemini. As chamadas passam pelo ser
    node server.js
    ```
 
-5. Abra `http://127.0.0.1:4173` no navegador. Para usar a versão infantil, abra `http://127.0.0.1:4173/infantil.html`.
+5. Abra `http://127.0.0.1:4173` no navegador. A página inicial abre a versão adulta (`/adulto/`). A versão infantil fica em `/infantil/` e oferece, nas configurações, acesso à versão para crianças não letradas (`/infantil-nao-letrado/`).
 
 O `.env` está no `.gitignore`; cada colaborador mantém o próprio segredo no computador. O `.env.example` sem chave pode ser versionado para documentar a configuração.
 
