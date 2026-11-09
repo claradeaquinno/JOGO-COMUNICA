@@ -3332,6 +3332,16 @@ body[data-theme="dark"] #app .jor-fase.ok .jor-num { background: #2a5a85; color:
   max-width: 100%;
 }
 #app .guri-bicho .mascot-img { width: 100%; height: 100%; object-fit: contain; object-position: bottom; }
+/* Botão de atalho dentro de uma linha de Configurações */
+.settings-link-btn {
+  flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: var(--tap-min); padding: 0 18px;
+  border-radius: 999px; background: var(--yellow); color: #173a5e;
+  font-family: var(--font-title); font-weight: 700; text-decoration: none;
+  box-shadow: 0 3px 0 var(--yellow-dark);
+}
+.settings-link-btn:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 3px; }
 </style>
 <link rel="stylesheet" href="../menu-inicial.css">
 </head>
@@ -4314,6 +4324,8 @@ function mascotHeroHtml() {
 function go(screen, extra = {}) {
   cancelRefreshVoice();
   STATE.screen = screen;
+  // Guarda a última tela de palavras para o "voltar" das Configurações.
+  if (screen === 'circularMode' || screen === 'carouselMode') STATE.lastWordScreen = screen;
   Object.assign(STATE, extra);
   if (screen !== 'challenge') { STATE.challenge = null; STATE.challengeTab = 'jogo'; STATE.chAcerto = null; clearTimeout(STATE.chTimer); }
   render();
@@ -5601,7 +5613,7 @@ function renderSettings() {
 
   return `
     <div class="topbar">
-      <button class="icon-btn" data-go="home" aria-label="Voltar para o início">←</button>
+      <button class="icon-btn" data-go="${STATE.lastWordScreen || 'build'}" aria-label="Voltar para as palavras">←</button>
       <div class="topbar-title">Configurações</div>
       <div style="width:var(--tap-min)"></div>
     </div>
@@ -5610,7 +5622,15 @@ function renderSettings() {
       <div class="form-block">
         <div class="settings-row">
           <div>
-            <a class="menu-btn" href="../infantil-nao-letrado/index.html">Acessar versão infantil não letrada</a><div class="settings-label">Tamanho da letra e dos botões</div>
+            <div class="settings-label">Versão infantil não letrada</div>
+            <div class="settings-desc">Para crianças que ainda não leem: só imagens e voz</div>
+          </div>
+          <a class="settings-link-btn" href="../infantil-nao-letrado/index.html">Abrir</a>
+        </div>
+
+        <div class="settings-row">
+          <div>
+            <div class="settings-label">Tamanho da letra e dos botões</div>
             <div class="settings-desc">Deixa tudo maior ou menor na tela</div>
           </div>
           <div class="stepper">

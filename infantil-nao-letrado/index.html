@@ -3332,6 +3332,68 @@ body[data-theme="dark"] #app .jor-fase.ok .jor-num { background: #2a5a85; color:
   max-width: 100%;
 }
 #app .guri-bicho .mascot-img { width: 100%; height: 100%; object-fit: contain; object-position: bottom; }
+/* Botão de atalho dentro de uma linha de Configurações */
+.settings-link-btn {
+  flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center; text-align: center;
+  min-height: var(--tap-min); padding: 6px 18px;
+  border-radius: 999px; background: var(--yellow); color: #173a5e;
+  font-family: var(--font-title); font-weight: 700; text-decoration: none;
+  box-shadow: 0 3px 0 var(--yellow-dark);
+}
+.settings-link-btn:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 3px; }
+/* ===== Menu inicial em grade 2x2 com cartões quadrados (igual a Categorias). !important para vencer estilos de outros arquivos. ===== */
+#app nav.menu, nav.menu {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  grid-auto-flow: row !important;
+  gap: 14px !important;
+  width: 100% !important;
+  max-width: 560px !important;
+  margin-left: auto !important; margin-right: auto !important;
+}
+#app nav.menu > .menu-btn, nav.menu > .menu-btn {
+  grid-column: auto !important;
+  grid-row: auto !important;
+  width: 100% !important;
+  aspect-ratio: 1 / 1 !important;
+  min-height: 0 !important;
+  height: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
+  gap: 6px !important;
+  padding: 12px !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+}
+/* A figura ocupa o espaço que sobra do quadrado, sempre centralizada e sem distorcer */
+#app nav.menu .menu-illustration, nav.menu .menu-illustration {
+  display: block !important;
+  flex: 1 1 0 !important;
+  min-height: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  margin: 0 !important;
+  border-radius: 12px;
+}
+/* Área de texto com altura fixa: assim todas as figuras ficam do mesmo tamanho */
+#app nav.menu .menu-text, nav.menu .menu-text {
+  display: flex !important; flex-direction: column !important; justify-content: center !important;
+  flex: 0 0 auto !important; width: 100%; height: 46px !important; overflow: hidden;
+}
+#app nav.menu .menu-arrow, nav.menu .menu-arrow { display: none !important; }
+/* No celular o cartão é pequeno: fica só o título para a figura não encolher */
+@media (max-width: 520px) {
+  #app nav.menu .menu-sub, nav.menu .menu-sub { display: none !important; }
+  #app nav.menu .menu-title, nav.menu .menu-title { font-size: 13px !important; }
+  #app nav.menu .menu-text, nav.menu .menu-text { height: 32px !important; }
+}
 </style>
 <script defer src="sem-texto.js"></script>
 <link rel="stylesheet" href="../menu-inicial.css">
@@ -5612,7 +5674,15 @@ function renderSettings() {
       <div class="form-block">
         <div class="settings-row">
           <div>
-            <a class="menu-btn" href="../infantil/index.html" aria-label="Acessar versão infantil com textos">🔤</a><div class="settings-label">Tamanho da letra e dos botões</div>
+            <div class="settings-label">Versão com palavras</div>
+            <div class="settings-desc">Volta para o Comunica com textos escritos</div>
+          </div>
+          <a class="settings-link-btn" href="../infantil/index.html">Voltar para as palavras</a>
+        </div>
+
+        <div class="settings-row">
+          <div>
+            <div class="settings-label">Tamanho da letra e dos botões</div>
             <div class="settings-desc">Deixa tudo maior ou menor na tela</div>
           </div>
           <div class="stepper">
