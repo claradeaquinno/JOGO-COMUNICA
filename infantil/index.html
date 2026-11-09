@@ -3342,6 +3342,42 @@ body[data-theme="dark"] #app .jor-fase.ok .jor-num { background: #2a5a85; color:
   box-shadow: 0 3px 0 var(--yellow-dark);
 }
 .settings-link-btn:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 3px; }
+/* Guri abaixo das Configurações na tela inicial */
+body.guri-no-inicio .mascot-float {
+  position: absolute !important;
+  right: auto !important; bottom: auto !important;
+}
+body.guri-no-inicio .mascot-tip-toast {
+  position: absolute;
+  right: auto; bottom: auto;
+  left: var(--guri-tip-left, 16px); top: var(--guri-tip-top, 170px);
+}
+body.guri-no-inicio .mascot-tip-toast::after {
+  right: auto; bottom: auto; left: 22px; top: -9px;
+  transform: rotate(225deg);
+}
+/* Botão do Guri com o mesmo fundo branco do botão de Configurações, nos dois temas */
+.mascot-float,
+body[data-theme="dark"] .mascot-float,
+body[data-theme] #app ~ .mascot-float {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border: none !important;
+  box-shadow: 0 4px 8px rgba(23, 58, 94, 0.2) !important;
+}
+/* Guri do mesmo tamanho da engrenagem e com o mesmo destaque amarelo ao passar o mouse ou selecionar */
+.mascot-float {
+  width: var(--tap-min, 48px) !important;
+  height: var(--tap-min, 48px) !important;
+}
+body #mascotFloatBtn.mascot-float:hover,
+body #mascotFloatBtn.mascot-float:focus-visible,
+body #mascotFloatBtn.mascot-float.scan-active,
+body #mascotFloatBtn.mascot-float.accessibility-focus {
+  outline: 3px solid #f3d675 !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 0 2px rgba(16, 40, 61, .35), 0 0 0 6px rgba(243, 214, 117, .55), 0 6px 14px rgba(0, 0, 0, .25) !important;
+  background: #fff2bf !important;
+}
 </style>
 <link rel="stylesheet" href="../menu-inicial.css">
 </head>
@@ -4748,6 +4784,23 @@ function wordCardHtml(word, inFavorites = false) {
   `;
 }
 
+// Na tela inicial, o botão do Guri fica logo abaixo do botão de Configurações.
+// Nas outras telas ele volta para o canto de baixo, porque em cima fica a seta de voltar.
+function posicionarMascoteNoInicio() {
+  const btn = document.getElementById('mascotFloatBtn');
+  if (!btn) return;
+  const engrenagem = STATE.screen === 'home' ? document.querySelector('#app .home-screen [data-go="settings"]') : null;
+  document.body.classList.toggle('guri-no-inicio', !!engrenagem);
+  if (!engrenagem) { btn.style.top = btn.style.left = ''; return; }
+  const r = engrenagem.getBoundingClientRect();
+  const tamanho = btn.offsetWidth || 62;
+  btn.style.left = Math.round(r.left + window.scrollX + (r.width - tamanho) / 2) + 'px';
+  btn.style.top = Math.round(r.bottom + window.scrollY + 12) + 'px';
+  document.body.style.setProperty('--guri-tip-left', btn.style.left);
+  document.body.style.setProperty('--guri-tip-top', (parseInt(btn.style.top, 10) + tamanho + 14) + 'px');
+}
+window.addEventListener('resize', posicionarMascoteNoInicio);
+
 /* ---------- Render ---------- */
 function render() {
   const app = document.getElementById('app');
@@ -4771,6 +4824,7 @@ function render() {
   }
 
   app.innerHTML = html;
+  posicionarMascoteNoInicio();
 
   if (STATE.screen === 'circularMode') {
     initCircularKeyboard();
