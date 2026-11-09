@@ -784,7 +784,7 @@ function renderHome() {
 
       <img
         class="hero-cover-img"
-        src="assets/imagens/tela-inicio.jpg"
+        src="../assets/imagens/tela-inicio.jpg"
         alt="ComunicA - Seu jeito de comunicar o que você precisa"
       >
 

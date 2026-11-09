@@ -1,0 +1,93 @@
+/* Mantém o espaço do texto para preservar o layout da versão infantil. */
+.visual-button-text {
+  visibility: hidden !important;
+}
+
+/* A legenda permanece no DOM para acessibilidade e para manter o layout.
+   Opacidade no contêiner impede que estilos dos filhos revelem o texto. */
+body .home-screen .menu-btn .menu-text {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+/* Cards ilustrados do menu: lado a lado e com quebra em telas menores. */
+body #app .home-screen .menu {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  width: 100%;
+  max-width: 900px;
+  margin: 18px auto;
+}
+body #app .home-screen .menu-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: max(140px, var(--tap-min));
+  aspect-ratio: 1 / 1;
+  padding: 20px;
+  gap: 0;
+  text-align: center;
+}
+body #app .home-screen .menu-btn .menu-icon {
+  width: 70%;
+  height: 70%;
+  max-width: 130px;
+  max-height: 130px;
+  flex: 0 1 auto;
+  object-fit: contain;
+}
+body #app .home-screen .menu-btn .menu-text {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+body #app .home-screen .menu-btn .menu-arrow {
+  display: none;
+}
+@media (max-width: 600px) {
+  body #app .home-screen .menu {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  body #app .home-screen .menu-btn {
+    min-height: max(110px, var(--tap-min));
+    padding: 14px;
+  }
+}
+
+/* Ilustrações de cenas maiores para reconhecer cada ação sem ler. */
+body #app .home-screen .menu-btn .menu-illustration {
+  width: 100%;
+  height: 100%;
+  max-width: 210px;
+  max-height: 210px;
+  filter: none;
+}
+
+/* Legendas curtas dão apoio; a ilustração ocupa a maior parte do card. */
+body #app .home-screen .menu-btn {
+  flex-direction: column;
+  gap: 10px;
+}
+body #app .home-screen .menu-btn .menu-illustration {
+  flex: 1 1 0;
+  min-height: 0;
+  height: auto;
+}
+body #app .home-screen .menu-btn .menu-caption {
+  flex: 0 0 auto;
+  display: block;
+  width: 100%;
+  max-width: 24ch;
+  font-family: var(--font);
+  font-size: clamp(14px, 1.6vw, 17px);
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+  color: inherit;
+  overflow-wrap: break-word;
+}

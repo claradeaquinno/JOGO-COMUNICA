@@ -40,7 +40,7 @@ body {
       rgba(255, 255, 255, 0.1) 0%,
       rgba(23, 58, 94, 0.3) 100%
     ),
-    url('assets/imagens/tela-inicio.png') center top / cover no-repeat fixed;
+    url('../assets/imagens/tela-inicio.png') center top / cover no-repeat fixed;
 
   background-color: #7bc562;
   color: var(--navy);
@@ -62,7 +62,7 @@ body.bg-outras {
       rgba(255, 255, 255, 0.1) 0%,
       rgba(23, 58, 94, 0.3) 100%
     ),
-    url('assets/imagens/imagens-outrastelas.png') center top / cover no-repeat fixed !important;
+    url('../assets/imagens/imagens-outrastelas.png') center top / cover no-repeat fixed !important;
 }
 
 
