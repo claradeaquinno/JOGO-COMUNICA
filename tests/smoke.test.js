@@ -51,3 +51,35 @@ test('servidor abre versões, redireciona pastas e protege arquivos internos', a
     child.kill();
   }
 });
+
+
+test('argola visual contém quatro setores e abre opções sem inserir o nome da categoria', () => {
+  const html = fs.readFileSync(path.join(root, 'infantil-nao-letrado/index.html'), 'utf8');
+  const source = html.slice(html.indexOf('const SETORES_VISUAIS ='), html.indexOf('function palavrasPersonalizadasPorGenero'));
+  const makeRing = () => ({ teclas: [], palavras: [] });
+  const rings = [makeRing(), makeRing()];
+  let opened = 0;
+  const context = vm.createContext({
+    aneis: rings,
+    criarTeclasDoAnel(ring, count) {
+      ring.teclas = Array.from({ length: count }, () => ({ dataset: {}, attributes: {}, setAttribute(key, value) { this.attributes[key] = value; } }));
+    },
+    allWords: () => [{ cat: 'comida', label: 'Água' }, { cat: 'pessoas', label: 'Mãe' }],
+    atualizarTextoDasTeclas(ring, words) { ring.palavras = words; },
+    mostrarAnelSugestoes() { opened++; },
+    focarTecla(ring, index) { assert.equal(ring, 1); assert.equal(index, 0); }
+  });
+  vm.runInContext(source + '; atualizarAnelPalavrasChave();', context);
+  assert.deepEqual(rings[0].teclas.map(key => key.dataset.setorVisual), ['comida', 'sentimentos', 'pessoas', 'lugares']);
+  for (const key of rings[0].teclas) {
+    assert.ok(key.attributes['aria-label']);
+    assert.match(key.innerHTML, /<svg/);
+    vm.runInContext('abrirSetorVisual(' + JSON.stringify(key.dataset.setorVisual) + ')', context);
+    assert.ok(rings[1].palavras.length > 0);
+    assert.ok(rings[1].palavras.length <= 10);
+  }
+  assert.equal(opened, 4);
+  for (const page of ['adulto', 'infantil']) {
+    assert.ok(!fs.readFileSync(path.join(root, page, 'index.html'), 'utf8').includes('const SETORES_VISUAIS'));
+  }
+});
