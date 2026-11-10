@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 
 
 <title>Comunica</title>
@@ -5141,7 +5141,6 @@ html body:not([data-color-vision="on"]) #app .profile-choice-arrow {
 html body #app .profile-choice-card:focus-visible { outline: 3px solid #f7c94d !important; outline-offset: 3px !important; }
 html body #app .onboard-hint { font-size: 0.8rem !important; margin-top: 14px !important; }
 </style>
-<link rel="stylesheet" href="../menu-inicial.css">
 </head>
 
 <body>
@@ -6488,8 +6487,8 @@ function renderBuild() {
       <button class="mode-choice-back" data-go="home" aria-label="Voltar ao início">← Voltar</button>
       <div class="mode-choice-content">
         <h1>Como você quer se comunicar?</h1>
-        <button class="mode-choice-button" type="button" data-mode-screen="circularMode" aria-label="Teclado circular"><svg class="keyboard-choice-icon" viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="23"/><circle cx="28" cy="28" r="12"/><path d="M28 5v11m0 24v11M5 28h11m24 0h11M12 12l8 8m16 16 8 8m0-32-8 8M20 36l-8 8"/></svg><span class="label">Teclado circular</span></button>
-        <button class="mode-choice-button" type="button" data-mode-screen="carouselMode" aria-label="Carrossel"><svg class="keyboard-choice-icon" viewBox="0 0 56 56" aria-hidden="true"><rect x="17" y="10" width="22" height="36" rx="5"/><path d="M11 16H6v24h5m34-24h5v24h-5M24 23l8 5-8 5"/></svg><span class="label">Carrossel</span></button>
+        <button class="mode-choice-button" type="button" data-mode-screen="circularMode">Teclado circular</button>
+        <button class="mode-choice-button" type="button" data-mode-screen="carouselMode">Carrossel</button>
       </div>
     </div>
   `;
