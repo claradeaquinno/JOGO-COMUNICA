@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#173a5e">
 <meta name="description" content="Comunica — aplicativo de Comunicação Alternativa e Aumentativa (CAA) para tablet e celular">
-<title>Comunica</title>
+<title>ComunicA — Infantil não letrado</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@500;600;700;800&display=swap');
@@ -1333,7 +1333,7 @@ body[data-theme="dark"] #app .personalize-keyboard-stage .anel-meio .tecla.scan-
   }
   .personalize-builder .personalize-words .custom-list { margin-top: 0; }
 }
-.carousel-full-screen { position: fixed; inset: 0; z-index: 100; overflow: auto; min-height: 100vh; padding: 18px 24px 28px; background: linear-gradient(180deg, rgba(255,255,255,.1), rgba(23,58,94,.3)), url('../assets/imagens/imagens-outrastelas.png') center / cover no-repeat; }
+.carousel-full-screen { position: fixed; inset: 0; z-index: 100; overflow: auto; min-height: 100vh; padding: 18px 24px 28px; background: linear-gradient(180deg, rgba(255,255,255,.1), rgba(23,58,94,.3)), url('../assets/imagens/plano-inicio.png') center / cover no-repeat; }
 .carousel-full-topbar { width: min(100%, 1100px); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
 .carousel-full-content { width: min(100%, 1020px); margin: 12px auto 0; }
 .carousel-full-content .section-label, .carousel-full-content .layer-label { color: #fff; }
@@ -1343,7 +1343,7 @@ body[data-theme="dark"] #app .personalize-keyboard-stage .anel-meio .tecla.scan-
 .carousel-full-content .carousel-card.side { width: 110px; height: 140px; }
 .carousel-full-content .confirm-btn { margin-bottom: 14px; }
 
-.circular-full-screen { position: fixed; inset: 0; z-index: 100; overflow: auto; min-height: 100vh; padding: 18px 24px 28px; background: linear-gradient(180deg, rgba(255,255,255,.1), rgba(23,58,94,.3)), url('../assets/imagens/imagens-outrastelas.png') center / cover no-repeat; }
+.circular-full-screen { position: fixed; inset: 0; z-index: 100; overflow: auto; min-height: 100vh; padding: 18px 24px 28px; background: linear-gradient(180deg, rgba(255,255,255,.1), rgba(23,58,94,.3)), url('../assets/imagens/plano-inicio.png') center / cover no-repeat; }
 .circular-full-topbar { width: min(100%, 1100px); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
 .circular-full-content { width: min(100%, 1020px); margin: 12px auto 0; text-align: center; }
 .circular-full-content .section-label, .circular-full-content .layer-label { color: #fff; }
@@ -3332,20 +3332,78 @@ body[data-theme="dark"] #app .jor-fase.ok .jor-num { background: #2a5a85; color:
   max-width: 100%;
 }
 #app .guri-bicho .mascot-img { width: 100%; height: 100%; object-fit: contain; object-position: bottom; }
-.home-screen .menu-btn {
-  border-radius: 24px !important;
-  overflow: hidden;
+/* Botão de atalho dentro de uma linha de Configurações */
+.settings-link-btn {
+  flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center; text-align: center;
+  min-height: var(--tap-min); padding: 6px 18px;
+  border-radius: 999px; background: var(--yellow); color: #173a5e;
+  font-family: var(--font-title); font-weight: 700; text-decoration: none;
+  box-shadow: 0 3px 0 var(--yellow-dark);
+}
+.settings-link-btn:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 3px; }
+/* ===== Menu inicial em grade 2x2 com cartões quadrados (igual a Categorias). !important para vencer estilos de outros arquivos. ===== */
+#app nav.menu, nav.menu {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  grid-auto-flow: row !important;
+  gap: 14px !important;
+  width: 100% !important;
+  max-width: 560px !important;
+  margin-left: auto !important; margin-right: auto !important;
+}
+#app nav.menu > .menu-btn, nav.menu > .menu-btn {
+  grid-column: auto !important;
+  grid-row: auto !important;
+  width: 100% !important;
+  aspect-ratio: 1 / 1 !important;
+  min-height: 0 !important;
+  height: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
+  gap: 6px !important;
+  padding: 12px !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+}
+/* A figura ocupa o espaço que sobra do quadrado, sempre centralizada e sem distorcer */
+#app nav.menu .menu-illustration, nav.menu .menu-illustration {
+  display: block !important;
+  flex: 1 1 0 !important;
+  min-height: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  margin: 0 !important;
+  border-radius: 12px;
+}
+/* Área de texto com altura fixa: assim todas as figuras ficam do mesmo tamanho */
+#app nav.menu .menu-text, nav.menu .menu-text {
+  display: flex !important; flex-direction: column !important; justify-content: center !important;
+  flex: 0 0 auto !important; width: 100%; height: 46px !important; overflow: hidden;
+}
+#app nav.menu .menu-arrow, nav.menu .menu-arrow { display: none !important; }
+/* No celular o cartão é pequeno: fica só o título para a figura não encolher */
+@media (max-width: 520px) {
+  #app nav.menu .menu-sub, nav.menu .menu-sub { display: none !important; }
+  #app nav.menu .menu-title, nav.menu .menu-title { font-size: 13px !important; }
+  #app nav.menu .menu-text, nav.menu .menu-text { height: 32px !important; }
+}
+/* Ícones ilustrados nos botões em volta do teclado circular */
+#app .circular-mode-screen .satelite { padding: 6px !important; font-size: 0 !important; }
+#app .circular-mode-screen .satelite .satelite-icone {
+  display: block; width: 78%; height: 78%; object-fit: contain; pointer-events: none;
+  filter: drop-shadow(0 2px 2px rgba(16,40,61,.25));
 }
 </style>
-<style>
-/* Oculta as legendas do menu já na primeira renderização. */
-body .home-screen .menu-btn .menu-text {
-  opacity: 0 !important;
-  pointer-events: none;
-}
-</style>
-<link rel="stylesheet" href="sem-texto.css?v=5">
-<script src="sem-texto.js?v=5" defer></script>
+<script defer src="sem-texto.js?v=6"></script>
+<link rel="stylesheet" href="../menu-inicial.css">
+<link rel="stylesheet" href="sem-texto.css?v=6">
 </head>
 
 <body>
@@ -4802,32 +4860,32 @@ function renderHome() {
       ${mascotHeroHtml()}
 
       <nav class="menu" aria-label="Menu principal">
-        <div class="menu-btn primary" data-go="build" role="button" tabindex="0" aria-label="Falar">
-          <img class="menu-icon menu-illustration" src="ilustracoes/comunicar.png" alt="Criança usando uma prancha de figuras para conversar" aria-hidden="true">
+        <div class="menu-btn primary" data-go="build" role="button" tabindex="0" aria-label="Começar a comunicar">
+          <img class="menu-illustration" src="ilustracoes/comunicar-v3.png" width="1254" height="1254" alt="" aria-hidden="true" decoding="async">
           <span class="menu-caption" data-visible-caption>Falar</span>
           <div class="menu-arrow" aria-hidden="true">›</div>
         </div>
 
-        <div class="menu-btn" data-go="favorites" role="button" tabindex="0" aria-label="Meus favoritos">
-          <img class="menu-icon menu-illustration" src="ilustracoes/favoritos.png" alt="Criança abraçando uma estrela com suas figuras favoritas" aria-hidden="true">
+        <div class="menu-btn" data-go="favorites" role="button" tabindex="0" aria-label="Abrir figuras e frases favoritas">
+          <img class="menu-illustration" src="ilustracoes/favoritos-v3.png" width="1254" height="1254" alt="" aria-hidden="true" decoding="async">
           <span class="menu-caption" data-visible-caption>Meus favoritos</span>
           <div class="menu-arrow" aria-hidden="true">›</div>
         </div>
 
-        <div class="menu-btn" data-go="categories" role="button" tabindex="0" aria-label="Escolher palavras">
-          <img class="menu-icon menu-illustration" src="ilustracoes/categorias.png" alt="Comidas, brinquedos e roupas organizados em grupos" aria-hidden="true">
+        <div class="menu-btn" data-go="categories" role="button" tabindex="0" aria-label="Escolher figuras por assunto">
+          <img class="menu-illustration" src="ilustracoes/categorias-v3.png" width="1254" height="1254" alt="" aria-hidden="true" decoding="async">
           <span class="menu-caption" data-visible-caption>Escolher palavras</span>
           <div class="menu-arrow" aria-hidden="true">›</div>
         </div>
 
-        <div class="menu-btn" data-go="personalize" role="button" tabindex="0" aria-label="Criar uma nova palavra">
-          <img class="menu-icon menu-illustration" src="ilustracoes/personalizar.png" alt="Criança desenhando uma nova figura de comunicação" aria-hidden="true">
+        <div class="menu-btn" data-go="personalize" role="button" tabindex="0" aria-label="Criar e adicionar minhas figuras">
+          <img class="menu-illustration" src="ilustracoes/personalizar-v3.png" width="1254" height="1254" alt="" aria-hidden="true" decoding="async">
           <span class="menu-caption" data-visible-caption>Criar uma nova palavra</span>
           <div class="menu-arrow" aria-hidden="true">›</div>
         </div>
 
-        <div class="menu-btn" data-go="challenge" role="button" tabindex="0" aria-label="Brincar e aprender">
-          <img class="menu-icon menu-illustration" src="ilustracoes/desafio.png" alt="Crianças brincando de combinar figuras iguais" aria-hidden="true">
+        <div class="menu-btn" data-go="challenge" role="button" tabindex="0" aria-label="Brincar de escolher a figura certa">
+          <img class="menu-illustration" src="ilustracoes/desafio-v3.png" width="1254" height="1254" alt="" aria-hidden="true" decoding="async">
           <span class="menu-caption" data-visible-caption>Brincar e aprender</span>
           <div class="menu-arrow" aria-hidden="true">›</div>
         </div>
@@ -4844,8 +4902,8 @@ function renderBuild() {
       <button class="mode-choice-back" data-go="home" aria-label="Voltar ao início"><img class="back-icon" src="../assets/imagens/icone-voltar.png" alt="" aria-hidden="true"></button>
       <div class="mode-choice-content">
         <h1>Como você quer se comunicar?</h1>
-        <button class="mode-choice-button" type="button" data-mode-screen="circularMode">Teclado circular</button>
-        <button class="mode-choice-button" type="button" data-mode-screen="carouselMode">Carrossel</button>
+        <button class="mode-choice-button" type="button" data-mode-screen="circularMode" aria-label="Teclado circular"><img class="keyboard-choice-illustration" src="ilustracoes/teclado-circular.png" width="1254" height="1254" alt="" aria-hidden="true" decoding="async"><span class="label">Teclado circular</span></button>
+        <button class="mode-choice-button" type="button" data-mode-screen="carouselMode" aria-label="Carrossel"><img class="keyboard-choice-illustration" src="ilustracoes/teclado-carrossel.png" width="1254" height="1254" alt="" aria-hidden="true" decoding="async"><span class="label">Carrossel</span></button>
       </div>
     </div>
   `;
@@ -5235,7 +5293,7 @@ function circularKeyboardRings() {
 }
 
 function renderCircularKeyboard() {
-  return `<div class="mode-screen circular-mode-screen"><button class="mode-screen-back" data-go="build" aria-label="Voltar para escolha do modo"><img class="back-icon" src="../assets/imagens/icone-voltar.png" alt="" aria-hidden="true"></button><div class="circular-keyboard-reserved"><div class="phrase-stack"><div class="campo" aria-label="Frase formada"><span id="valor"></span></div><div class="frases-prontas" id="frasesProntas" data-rotulo="Palavras salvas" aria-label="Palavras salvas pelo usuário" aria-live="polite"></div></div><div class="teclado-area"><section class="teclado" id="teclado" aria-label="Teclado circular"><div class="anel anel-externo" id="anelExterno"></div><div class="anel anel-meio" id="anelMeio"></div></section><div class="satelites" id="menuOrbital" aria-label="Menu de ações"><button class="satelite" id="limpar" type="button" aria-label="Limpar">limpar</button><button class="satelite" id="excluir" type="button" aria-label="Excluir">excluir</button><button class="satelite" id="recarregar" type="button" aria-label="Recarregar sugestões ou conectar o Gemini" title="Recarregar sugestões ou conectar o Gemini">recarregar</button><button class="satelite" id="voltarInicio" type="button" aria-label="Voltar ao início">voltar</button><button class="satelite" id="falar" type="button" aria-label="Falar">falar</button><button class="satelite satelite-destaque" id="concluir" type="button" aria-label="Concluir">concluir</button></div></div></div></div>`;
+  return `<div class="mode-screen circular-mode-screen"><button class="mode-screen-back" data-go="build" aria-label="Voltar para escolha do modo"><img class="back-icon" src="../assets/imagens/icone-voltar.png" alt="" aria-hidden="true"></button><div class="circular-keyboard-reserved"><div class="phrase-stack"><div class="campo" aria-label="Frase formada"><span id="valor"></span></div><div class="frases-prontas" id="frasesProntas" data-rotulo="Palavras salvas" aria-label="Palavras salvas pelo usuário" aria-live="polite"></div></div><div class="teclado-area"><section class="teclado" id="teclado" aria-label="Teclado circular"><div class="anel anel-externo" id="anelExterno"></div><div class="anel anel-meio" id="anelMeio"></div></section><div class="satelites" id="menuOrbital" aria-label="Menu de ações"><button class="satelite" id="limpar" type="button" aria-label="Limpar"><img class="satelite-icone" src="ilustracoes/icone_limpar_comunica.png" alt="" aria-hidden="true"></button><button class="satelite" id="excluir" type="button" aria-label="Excluir"><img class="satelite-icone" src="ilustracoes/icone_excluir_comunica.png" alt="" aria-hidden="true"></button><button class="satelite" id="recarregar" type="button" aria-label="Recarregar sugestões ou conectar o Gemini" title="Recarregar sugestões ou conectar o Gemini"><img class="satelite-icone" src="ilustracoes/icone_recarregar_comunica.png" alt="" aria-hidden="true"></button><button class="satelite" id="voltarInicio" type="button" aria-label="Voltar ao início"><img class="satelite-icone" src="ilustracoes/icone_voltar_comunica.png" alt="" aria-hidden="true"></button><button class="satelite" id="falar" type="button" aria-label="Falar"><img class="satelite-icone" src="ilustracoes/icone_falar_comunica.png" alt="" aria-hidden="true"></button><button class="satelite satelite-destaque" id="concluir" type="button" aria-label="Concluir"><img class="satelite-icone" src="ilustracoes/icone_concluir_comunica_v2.png" alt="" aria-hidden="true"></button></div></div></div></div>`;
 }
 function renderCategories() {
   const categories = allCategories();
@@ -5605,6 +5663,14 @@ function renderSettings() {
 
     <div class="screen">
       <div class="form-block">
+        <div class="settings-row">
+          <div>
+            <div class="settings-label">Versão com palavras</div>
+            <div class="settings-desc">Volta para o Comunica com textos escritos</div>
+          </div>
+          <a class="settings-link-btn" href="../infantil/index.html">Voltar para as palavras</a>
+        </div>
+
         <div class="settings-row">
           <div>
             <div class="settings-label">Tamanho da letra e dos botões</div>
@@ -7339,8 +7405,47 @@ function atualizarFrasesProntas() {
     }, 450);
 }
 
+// Setores visuais exclusivos da versão infantil não letrada, em ordem horária.
+const SETORES_VISUAIS = [
+    { id: 'comida', label: 'Comidas e bebidas', icon: 'maca', reserva: ['água', 'comida', 'maçã', 'banana', 'suco', 'leite'] },
+    { id: 'sentimentos', label: 'Adicionar Eu à frase', palavra: 'Eu', icon: 'rosto', reserva: ['feliz', 'triste', 'bem', 'cansado', 'com medo', 'com dor'] },
+    { id: 'pessoas', label: 'Pessoas e carinho', icon: 'coracao', reserva: ['mãe', 'pai', 'amigo', 'abraço', 'gosto', 'obrigado'] },
+    { id: 'lugares', label: 'Lugares', icon: 'casa', reserva: ['casa', 'escola', 'parque', 'banheiro', 'hospital', 'quarto'] }
+];
+function iconeSetorVisual(tipo) {
+    // Formas arredondadas e poucos detalhes para leitura em tamanho menor.
+    const desenhos = {
+        maca: '<path d="M32 22C20 12 9 21 12 35c2 13 10 21 20 16 10 5 18-3 20-16 3-14-8-23-20-13Z" fill="#f4d991"/><path d="M32 22c-2-6-1-11 2-15"/><path d="M35 16c0-8 7-11 15-10-1 8-7 13-15 10Z" fill="#a8c9ad"/><path d="M20 28c-3 2-4 5-3 9" stroke="#fff8e4" stroke-width="4"/>',
+        rosto: '<circle cx="32" cy="32" r="23" fill="#f4df9e"/><path d="M20 27q4-6 8 0m8 0q4-6 8 0"/><ellipse cx="18" cy="35" rx="4" ry="2.5" fill="#e6b9ad" stroke="none"/><ellipse cx="46" cy="35" rx="4" ry="2.5" fill="#e6b9ad" stroke="none"/><path d="M23 37q9 13 18 0"/>',
+        casa: '<rect x="16" y="29" width="32" height="25" rx="5" fill="#f4df9e"/><path d="M9 30 29 12q3-3 6 0l20 18" stroke="#26485d" stroke-width="9"/><path d="M9 30 29 12q3-3 6 0l20 18" stroke="#a8c9ad" stroke-width="4"/><path d="M27 54V40a5 5 0 0 1 10 0v14" fill="#b9d7e8"/><rect x="20" y="32" width="6" height="6" rx="1.5" fill="#b9d7e8" stroke-width="2"/>',
+        coracao: '<path d="M32 53C25 48 10 37 10 25c0-15 16-20 22-8 6-12 22-7 22 8 0 12-15 23-22 28Z" fill="#b5d2b9"/><path d="M18 25c0-5 4-7 7-5" stroke="#f2faf2" stroke-width="4"/>'
+    };
+    return '<svg class="setor-visual-icone" viewBox="0 0 64 64" aria-hidden="true" focusable="false" fill="none" stroke="#26485d" stroke-width="2.8" stroke-linejoin="round" stroke-linecap="round">' + desenhos[tipo] + '</svg>';
+}
 function atualizarAnelPalavrasChave() {
-    atualizarTextoDasTeclas(aneis[0], palavrasChave);
+    const anel = aneis[0];
+    criarTeclasDoAnel(anel, SETORES_VISUAIS.length, false);
+    anel.teclas.forEach((tecla, indice) => {
+        const setor = SETORES_VISUAIS[indice];
+        tecla.dataset.setorVisual = setor.id;
+        if (setor.palavra) tecla.dataset.valor = setor.palavra;
+        tecla.setAttribute('aria-label', setor.label);
+        tecla.innerHTML = iconeSetorVisual(setor.icon);
+    });
+    anel.palavras = SETORES_VISUAIS.map(setor => setor.label);
+}
+function abrirSetorVisual(id) {
+    const setor = SETORES_VISUAIS.find(item => item.id === id);
+    if (!setor) return;
+    const palavras = allWords().filter(word => word.cat === id).map(word => word.label);
+    const lista = [...new Set(palavras.concat(setor.reserva))].slice(0, 10);
+    const anel = aneis[1];
+    criarTeclasDoAnel(anel, lista.length, false);
+    atualizarTextoDasTeclas(anel, lista);
+    mostrarAnelSugestoes();
+    anelAtualIndice = 1;
+    posicaoAtualIndice = 0;
+    focarTecla(1, 0);
 }
 
 function palavrasPersonalizadasPorGenero(genero) {
@@ -7513,17 +7618,10 @@ async function recarregarSugestoes() {
 // Reseta o teclado para a configuração inicial: argola de dentro volta a
 // mostrar as palavras-chave e a argola de fora desaparece de novo.
 function voltarConfiguracaoInicial() {
-    if (modoAlfabeto) {
-        criarTeclasDoAnel(aneis[0], 9, false);
-        modoAlfabeto = false;
-        document.querySelectorAll(".botao-alfabeto").forEach((botao) => botao.classList.remove("ativo"));
-    }
     atualizarAnelPalavrasChave();
     esconderAnelSugestoes();
     if (!valor?.textContent.trim()) sugestaoSelecionadaBarra = "";
     atualizarFrasesProntas();
-    novaPalavraAlfabeto = true;
-    noBotaoCentral = false;
     anelAtualIndice = 0;
     posicaoAtualIndice = 0;
     focarTecla(0, 0);
@@ -7612,58 +7710,8 @@ function adicionarPalavra(texto) {
     atualizarFrasesProntas();
 }
 
-// ==== Modo alfabético (botão "Aa" no centro da argola de dentro) ====
-// Reconstrói a própria argola de dentro (a "argola inicial") com as 26
-// letras do alfabeto, no lugar do que ela estivesse mostrando (palavras-
-// chave ou sugestões). Só entra nesse modo quando o botão central é clicado.
-const alfabeto = "abcdefghijklmnopqrstuvwxyz".split("");
-let modoAlfabeto = false;
-let novaPalavraAlfabeto = true;
-
-// A argola interna mantém as palavras-chave; as continuações ficam na externa.
-function restaurarConteudoAnelInicial() {
-    atualizarAnelPalavrasChave();
-}
-
-function entrarModoAlfabeto() {
-    modoAlfabeto = true;
-    novaPalavraAlfabeto = true;
-    criarTeclasDoAnel(aneis[0], alfabeto.length, true);
-    atualizarTextoDasTeclas(aneis[0], alfabeto);
-    anelAtualIndice = 0;
-    posicaoAtualIndice = 0;
-    focarTecla(0, 0);
-}
-
-function sairModoAlfabeto() {
-    modoAlfabeto = false;
-    criarTeclasDoAnel(aneis[0], 9, false);
-    restaurarConteudoAnelInicial();
-    anelAtualIndice = 0;
-    posicaoAtualIndice = 0;
-    atualizarFrasesProntas();
-    if (valor.textContent.trim() && sugestoesVisiveis) atualizarSugestoesNoAnel(1);
-    focarTecla(0, 0);
-}
-
-function alternarModoAlfabeto() {
-    noBotaoCentral = false;
-    if (modoAlfabeto) sairModoAlfabeto(); else entrarModoAlfabeto();
-    document.querySelectorAll(".botao-alfabeto").forEach((botao) => botao.classList.toggle("ativo", modoAlfabeto));
-}
-
-// Digita uma letra na palavra atual: a primeira letra depois de entrar no
-// modo alfabético começa uma palavra nova (com espaço); as seguintes
-// grudam direto na anterior, sem espaço, até o usuário sair do modo.
-function adicionarLetra(letra) {
-    if (novaPalavraAlfabeto) {
-        valor.textContent = `${valor.textContent.trim()} ${letra}`.trim();
-        novaPalavraAlfabeto = false;
-    } else {
-        valor.textContent += letra;
-    }
-    atualizarFrasesProntas();
-}
+// Esta versão mantém a seleção por figuras no teclado circular.
+const modoAlfabeto = false;
 
 // Usada tanto pelo clique quanto pela tecla Enter/Espaço. As palavras-chave
 // ficam na argola interna; as continuações permanecem sempre na argola externa.
@@ -7673,10 +7721,8 @@ function selecionarPalavra(tecla) {
     anelAtualIndice = indiceReal;
     posicaoAtualIndice = aneis[indiceReal].teclas.indexOf(tecla);
 
-    if (modoAlfabeto) {
-        // No modo alfabético só a própria argola de dentro (agora com as
-        // letras) responde; a de fora fica bloqueada até sair do modo.
-        if (aneis[0].teclas.includes(tecla)) adicionarLetra(tecla.dataset.valor);
+    if (tecla.dataset.setorVisual && !tecla.dataset.valor) {
+        abrirSetorVisual(tecla.dataset.setorVisual);
         return;
     }
 
@@ -7705,11 +7751,11 @@ function direcaoDoAngulo(angulo) {
 }
 
 function indiceMaisProximoNoAnel(origem, destino, posicao) {
-    const anguloOrigem = (posicao / origem.teclas.length) * 2 * Math.PI - Math.PI / 2;
+    const anguloOrigem = (posicao / origem.teclas.length) * 2 * Math.PI - (origem.elemento.classList.contains("anel-quatro-setores") ? 3 * Math.PI / 4 : Math.PI / 2);
     let melhorIndice = 0;
     let menorDistancia = Infinity;
     destino.teclas.forEach((_, indice) => {
-        const anguloDestino = (indice / destino.teclas.length) * 2 * Math.PI - Math.PI / 2;
+        const anguloDestino = (indice / destino.teclas.length) * 2 * Math.PI - (destino.elemento.classList.contains("anel-quatro-setores") ? 3 * Math.PI / 4 : Math.PI / 2);
         const distancia = Math.abs(Math.atan2(Math.sin(anguloDestino - anguloOrigem), Math.cos(anguloDestino - anguloOrigem)));
         if (distancia < menorDistancia) {
             menorDistancia = distancia;
@@ -7721,7 +7767,7 @@ function indiceMaisProximoNoAnel(origem, destino, posicao) {
 
 function mostrarCunha(anel, posicao) {
     const abertura = 360 / anel.quantidade;
-    const inicio = posicao * abertura - abertura / 2;
+    const inicio = posicao * abertura - abertura / 2 - (anel.elemento.classList.contains("anel-quatro-setores") ? 45 : 0);
     aneis.forEach((outroAnel) => outroAnel.cunha.classList.remove("ativa"));
     anel.cunha.style.background = `conic-gradient(from ${inicio}deg, rgb(255 230 140 / 85%) 0deg ${abertura}deg, transparent ${abertura}deg 360deg)`;
     anel.cunha.classList.add("ativa");
@@ -7761,9 +7807,6 @@ function focarTecla(anelDestino, posicaoDestino) {
 // considera "focado" — assim funciona mesmo quando o foco automático do
 // navegador não pega em algum ambiente de exibição. Ele só age quando a
 // tela do teclado circular está aberta.
-// Cursor extra: quando true, o foco está no botão "Aa" no centro da
-// argola de dentro (acessível pela seta para cima a partir dela).
-let noBotaoCentral = false;
 let teclaRetornoMenu = null;
 
 function tratarSetaTecladoCircular(evento) {
@@ -7773,10 +7816,8 @@ function tratarSetaTecladoCircular(evento) {
     const elementoFocado = document.activeElement;
     const anelFocado = aneis.findIndex((anel) => anel.teclas.includes(elementoFocado));
     const focoNaTecla = anelFocado >= 0;
-    const botaoCentral = document.querySelector(".botao-alfabeto");
-    const focoNoCentro = elementoFocado === botaoCentral;
     const focoNoMenu = botoesMenu.includes(elementoFocado);
-    if (!focoNaTecla && !focoNoCentro) {
+    if (!focoNaTecla) {
         if (focoNoMenu) return;
         if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(evento.key)) {
             evento.preventDefault();
@@ -7784,25 +7825,9 @@ function tratarSetaTecladoCircular(evento) {
         }
         return;
     }
-    noBotaoCentral = focoNoCentro;
 
     // Se o foco estiver em um botão do menu lateral, quem cuida disso é o moverNoMenu.
     if (focoNoMenu) return;
-
-    if (noBotaoCentral) {
-        if (["Enter", " "].includes(evento.key)) {
-            evento.preventDefault();
-            noBotaoCentral = false;
-            alternarModoAlfabeto();
-            return;
-        }
-        if (evento.key === "ArrowDown" || evento.key === "ArrowUp") {
-            evento.preventDefault();
-            noBotaoCentral = false;
-            focarTecla(anelAtualIndice, posicaoAtualIndice);
-        }
-        return;
-    }
 
     // Tab pode entrar no menu sem alterar o comportamento circular das setas.
     if (focoNaTecla && evento.key === "Tab" && !evento.shiftKey) {
@@ -7836,15 +7861,6 @@ function tratarSetaTecladoCircular(evento) {
             if (anelAtualIndice === 1) {
                 proximoAnel = 0;
                 proximaPosicao = indiceMaisProximoNoAnel(anelAtual, aneis[0], posicaoAtualIndice);
-            } else if (anelAtualIndice === 0) {
-                evento.preventDefault();
-                const botaoCentral = document.querySelector(".botao-alfabeto");
-                if (botaoCentral) {
-                    evento.preventDefault();
-                    noBotaoCentral = true;
-                    botaoCentral.focus();
-                }
-                return;
             }
             break;
         case "ArrowDown":
@@ -7887,13 +7903,19 @@ function criarTeclasDoAnel(anel, quantidade, compacta) {
     anel.teclas.forEach((tecla) => tecla.remove());
     anel.teclas = [];
     anel.quantidade = quantidade;
+    const setoresVisuais = anel === aneis[0] && quantidade === 4 && !compacta;
+    anel.elemento.classList.toggle("anel-quatro-setores", setoresVisuais);
 
     for (let posicao = 0; posicao < quantidade; posicao += 1) {
         const tecla = document.createElement("button");
-        const angulo = (posicao / quantidade) * 360 - 90;
+        const angulo = (posicao / quantidade) * 360 - (setoresVisuais ? 135 : 90);
         const x = 50 + Math.cos(angulo * Math.PI / 180) * anel.raio * 0.5;
         const y = 50 + Math.sin(angulo * Math.PI / 180) * anel.raio * 0.5;
         tecla.className = compacta ? "tecla tecla-compacta" : "tecla";
+        if (setoresVisuais) {
+            tecla.classList.add("tecla-setor-visual");
+            tecla.dataset.quadrante = String(posicao);
+        }
         tecla.type = "button";
         tecla.tabIndex = -1;
         tecla.dataset.direcao = direcaoDoAngulo(angulo);
@@ -7952,9 +7974,6 @@ function initCircularKeyboard() {
     sugestoesVisiveis = false;
     anelAtualIndice = 0;
     posicaoAtualIndice = 0;
-    modoAlfabeto = false;
-    novaPalavraAlfabeto = true;
-    noBotaoCentral = false;
 
     aneis = [
         { elemento: document.getElementById("anelMeio"), quantidade: 9, teclas: [], palavras: palavrasChave, raio: 72, temBuraco: true },
@@ -7968,13 +7987,10 @@ function initCircularKeyboard() {
         anel.cunha = cunha;
 
         if (anel.temBuraco) {
-            const botaoAlfabeto = document.createElement("button");
-            botaoAlfabeto.type = "button";
-            botaoAlfabeto.className = "buraco-central botao-alfabeto";
-            botaoAlfabeto.textContent = "Aa";
-            botaoAlfabeto.setAttribute("aria-label", "Alternar para teclado alfabético");
-            botaoAlfabeto.addEventListener("click", alternarModoAlfabeto);
-            anel.elemento.appendChild(botaoAlfabeto);
+            const centro = document.createElement('span');
+            centro.className = 'buraco-central centro-visual';
+            centro.setAttribute('aria-hidden', 'true');
+            anel.elemento.appendChild(centro);
         }
 
         criarTeclasDoAnel(anel, anel.quantidade, false);
@@ -8043,9 +8059,8 @@ function initCircularKeyboard() {
     focarInicio();
     requestAnimationFrame(() => {
         const focoNaArgolaInicial = aneis[0]?.teclas.includes(document.activeElement);
-        const focoNoCentro = document.activeElement === document.querySelector(".botao-alfabeto");
         const focoNoMenu = botoesMenu.includes(document.activeElement);
-        if (STATE.screen === "circularMode" && !sugestoesVisiveis && !focoNaArgolaInicial && !focoNoCentro && !focoNoMenu) {
+        if (STATE.screen === "circularMode" && !sugestoesVisiveis && !focoNaArgolaInicial && !focoNoMenu) {
             focarInicio();
         }
     });

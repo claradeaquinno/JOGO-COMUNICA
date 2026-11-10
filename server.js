@@ -1,5 +1,5 @@
 
-   const fs = require('node:fs');
+const fs = require('node:fs');
 const http = require('node:http');
 const path = require('node:path');
 
@@ -138,6 +138,11 @@ async function serveStatic(request, response, pathname) {
   }
 
   fs.stat(filePath, (error, stats) => {
+    if (!error && stats.isDirectory() && !decodedPath.endsWith('/')) {
+      response.writeHead(308, { Location: `${pathname}/${new URL(request.url, 'http://localhost').search}` });
+      response.end();
+      return;
+    }
     if (error || !stats.isFile()) {
       sendJson(response, 404, { error: { message: 'Arquivo não encontrado.' } });
       return;
@@ -147,12 +152,22 @@ async function serveStatic(request, response, pathname) {
       'X-Content-Type-Options': 'nosniff'
     });
     if (request.method === 'HEAD') response.end();
-    else fs.createReadStream(filePath).pipe(response);
+    else {
+      const stream = fs.createReadStream(filePath);
+      stream.on('error', () => response.destroy());
+      stream.pipe(response);
+    }
   });
 }
 
 const server = http.createServer(async (request, response) => {
-  const url = new URL(request.url, `http://${request.headers.host || 'localhost'}`);
+  let url;
+  try {
+    url = new URL(request.url, 'http://localhost');
+  } catch {
+    sendJson(response, 400, { error: { message: 'URL inválida.' } });
+    return;
+  }
   if (url.pathname === '/api/gemini/status') {
     if (request.method !== 'GET') {
       sendJson(response, 405, { error: { message: 'Método não permitido.' } });

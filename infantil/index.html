@@ -1333,7 +1333,7 @@ body[data-theme="dark"] #app .personalize-keyboard-stage .anel-meio .tecla.scan-
   }
   .personalize-builder .personalize-words .custom-list { margin-top: 0; }
 }
-.carousel-full-screen { position: fixed; inset: 0; z-index: 100; overflow: auto; min-height: 100vh; padding: 18px 24px 28px; background: linear-gradient(180deg, rgba(255,255,255,.1), rgba(23,58,94,.3)), url('../assets/imagens/imagens-outrastelas.png') center / cover no-repeat; }
+.carousel-full-screen { position: fixed; inset: 0; z-index: 100; overflow: auto; min-height: 100vh; padding: 18px 24px 28px; background: linear-gradient(180deg, rgba(255,255,255,.1), rgba(23,58,94,.3)), url('../assets/imagens/plano-inicio.png') center / cover no-repeat; }
 .carousel-full-topbar { width: min(100%, 1100px); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
 .carousel-full-content { width: min(100%, 1020px); margin: 12px auto 0; }
 .carousel-full-content .section-label, .carousel-full-content .layer-label { color: #fff; }
@@ -1343,7 +1343,7 @@ body[data-theme="dark"] #app .personalize-keyboard-stage .anel-meio .tecla.scan-
 .carousel-full-content .carousel-card.side { width: 110px; height: 140px; }
 .carousel-full-content .confirm-btn { margin-bottom: 14px; }
 
-.circular-full-screen { position: fixed; inset: 0; z-index: 100; overflow: auto; min-height: 100vh; padding: 18px 24px 28px; background: linear-gradient(180deg, rgba(255,255,255,.1), rgba(23,58,94,.3)), url('../assets/imagens/imagens-outrastelas.png') center / cover no-repeat; }
+.circular-full-screen { position: fixed; inset: 0; z-index: 100; overflow: auto; min-height: 100vh; padding: 18px 24px 28px; background: linear-gradient(180deg, rgba(255,255,255,.1), rgba(23,58,94,.3)), url('../assets/imagens/plano-inicio.png') center / cover no-repeat; }
 .circular-full-topbar { width: min(100%, 1100px); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
 .circular-full-content { width: min(100%, 1020px); margin: 12px auto 0; text-align: center; }
 .circular-full-content .section-label, .circular-full-content .layer-label { color: #fff; }
@@ -3332,11 +3332,112 @@ body[data-theme="dark"] #app .jor-fase.ok .jor-num { background: #2a5a85; color:
   max-width: 100%;
 }
 #app .guri-bicho .mascot-img { width: 100%; height: 100%; object-fit: contain; object-position: bottom; }
-.home-screen .menu-btn {
-  border-radius: 24px !important;
-  overflow: hidden;
+/* Botão de atalho dentro de uma linha de Configurações */
+.settings-link-btn {
+  flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: var(--tap-min); padding: 0 18px;
+  border-radius: 999px; background: var(--yellow); color: #173a5e;
+  font-family: var(--font-title); font-weight: 700; text-decoration: none;
+  box-shadow: 0 3px 0 var(--yellow-dark);
 }
+.settings-link-btn:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 3px; }
+/* Guri abaixo das Configurações na tela inicial */
+body.guri-no-inicio .mascot-float {
+  position: absolute !important;
+  right: auto !important; bottom: auto !important;
+}
+body.guri-no-inicio .mascot-tip-toast {
+  position: absolute;
+  right: auto; bottom: auto;
+  left: var(--guri-tip-left, 16px); top: var(--guri-tip-top, 170px);
+}
+body.guri-no-inicio .mascot-tip-toast::after {
+  right: auto; bottom: auto; left: 22px; top: -9px;
+  transform: rotate(225deg);
+}
+/* Botão do Guri com o mesmo fundo branco do botão de Configurações, nos dois temas */
+.mascot-float,
+body[data-theme="dark"] .mascot-float,
+body[data-theme] #app ~ .mascot-float {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border: none !important;
+  box-shadow: 0 4px 8px rgba(23, 58, 94, 0.2) !important;
+}
+/* Guri do mesmo tamanho da engrenagem e com o mesmo destaque amarelo ao passar o mouse ou selecionar */
+.mascot-float {
+  width: var(--tap-min, 48px) !important;
+  height: var(--tap-min, 48px) !important;
+}
+body #mascotFloatBtn.mascot-float:hover,
+body #mascotFloatBtn.mascot-float:focus-visible,
+body #mascotFloatBtn.mascot-float.scan-active,
+body #mascotFloatBtn.mascot-float.accessibility-focus {
+  outline: 3px solid #f3d675 !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 0 2px rgba(16, 40, 61, .35), 0 0 0 6px rgba(243, 214, 117, .55), 0 6px 14px rgba(0, 0, 0, .25) !important;
+  background: #fff2bf !important;
+}
+/* O Guri só aparece na tela inicial */
+body:not(.guri-no-inicio) #mascotFloatBtn,
+body:not(.guri-no-inicio) #mascotTip { display: none !important; }
+/* ===== Personalizar: interface mais clara ===== */
+#app .personalize-builder h3 {
+  font-family: var(--font-title); font-size: 20px; margin: 0 0 4px;
+}
+#app .personalize-builder .field-label {
+  font-size: 14px; font-weight: 700; color: var(--navy-soft); margin-bottom: 10px;
+}
+/* Campo da palavra: grande e centralizado, como a barra da frase */
+#app .personalize-builder #newWordLabel {
+  display: block; width: 100%; box-sizing: border-box;
+  min-height: 60px; padding: 10px 18px;
+  border: 2px solid var(--card-border); border-radius: 18px;
+  background: #ffffff; color: var(--navy);
+  font-family: var(--font-title); font-size: 26px; font-weight: 800;
+  text-align: center; letter-spacing: .5px;
+  box-shadow: inset 0 2px 6px rgba(23,58,94,.08);
+}
+#app .personalize-builder #newWordLabel::placeholder {
+  font-family: var(--font); font-size: 15px; font-weight: 600; color: #8aa6bd; letter-spacing: 0;
+}
+#app .personalize-builder #newWordLabel:focus { outline: none; border-color: var(--yellow-dark); }
+/* Roda: trilho visível e letras maiores */
+body:not([data-theme="dark"]) #app .personalize-keyboard-stage .personalize-letter-ring {
+  background: radial-gradient(circle, #ffffff 0 26%, #f2f9ff 27% 100%) !important;
+  box-shadow: inset 0 0 0 2px #cfe9f7, 0 10px 24px rgba(23,58,94,.18) !important;
+}
+#app .personalize-keyboard-stage .anel-meio .tecla,
+#app .personalize-keyboard-stage .anel-meio .tecla-compacta { font-size: 15px; }
+@media (min-width: 600px) {
+  #app .personalize-keyboard-stage .anel-meio .tecla,
+  #app .personalize-keyboard-stage .anel-meio .tecla-compacta { font-size: 18px; }
+}
+#app .personalize-keyboard-stage .buraco-central {
+  font-family: var(--font-title); font-size: 22px; font-weight: 800;
+  box-shadow: 0 3px 10px rgba(23,58,94,.15);
+}
+/* Botões em volta da roda: maiores e com texto legível */
+#app .personalize-keyboard-stage .satelite { font-weight: 800 !important; }
+@media (min-width: 600px) {
+  #app .personalize-keyboard-stage .satelite {
+    width: 60px !important; height: 60px !important; font-size: 12px !important;
+  }
+}
+/* Lista de palavras salvas */
+#app .personalize-words h3 { margin-bottom: 10px; }
+#app .personalize-words .custom-chip { font-size: 15px; padding: 4px 6px 4px 14px; }
+#app .custom-empty {
+  width: 100%; box-sizing: border-box;
+  display: flex; flex-direction: column; gap: 4px; align-items: center; text-align: center;
+  padding: 18px 14px; border: 2px dashed var(--card-border); border-radius: 16px;
+  color: var(--navy-soft); font-size: 14px; font-weight: 600;
+}
+#app .custom-empty strong { color: var(--navy); font-size: 15px; }
+body[data-theme="dark"] #app .custom-empty { border-color: #3d6688; color: #c9dced; }
+body[data-theme="dark"] #app .custom-empty strong { color: #f1f7ff; }
 </style>
+<link rel="stylesheet" href="../menu-inicial.css">
 </head>
 
 <body>
@@ -4317,6 +4418,8 @@ function mascotHeroHtml() {
 function go(screen, extra = {}) {
   cancelRefreshVoice();
   STATE.screen = screen;
+  // Guarda a última tela de palavras para o "voltar" das Configurações.
+  if (screen === 'circularMode' || screen === 'carouselMode') STATE.lastWordScreen = screen;
   Object.assign(STATE, extra);
   if (screen !== 'challenge') { STATE.challenge = null; STATE.challengeTab = 'jogo'; STATE.chAcerto = null; clearTimeout(STATE.chTimer); }
   render();
@@ -4739,6 +4842,23 @@ function wordCardHtml(word, inFavorites = false) {
   `;
 }
 
+// Na tela inicial, o botão do Guri fica logo abaixo do botão de Configurações.
+// Nas outras telas ele fica escondido (ver CSS "O Guri só aparece na tela inicial").
+function posicionarMascoteNoInicio() {
+  const btn = document.getElementById('mascotFloatBtn');
+  if (!btn) return;
+  const engrenagem = STATE.screen === 'home' ? document.querySelector('#app .home-screen [data-go="settings"]') : null;
+  document.body.classList.toggle('guri-no-inicio', !!engrenagem);
+  if (!engrenagem) { btn.style.top = btn.style.left = ''; return; }
+  const r = engrenagem.getBoundingClientRect();
+  const tamanho = btn.offsetWidth || 62;
+  btn.style.left = Math.round(r.left + window.scrollX + (r.width - tamanho) / 2) + 'px';
+  btn.style.top = Math.round(r.bottom + window.scrollY + 12) + 'px';
+  document.body.style.setProperty('--guri-tip-left', btn.style.left);
+  document.body.style.setProperty('--guri-tip-top', (parseInt(btn.style.top, 10) + tamanho + 14) + 'px');
+}
+window.addEventListener('resize', posicionarMascoteNoInicio);
+
 /* ---------- Render ---------- */
 function render() {
   const app = document.getElementById('app');
@@ -4762,6 +4882,7 @@ function render() {
   }
 
   app.innerHTML = html;
+  posicionarMascoteNoInicio();
 
   if (STATE.screen === 'circularMode') {
     initCircularKeyboard();
@@ -4837,6 +4958,14 @@ function renderHome() {
           </div>
           <div class="menu-arrow" aria-hidden="true">›</div>
         </div>
+        <a class="menu-btn menu-btn-link" href="../infantil-nao-letrado/index.html" role="button" aria-label="Abrir a versão não letrada, só com figuras">
+          <img class="menu-icon" src="../assets/imagens/icone-nao-letrado.png" alt="" aria-hidden="true">
+          <div class="menu-text">
+            <div class="menu-title">VERSÃO NÃO LETRADA</div>
+            <div class="menu-sub">Só figuras e voz</div>
+          </div>
+          <div class="menu-arrow" aria-hidden="true">›</div>
+        </a>
       </nav>
 
       <div class="about-link" data-go="about" role="button" tabindex="0">SOBRE O COMUNICA</div>
@@ -4850,8 +4979,8 @@ function renderBuild() {
       <button class="mode-choice-back" data-go="home" aria-label="Voltar ao início"><img class="back-icon" src="../assets/imagens/icone-voltar.png" alt="" aria-hidden="true"></button>
       <div class="mode-choice-content">
         <h1>Como você quer se comunicar?</h1>
-        <button class="mode-choice-button" type="button" data-mode-screen="circularMode">Teclado circular</button>
-        <button class="mode-choice-button" type="button" data-mode-screen="carouselMode">Carrossel</button>
+        <button class="mode-choice-button" type="button" data-mode-screen="circularMode" aria-label="Teclado circular"><span class="label">Teclado circular</span></button>
+        <button class="mode-choice-button" type="button" data-mode-screen="carouselMode" aria-label="Carrossel"><span class="label">Carrossel</span></button>
       </div>
     </div>
   `;
@@ -5343,7 +5472,7 @@ function renderPersonalize() {
         ${word.emoji} ${word.label} <small>· ${allCategories().find(category => category.id === word.cat)?.label || 'Sem categoria'}</small>
         <button type="button" class="x" data-del-word="${word.id}" aria-label="Excluir palavra ${word.label}" title="Excluir palavra">✕</button>
       </span>
-    `).join('') || `<span style="color:var(--navy-soft);font-weight:600;font-size:13px;">Nenhuma palavra personalizada ainda.</span>`;
+    `).join('') || `<div class="custom-empty"><strong>Nenhuma palavra ainda</strong><span>Monte uma palavra no teclado e toque em <b>salvar</b>. Ela aparece aqui.</span></div>`;
 
   const letrasPersonalizar = [...'abcdefghijklmnopqrstuvwxyzç'];
   const teclasPersonalizar = letrasPersonalizar.map((letra, indice) => {
@@ -5604,7 +5733,7 @@ function renderSettings() {
 
   return `
     <div class="topbar">
-      <button class="icon-btn" data-go="home" aria-label="Voltar para o início">←</button>
+      <button class="icon-btn" data-go="${STATE.lastWordScreen || 'build'}" aria-label="Voltar para as palavras">←</button>
       <div class="topbar-title">Configurações</div>
       <div style="width:var(--tap-min)"></div>
     </div>
