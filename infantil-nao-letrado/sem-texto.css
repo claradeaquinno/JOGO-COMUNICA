@@ -128,3 +128,110 @@ body #app .home-screen .menu .menu-caption {
   color: inherit;
   overflow-wrap: break-word;
 }
+
+/* Duas fatias radiais dividem o antigo setor do coração na diagonal. */
+body #app .circular-mode-screen .anel-quatro-setores [data-metade] {
+  left: 50% !important;
+  top: 50% !important;
+  width: 50% !important;
+  height: 50% !important;
+  padding: 0 !important;
+}
+body #app .circular-mode-screen .anel-quatro-setores [data-metade="gosto"] {
+  clip-path: polygon(0 0, 100% 100%, 0 100%);
+}
+body #app .circular-mode-screen .anel-quatro-setores [data-metade="nao-gosto"] {
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
+  background: #f1d9d1 !important;
+}
+body #app .circular-mode-screen .anel-quatro-setores [data-metade]::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 142%;
+  height: 2px;
+  background: #26485d;
+  transform: rotate(45deg);
+  transform-origin: left center;
+  pointer-events: none;
+}
+body #app .circular-mode-screen .anel-quatro-setores [data-metade] .setor-visual-icone {
+  position: absolute;
+  width: 40%;
+  height: 40%;
+}
+body #app .circular-mode-screen .anel-quatro-setores [data-metade="gosto"] .setor-visual-icone {
+  left: 16%;
+  top: 54%;
+}
+body #app .circular-mode-screen .anel-quatro-setores [data-metade="nao-gosto"] .setor-visual-icone {
+  left: 54%;
+  top: 16%;
+}
+
+/* Mantém as fatias abaixo do centro, inclusive durante hover, foco e varredura. */
+body #app .circular-mode-screen .anel-quatro-setores {
+  isolation: isolate;
+}
+body #app .circular-mode-screen .anel-quatro-setores .tecla-setor-visual,
+body #app .circular-mode-screen .anel-quatro-setores .tecla-setor-visual:hover,
+body #app .circular-mode-screen .anel-quatro-setores .tecla-setor-visual:focus,
+body #app .circular-mode-screen .anel-quatro-setores .tecla-setor-visual:focus-visible,
+body #app .circular-mode-screen .anel-quatro-setores .tecla-setor-visual.accessibility-focus,
+body #app .circular-mode-screen .anel-quatro-setores .tecla-setor-visual.scan-active {
+  z-index: 1 !important;
+}
+body #app .circular-mode-screen .anel-quatro-setores .centro-visual {
+  z-index: 5 !important;
+  pointer-events: none;
+}
+
+/* Figuras são o foco das sugestões; a palavra serve de legenda de apoio. */
+body #app .circular-mode-screen .anel-externo .tecla-sugestao-ilustrada {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  width: clamp(48px, 8vw, 72px);
+  height: clamp(56px, 9vw, 80px);
+  border-radius: 12px;
+  padding: 3px;
+}
+body #app .circular-mode-screen .sugestao-pictograma {
+  display: block;
+  flex: 0 1 auto;
+  width: 40px;
+  height: 40px;
+  min-height: 24px;
+  pointer-events: none;
+}
+body #app .circular-mode-screen .sugestao-legenda {
+  display: block;
+  font-size: 10px;
+  line-height: 1.1;
+  font-weight: 700;
+  color: #123b4d;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+/* Nesta versão os botões do menu e as sugestões são identificados por figuras. */
+body #app .home-screen .menu .menu-caption,
+body #app .circular-mode-screen .sugestao-legenda {
+  display: none !important;
+}
+body #app .circular-mode-screen .anel-externo .tecla-sugestao-ilustrada {
+  width: clamp(48px, 8vw, 68px);
+  height: clamp(48px, 8vw, 68px);
+}
+body #app .circular-mode-screen .sugestao-pictograma {
+  width: 100%;
+  height: 100%;
+}
+
+/* O fechamento da argola prevalece sobre estilos de foco e transições. */
+body #app .circular-mode-screen .anel-externo[hidden] {
+  display: none !important;
+}

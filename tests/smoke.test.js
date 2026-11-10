@@ -53,7 +53,7 @@ test('servidor abre versões, redireciona pastas e protege arquivos internos', a
 });
 
 
-test('argola visual contém quatro setores e abre opções sem inserir o nome da categoria', () => {
+test('argola visual divide o coração entre gosto e não gosto e mantém as categorias', () => {
   const html = fs.readFileSync(path.join(root, 'infantil-nao-letrado/index.html'), 'utf8');
   const source = html.slice(html.indexOf('const SETORES_VISUAIS ='), html.indexOf('function palavrasPersonalizadasPorGenero'));
   const makeRing = () => ({ teclas: [], palavras: [] });
@@ -70,16 +70,169 @@ test('argola visual contém quatro setores e abre opções sem inserir o nome da
     focarTecla(ring, index) { assert.equal(ring, 1); assert.equal(index, 0); }
   });
   vm.runInContext(source + '; atualizarAnelPalavrasChave();', context);
-  assert.deepEqual(rings[0].teclas.map(key => key.dataset.setorVisual), ['comida', 'sentimentos', 'pessoas', 'lugares']);
+  assert.deepEqual(rings[0].teclas.map(key => key.dataset.setorVisual), ['comida', 'sentimentos', 'gosto', 'nao-gosto', 'lugares']);
   for (const key of rings[0].teclas) {
     assert.ok(key.attributes['aria-label']);
     assert.match(key.innerHTML, /<svg/);
+    if (key.dataset.valor) continue;
     vm.runInContext('abrirSetorVisual(' + JSON.stringify(key.dataset.setorVisual) + ')', context);
     assert.ok(rings[1].palavras.length > 0);
     assert.ok(rings[1].palavras.length <= 10);
   }
-  assert.equal(opened, 4);
+  assert.equal(opened, 2);
+  assert.equal(rings[0].teclas[2].dataset.valor, 'gosto');
+  assert.equal(rings[0].teclas[3].dataset.valor, 'não gosto');
+  assert.match(rings[0].teclas[3].innerHTML, /M12 12 53 53/);
+  const selectSource = html.slice(html.indexOf('function selecionarPalavra(tecla)'), html.indexOf('function direcaoDoAngulo(angulo)'));
+  const typed = [];
+  let hidden = 0;
+  Object.assign(context, {
+    adicionarPalavra(text) { typed.push(text); },
+    esconderAnelSugestoes() { hidden++; context.sugestoesVisiveis = false; },
+    focarTecla(ring, index) { assert.equal(ring, 0); assert.ok([1, 2, 3].includes(index)); },
+    atualizarSugestoesNoAnel() { assert.fail('Botões diretos não devem gerar sugestões'); }
+  });
+  vm.runInContext(selectSource, context);
+  for (const initiallyOpen of [false, true]) {
+    for (const index of [1, 2, 3]) {
+      context.sugestoesVisiveis = initiallyOpen;
+      context.selecionarPalavra(rings[0].teclas[index]);
+      assert.equal(context.sugestoesVisiveis, false);
+    }
+  }
+  assert.deepEqual(typed, ['Eu', 'gosto', 'não gosto', 'Eu', 'gosto', 'não gosto']);
+  assert.equal(hidden, 6);
+  assert.equal(opened, 2, 'Botões diretos não abrem a argola externa');
   for (const page of ['adulto', 'infantil']) {
     assert.ok(!fs.readFileSync(path.join(root, page, 'index.html'), 'utf8').includes('const SETORES_VISUAIS'));
   }
+});
+
+test('sugestões externas mostram pictogramas e preservam a palavra selecionada', () => {
+  const context = vm.createContext({});
+  vm.runInContext(fs.readFileSync(path.join(root, 'infantil-nao-letrado/pictogramas.js'), 'utf8'), context);
+  for (const word of ['água', 'comida', 'maçã', 'banana', 'suco', 'leite', 'casa', 'escola', 'parque', 'banheiro', 'hospital', 'quarto', 'feliz', 'triste', 'com medo', 'com dor', 'mãe', 'pai', 'gosto', 'brincar']) {
+    assert.match(context.pictogramaSugestao(word), /<svg/ , word);
+  }
+  assert.equal(context.pictogramaSugestao('<script>'), '');
+  for (const word of ['quero', 'Quero', 'ajuda', 'preciso de ajuda', 'pode ajudar']) assert.equal(context.pictogramaSugestao(word), '');
+  const html = fs.readFileSync(path.join(root, 'infantil-nao-letrado/index.html'), 'utf8');
+  const source = html.slice(html.indexOf('function atualizarTextoDasTeclas('), html.indexOf('// ==== Integração opcional com Gemini'));
+  const button = () => ({dataset:{}, classList:{add(){},remove(){}}, replaceChildren(){this.innerHTML='';this.children=[];}, setAttribute(key,value){this[key]=value;}, appendChild(node){this.children.push(node);}});
+  const rings = [{teclas:[button()]}, {teclas:[button(),button()]}];
+  let closed = false;
+  Object.assign(context, {aneis:rings,
+    criarTeclasDoAnel(ring, count) { ring.teclas = Array.from({length:count}, button); },
+    esconderAnelSugestoes() { closed = true; }
+  });
+  vm.runInContext(source, context);
+  context.atualizarTextoDasTeclas(rings[1], ['água', 'escola']);
+  assert.match(rings[1].teclas[0].innerHTML, /<svg/);
+  assert.match(rings[1].teclas[1].innerHTML, /<svg/);
+  assert.equal(rings[1].teclas[0].dataset.valor, 'água');
+  assert.equal(rings[1].teclas[0].children.length, 0, 'Sem legenda de texto');
+  context.atualizarTextoDasTeclas(rings[1], ['água', 'palavra sem figura', 'escola']);
+  assert.equal(rings[1].teclas.length, 2);
+  assert.deepEqual(Array.from(rings[1].palavras), ['água', 'escola']);
+  context.atualizarTextoDasTeclas(rings[1], ['palavra sem figura']);
+  assert.equal(rings[1].teclas.length, 0);
+  assert.equal(closed, true);
+});
+
+test('limpar restaura os setores visuais e remove sugestões antigas', () => {
+  const html = fs.readFileSync(path.join(root, 'infantil-nao-letrado/index.html'), 'utf8');
+  const source = html.slice(html.indexOf('function voltarConfiguracaoInicial()'), html.indexOf('// Posiciona os botões do menu lateral'));
+  const rings = [{teclas:[]}, {teclas:[{}], palavras:['gosto']}];
+  let visual = 0;
+  const context = vm.createContext({
+    aneis:rings, valor:{textContent:''}, sugestoesVisiveis:true, teclaAtiva:{}, sugestaoSelecionadaBarra:'gosto',
+    esconderAnelSugestoes(){context.sugestoesVisiveis=false;},
+    criarTeclasDoAnel(ring,count){ring.teclas=Array.from({length:count},()=>({}));},
+    atualizarAnelPalavrasChave(){visual++;}, atualizarFrasesProntas(){},
+    focarTecla(ring,index){assert.equal(ring,0);assert.equal(index,0);}
+  });
+  vm.runInContext(source+';voltarConfiguracaoInicial();',context);
+  assert.equal(visual,1);
+  assert.equal(context.sugestoesVisiveis,false);
+  assert.equal(rings[1].teclas.length,0);
+  assert.equal(rings[1].palavras.length,0);
+  assert.equal(context.teclaAtiva,null);
+  assert.equal(context.sugestaoSelecionadaBarra,'');
+});
+
+test('alimentos recebem quero ou de, preservando negação e edições posteriores', async () => {
+  const html = fs.readFileSync(path.join(root, 'infantil-nao-letrado/index.html'), 'utf8');
+  const source = html.slice(html.indexOf('function ehAlimentoVisual('), html.indexOf('// Esta versão mantém a seleção por figuras'));
+  let resolveCorrection;
+  let requested;
+  const context = vm.createContext({
+    valor:{textContent:'Eu'}, normalizarPalavra:s => s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase(),
+    allWords:()=>[], atualizarFrasesProntas(){},
+    corrigirComGemini(text, instruction) { requested = [text,instruction]; return new Promise(resolve => {resolveCorrection=resolve;}); }
+  });
+  vm.runInContext(source,context);
+  context.adicionarPalavra('maçã');
+  assert.equal(context.valor.textContent,'Eu quero maçã');
+  assert.equal(requested[0],'Eu maçã');
+  assert.match(requested[1],/quero/);
+  context.valor.textContent='';
+  resolveCorrection('Eu quero maçã.');
+  await new Promise(resolve => setImmediate(resolve));
+  assert.equal(context.valor.textContent,'');
+  context.valor.textContent='Eu gosto';
+  context.adicionarPalavra('maçã');
+  assert.equal(context.valor.textContent,'Eu gosto de maçã');
+  context.valor.textContent='Eu não gosto';
+  context.adicionarPalavra('banana');
+  assert.equal(context.valor.textContent,'Eu não gosto de banana');
+  context.corrigirComGemini=async()=>null;
+  context.valor.textContent='Eu';
+  context.adicionarPalavra('água');
+  await new Promise(resolve => setImmediate(resolve));
+  assert.equal(context.valor.textContent,'Eu quero água');
+  context.valor.textContent='Eu';
+  context.adicionarPalavra('casa');
+  assert.equal(context.valor.textContent,'Eu casa');
+  context.valor.textContent='Eu gosto de';
+  context.adicionarPalavra('maçã');
+  assert.equal(context.valor.textContent,'Eu gosto de maçã');
+  context.valor.textContent='Eu não gosto de';
+  context.adicionarPalavra('banana');
+  assert.equal(context.valor.textContent,'Eu não gosto de banana');
+  for (const [base, lugar, expected] of [
+    ['Eu gosto', 'parque', 'Eu gosto de ir ao parque'],
+    ['Eu não gosto', 'escola', 'Eu não gosto de ir à escola'],
+    ['Eu gosto de', 'casa', 'Eu gosto de ir para casa'],
+    ['Eu não gosto de', 'hospital', 'Eu não gosto de ir ao hospital'],
+    ['Eu gosto', 'banheiro', 'Eu gosto de ir ao banheiro']
+  ]) {
+    context.valor.textContent=base;
+    context.adicionarPalavra(lugar);
+    assert.equal(context.valor.textContent,expected);
+  }
+});
+
+test('concluir fecha a argola antes da API e não sobrescreve edição posterior', async () => {
+  const html = fs.readFileSync(path.join(root, 'infantil-nao-letrado/index.html'), 'utf8');
+  const source = html.slice(html.indexOf('async function concluirFraseCircular()'), html.indexOf('function focarInicio()'));
+  let resolveCorrection;
+  let closed = false;
+  const context = vm.createContext({
+    valor:{textContent:'Eu quero maçã'},
+    voltarConfiguracaoInicial(){closed=true;}, canonicalizarNomesPersonalizados:s=>s,
+    corrigirComGemini:()=>new Promise(resolve=>{resolveCorrection=resolve;}),
+    corrigirComLanguageTool:async s=>s
+  });
+  vm.runInContext(source,context);
+  const pending=context.concluirFraseCircular();
+  assert.equal(closed,true,'Fecha sem esperar a API');
+  context.valor.textContent='';
+  resolveCorrection('Eu quero maçã.');
+  await pending;
+  assert.equal(context.valor.textContent,'');
+  context.valor.textContent='Eu quero água';
+  const completed=context.concluirFraseCircular();
+  resolveCorrection('Eu quero água.');
+  await completed;
+  assert.equal(context.valor.textContent,'Eu quero água.');
 });
