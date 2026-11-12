@@ -3436,6 +3436,717 @@ body:not([data-theme="dark"]) #app .personalize-keyboard-stage .personalize-lett
 #app .custom-empty strong { color: var(--navy); font-size: 15px; }
 body[data-theme="dark"] #app .custom-empty { border-color: #3d6688; color: #c9dced; }
 body[data-theme="dark"] #app .custom-empty strong { color: #f1f7ff; }
+
+/* ===== Configurações: controles compactos (12/11) ===== */
+#app .form-block .settings-row { min-height: 60px; padding: 10px 4px; }
+#app .settings-row .switch {
+  min-width: 0 !important;
+  width: 52px;
+  height: 30px;
+  justify-self: end;
+}
+#app .settings-row .switch-track::before { width: 24px; height: 24px; }
+#app .settings-row .switch input:checked + .switch-track::before { transform: translateX(22px); }
+#app .settings-row .stepper {
+  min-width: 0 !important;
+  gap: 6px;
+  justify-content: flex-end;
+  justify-self: end;
+}
+#app .settings-row .stepper button {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  min-height: 34px;
+  font-size: 18px;
+  line-height: 1;
+  padding: 0;
+}
+#app .settings-row .stepper span { min-width: 58px; font-size: 13px; }
+#app .cv-type-btn { padding-top: 8px; padding-bottom: 8px; }
+#app .color-vision-swatch, #app .color-vision-swatch * { color: #173a5e !important; }
+#app .settings-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+#app .settings-actions .submit-btn {
+  width: auto;
+  min-height: 42px;
+  margin: 0 !important;
+  padding: 8px 20px;
+  font-size: 14px;
+  border-radius: 999px;
+}
+@media (max-width: 420px) {
+  #app .form-block .settings-row { grid-template-columns: minmax(0, 1fr) auto; row-gap: 0; }
+  #app .settings-row .stepper,
+  #app .settings-row .switch { justify-self: end; }
+  #app .settings-row .stepper span { min-width: 50px; font-size: 12px; }
+  #app .settings-actions .submit-btn { flex: 1 1 100%; }
+}
+
+/* ===== Configurações em grupos (12/11) ===== */
+#app .settings-screen { gap: 0; }
+#app .settings-group { width: 100%; margin-bottom: 18px; }
+#app .settings-group-title {
+  margin: 0 0 8px 6px;
+  font-family: var(--font-title);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--navy-soft);
+}
+body[data-theme="dark"] #app .settings-group-title { color: #a9c8e4; }
+#app .settings-group .form-block { margin-bottom: 0; padding: 4px 16px; }
+#app .settings-row { border-bottom: 1px solid var(--card-border); }
+#app .form-block > .settings-row:last-child { border-bottom: none; }
+#app .settings-row--sub { padding-left: 18px !important; }
+#app .settings-sub {
+  padding: 4px 4px 14px;
+  border-bottom: 1px solid var(--card-border);
+}
+#app .settings-sub-title {
+  font-family: var(--font-title);
+  font-size: 13px;
+  font-weight: 800;
+  margin: 6px 0 8px;
+  opacity: .85;
+}
+#app .cv-type-group { margin: 0 0 12px; }
+#app .cv-type-btn {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start !important;
+  gap: 10px;
+  text-align: left;
+  padding: 10px 12px !important;
+  border-radius: 12px !important;
+  border-width: 1.5px !important;
+  box-shadow: none !important;
+}
+#app .cv-type-btn[aria-checked="true"] span::before { content: none !important; }
+#app .cv-radio {
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  opacity: .6;
+  box-sizing: border-box;
+}
+#app .cv-type-btn[aria-checked="true"] { border-color: #f3d675 !important; }
+#app .cv-type-btn[aria-checked="true"] .cv-radio {
+  opacity: 1;
+  border-color: #e0b52a;
+  background: radial-gradient(circle, #e0b52a 0 4px, transparent 5px);
+}
+#app .cv-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+#app .cv-name { font-family: var(--font-title); font-weight: 800; font-size: 14px; }
+#app .color-vision-preview { margin: 0; padding: 0; background: none !important; border: none !important; }
+#app .color-vision-swatch { min-height: 38px; border-width: 1.5px !important; font-size: 13px; }
+#app .color-vision-swatch--focus { border: 2px solid #173a5e !important; box-shadow: 0 0 0 3px rgba(243, 214, 117, .8); }
+#app .settings-pill {
+  min-height: 38px;
+  padding: 6px 20px;
+  border-radius: 999px;
+  border: 1.5px solid var(--card-border);
+  background: var(--navy);
+  color: #fff;
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+  justify-self: end;
+  white-space: nowrap;
+}
+body[data-theme="dark"] #app .settings-pill { background: #f7c94d; color: #10283d; border-color: #b98200; }
+body[data-color-vision="on"] #app .color-vision-swatch--selected { color: #fff !important; }
+
+/* ===== Carrossel: interface organizada (12/11) ===== */
+#app .carousel-full-content { width: min(100%, 760px); margin-top: 18px; }
+#app .carousel-full-content .section-label {
+  font-family: var(--font-title);
+  font-size: 13px;
+  letter-spacing: .08em;
+  margin: 0 0 8px 4px;
+}
+#app .carousel-full-content .phrase-bar {
+  min-height: 64px;
+  border-radius: 16px;
+  padding: 10px 16px;
+  margin-bottom: 22px;
+  box-shadow: 0 6px 18px rgba(16, 40, 61, .18);
+}
+#app .carousel-full-content .layer-label {
+  display: table;
+  margin: 0 auto 14px;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: rgba(16, 40, 61, .55);
+  color: #fff !important;
+  font-family: var(--font-title);
+  font-size: 13px;
+  letter-spacing: .06em;
+  text-shadow: none;
+}
+#app .carousel-full-content .carousel-wrap {
+  min-height: 0;
+  margin-bottom: 8px;
+  gap: 14px;
+}
+#app .carousel-full-content .carousel-track { gap: 14px; align-items: center; }
+#app .carousel-full-content .carousel-card { border-radius: 20px; }
+#app .carousel-full-content .carousel-card.center {
+  width: 200px;
+  height: 220px;
+  box-shadow: 0 10px 24px rgba(16, 40, 61, .28);
+}
+#app .carousel-full-content .carousel-card.center .label { font-size: 22px; }
+#app .carousel-full-content .carousel-card.side {
+  width: 130px;
+  height: 160px;
+  opacity: .75;
+  transform: none;
+}
+#app .carousel-full-content .carousel-card.side .label { font-size: 14px; }
+#app .carousel-full-content .carousel-arrow {
+  width: 52px;
+  height: 52px;
+  font-size: 30px;
+  line-height: 1;
+  padding-bottom: 4px;
+  background: #fff;
+  color: #173a5e;
+  box-shadow: 0 4px 12px rgba(16, 40, 61, .25);
+}
+#app .carousel-counter {
+  text-align: center;
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 13px;
+  color: #fff;
+  margin: 4px 0 16px;
+  text-shadow: 0 1px 2px rgba(16, 40, 61, .5);
+}
+#app .carousel-full-content .confirm-btn {
+  min-height: 56px;
+  border-radius: 16px;
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+#app .carousel-full-screen .action-row {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 18px;
+}
+#app .carousel-full-screen .action-row button {
+  min-height: 50px;
+  padding: 6px 8px;
+  border-radius: 14px;
+  border: 1.5px solid rgba(23, 58, 94, .2);
+  background: rgba(255, 255, 255, .94);
+  color: #173a5e;
+  font-family: var(--font-title);
+  font-size: 14px;
+  line-height: 1.15;
+  text-shadow: none;
+  box-shadow: 0 3px 10px rgba(16, 40, 61, .15);
+}
+body[data-theme="dark"] #app .carousel-full-screen .action-row button {
+  background: #1b344d;
+  color: #f1f7ff;
+  border-color: #4d789c;
+}
+#app .carousel-full-screen .action-row .btn-speak:not(:disabled) {
+  background: #f7c94d !important;
+  color: #10283d !important;
+  border-color: #d9a400 !important;
+}
+#app .carousel-full-screen .action-row button:disabled { opacity: .5; box-shadow: none; }
+#app .carousel-all-cats {
+  display: table;
+  margin: 0 auto;
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(255, 255, 255, .7);
+  background: rgba(16, 40, 61, .35);
+  color: #fff;
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: 14px;
+  text-decoration: none !important;
+}
+@media (max-width: 560px) {
+  #app .carousel-full-content .carousel-card.center { width: 132px; height: 168px; }
+  #app .carousel-full-content .carousel-card.center .label { font-size: 18px; }
+  #app .carousel-full-content .carousel-card.side { width: 56px; height: 112px; }
+  #app .carousel-full-content .carousel-card.side .label { font-size: 11px; word-break: break-word; padding: 0 3px; }
+  #app .carousel-full-content .carousel-arrow { width: 36px; height: 36px; min-width: 36px; min-height: 36px; font-size: 22px; }
+  #app .carousel-full-content .carousel-wrap,
+  #app .carousel-full-content .carousel-track { gap: 5px; }
+  #app .carousel-full-screen .action-row { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
+  #app .carousel-full-screen .action-row button { grid-column: span 2; font-size: 13px; min-height: 48px; }
+  #app .carousel-full-screen .action-row .btn-fav,
+  #app .carousel-full-screen .action-row .btn-fav-word { grid-column: span 3; }
+}
+
+/* ===== Começar a comunicar: painel estilo jogo (12/11) ===== */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+#app .hub-screen {
+  width: min(100%, 720px);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 16px 16px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-family: var(--font-title);
+}
+#app .hub-topo { display: flex; align-items: center; gap: 12px; }
+#app .hub-voltar { flex: 0 0 auto; }
+#app .hub-recursos { flex: 1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+#app .hub-recurso {
+  display: flex; align-items: center; gap: 8px;
+  min-height: 44px; padding: 4px 12px 4px 4px; border-radius: 999px;
+  background: #173a5e; color: #fff; font-weight: 800; font-size: 18px;
+  border: 2px solid #0f2a45; box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .25);
+}
+#app .hub-rec-ico {
+  flex: 0 0 34px; width: 34px; height: 34px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 800; color: #173a5e; border: 2px solid #fff;
+}
+#app .hub-rec-xp { background: #5ec8f0; }
+#app .hub-rec-estrela { background: #ffcf4d; clip-path: none; position: relative; }
+#app .hub-rec-estrela::before {
+  content: ''; width: 20px; height: 20px; background: #173a5e;
+  clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+#app .hub-rec-dias { background: #7ee0a5; }
+#app .hub-rec-frases { background: #ffb38a; }
+
+/* painel do personagem */
+#app .hub-painel {
+  display: grid;
+  grid-template-columns: 110px 1fr 110px;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 26px;
+  background: linear-gradient(180deg, #eaf6ff 0%, #d4eefc 100%);
+  border: 3px solid #173a5e;
+  box-shadow: 0 6px 0 #0f2a45, 0 12px 24px rgba(16, 40, 61, .25);
+  color: #173a5e;
+}
+#app .hub-coluna { display: flex; flex-direction: column; gap: 12px; }
+#app .hub-slot {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  display: flex; flex-direction: column; align-items: stretch;
+  padding: 0; overflow: hidden; cursor: pointer;
+  border-radius: 18px;
+  border: 3px solid #173a5e !important;
+  background: #5ec8f0 !important;
+  box-shadow: 0 4px 0 #0f2a45;
+  color: #173a5e !important;
+  font-family: var(--font-title);
+  transition: transform .12s ease;
+}
+#app .hub-coluna:last-child .hub-slot { background: #ffcf4d !important; }
+#app .hub-slot:active { transform: translateY(3px); box-shadow: 0 1px 0 #0f2a45; }
+#app .hub-slot.vazio { visibility: hidden; }
+#app .hub-slot-topo {
+  background: #173a5e; color: #fff;
+  font-size: 12.5px; font-weight: 800; padding: 4px 4px 5px; text-align: center;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+#app .hub-slot-corpo { flex: 1; display: flex; align-items: center; justify-content: center; padding: 6px; }
+#app .hub-slot-corpo img { width: 72%; height: 72%; object-fit: contain; }
+#app .hub-slot-letra { font-size: 38px; font-weight: 800; color: #173a5e; opacity: .85; }
+#app .hub-slot-qtd {
+  position: absolute; right: 6px; bottom: 6px;
+  min-width: 26px; height: 22px; padding: 0 6px; border-radius: 999px;
+  background: #fff; color: #173a5e; border: 2px solid #173a5e;
+  font-size: 12px; font-weight: 800; line-height: 18px; text-align: center;
+}
+#app .hub-centro { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 10px; min-width: 0; }
+#app .hub-guri {
+  position: relative; width: 100%; flex: 1; min-height: 220px;
+  display: flex; align-items: flex-end; justify-content: center;
+}
+#app .hub-guri::after {
+  content: ''; position: absolute; bottom: 4px; left: 50%; width: 70%; height: 22px; margin-left: -35%;
+  border-radius: 50%; background: rgba(23, 58, 94, .2); z-index: 0;
+}
+#app .hub-guri-img { position: relative; z-index: 1; max-width: 100%; max-height: 260px; object-fit: contain; animation: evoFlutua 3.2s ease-in-out infinite; }
+#app .hub-poder {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 4px 16px 4px 4px; border-radius: 999px;
+  background: #173a5e; color: #ffcf4d; font-size: 18px; font-weight: 800;
+  border: 2px solid #ffcf4d;
+}
+#app .hub-poder-ico {
+  width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: #ffcf4d; color: #173a5e; font-size: 15px;
+}
+#app .hub-stats {
+  grid-column: 1 / -1;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px;
+}
+#app .hub-stats span {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  min-height: 40px; padding: 4px 10px; border-radius: 999px;
+  background: rgba(23, 58, 94, .1); font-size: 14px; font-weight: 700; text-align: center;
+}
+#app .hub-stats b { font-size: 18px; }
+#app .hub-atalhos {
+  grid-column: 1 / -1;
+  display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px;
+  padding-top: 12px; border-top: 2px dashed rgba(23, 58, 94, .25);
+}
+#app .hub-atalho {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 6px 2px; border: 0 !important; background: transparent !important; cursor: pointer;
+  color: inherit !important; font-family: var(--font-title);
+}
+#app .hub-atalho-icone {
+  width: 56px; height: 56px; border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  background: #fff; border: 3px solid #173a5e; box-shadow: 0 3px 0 #0f2a45;
+}
+#app .hub-atalho-icone img { width: 36px; height: 36px; object-fit: contain; }
+#app .hub-atalho-nome { font-size: 13.5px; font-weight: 800; }
+
+/* faixas de título (estilo barra de seção) */
+#app .hub-faixa {
+  display: flex; align-items: center; justify-content: center; gap: 10px; position: relative;
+  min-height: 52px; padding: 6px 12px; border-radius: 16px 16px 0 0;
+  background: #173a5e; border: 3px solid #0f2a45; border-bottom: 0;
+}
+#app .hub-faixa-titulo { margin: 0; font-size: 20px; font-weight: 800; color: #fff; text-align: center; }
+#app .hub-faixa-btn {
+  position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+  min-height: 36px; padding: 4px 14px; border-radius: 12px; cursor: pointer;
+  background: #ffcf4d !important; color: #173a5e !important; border: 2px solid #0f2a45 !important;
+  box-shadow: 0 3px 0 #0f2a45; font-family: var(--font-title); font-weight: 800; font-size: 14px;
+}
+#app .hub-modos-botoes, #app .hub-grade {
+  padding: 14px; border-radius: 0 0 20px 20px;
+  background: #cfe6f5; border: 3px solid #0f2a45; border-top: 0;
+}
+#app .hub-modos-botoes { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+#app .hub-modo {
+  min-height: 84px; border-radius: 18px; cursor: pointer;
+  background: #ffcf4d !important; color: #173a5e !important;
+  border: 3px solid #0f2a45 !important; box-shadow: 0 5px 0 #0f2a45;
+  font-family: var(--font-title); font-size: 22px; font-weight: 800;
+}
+#app .hub-modo + .hub-modo { background: #5ec8f0 !important; }
+#app .hub-modo:active { transform: translateY(4px); box-shadow: 0 1px 0 #0f2a45; }
+#app .hub-grade { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+#app .hub-palavra {
+  aspect-ratio: 1 / 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  padding: 6px 4px; border-radius: 16px; cursor: pointer;
+  background: #eaf6ff !important; color: #173a5e !important;
+  border: 3px solid #173a5e !important; box-shadow: 0 4px 0 #0f2a45;
+  font-family: var(--font-title);
+}
+#app .hub-palavra:nth-child(3n+2) { background: #fff2bf !important; }
+#app .hub-palavra:nth-child(3n) { background: #d4eefc !important; }
+#app .hub-palavra:active { transform: translateY(3px); box-shadow: 0 1px 0 #0f2a45; }
+#app .hub-palavra-img { width: 58%; height: 52%; display: flex; align-items: center; justify-content: center; }
+#app .hub-palavra-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
+#app .hub-palavra-letra { font-size: 30px; font-weight: 800; opacity: .8; }
+#app .hub-palavra-nome { font-size: 16px; font-weight: 800; line-height: 1.1; text-align: center; overflow: hidden; text-overflow: ellipsis; max-width: 100%; white-space: nowrap; }
+
+/* painel sempre claro, nos dois temas (pedido do Mayke) */
+body[data-theme="dark"] #app .hub-palavra-nome,
+body[data-theme="dark"] #app .hub-atalho-nome,
+body[data-theme="dark"] #app .hub-stats span { color: #173a5e !important; }
+@media (max-width: 560px) {
+  #app .hub-screen { padding: 12px 12px 24px; gap: 14px; }
+  #app .hub-recursos { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+  #app .hub-recurso { min-height: 38px; font-size: 16px; }
+  #app .hub-rec-ico { flex-basis: 28px; width: 28px; height: 28px; font-size: 11px; }
+  #app .hub-painel { grid-template-columns: 84px 1fr 84px; gap: 8px; padding: 12px; }
+  #app .hub-slot-topo { font-size: 10.5px; }
+  #app .hub-slot-letra { font-size: 30px; }
+  #app .hub-guri { min-height: 180px; }
+  #app .hub-guri-img { max-height: 200px; }
+  #app .hub-poder { font-size: 14px; padding: 3px 10px 3px 3px; gap: 5px; max-width: 100%; }
+  #app .hub-poder-ico { width: 26px; height: 26px; font-size: 13px; }
+  #app .hub-stats { gap: 6px; }
+  #app .hub-stats span { flex-direction: column; gap: 0; min-height: 52px; border-radius: 14px; font-size: 11.5px; line-height: 1.1; padding: 4px; }
+  #app .hub-atalho-icone { width: 50px; height: 50px; }
+  #app .hub-atalho-icone img { width: 30px; height: 30px; }
+  #app .hub-atalho-nome { font-size: 11.5px; }
+  #app .hub-faixa-titulo { font-size: 17px; }
+  #app .hub-rapidas .hub-faixa { justify-content: flex-start; }
+  #app .hub-modo { min-height: 72px; font-size: 19px; }
+  #app .hub-grade { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+
+@keyframes evoFlutua { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+/* ===== Desafio no estilo do painel "Começar a comunicar" (12/11) ===== */
+#app .ch-painel .hub-coluna { gap: 8px; }
+#app .ch-fase { aspect-ratio: auto; min-height: 96px; }
+#app .ch-fase .hub-slot-topo { font-size: 11.5px; }
+#app .ch-fase .hub-slot-corpo { padding: 4px; }
+#app .ch-fase-img { width: 64px; height: 56px; object-fit: contain; }
+#app .ch-fase.bloq { background: #c9dfee !important; }
+#app .ch-fase.bloq .ch-fase-img { filter: brightness(0) opacity(.35); }
+#app .ch-fase.bloq .hub-slot-topo { background: #6f8ea8; }
+#app .ch-fase.atual { background: #ffcf4d !important; outline: 4px solid #ffcf4d; outline-offset: 2px; }
+#app .ch-fase[aria-pressed="true"]:not(.atual) { outline: 3px dashed #173a5e; outline-offset: 2px; }
+#app .ch-guri { overflow: hidden; border-radius: 22px; background: radial-gradient(60% 50% at 50% 70%, rgba(94, 200, 240, .35), transparent 70%); }
+#app .ch-guri::after { background: radial-gradient(closest-side, rgba(94, 200, 240, .7), rgba(94, 200, 240, 0)); box-shadow: 0 0 0 2px rgba(23, 58, 94, .35); }
+#app .ch-holo { position: relative; z-index: 1; display: flex; align-items: flex-end; justify-content: center; width: 100%; height: 100%; }
+#app .ch-scan {
+  position: absolute; left: 8%; right: 8%; top: -12%; height: 12%; z-index: 2; pointer-events: none;
+  background: linear-gradient(180deg, transparent, rgba(94, 200, 240, .12) 70%, rgba(94, 200, 240, .65) 96%, transparent);
+  animation: chVarre 3.6s linear infinite;
+}
+#app .ch-quando { font-size: 14px; font-weight: 700; text-align: center; color: #3a6b94; }
+#app .ch-subiu { padding: 6px 14px; border-radius: 999px; background: #ffcf4d; color: #173a5e; border: 2px solid #173a5e; font-weight: 800; }
+#app .ch-centro.bloqueado .hub-guri-img { filter: brightness(0) opacity(.45); }
+#app .ch-centro.trocando .ch-holo { animation: chTroca .6s ease both; }
+#app .ch-centro.trocando .ch-scan { animation: chVarre .6s ease-out; }
+#app .ch-centro.upgrade .ch-holo { animation: chUpgrade 1.4s ease both; }
+#app .ch-energia {
+  grid-column: 1 / -1; height: 18px; border-radius: 999px; overflow: hidden;
+  background: #fff; border: 3px solid #173a5e;
+}
+#app .ch-energia-cheia {
+  height: 100%; border-radius: 999px;
+  background: linear-gradient(90deg, #5ec8f0, #a6e0f7, #5ec8f0); background-size: 200% 100%;
+  animation: chEnergia 2s linear infinite;
+}
+/* desafio */
+#app .ch-desafio .hub-faixa-titulo { font-size: 24px; padding: 4px 8px; }
+#app .ch-corpo {
+  padding: 14px; border-radius: 0 0 20px 20px;
+  background: #cfe6f5; border: 3px solid #0f2a45; border-top: 0;
+}
+#app .ch-dica-hub { margin: 0 0 10px; text-align: center; font-size: 16px; font-weight: 700; color: #173a5e; }
+#app .ch-frase-hub { display: flex; gap: 10px; }
+#app .ch-frase-hub .phrase-bar {
+  flex: 1; min-width: 0; min-height: 76px; margin: 0; border-radius: 18px;
+  background: #fff !important; border: 3px solid #173a5e !important; color: #173a5e !important;
+}
+#app .ch-hub .phrase-chip { font-size: 22px !important; padding: 6px 14px !important; background: #fff2bf !important; color: #173a5e !important; border: 2px solid #173a5e !important; border-radius: 12px !important; }
+#app .ch-hub .phrase-placeholder { color: #6f8ea8 !important; font-size: 17px; }
+#app .ch-frase-btns { display: flex; gap: 10px; }
+#app .hub-acao {
+  min-width: 110px; min-height: 76px; border-radius: 18px; cursor: pointer;
+  background: #fff !important; color: #173a5e !important; border: 3px solid #173a5e !important;
+  box-shadow: 0 4px 0 #0f2a45; font-family: var(--font-title); font-size: 19px; font-weight: 800;
+}
+#app .hub-acao:disabled { opacity: .5; box-shadow: none; cursor: default; }
+#app .ch-hub .ch-aviso { margin: 12px 0 0; font-size: 17px; border-radius: 14px; border: 2px solid #173a5e; }
+#app .ch-grade { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+#app .ch-palavra { aspect-ratio: auto; min-height: 80px; }
+#app .ch-palavra .hub-palavra-nome { font-size: 24px; white-space: normal; }
+#app .ch-palavra:disabled { opacity: .35; box-shadow: none; cursor: default; }
+#app .ch-final { border-radius: 20px; border-top: 3px solid #0f2a45; }
+#app .ch-final .hub-modo { background: #7ee0a5 !important; font-size: 22px; }
+#app .ch-final .hub-modo:disabled { background: #e3eef6 !important; color: #8aa6bc !important; box-shadow: none; }
+#app .ch-final .ch-reset { background: #fff !important; font-size: 18px; }
+@keyframes chVarre { 0% { top: -12%; } 100% { top: 105%; } }
+@keyframes chEnergia { 0% { background-position: 0 0; } 100% { background-position: 200% 0; } }
+@keyframes chTroca {
+  0% { opacity: 1; filter: none; transform: scale(1); }
+  35% { opacity: .25; filter: hue-rotate(90deg) saturate(3) blur(2px); transform: scale(.9) skewX(8deg); clip-path: inset(0 0 55% 0); }
+  50% { opacity: .1; transform: scale(.85) skewX(-8deg); clip-path: inset(45% 0 0 0); }
+  75% { opacity: .85; filter: brightness(1.6); transform: scale(1.05); clip-path: inset(0 0 0 0); }
+  100% { opacity: 1; filter: none; transform: scale(1); }
+}
+@keyframes chUpgrade {
+  0% { opacity: 0; transform: scale(.4); filter: brightness(3) blur(4px); }
+  60% { opacity: 1; transform: scale(1.12); filter: brightness(1.6); }
+  100% { opacity: 1; transform: scale(1); filter: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #app .ch-scan, #app .ch-energia-cheia, #app .hub-guri-img { animation: none !important; }
+}
+@media (max-width: 560px) {
+  #app .ch-painel { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+  #app .ch-painel .hub-coluna { display: contents; }
+  #app .ch-centro { grid-column: 1 / -1; order: -1; margin-bottom: 6px; }
+  #app .ch-guri { min-height: 200px; }
+  #app .ch-fase { min-height: 74px; border-radius: 14px; }
+  #app .ch-fase .hub-slot-topo { font-size: 8.5px; padding: 3px 2px; }
+  #app .ch-fase-img { width: 40px; height: 34px; }
+  #app .ch-fase .hub-slot-qtd { right: 3px; bottom: 3px; min-width: 20px; height: 18px; font-size: 10px; line-height: 14px; padding: 0 4px; }
+  #app .ch-painel .ch-energia, #app .ch-painel .hub-stats { grid-column: 1 / -1; }
+  #app .ch-quando { font-size: 12px; }
+  #app .ch-desafio .hub-faixa-titulo { font-size: 20px; }
+  #app .ch-frase-hub { flex-direction: column; }
+  #app .ch-frase-btns .hub-acao { flex: 1; min-height: 60px; }
+  #app .ch-grade { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #app .ch-palavra { min-height: 70px; }
+  #app .ch-palavra .hub-palavra-nome { font-size: 22px; }
+  #app .ch-final { grid-template-columns: 1fr; }
+}
+
+/* ===== Desafio: tons pastel e azul padrão (12/11) ===== */
+#app .ch-hub {
+  --p-borda: #8cc3e6;
+  --p-borda-forte: #5fa3d3;
+  --p-azul: #cfe9f9;
+  --p-azul-2: #b5ddf5;
+  --p-fundo: #eef8ff;
+  --p-texto: #2a5577;
+  --p-sombra: 0 3px 0 rgba(95, 163, 211, .35);
+}
+#app .ch-hub .hub-recurso { background: #fff; color: var(--p-texto); border: 2px solid var(--p-borda); box-shadow: var(--p-sombra); }
+#app .ch-hub .hub-rec-ico { border-color: #fff; color: var(--p-texto); }
+#app .ch-hub .hub-rec-xp { background: #b5ddf5; }
+#app .ch-hub .hub-rec-estrela { background: #fde9a8; }
+#app .ch-hub .hub-rec-estrela::before { background: var(--p-texto); }
+#app .ch-hub .hub-rec-dias { background: #c6efd6; }
+#app .ch-hub .hub-rec-frases { background: #fbd6c2; }
+#app .ch-hub .hub-painel {
+  background: linear-gradient(180deg, #f4fbff 0%, #e2f3fd 100%);
+  border: 2px solid var(--p-borda);
+  box-shadow: 0 6px 18px rgba(95, 163, 211, .25);
+  color: var(--p-texto);
+}
+#app .ch-hub .hub-slot {
+  border: 2px solid var(--p-borda) !important;
+  background: var(--p-azul) !important;
+  box-shadow: var(--p-sombra);
+  color: var(--p-texto) !important;
+}
+#app .ch-hub .hub-coluna:last-child .hub-slot { background: var(--p-azul) !important; }
+#app .ch-hub .hub-slot-topo { background: var(--p-azul-2); color: var(--p-texto); }
+#app .ch-hub .hub-slot-qtd { background: #fff; color: var(--p-texto); border-color: var(--p-borda); }
+#app .ch-hub .ch-fase.bloq { background: #edf2f6 !important; border-color: #c9d6e0 !important; }
+#app .ch-hub .ch-fase.bloq .hub-slot-topo { background: #dde6ed; color: #8aa0b2; }
+#app .ch-hub .ch-fase.bloq .ch-fase-img { filter: brightness(0) opacity(.18); }
+#app .ch-hub .ch-fase.atual { background: #fff4cc !important; border-color: #f0cf6a !important; outline: 3px solid #fde9a8; }
+#app .ch-hub .ch-fase.atual .hub-slot-topo { background: #fde9a8; }
+#app .ch-hub .ch-fase[aria-pressed="true"]:not(.atual) { outline: 3px solid var(--p-azul-2); }
+#app .ch-hub .ch-guri { background: radial-gradient(60% 50% at 50% 70%, rgba(181, 221, 245, .6), transparent 70%); }
+#app .ch-hub .ch-guri::after { background: radial-gradient(closest-side, rgba(181, 221, 245, .9), rgba(181, 221, 245, 0)); box-shadow: none; }
+#app .ch-hub .hub-poder { background: #fff; color: var(--p-texto); border: 2px solid var(--p-borda); }
+#app .ch-hub .hub-poder-ico { background: var(--p-azul-2); color: var(--p-texto); }
+#app .ch-hub .ch-quando { color: #5b84a5; }
+#app .ch-hub .ch-subiu { background: #fff4cc; color: var(--p-texto); border-color: #f0cf6a; }
+#app .ch-hub .ch-energia { background: #fff; border: 2px solid var(--p-borda); }
+#app .ch-hub .ch-energia-cheia { background: linear-gradient(90deg, #a6d8f5, #cdeafb, #a6d8f5); background-size: 200% 100%; }
+#app .ch-hub .hub-stats span { background: #fff; border: 1.5px solid var(--p-azul-2); color: var(--p-texto) !important; }
+/* faixas e blocos */
+#app .ch-hub .hub-faixa { background: var(--p-azul-2); border: 2px solid var(--p-borda); border-bottom: 0; }
+#app .ch-hub .hub-faixa-titulo { color: var(--p-texto); }
+#app .ch-hub .ch-corpo,
+#app .ch-hub .hub-grade,
+#app .ch-hub .hub-modos-botoes { background: var(--p-fundo); border: 2px solid var(--p-borda); border-top: 0; }
+#app .ch-hub .ch-final { border-top: 2px solid var(--p-borda); }
+#app .ch-hub .ch-dica-hub { color: var(--p-texto); }
+#app .ch-hub .ch-frase-hub .phrase-bar { border: 2px solid var(--p-borda) !important; color: var(--p-texto) !important; }
+#app .ch-hub .phrase-chip { background: var(--p-azul) !important; color: var(--p-texto) !important; border: 2px solid var(--p-borda) !important; }
+#app .ch-hub .hub-acao { border: 2px solid var(--p-borda) !important; color: var(--p-texto) !important; box-shadow: var(--p-sombra); }
+#app .ch-hub .hub-faixa-btn { background: #fff !important; color: var(--p-texto) !important; border: 2px solid var(--p-borda-forte) !important; box-shadow: var(--p-sombra); }
+/* palavras: todas no mesmo azul */
+#app .ch-hub .hub-palavra,
+#app .ch-hub .hub-palavra:nth-child(3n+2),
+#app .ch-hub .hub-palavra:nth-child(3n) {
+  background: var(--p-azul) !important;
+  border: 2px solid var(--p-borda) !important;
+  color: var(--p-texto) !important;
+  box-shadow: var(--p-sombra);
+}
+#app .ch-hub .ch-palavra:disabled { background: #edf2f6 !important; border-color: #d3dee7 !important; color: #a3b6c5 !important; opacity: 1; }
+/* botões finais */
+#app .ch-hub .hub-modo { border: 2px solid var(--p-borda) !important; box-shadow: var(--p-sombra); color: var(--p-texto) !important; }
+#app .ch-hub .ch-final .hub-modo { background: var(--p-azul-2) !important; }
+#app .ch-hub .ch-final .hub-modo:disabled { background: #edf2f6 !important; color: #a3b6c5 !important; border-color: #d3dee7 !important; box-shadow: none; }
+#app .ch-hub .ch-final .ch-reset { background: #fff !important; }
+#app .ch-hub .ch-aviso { border: 2px solid var(--p-borda); background: #fff; color: var(--p-texto); }
+#app .ch-hub .ch-aviso.ch-ok { background: #e3f7ea; border-color: #9fdcb6; }
+
+/* ===== Desafio: troca de personagem com brilho (estilo evolução) ===== */
+#app .ch-hub .hub-guri-img { animation: none; }
+#app .ch-hub .ch-holo { transform-origin: 50% 100%; }
+#app .ch-brilho {
+  position: absolute; left: 50%; top: 55%; width: 60px; height: 60px; margin: -30px 0 0 -30px;
+  border-radius: 50%; z-index: 0; opacity: 0; pointer-events: none;
+  background: radial-gradient(circle, #ffffff 0%, rgba(255, 255, 255, .9) 25%, rgba(181, 221, 245, .7) 55%, rgba(181, 221, 245, 0) 72%);
+}
+#app .ch-faiscas { position: absolute; left: 50%; top: 50%; width: 0; height: 0; z-index: 3; pointer-events: none; }
+#app .ch-faiscas i {
+  position: absolute; left: -7px; top: -7px; width: 14px; height: 14px; opacity: 0;
+  background: #fff4cc;
+  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+}
+#app .ch-faiscas i:nth-child(2n) { background: #cfe9f9; width: 10px; height: 10px; left: -5px; top: -5px; }
+#app .ch-faiscas i:nth-child(1) { --fx: -110px; --fy: -70px; }
+#app .ch-faiscas i:nth-child(2) { --fx: 100px; --fy: -90px; }
+#app .ch-faiscas i:nth-child(3) { --fx: -120px; --fy: 30px; }
+#app .ch-faiscas i:nth-child(4) { --fx: 115px; --fy: 20px; }
+#app .ch-faiscas i:nth-child(5) { --fx: -40px; --fy: -130px; }
+#app .ch-faiscas i:nth-child(6) { --fx: 50px; --fy: -125px; }
+/* saindo: o Guri vira luz e encolhe */
+#app .ch-centro.saindo .ch-holo { animation: guriSai .38s ease-in both; }
+#app .ch-centro.saindo .ch-brilho { animation: brilhoCresce .38s ease-out both; }
+/* entrando: o novo Guri aparece da luz, com pulinho */
+#app .ch-centro.entrando .ch-holo { animation: guriEntra .7s cubic-bezier(.2, .9, .3, 1.3) both; }
+#app .ch-centro.entrando .ch-brilho { animation: brilhoSome .6s ease-out both; }
+#app .ch-centro.entrando .ch-faiscas i { animation: faisca .7s ease-out both; }
+#app .ch-centro.entrando .ch-faiscas i:nth-child(2n) { animation-delay: .06s; }
+@keyframes guriSai {
+  0% { transform: scale(1); filter: brightness(1) saturate(1) drop-shadow(0 0 0 #fff); opacity: 1; }
+  60% { transform: scale(.85); filter: brightness(2.6) saturate(.15) drop-shadow(0 0 12px #fff); opacity: 1; }
+  100% { transform: scale(.4); filter: brightness(3) saturate(0) drop-shadow(0 0 18px #fff); opacity: 0; }
+}
+@keyframes guriEntra {
+  0% { transform: scale(.4); filter: brightness(3) saturate(0) drop-shadow(0 0 18px #fff); opacity: 0; }
+  40% { transform: scale(1.08); filter: brightness(2.6) saturate(.15) drop-shadow(0 0 12px #fff); opacity: 1; }
+  75% { transform: scale(.97); filter: brightness(1.3) saturate(.8) drop-shadow(0 0 6px #fff); opacity: 1; }
+  100% { transform: scale(1); filter: brightness(1) saturate(1) drop-shadow(0 0 0 #fff); opacity: 1; }
+}
+@keyframes brilhoCresce { 0% { opacity: 0; transform: scale(.5); } 100% { opacity: 1; transform: scale(3.2); } }
+@keyframes brilhoSome { 0% { opacity: 1; transform: scale(3.2); } 100% { opacity: 0; transform: scale(4.2); } }
+@keyframes faisca {
+  0% { opacity: 0; transform: translate(0, 0) scale(.3) rotate(0); }
+  30% { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--fx), var(--fy)) scale(1) rotate(90deg); }
+}
+/* ao subir de nível usa o mesmo efeito de entrada */
+#app .ch-centro.upgrade .ch-holo { animation: guriEntra 1s cubic-bezier(.2, .9, .3, 1.3) both; }
+#app .ch-centro.upgrade .ch-brilho { animation: brilhoSome 1s ease-out both; }
+#app .ch-centro.upgrade .ch-faiscas i { animation: faisca 1s ease-out both; }
+#app .ch-centro.bloqueado .hub-guri-img { filter: brightness(0) opacity(.18); }
+@media (prefers-reduced-motion: reduce) {
+  #app .ch-centro .ch-holo, #app .ch-brilho, #app .ch-faiscas i { animation: none !important; }
+}
+
+/* ===== Desafio: Guri ocupando todo o centro (tamanho de jogo) ===== */
+#app .ch-hub .ch-centro { gap: 8px; }
+#app .ch-hub .ch-guri { min-height: 0; flex: 1 1 auto; height: 100%; }
+#app .ch-hub .ch-holo { position: absolute; inset: 0 0 8px 0; width: auto; height: auto; }
+#app .ch-hub .ch-holo .hub-guri-img { width: 100%; height: 100%; max-height: none; object-fit: contain; object-position: 50% 100%; }
+#app .ch-hub .ch-guri::after { width: 80%; margin-left: -40%; height: 28px; bottom: 0; }
+@media (max-width: 560px) {
+  #app .ch-hub .ch-guri { min-height: 300px; }
+}
+
+/* ===== Desafio: troca do Guri com fade simples ===== */
+#app .ch-hub .ch-brilho, #app .ch-hub .ch-faiscas { display: none; }
+#app .ch-hub .ch-centro.saindo .ch-holo { animation: guriFadeOut .35s ease-in both; }
+#app .ch-hub .ch-centro.entrando .ch-holo { animation: guriFadeIn .45s ease-out both; }
+#app .ch-hub .ch-centro.upgrade .ch-holo { animation: guriFadeIn .8s ease-out both; }
+@keyframes guriFadeOut { from { opacity: 1; } to { opacity: 0; } }
+@keyframes guriFadeIn { from { opacity: 0; } to { opacity: 1; } }
 </style>
 <link rel="stylesheet" href="../menu-inicial.css">
 </head>
@@ -4270,6 +4981,7 @@ function playCircularWordAudio(word) {
 }
 
 function playMascotVoice() {
+  if (STATE.data.settings.mascotVoiceEnabled === false) return;
   if (!mascotAudio) {
     mascotAudio = document.getElementById('mascotAudio');
   }
@@ -4292,6 +5004,7 @@ function playMascotVoiceAfterRefresh() {
 
   if (!mascotAudio) return;
 
+  if (STATE.data.settings.mascotVoiceEnabled === false) return;
   refreshVoiceCancelled = false;
   clearTimeout(refreshVoiceTimer);
   mascotAudio.pause();
@@ -5014,7 +5727,7 @@ function renderCarouselMode() {
   }
 
   const layerLabel = STATE.phrase.length === 0 ? 'QUEM ESTÁ FALANDO?' : STATE.phrase.length === 1 ? 'O QUE VOCÊ QUER DIZER?' : 'COMPLETE A FRASE';
-  return `<div class="carousel-full-screen"><div class="carousel-full-topbar"><button class="icon-btn" data-go="build" aria-label="Voltar para escolha do modo">←</button><div class="topbar-title">Comunicar</div><button class="icon-btn" data-go="personalize" aria-label="Personalizar">+</button></div><div class="carousel-full-content"><div class="section-label">MINHA FRASE</div><div class="phrase-bar" role="group" aria-label="Minha frase">${chipHtml}</div><div class="layer-label">${layerLabel}</div><div class="carousel-wrap">${cardsHtml}</div><button class="confirm-btn" id="confirmBtn" ${n === 0 ? 'disabled' : ''}>Selecionar</button><div class="action-row" role="toolbar" aria-label="Ações da frase"><button class="btn-erase" id="eraseBtn" aria-label="Apagar última palavra">Apagar</button><button class="btn-clear" id="clearBtn" aria-label="Limpar toda a frase">Limpar</button><button class="btn-speak" id="speakBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Falar a frase em voz alta">Falar</button><button class="btn-fav" id="favPhraseBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Favoritar esta frase">Favorizar frase</button><button class="btn-fav-word" id="favWordBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Favorizar palavra">Favorizar palavra</button></div><div class="back-link" data-go="categories" role="button" tabindex="0" style="margin-top:4px;">Ver todas as categorias</div></div></div>`;
+  return `<div class="carousel-full-screen"><div class="carousel-full-topbar"><button class="icon-btn" data-go="build" aria-label="Voltar para escolha do modo">←</button><div class="topbar-title">Comunicar</div><button class="icon-btn" data-go="personalize" aria-label="Personalizar">+</button></div><div class="carousel-full-content"><div class="section-label">MINHA FRASE</div><div class="phrase-bar" role="group" aria-label="Minha frase">${chipHtml}</div><div class="layer-label">${layerLabel}</div><div class="carousel-wrap">${cardsHtml}</div>${n > 1 ? `<div class="carousel-counter" aria-live="polite">${STATE.carouselIndex + 1} de ${n}</div>` : ''}<button class="confirm-btn" id="confirmBtn" ${n === 0 ? 'disabled' : ''}>Selecionar</button><div class="action-row" role="toolbar" aria-label="Ações da frase"><button class="btn-erase" id="eraseBtn" aria-label="Apagar última palavra">Apagar</button><button class="btn-clear" id="clearBtn" aria-label="Limpar toda a frase">Limpar</button><button class="btn-speak" id="speakBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Falar a frase em voz alta">Falar</button><button class="btn-fav" id="favPhraseBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Favoritar esta frase">Favoritar frase</button><button class="btn-fav-word" id="favWordBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Favoritar palavra">Favoritar palavra</button></div><div class="back-link carousel-all-cats" data-go="categories" role="button" tabindex="0">Ver todas as categorias</div></div></div>`;
 }
 
 function fillCircularRingOptions(optionIds, quantity) {
@@ -5525,26 +6238,8 @@ function renderPersonalize() {
 }
 
 function renderChallenge() {
-  const aba = STATE.challengeTab || 'jogo';
   const subiu = !!STATE.guriSubiu;
   STATE.guriSubiu = null;
-
-  const abasHtml = `
-    <div class="ch-abas" role="tablist" aria-label="Seções do desafio">
-      <button type="button" class="ch-aba" role="tab" data-ch-tab="jogo" aria-selected="${aba === 'jogo'}">Jogo</button>
-      <button type="button" class="ch-aba" role="tab" data-ch-tab="jornada" aria-selected="${aba === 'jornada'}">Jornada do Guri</button>
-    </div>`;
-
-  const topo = `
-    <div class="topbar">
-      <button class="icon-btn" data-go="home" aria-label="Voltar para o início">←</button>
-      <div class="topbar-title">Desafio</div>
-      <div style="width:var(--tap-min)"></div>
-    </div>`;
-
-  if (aba === 'jornada') {
-    return `${topo}<div class="screen">${abasHtml}${renderJornada(subiu)}</div>`;
-  }
 
   if (!STATE.challenge) {
     STATE.challenge = sortearDesafio();
@@ -5557,45 +6252,110 @@ function renderChallenge() {
   const cheia = STATE.phrase.length >= challenge.frase.length && !done && atual !== alvo;
   const usados = new Set(STATE.phrase.map(w => w.id));
 
+  const perfil = STATE.data.profile;
+  const info = guriInfo(perfil.xp);
+  const registro = {};
+  (perfil.niveisAlcancados || []).forEach(r => { registro[r.nivel] = r; });
+
+  const fase = nivel => {
+    const alcancado = nivel.n <= info.nivel;
+    const eAtual = nivel.n === info.nivel;
+    const r = registro[nivel.n];
+    const quando = nivel.n === 1 ? 'Início da jornada'
+      : alcancado ? (r ? `Desbloqueado em ${formatarData(r.dia)}` : 'Desbloqueado')
+      : `Faltam ${nivel.xp - info.xp} XP`;
+    return `
+      <button type="button" class="hub-slot ch-fase${alcancado ? ' ok' : ' bloq'}${eAtual ? ' atual' : ''}"
+        data-evo-n="${nivel.n}" data-evo-nome="${nivel.nome}" data-evo-quando="${quando}" data-evo-ok="${alcancado ? '1' : '0'}"
+        aria-label="Nível ${nivel.n}: ${alcancado ? nivel.nome : 'bloqueado'}. ${quando}" aria-pressed="${eAtual}">
+        <span class="hub-slot-topo">${alcancado ? nivel.nome : 'Bloqueado'}</span>
+        <span class="hub-slot-corpo">${guriImagemHtml(nivel.n, 'ch-fase-img', '')}</span>
+        <span class="hub-slot-qtd">${nivel.n}</span>
+      </button>`;
+  };
+  const esquerda = GURI_NIVEIS.slice(0, 5).map(fase).join('');
+  const direita = GURI_NIVEIS.slice(5, 10).map(fase).join('');
+  const quandoAtual = info.proximo ? `Faltam ${info.faltam} XP para o nível ${info.proximo.n}` : 'Nível máximo alcançado';
+
   return `
-    ${topo}
-    <div class="screen">
-      ${abasHtml}
-      ${guriCardHtml(subiu)}
-
-      <div class="challenge-card">
-        <p>${challenge.prompt}</p>
-        <p class="ch-dica">Monte a frase completa, com ${challenge.frase.length} palavras, na ordem certa.</p>
+    <div class="hub-screen ch-hub">
+      <div class="hub-topo">
+        <button class="mode-choice-back hub-voltar" data-go="home" aria-label="Voltar ao início"><img class="back-icon" src="../assets/imagens/icone-voltar.png" alt="" aria-hidden="true"></button>
+        <div class="hub-recursos" aria-label="Seus números">
+          <span class="hub-recurso"><b class="hub-rec-ico hub-rec-xp">XP</b><span>${info.xp}</span></span>
+          <span class="hub-recurso"><b class="hub-rec-ico hub-rec-estrela" aria-hidden="true"></b><span>${perfil.stars || 0}</span><span class="sr-only">estrelas</span></span>
+          <span class="hub-recurso"><b class="hub-rec-ico hub-rec-dias">D</b><span>${Number(perfil.streak) || 0}</span><span class="sr-only">dias seguidos</span></span>
+          <span class="hub-recurso"><b class="hub-rec-ico hub-rec-frases">F</b><span>${Number(perfil.phrasesSpoken) || 0}</span><span class="sr-only">frases faladas</span></span>
+        </div>
       </div>
 
-      <h2 class="section-label">MINHA FRASE</h2>
-      <div class="phrase-bar">
-        ${STATE.phrase.length
-          ? STATE.phrase.map(word => `<span class="phrase-chip">${word.label}</span>`).join('')
-          : `<span class="phrase-placeholder">Toque nas palavras abaixo...</span>`}
+      <section class="hub-painel ch-painel" aria-label="Evolução do Guri">
+        <div class="hub-coluna">${esquerda}</div>
+        <div class="hub-centro ch-centro${subiu ? ' upgrade' : ''}" id="evoTela">
+          <div class="hub-guri ch-guri">
+            <span class="ch-brilho" aria-hidden="true"></span>
+            <span class="ch-faiscas" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+            <span class="ch-holo" id="evoHolo">${guriImagemHtml(info.nivel, 'hub-guri-img', 'Guri ' + info.nome)}</span>
+          </div>
+          <div class="hub-poder"><span class="hub-poder-ico" id="evoNivel">${info.nivel}</span><span id="evoNome">${info.nome}</span></div>
+          <div class="ch-quando" id="evoQuando" aria-live="polite">${quandoAtual}</div>
+          ${subiu ? `<div class="ch-subiu" role="status">Evolução concluída!</div>` : ''}
+        </div>
+        <div class="hub-coluna">${direita}</div>
+
+        <div class="ch-energia" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${info.pct}" aria-label="Energia para a próxima evolução">
+          <div class="ch-energia-cheia" style="width:${info.pct}%"></div>
+        </div>
+
+        <div class="hub-stats">
+          <span><b>${Number(perfil.desafiosVencidos) || 0}</b> desafios vencidos</span>
+          <span><b>${Number(perfil.phrasesSpoken) || 0}</b> frases faladas</span>
+          <span><b>${Number(perfil.bestStreak) || 0}</b> maior sequência</span>
+        </div>
+      </section>
+
+      <section class="hub-modos ch-desafio" aria-labelledby="chTitulo">
+        <div class="hub-faixa">
+          <h1 class="hub-faixa-titulo" id="chTitulo">${challenge.prompt}</h1>
+        </div>
+        <div class="ch-corpo">
+          <p class="ch-dica-hub">Monte a frase com ${challenge.frase.length} palavras, na ordem certa.</p>
+          <div class="ch-frase-hub">
+            <div class="phrase-bar" aria-label="Minha frase">
+              ${STATE.phrase.length
+                ? STATE.phrase.map(word => `<span class="phrase-chip">${word.label}</span>`).join('')
+                : `<span class="phrase-placeholder">Toque nas palavras abaixo...</span>`}
+            </div>
+            <div class="ch-frase-btns">
+              <button class="hub-acao" id="eraseBtn" aria-label="Apagar última palavra" ${STATE.phrase.length && !done ? '' : 'disabled'}>Apagar</button>
+              <button class="hub-acao" id="clearBtn" aria-label="Limpar frase" ${STATE.phrase.length && !done ? '' : 'disabled'}>Limpar</button>
+            </div>
+          </div>
+          ${cheia ? `<div class="ch-aviso" role="alert">Quase! Confira as palavras e a ordem da frase.</div>` : ''}
+          ${done ? `<div class="ch-aviso ch-ok" role="status">Frase certa! +${STATE.chAcerto.xp} XP. Já vem a próxima...</div>` : ''}
+        </div>
+      </section>
+
+      <section class="hub-rapidas" aria-labelledby="chPalavrasTitulo">
+        <div class="hub-faixa">
+          <h2 class="hub-faixa-titulo" id="chPalavrasTitulo">Escolha as palavras</h2>
+          <button type="button" class="hub-faixa-btn" id="skipChallenge">Outro desafio</button>
+        </div>
+        <div class="hub-grade ch-grade">
+          ${challenge.opcoes.map(op => {
+            const id = 'ch_' + op.idx;
+            const usada = usados.has(id);
+            return `<button type="button" class="hub-palavra ch-palavra" data-ch-opt="${op.idx}" ${usada || done ? 'disabled' : ''}><span class="hub-palavra-nome">${op.label}</span></button>`;
+          }).join('')}
+        </div>
+      </section>
+
+      <div class="hub-modos-botoes ch-final">
+        ${done
+          ? `<button class="hub-modo" id="nextChallengeBtn">Próxima frase</button>`
+          : `<button class="hub-modo" id="speakBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Ouvir minha frase">Ouvir minha frase</button>`}
+        <button type="button" class="hub-modo ch-reset" id="resetJogoBtn">Recomeçar do zero</button>
       </div>
-      ${cheia ? `<div class="ch-aviso" role="alert">Quase! Confira as palavras e a ordem da frase.</div>` : ''}
-      ${done ? `<div class="ch-aviso ch-ok" role="status">Frase certa! +${STATE.chAcerto.xp} XP. Já vem a próxima...</div>` : ''}
-
-      <div class="action-row" role="toolbar" aria-label="Ações do desafio">
-        <button class="btn-erase" id="eraseBtn" aria-label="Apagar última palavra">Apagar</button>
-        <button class="btn-clear" id="clearBtn" aria-label="Limpar frase">Limpar</button>
-      </div>
-
-      <h2 class="section-label">ESCOLHA AS PALAVRAS</h2>
-      <div class="ch-opcoes" role="list">
-        ${challenge.opcoes.map(op => {
-          const id = 'ch_' + op.idx;
-          const usada = usados.has(id);
-          return `<button type="button" class="ch-opcao" role="listitem" data-ch-opt="${op.idx}" ${usada || done ? 'disabled' : ''}>${op.label}</button>`;
-        }).join('')}
-      </div>
-
-      ${done
-        ? `<button class="speak-btn" id="nextChallengeBtn">Próxima frase</button>`
-        : `<button class="speak-btn" id="speakBtn" ${STATE.phrase.length ? '' : 'disabled'} aria-label="Ouvir minha frase">Ouvir minha frase</button>`}
-
-      <div class="back-link" style="margin-top:14px;" id="skipChallenge" role="button" tabindex="0">Tentar outro desafio</div>
     </div>
   `;
 }
@@ -5722,14 +6482,38 @@ function renderSettings() {
   const s = STATE.data.settings;
   const fontLabels = ['Pequena', 'Média', 'Grande', 'Extra grande'];
   const scanSpeed = getScanSpeed();
+  const scanLabel = `${(Math.round(scanSpeed / 100) / 10).toFixed(1).replace('.', ',')}s`;
   const voiceRate = getVoiceRate();
-  const voiceLabel = voiceRate <= 0.6
+  const voiceLabel = voiceRate < 0.75
     ? 'Muito lenta'
-    : voiceRate <= 0.8
+    : voiceRate < 0.95
       ? 'Lenta'
-      : voiceRate <= 1
+      : voiceRate <= 1.05
         ? 'Normal'
-        : 'Rápida';
+        : voiceRate <= 1.3
+          ? 'Rápida'
+          : 'Muito rápida';
+  const cvType = s.colorVisionType || 'deuteranomalia';
+
+  const row = (label, desc, control, extraClass = '') => `
+        <div class="settings-row ${extraClass}">
+          <div>
+            <div class="settings-label">${label}</div>
+            <div class="settings-desc">${desc}</div>
+          </div>
+          ${control}
+        </div>`;
+  const toggle = (id, checked, aria = '') => `
+          <label class="switch">
+            <input type="checkbox" id="${id}" ${aria} ${checked ? 'checked' : ''}>
+            <span class="switch-track"></span>
+          </label>`;
+  const stepper = (downId, downLabel, value, upId, upLabel, downOff, upOff) => `
+          <div class="stepper">
+            <button id="${downId}" aria-label="${downLabel}" ${downOff ? 'disabled' : ''}>−</button>
+            <span aria-live="polite">${value}</span>
+            <button id="${upId}" aria-label="${upLabel}" ${upOff ? 'disabled' : ''}>+</button>
+          </div>`;
 
   return `
     <div class="topbar">
@@ -5738,107 +6522,70 @@ function renderSettings() {
       <div style="width:var(--tap-min)"></div>
     </div>
 
-    <div class="screen">
-      <div class="form-block">
-        <div class="settings-row">
-          <div>
-            <div class="settings-label">Tamanho da letra e dos botões</div>
-            <div class="settings-desc">Deixa tudo maior ou menor na tela</div>
-          </div>
-          <div class="stepper">
-            <button id="fontDownBtn" aria-label="Diminuir tamanho da letra" ${s.fontStep <= 1 ? 'disabled' : ''}>−</button>
-            <span aria-live="polite">${fontLabels[s.fontStep - 1]}</span>
-            <button id="fontUpBtn" aria-label="Aumentar tamanho da letra" ${s.fontStep >= 4 ? 'disabled' : ''}>+</button>
+    <div class="screen settings-screen">
+      <section class="settings-group" aria-labelledby="cfgTela">
+        <h2 class="settings-group-title" id="cfgTela">Tela</h2>
+        <div class="form-block">
+${row('Tamanho da letra e dos botões', 'Deixa tudo maior ou menor na tela',
+  stepper('fontDownBtn', 'Diminuir tamanho da letra', fontLabels[s.fontStep - 1], 'fontUpBtn', 'Aumentar tamanho da letra', s.fontStep <= 1, s.fontStep >= 4))}
+${row('Tema escuro', 'Fundo escuro e menos brilho', toggle('darkThemeToggle', s.darkTheme !== false))}
+        </div>
+      </section>
+
+      <section class="settings-group" aria-labelledby="cfgAcess">
+        <h2 class="settings-group-title" id="cfgAcess">Acessibilidade</h2>
+        <div class="form-block">
+${row('Modo para daltonismo', 'Ajusta cores e contraste da interface',
+  toggle('colorVisionToggle', s.colorVision, 'aria-label="Ativar modo para daltonismo"'))}
+${s.colorVision ? `
+          <div class="settings-sub">
+            <div class="settings-sub-title">Tipo de daltonismo</div>
+            <div class="cv-type-group" role="radiogroup" aria-label="Tipo de daltonismo">
+              ${COLOR_VISION_TYPES.map(t => `<button type="button" class="cv-type-btn" role="radio" data-cv-type="${t.id}" aria-checked="${cvType === t.id}"><span class="cv-radio" aria-hidden="true"></span><span class="cv-text"><span class="cv-name">${t.nome}</span><small>${t.desc}</small></span></button>`).join('')}
+            </div>
+            <div class="color-vision-preview" role="group" aria-label="Prévia das cores">
+              <div class="settings-sub-title">Prévia</div>
+              <div class="color-vision-preview-items">
+                <span class="color-vision-swatch color-vision-swatch--option">Opção</span>
+                <span class="color-vision-swatch color-vision-swatch--selected">Selecionada</span>
+                <span class="color-vision-swatch color-vision-swatch--focus">Foco</span>
+              </div>
+            </div>
+          </div>` : ''}
+${row('Modo de varredura', 'O destaque passa pelos botões; pressione o centro do analógico para escolher', toggle('scanToggle', s.scanEnabled))}
+${s.scanEnabled ? row('Velocidade da varredura', 'Tempo em cada botão',
+  stepper('scanSpeedDownBtn', 'Deixar a varredura mais lenta', scanLabel, 'scanSpeedUpBtn', 'Deixar a varredura mais rápida', scanSpeed >= 3000, scanSpeed <= 600), 'settings-row--sub') : ''}
+        </div>
+      </section>
+
+      <section class="settings-group" aria-labelledby="cfgVoz">
+        <h2 class="settings-group-title" id="cfgVoz">Voz</h2>
+        <div class="form-block">
+${row('Velocidade da voz', voiceLabel,
+  stepper('rateDownBtn', 'Diminuir velocidade da voz', `${voiceRate.toFixed(1).replace('.', ',')}x`, 'rateUpBtn', 'Aumentar velocidade da voz', voiceRate <= 0.5, voiceRate >= 1.6))}
+${row(`Voz do mascote ${MASCOT_NAME}`, 'Liga ou desliga a fala das dicas', toggle('mascotVoiceToggle', s.mascotVoiceEnabled))}
+          <div class="settings-row settings-row--action">
+            <div>
+              <div class="settings-label">Testar a voz</div>
+              <div class="settings-desc">Ouça como a voz está agora</div>
+            </div>
+            <button type="button" class="settings-pill" id="testVoiceBtn">Ouvir</button>
           </div>
         </div>
+      </section>
 
-        <div class="settings-row">
-          <div>
-            <div class="settings-label">Tema escuro</div>
-            <div class="settings-desc">Fundo escuro e menos brilho para facilitar o uso</div>
-          </div>
-          <label class="switch">
-            <input type="checkbox" id="darkThemeToggle" ${s.darkTheme !== false ? 'checked' : ''}>
-            <span class="switch-track"></span>
-          </label>
-        </div>
-
-        <div class="settings-row">
-          <div>
-            <div class="settings-label">Modo para daltonismo</div>
-            <div class="settings-desc" id="colorVisionDescription">Reforça o contraste e diferencia opções pela cor, pelo contorno e por símbolos.</div>
-          </div>
-          <label class="switch">
-            <input type="checkbox" id="colorVisionToggle" aria-label="Ativar modo para daltonismo" aria-describedby="colorVisionDescription" ${s.colorVision ? 'checked' : ''}>
-            <span class="switch-track"></span>
-          </label>
-        </div>
-<div class="cv-type-group" role="radiogroup" aria-label="Tipo de daltonismo" data-disabled="${s.colorVision ? 'false' : 'true'}">
-  ${COLOR_VISION_TYPES.map(t => `<button type="button" class="cv-type-btn" role="radio" data-cv-type="${t.id}" aria-checked="${(s.colorVisionType || 'deuteranomalia') === t.id}" ${s.colorVision ? '' : 'disabled'}><span>${t.nome}</span><small>${t.desc}</small></button>`).join('')}
-</div>
-<div class="color-vision-preview" role="group" aria-label="Prévia da paleta do modo para daltonismo">
-  <div class="color-vision-preview-head">
-    <span class="color-vision-preview-title">Prévia da paleta</span>
-    <span class="color-vision-preview-badge">Alto contraste</span>
-  </div>
-  <div class="color-vision-preview-items">
-    <span class="color-vision-swatch color-vision-swatch--option"><span aria-hidden="true">◆</span> Opção</span>
-    <span class="color-vision-swatch color-vision-swatch--selected"><span aria-hidden="true">✓</span> Selecionada</span>
-    <span class="color-vision-swatch color-vision-swatch--focus"><span aria-hidden="true">▣</span> Foco</span>
-  </div>
-  <p class="color-vision-preview-note">A seleção também usa contorno e símbolo. As figuras e imagens do jogo são mantidas.</p>
-</div>
-
-        <div class="settings-row">
-          <div>
-            <div class="settings-label">Modo de varredura</div>
-            <div class="settings-desc">O destaque passa pelos botões; pressione o centro do analógico para escolher</div>
-          </div>
-          <label class="switch">
-            <input type="checkbox" id="scanToggle" ${s.scanEnabled ? 'checked' : ''}>
-            <span class="switch-track"></span>
-          </label>
-        </div>
-
-        <div class="settings-row">
-          <div>
-            <div class="settings-label">Velocidade da varredura</div>
-            <div class="settings-desc">Tempo em cada botão: ${Math.round(scanSpeed / 100) / 10}s</div>
-          </div>
-          <div class="stepper">
-            <button id="scanSpeedDownBtn" aria-label="Deixar a varredura mais lenta">−</button>
-            <span aria-live="polite">${Math.round(scanSpeed / 100) / 10}s</span>
-            <button id="scanSpeedUpBtn" aria-label="Deixar a varredura mais rápida">+</button>
+      <section class="settings-group" aria-labelledby="cfgVersao">
+        <h2 class="settings-group-title" id="cfgVersao">Versões</h2>
+        <div class="form-block">
+          <div class="settings-row settings-row--action">
+            <div>
+              <div class="settings-label">Versão infantil não letrada</div>
+              <div class="settings-desc">Comunicação só com imagens</div>
+            </div>
+            <button type="button" class="settings-pill" id="openNonReaderBtn">Abrir</button>
           </div>
         </div>
-
-        <div class="settings-row">
-          <div>
-            <div class="settings-label">Velocidade da voz</div>
-            <div class="settings-desc">Ajusta a rapidez da fala</div>
-          </div>
-          <div class="stepper">
-            <button id="rateDownBtn" aria-label="Diminuir velocidade da voz">−</button>
-            <span aria-live="polite">${voiceLabel}</span>
-            <button id="rateUpBtn" aria-label="Aumentar velocidade da voz">+</button>
-          </div>
-        </div>
-
-        <div class="settings-row">
-          <div>
-            <div class="settings-label">Voz do mascote ${MASCOT_NAME}</div>
-            <div class="settings-desc">Liga ou desliga a fala das dicas</div>
-          </div>
-          <label class="switch">
-            <input type="checkbox" id="mascotVoiceToggle" ${s.mascotVoiceEnabled ? 'checked' : ''}>
-            <span class="switch-track"></span>
-          </label>
-        </div>
-
-      </div>
-
-      <button class="submit-btn" id="testVoiceBtn">Testar a voz</button>
-      <button type="button" class="submit-btn" id="openNonReaderBtn" style="margin-top:12px">🧒 Acessar versão infantil não letrada</button>
+      </section>
     </div>
   `;
 }
@@ -6475,6 +7222,30 @@ function attachHandlers() {
     render();
   }));
 
+  document.querySelectorAll('[data-evo-n]').forEach(btn => btn.addEventListener('click', () => {
+    const tela = document.getElementById('evoTela');
+    const holo = document.getElementById('evoHolo');
+    if (!tela || !holo) return;
+    const n = Number(btn.getAttribute('data-evo-n'));
+    const ok = btn.getAttribute('data-evo-ok') === '1';
+    document.querySelectorAll('[data-evo-n]').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+    clearTimeout(tela._trocaA); clearTimeout(tela._trocaB);
+    tela.classList.remove('trocando', 'upgrade', 'saindo', 'entrando');
+    void tela.offsetWidth;
+    tela.classList.add('saindo');
+    tela._trocaA = setTimeout(() => {
+      holo.innerHTML = guriImagemHtml(n, 'hub-guri-img', ok ? 'Guri ' + btn.getAttribute('data-evo-nome') : 'Fase bloqueada');
+      tela.classList.toggle('bloqueado', !ok);
+      document.getElementById('evoNivel').textContent = n;
+      document.getElementById('evoNome').textContent = ok ? btn.getAttribute('data-evo-nome') : 'Bloqueado';
+      document.getElementById('evoQuando').textContent = btn.getAttribute('data-evo-quando');
+      tela.classList.remove('saindo');
+      void tela.offsetWidth;
+      tela.classList.add('entrando');
+      tela._trocaB = setTimeout(() => tela.classList.remove('entrando'), 800);
+    }, 380);
+  }));
+
   const resetJogoBtn = document.getElementById('resetJogoBtn');
   if (resetJogoBtn) resetJogoBtn.addEventListener('click', () => {
     showAccessibleConfirm('Recomeçar o jogo do zero? O XP, o nível, as estrelas e os dias seguidos do Guri serão zerados.', () => {
@@ -6577,6 +7348,7 @@ function attachHandlers() {
     STATE.data.settings.voiceRate = Math.max(0.5, +(getVoiceRate() - 0.1).toFixed(1));
     saveData();
     render();
+    speak('Assim fica a voz.');
   });
 
   const rateUpBtn = document.getElementById('rateUpBtn');
@@ -6584,12 +7356,15 @@ function attachHandlers() {
     STATE.data.settings.voiceRate = Math.min(1.6, +(getVoiceRate() + 0.1).toFixed(1));
     saveData();
     render();
+    speak('Assim fica a voz.');
   });
 
   const mascotVoiceToggle = document.getElementById('mascotVoiceToggle');
   if (mascotVoiceToggle) mascotVoiceToggle.addEventListener('change', event => {
     STATE.data.settings.mascotVoiceEnabled = event.target.checked;
     saveData();
+    if (!event.target.checked) cancelRefreshVoice();
+    showToast(event.target.checked ? 'Voz do Guri ligada' : 'Voz do Guri desligada');
   });
 
   const openNonReaderBtn = document.getElementById('openNonReaderBtn');
@@ -6599,7 +7374,11 @@ function attachHandlers() {
 
   const testVoiceBtn = document.getElementById('testVoiceBtn');
   if (testVoiceBtn) testVoiceBtn.addEventListener('click', () => {
-    playMascotVoice('Oi! Esta é a minha voz no Comunica.');
+    if (STATE.data.settings.mascotVoiceEnabled) {
+      playMascotVoice();
+    } else {
+      speak('Oi! Esta é a voz do Comunica.');
+    }
   });
 
   /* Mascote na tela inicial */
@@ -8064,6 +8843,9 @@ function falarFrase() {
     }
     const fala = new SpeechSynthesisUtterance(texto);
     fala.lang = "pt-BR";
+    fala.rate = getVoiceRate();
+    const vozPt = speechSynthesis.getVoices().find(v => v.lang && v.lang.toLowerCase().startsWith("pt"));
+    if (vozPt) fala.voice = vozPt;
     speechSynthesis.cancel();
     speechSynthesis.speak(fala);
     registrarFrase(texto);
