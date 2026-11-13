@@ -6465,6 +6465,15 @@ function renderHome() {
 
       </div>
 
+      <div class="menu-btn" data-go="seniorVisual" role="button" tabindex="0" aria-label="Acessar versão sênior não letrada">
+        <img class="menu-image" src="../assets/imagens/icone-nao-letrado.png" alt="" aria-hidden="true">
+        <div class="menu-text">
+          <div class="menu-title">SÊNIOR NÃO LETRADO</div>
+          <div class="menu-sub">Comunicação com figuras</div>
+        </div>
+        <div class="menu-arrow" aria-hidden="true">›</div>
+      </div>
+
     </div>
 
     <div
@@ -7498,6 +7507,11 @@ function attachHandlers() {
             element.getAttribute(
               'data-go'
             );
+
+          if (target === 'seniorVisual') {
+            window.location.href = '../senior-nao-letrado/index.html';
+            return;
+          }
 
           const menuTexts = {
 
