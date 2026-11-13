@@ -4220,6 +4220,26 @@ body[data-theme="dark"] .splash-screen .splash-hint-text {
 }
 .splash-screen:hover .splash-hint-text { transform: translateY(-2px); box-shadow: 0 6px 0 #8cc3e6, 0 12px 22px rgba(42, 85, 119, .22) !important; }
 .splash-screen:active .splash-hint-text { transform: translateY(3px); box-shadow: 0 1px 0 #8cc3e6, 0 4px 10px rgba(42, 85, 119, .18) !important; }
+/* parte de dentro (abas): quarto vertical só no celular / tela em pé (13/11) */
+@media (max-width: 768px), (max-aspect-ratio: 3/4) {
+  body:not(.bg-outras),
+  body.bg-outras {
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.16) 0%, rgba(23,58,94,0.28) 100%),
+      url('../assets/imagens/plano-inicio-mobile.jpg') center bottom / cover no-repeat !important;
+    background-attachment: scroll, fixed !important;
+  }
+  body[data-theme="dark"]:not(.bg-outras),
+  body[data-theme="dark"].bg-outras {
+    background: linear-gradient(180deg, rgba(16,40,61,.82), rgba(10,25,39,.96)),
+      url('../assets/imagens/plano-inicio-mobile.jpg') center bottom / cover no-repeat !important;
+  }
+  .carousel-full-screen,
+  .circular-full-screen {
+    background: linear-gradient(180deg, rgba(255,255,255,.1), rgba(23,58,94,.3)),
+      url('../assets/imagens/plano-inicio-mobile.jpg') center bottom / cover no-repeat !important;
+  }
+}
 </style>
 <link rel="stylesheet" href="../menu-inicial.css">
 </head>
