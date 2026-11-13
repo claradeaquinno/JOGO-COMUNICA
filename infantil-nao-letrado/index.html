@@ -4890,6 +4890,11 @@ function renderHome() {
           <span class="menu-caption" data-visible-caption>Brincar e aprender</span>
           <div class="menu-arrow" aria-hidden="true">›</div>
         </div>
+        <div class="menu-btn" data-go="literate" role="button" tabindex="0" aria-label="Voltar para a versão letrada">
+          <img class="menu-illustration" src="../assets/imagens/icone-livros.png" width="1200" height="1200" alt="" aria-hidden="true" decoding="async">
+          <span class="menu-caption" data-visible-caption>Versão letrada</span>
+          <div class="menu-arrow" aria-hidden="true">›</div>
+        </div>
       </nav>
 
       <div class="about-link" data-go="about" role="button" tabindex="0">SOBRE O COMUNICA</div>
@@ -6036,6 +6041,10 @@ function attachHandlers() {
   document.querySelectorAll('[data-go]').forEach(element => {
     const activate = () => {
       const target = element.getAttribute('data-go');
+      if (target === 'literate') {
+        window.location.href = '../infantil/index.html';
+        return;
+      }
       const menuTexts = {
         build: 'Começar a comunicar',
         favorites: 'Favoritos',
