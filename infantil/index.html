@@ -4654,6 +4654,20 @@ body #mascotFloatBtn.mascot-float { transition: transform .15s ease !important; 
 #mascotTip, body.guri-no-inicio #mascotTip, .mascot-tip-toast.show { display: none !important; }
 /* Sem o botão do Guri (13/11) */
 #mascotFloatBtn, body.guri-no-inicio #mascotFloatBtn, body #mascotFloatBtn.mascot-float { display: none !important; }
+/* Configurações: título de cada grupo (Tela, Acessibilidade, Voz, Versões) dentro do cartão (13/11) */
+#app .settings-group { position: relative !important; }
+#app .settings-group-title,
+body.bg-outras #app .settings-group-title {
+  position: absolute !important; top: 14px; left: 20px; right: 20px; z-index: 1;
+  margin: 0 !important; color: #2a5577 !important; text-shadow: none !important;
+}
+body[data-theme="dark"] #app .settings-group-title { color: #a9c8e4 !important; }
+#app .settings-group .form-block,
+body.bg-outras #app .settings-group .form-block { padding-top: 40px !important; }
+@media (min-width: 1024px) {
+  body.bg-outras #app .settings-group-title { top: 18px; left: clamp(20px, 2vw, 30px); }
+  body.bg-outras #app .settings-group .form-block { padding-top: clamp(46px, 3.6vw, 56px) !important; }
+}
 </style>
 <link rel="stylesheet" href="../menu-inicial.css">
 </head>
