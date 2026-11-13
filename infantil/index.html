@@ -4147,6 +4147,57 @@ body[data-theme="dark"] #app .hub-stats span { color: #173a5e !important; }
 #app .ch-hub .ch-centro.upgrade .ch-holo { animation: guriFadeIn .8s ease-out both; }
 @keyframes guriFadeOut { from { opacity: 1; } to { opacity: 0; } }
 @keyframes guriFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* ===== Tela de abertura: cenário da casa atrás do Guri + botão Iniciar (13/11) ===== */
+.splash-screen,
+body[data-theme="dark"] .splash-screen {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, .15), rgba(255, 255, 255, 0) 40%),
+    url('../assets/imagens/comunica_cenario_casa_guri_amarela.png') center bottom / cover no-repeat,
+    linear-gradient(180deg, #cfe9f9, #fff4cc) !important;
+}
+.splash-screen .splash-hint-text,
+body[data-theme="dark"] .splash-screen .splash-hint-text {
+  display: inline-block;
+  min-width: 200px;
+  padding: 14px 40px;
+  border-radius: 999px;
+  background: #ffffff !important;
+  color: #2a5577 !important;
+  border: 3px solid #8cc3e6 !important;
+  box-shadow: 0 5px 0 rgba(95, 163, 211, .45), 0 10px 22px rgba(42, 85, 119, .2) !important;
+  font-family: var(--font-title);
+  font-size: clamp(22px, 5vw, 30px) !important;
+  font-weight: 800;
+  letter-spacing: .02em;
+  text-align: center;
+  text-shadow: none !important;
+}
+
+.splash-screen .splash-title-name,
+body[data-theme="dark"] .splash-screen .splash-title-name {
+  color: #2a5577 !important;
+  text-shadow: 0 2px 0 #fff, 0 0 18px rgba(255, 255, 255, .9) !important;
+}
+.splash-screen .splash-logo { filter: drop-shadow(0 3px 10px rgba(255, 255, 255, .8)); }
+
+/* abertura: imagem vertical só no celular / tela em pé */
+@media (max-width: 768px), (max-aspect-ratio: 3/4) {
+  .splash-screen,
+  body[data-theme="dark"] .splash-screen {
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, .15), rgba(255, 255, 255, 0) 40%),
+      url('../assets/imagens/comunica_cenario_casa_guri_mobile.png') center bottom / cover no-repeat,
+      linear-gradient(180deg, #cfe9f9, #fff4cc) !important;
+  }
+}
+
+/* abertura: fundo como <picture> (carrega certo no Vite e troca PC/celular) */
+.splash-screen, body[data-theme="dark"] .splash-screen { background: linear-gradient(180deg, #cfe9f9, #fff4cc) !important; overflow: hidden; }
+.splash-fundo { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.splash-fundo img { width: 100%; height: 100%; object-fit: cover; object-position: center bottom; display: block; }
+.splash-title, .splash-hint, .splash-mascot-wrap:not(.to-corner) { position: relative; z-index: 1; }
+.splash-mascot-wrap.to-corner { z-index: 2; }
 </style>
 <link rel="stylesheet" href="../menu-inicial.css">
 </head>
@@ -4156,6 +4207,10 @@ body[data-theme="dark"] #app .hub-stats span { color: #173a5e !important; }
 <a href="#app" class="skip-link">Pular para o conteúdo</a>
 
 <div id="splashScreen" class="splash-screen" role="dialog" aria-modal="true" aria-label="Tela de abertura do Comunica" tabindex="-1">
+  <picture class="splash-fundo" aria-hidden="true">
+    <source media="(max-width: 768px), (max-aspect-ratio: 3/4)" srcset="../assets/imagens/comunica_cenario_casa_guri_mobile.png">
+    <img src="../assets/imagens/comunica_cenario_casa_guri_amarela.png" alt="">
+  </picture>
   <div class="splash-title">
     <img class="splash-logo" src="../assets/imagens/comunica-logo.png" alt="Comunica"
       onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
@@ -4166,7 +4221,7 @@ body[data-theme="dark"] #app .hub-stats span { color: #173a5e !important; }
       data-size="220" data-mood="happy">
   </div>
   <div class="splash-hint" id="splashHint">
-    <span class="splash-hint-text">Toque na tela para começar</span>
+    <span class="splash-hint-text">Iniciar</span>
   </div>
 </div>
 
