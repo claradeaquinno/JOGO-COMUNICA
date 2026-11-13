@@ -4198,6 +4198,28 @@ body[data-theme="dark"] .splash-screen .splash-title-name {
 .splash-fundo img { width: 100%; height: 100%; object-fit: cover; object-position: center bottom; display: block; }
 .splash-title, .splash-hint, .splash-mascot-wrap:not(.to-corner) { position: relative; z-index: 1; }
 .splash-mascot-wrap.to-corner { z-index: 2; }
+/* abertura: degradê azul claro original por cima do cenário (13/11) */
+.splash-fundo::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 45% at 50% 52%, rgba(255,255,255,.55), rgba(255,255,255,0) 70%),
+    linear-gradient(180deg, rgba(244,251,255,.75) 0%, rgba(217,238,251,.45) 55%, rgba(191,227,247,.35) 100%);
+}
+/* abertura: botão Iniciar menor e mais caprichado (13/11) */
+.splash-screen .splash-hint-text,
+body[data-theme="dark"] .splash-screen .splash-hint-text {
+  min-width: 150px;
+  padding: 11px 34px !important;
+  font-size: clamp(18px, 4vw, 22px) !important;
+  letter-spacing: .04em;
+  border: 2px solid #8cc3e6 !important;
+  background: linear-gradient(180deg, #ffffff 0%, #eef8ff 100%) !important;
+  color: #1f4d73 !important;
+  box-shadow: 0 4px 0 #8cc3e6, 0 8px 18px rgba(42, 85, 119, .18) !important;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.splash-screen:hover .splash-hint-text { transform: translateY(-2px); box-shadow: 0 6px 0 #8cc3e6, 0 12px 22px rgba(42, 85, 119, .22) !important; }
+.splash-screen:active .splash-hint-text { transform: translateY(3px); box-shadow: 0 1px 0 #8cc3e6, 0 4px 10px rgba(42, 85, 119, .18) !important; }
 </style>
 <link rel="stylesheet" href="../menu-inicial.css">
 </head>
