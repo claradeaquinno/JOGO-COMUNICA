@@ -4321,6 +4321,339 @@ body[data-theme="dark"] #splashScreen .splash-hint-text,
 #splashScreen:hover .splash-hint-text:hover,
 #splashScreen .splash-voltar:hover,
 #splashScreen .splash-voltar:focus-visible { background: #fff2bf !important; border-color: #f3d675 !important; outline: none; }
+/* abertura: logo mais perto do Iniciar + logo maior no computador (13/11) */
+#splashScreen { gap: 6px !important; }
+#splashScreen .splash-title { margin: 0 !important; }
+#splashScreen .splash-logo { margin: 0 0 -4px !important; }
+@media (min-width: 769px) and (min-aspect-ratio: 3001/4000) {
+  #splashScreen .splash-logo {
+    width: clamp(420px, 36vw, 640px) !important;
+    max-height: 36vh !important;
+    margin-bottom: -8px !important;
+  }
+  #splashScreen .splash-hint { gap: 16px !important; }
+  #splashScreen .splash-hint-text,
+  body[data-theme="dark"] #splashScreen .splash-hint-text,
+  #splashScreen .splash-voltar {
+    width: clamp(240px, 18vw, 300px) !important;
+    padding: 14px 0 !important;
+    font-size: clamp(22px, 1.6vw, 26px) !important;
+  }
+}
+/* ===== Tela inicial (6 cards): tablet e computador (13/11) =====
+   Só CSS. Celular (até 599px) continua igual. "body:not(.bg-outras)" = tela inicial. */
+
+/* Tablet: cards em 2 colunas */
+@media (min-width: 600px) and (max-width: 1023px) {
+  body:not(.bg-outras) #app .home-screen .menu {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 14px 16px !important;
+    width: 100% !important; max-width: 820px !important;
+    margin: 6px auto 0 !important;
+  }
+  body:not(.bg-outras) #app .home-screen .menu-btn {
+    width: 100% !important; margin: 0 !important; box-sizing: border-box;
+    min-height: 100px !important;
+  }
+  body:not(.bg-outras) #app .home-screen .menu .menu-icon { width: 54px; height: 54px; flex-basis: 54px; }
+  body:not(.bg-outras) #app .home-screen {
+    display: flex !important; flex-direction: column !important;
+    min-height: calc(100dvh - 64px) !important; box-sizing: border-box;
+  }
+  body:not(.bg-outras) #app .home-screen .topbar { margin-bottom: auto !important; }
+  body:not(.bg-outras) #app .home-screen .home-logo { width: clamp(280px, 42vw, 380px) !important; max-height: 200px !important; }
+  body:not(.bg-outras) #app .home-screen .menu-btn { min-height: clamp(100px, 11vh, 140px) !important; }
+  body:not(.bg-outras) #app .home-screen .about-link { margin: 18px auto auto !important; font-size: 15px !important; }
+}
+
+/* Computador e notebook: 3 colunas x 2 linhas, tudo proporcional à tela */
+@media (min-width: 1024px) {
+  body:not(.bg-outras) #app { max-width: none !important; }
+  body:not(.bg-outras) #app .home-screen {
+    display: flex !important; flex-direction: column !important; align-items: center !important;
+    width: 100% !important; box-sizing: border-box;
+    min-height: calc(100dvh - 64px) !important;
+    padding: 0 !important; overflow: visible !important;
+  }
+  /* engrenagem no canto esquerdo (Guri logo abaixo), perfil no canto direito */
+  body:not(.bg-outras) #app .home-screen .topbar { width: 100% !important; padding: 0 0 8px !important; margin-bottom: auto !important; }
+  body:not(.bg-outras) #app .home-screen .topbar .icon-btn {
+    width: clamp(56px, 4vw, 68px) !important; height: clamp(56px, 4vw, 68px) !important; margin: 0 !important;
+  }
+  body:not(.bg-outras) #app .home-screen .topbar .menu-icon {
+    width: clamp(32px, 2.4vw, 40px) !important; height: clamp(32px, 2.4vw, 40px) !important; flex-basis: auto !important;
+  }
+  /* Guri logo abaixo da engrenagem: mesmo tamanho, mesma coluna, espaço curto */
+  body.guri-no-inicio #mascotFloatBtn.mascot-float {
+    position: fixed !important;
+    left: 32px !important;
+    top: calc(32px + clamp(56px, 4vw, 68px) + 14px) !important;
+    width: clamp(56px, 4vw, 68px) !important; height: clamp(56px, 4vw, 68px) !important;
+    min-width: 0 !important; margin: 0 !important; transform: none;
+  }
+  body.guri-no-inicio #mascotFloatBtn .mascot-head { width: 88% !important; height: 88% !important; }
+  body.guri-no-inicio .mascot-tip-toast {
+    position: fixed !important;
+    left: 32px !important;
+    top: calc(32px + 2 * clamp(56px, 4vw, 68px) + 30px) !important;
+  }
+  /* logo no alto, centralizada */
+  body:not(.bg-outras) #app .home-screen .home-logo {
+    width: clamp(380px, 36vw, 680px) !important;
+    max-height: clamp(150px, 28vh, 300px) !important;
+    margin: 0 auto clamp(18px, 3.5vh, 40px) !important;
+  }
+  /* grade dos 6 cards */
+  body:not(.bg-outras) #app .home-screen .menu {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    grid-auto-rows: 1fr;
+    gap: clamp(24px, 4.5vh, 48px) clamp(28px, 3vw, 56px) !important;
+    width: 100% !important; max-width: clamp(960px, 78vw, 1360px) !important;
+    margin: 0 auto !important;
+  }
+  body:not(.bg-outras) #app .home-screen .menu-btn {
+    width: 100% !important; margin: 0 !important; box-sizing: border-box;
+    min-height: clamp(110px, 16vh, 160px) !important;
+    padding: clamp(18px, 1.6vw, 28px) clamp(20px, 1.8vw, 30px) !important;
+    gap: clamp(14px, 1.2vw, 22px) !important;
+    border-radius: calc(var(--radius) + 6px) !important;
+    box-shadow: 0 6px 18px rgba(23, 58, 94, .14);
+  }
+  body:not(.bg-outras) #app .home-screen .menu .menu-icon {
+    width: clamp(56px, 4.4vw, 80px); height: clamp(56px, 4.4vw, 80px); flex-basis: clamp(56px, 4.4vw, 80px);
+  }
+  body:not(.bg-outras) #app .home-screen .menu-title { font-size: clamp(18px, 1.35vw, 24px) !important; margin-bottom: 6px !important; }
+  body:not(.bg-outras) #app .home-screen .menu-sub { font-size: clamp(14px, 1vw, 17px) !important; line-height: 1.3 !important; }
+  body:not(.bg-outras) #app .home-screen .menu-arrow { font-size: clamp(26px, 2vw, 34px) !important; }
+  /* tela inicial travada na altura da janela: nada rola, logo e cards encolhem se faltar espaço */
+  body:not(.bg-outras) { overflow-y: hidden !important; }
+  body:not(.bg-outras) #app { height: 100dvh !important; min-height: 0 !important; box-sizing: border-box !important; }
+  body:not(.bg-outras) #app .home-screen { height: 100% !important; min-height: 0 !important; }
+  body:not(.bg-outras) #app .home-screen > * { flex-shrink: 0; }
+  body:not(.bg-outras) #app .home-screen .home-logo { flex: 0 1 auto !important; flex-shrink: 1 !important; min-height: 70px !important; height: auto; object-fit: contain; }
+  /* logo maior: cresce para cima, no espaço livre do topo, sem empurrar os cards */
+  body:not(.bg-outras) #app .home-screen .home-logo {
+    width: clamp(440px, 42vw, 820px) !important;
+    max-height: clamp(160px, 30vh, 320px) !important;
+    transform: scale(1.6); transform-origin: 50% 95%;
+  }
+  body:not(.bg-outras) #app .home-screen .menu { flex: 0 0 auto !important; grid-auto-rows: auto !important; align-items: stretch; }
+  body:not(.bg-outras) #app .home-screen .menu-btn { min-height: clamp(84px, 15vh, 160px) !important; }
+  /* "Sobre o Comunica" embaixo dos cards */
+  body:not(.bg-outras) #app .home-screen .about-link {
+    font-size: clamp(15px, 1.1vw, 18px) !important;
+    margin: clamp(16px, 3vh, 36px) auto auto !important;
+    padding: 0 22px;
+  }
+}
+/* ===== Abas internas no computador: mesma escala da tela inicial (13/11) =====
+   Só CSS, só a partir de 1024px. "body.bg-outras" = qualquer aba fora da tela inicial. */
+@media (min-width: 1024px) {
+  body.bg-outras {
+    --dk-max: clamp(960px, 78vw, 1360px);
+    --dk-btn: clamp(56px, 4vw, 68px);
+  }
+  body.bg-outras #app { max-width: none !important; }
+
+  /* --- barra do topo: voltar no canto esquerdo, título maior --- */
+  body.bg-outras #app > .topbar { width: 100% !important; padding: 0 0 clamp(14px, 2.5vh, 28px) !important; }
+  body.bg-outras #app .topbar .icon-btn,
+  body.bg-outras #app .carousel-full-topbar .icon-btn {
+    width: var(--dk-btn) !important; height: var(--dk-btn) !important; margin: 0 !important;
+  }
+  body.bg-outras #app .icon-btn:not([data-go="home"]):not([data-go="categories"]):not([data-go="build"]) { font-size: clamp(26px, 2vw, 32px) !important; }
+  body.bg-outras #app .icon-btn[data-go]::before { width: clamp(36px, 2.8vw, 44px) !important; height: clamp(36px, 2.8vw, 44px) !important; }
+  body.bg-outras #app > .topbar > div:last-child:not(.topbar-title) { width: var(--dk-btn) !important; }
+  body.bg-outras #app .topbar-title { font-size: clamp(26px, 2vw, 36px) !important; }
+  body.bg-outras #app .mode-choice-back,
+  body.bg-outras #app .circular-mode-screen .mode-screen-back {
+    width: var(--dk-btn) !important; height: var(--dk-btn) !important; min-width: var(--dk-btn) !important;
+  }
+  body.bg-outras #app .mode-choice-back .back-icon,
+  body.bg-outras #app .mode-screen-back .back-icon { width: clamp(38px, 3vw, 46px) !important; }
+
+  /* --- área de conteúdo das abas com a mesma largura dos cards da tela inicial --- */
+  body.bg-outras #app > .screen {
+    width: 100% !important; max-width: var(--dk-max) !important;
+    margin: 0 auto !important; padding-bottom: 48px !important; box-sizing: border-box;
+  }
+  body.bg-outras #app .section-label { font-size: clamp(16px, 1.2vw, 20px) !important; margin-bottom: 14px !important; }
+  body.bg-outras #app .empty-state { font-size: clamp(16px, 1.2vw, 20px) !important; }
+
+  /* Categorias */
+  body.bg-outras #app .cat-grid { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: clamp(16px, 2vw, 28px) !important; }
+  body.bg-outras #app .cat-card { min-height: clamp(130px, 19vh, 200px) !important; border-radius: calc(var(--radius) + 6px) !important; padding: 20px 16px !important; }
+  body.bg-outras #app .cat-card .label { font-size: clamp(20px, 1.5vw, 26px) !important; }
+  body.bg-outras #app .cat-card .count { font-size: clamp(14px, 1vw, 17px) !important; margin-top: 4px; }
+  body.bg-outras #app .cat-card img { width: clamp(56px, 4.4vw, 80px) !important; height: clamp(56px, 4.4vw, 80px) !important; }
+
+  /* Palavras (dentro da categoria e favoritas) */
+  body.bg-outras #app .word-grid { grid-template-columns: repeat(auto-fill, minmax(clamp(150px, 12vw, 200px), 1fr)) !important; gap: clamp(14px, 1.6vw, 22px) !important; }
+  body.bg-outras #app .word-card { min-height: clamp(160px, 22vh, 220px) !important; border-radius: 20px !important; }
+  body.bg-outras #app .word-card .label { font-size: clamp(18px, 1.3vw, 22px) !important; }
+  body.bg-outras #app .word-card .description { font-size: clamp(12px, .9vw, 15px) !important; }
+  body.bg-outras #app .word-card .word-icon { width: clamp(52px, 4vw, 72px) !important; height: clamp(52px, 4vw, 72px) !important; }
+  body.bg-outras #app > .screen .phrase-bar { min-height: 76px !important; font-size: 22px !important; }
+  body.bg-outras #app > .screen .speak-btn { min-height: 60px; font-size: 20px !important; }
+
+  /* Favoritos: frases */
+  body.bg-outras #app .fav-item { padding: 16px 20px !important; font-size: clamp(17px, 1.25vw, 21px) !important; border-radius: 18px !important; }
+  body.bg-outras #app .fav-item button { font-size: clamp(15px, 1.1vw, 18px) !important; min-height: 48px; padding: 8px 18px !important; }
+
+  /* Blocos (Sobre, Perfil, Configurações) */
+  body.bg-outras #app .info-block { font-size: clamp(17px, 1.25vw, 21px) !important; padding: clamp(20px, 2vw, 30px) !important; border-radius: 22px !important; }
+  body.bg-outras #app .form-block { padding: clamp(20px, 2vw, 30px) !important; border-radius: 22px !important; }
+  body.bg-outras #app .form-block h3 { font-size: clamp(20px, 1.5vw, 26px) !important; }
+  body.bg-outras #app .profile-stat { font-size: clamp(16px, 1.2vw, 20px) !important; padding: 14px 0 !important; }
+  body.bg-outras #app .submit-btn { min-height: 58px; font-size: clamp(17px, 1.2vw, 20px) !important; }
+  body.bg-outras #app textarea { font-size: clamp(16px, 1.15vw, 19px) !important; }
+
+  /* Personalizar: cabe inteiro na tela, a roda do teclado acompanha a altura da janela */
+  body.bg-outras #app > .screen:has(.personalize-builder) { padding-bottom: 0 !important; }
+  body.bg-outras #app .personalize-builder { margin-bottom: 0 !important; }
+  body.bg-outras #app .personalize-builder .personalize-keyboard-stage {
+    width: clamp(300px, calc(100dvh - 360px), 530px) !important;
+    max-width: 100%; margin: 6px auto 0 !important;
+  }
+  body.bg-outras #app .personalize-builder .personalize-keyboard-layout { justify-content: center !important; }
+  body.bg-outras #app .personalize-builder .personalize-words { min-height: 0 !important; }
+  body.bg-outras #app .personalize-builder .personalize-words .custom-list {
+    max-height: calc(100dvh - 330px); overflow-y: auto; align-content: flex-start; padding-right: 6px;
+  }
+  /* Perfil: Resumo à esquerda, Feedback e Conta à direita */
+  body.bg-outras #app > .screen:has(.profile-stat) {
+    display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 clamp(18px, 2vw, 28px); align-items: start;
+  }
+  body.bg-outras #app > .screen:has(.profile-stat) > :first-child { grid-column: 1; grid-row: 1 / span 2; }
+  body.bg-outras #app > .screen:has(.profile-stat) > :not(:first-child) { grid-column: 2; }
+
+  /* Configurações: grupos em 2 colunas */
+  body.bg-outras #app .settings-screen {
+    display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 clamp(18px, 2vw, 28px); align-items: start;
+  }
+  body.bg-outras #app .settings-group-title { font-size: clamp(14px, 1.05vw, 17px) !important; }
+  body.bg-outras #app .settings-label { font-size: clamp(17px, 1.3vw, 21px) !important; }
+  body.bg-outras #app .settings-desc { font-size: clamp(14px, 1vw, 16px) !important; }
+  body.bg-outras #app .form-block .settings-row { min-height: 84px !important; }
+  body.bg-outras #app .stepper button { width: 46px !important; height: 46px !important; font-size: 20px; }
+  body.bg-outras #app .stepper span { font-size: 17px !important; }
+
+  /* Começar a comunicar: escolha do modo com dois cartões grandes lado a lado */
+  body.bg-outras #app .mode-choice-content {
+    width: min(100%, 980px) !important;
+    display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(18px, 2vw, 28px) !important;
+  }
+  body.bg-outras #app .mode-choice-content h1 {
+    grid-column: 1 / -1; width: 100% !important; font-size: clamp(30px, 2.6vw, 44px) !important; margin-bottom: 10px !important;
+  }
+  body.bg-outras #app .mode-choice-button {
+    width: 100% !important; min-height: clamp(150px, 26vh, 240px) !important;
+    font-size: clamp(24px, 2vw, 34px) !important; border-radius: calc(var(--radius) + 8px) !important;
+  }
+
+  /* Carrossel */
+  body.bg-outras #app .carousel-full-topbar { width: 100% !important; max-width: none !important; box-sizing: border-box; padding-left: 32px !important; padding-right: 32px !important; }
+  body.bg-outras #app .carousel-full-content { width: min(100%, clamp(900px, 68vw, 1120px)) !important; margin-top: 8px !important; }
+  body.bg-outras #app .carousel-full-content .section-label { font-size: clamp(15px, 1.1vw, 18px) !important; }
+  body.bg-outras #app .carousel-full-content .phrase-bar { min-height: clamp(64px, 9vh, 88px) !important; font-size: clamp(20px, 1.5vw, 26px) !important; margin-bottom: clamp(12px, 2vh, 24px) !important; }
+  body.bg-outras #app .carousel-full-content .phrase-placeholder { font-size: clamp(17px, 1.3vw, 21px) !important; }
+  body.bg-outras #app .carousel-full-content .layer-label { font-size: clamp(14px, 1.05vw, 17px) !important; padding: 8px 20px !important; }
+  body.bg-outras #app .carousel-full-content .carousel-card.center { width: clamp(220px, 30vh, 320px) !important; height: clamp(230px, 32vh, 340px) !important; }
+  body.bg-outras #app .carousel-full-content .carousel-card.center .label { font-size: clamp(26px, 2.2vw, 36px) !important; }
+  body.bg-outras #app .carousel-full-content .carousel-card.side { width: clamp(150px, 20vh, 220px) !important; height: clamp(180px, 25vh, 270px) !important; }
+  body.bg-outras #app .carousel-full-content .carousel-card.side .label { font-size: clamp(17px, 1.3vw, 22px) !important; }
+  body.bg-outras #app .carousel-full-content .carousel-track { gap: clamp(14px, 1.6vw, 24px) !important; }
+  body.bg-outras #app .carousel-full-content .carousel-arrow { width: clamp(56px, 4vw, 68px) !important; height: clamp(56px, 4vw, 68px) !important; font-size: 38px !important; }
+  body.bg-outras #app .carousel-counter { font-size: 16px !important; margin: 6px 0 clamp(10px, 2vh, 18px) !important; }
+  body.bg-outras #app .carousel-full-content .confirm-btn { min-height: clamp(56px, 8vh, 70px) !important; font-size: clamp(19px, 1.5vw, 24px) !important; border-radius: 18px !important; }
+  body.bg-outras #app .carousel-full-screen .action-row { gap: clamp(10px, 1.2vw, 16px) !important; }
+  body.bg-outras #app .carousel-full-screen .action-row button { min-height: clamp(52px, 7.5vh, 66px) !important; font-size: clamp(15px, 1.15vw, 19px) !important; border-radius: 16px !important; }
+  body.bg-outras #app .carousel-all-cats { font-size: clamp(15px, 1.1vw, 18px) !important; padding: 12px 26px !important; }
+
+  /* Desafio da comunicação */
+  /* duas telas lado a lado: Guri e fases à esquerda, desafio à direita */
+  body.bg-outras #app .hub-screen {
+    width: min(100%, var(--dk-max)) !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: auto auto auto auto 1fr;
+    gap: clamp(14px, 2vh, 22px) clamp(18px, 2vw, 32px) !important;
+    align-items: start;
+    align-content: center;
+    min-height: calc(100dvh - 64px) !important;
+  }
+  body.bg-outras #app .hub-screen > .hub-topo { grid-column: 1 / -1; grid-row: 1; }
+  body.bg-outras #app .hub-screen > .hub-painel { grid-column: 1; grid-row: 2 / span 4; margin: 0 !important; }
+  body.bg-outras #app .hub-screen > .hub-modos,
+  body.bg-outras #app .hub-screen > .hub-rapidas,
+  body.bg-outras #app .hub-screen > .hub-modos-botoes { grid-column: 2; margin: 0 !important; }
+  body.bg-outras #app .hub-screen > .hub-modos { grid-row: 2; }
+  body.bg-outras #app .hub-screen > .hub-rapidas { grid-row: 3; }
+  body.bg-outras #app .hub-screen > .hub-modos-botoes { grid-row: 4; }
+  body.bg-outras #app .hub-screen .hub-grade { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
+  body.bg-outras #app .hub-screen { padding-top: clamp(4px, 1vh, 12px) !important; padding-bottom: 16px !important; }
+  /* Desafio: seta de voltar no canto superior esquerdo, igual às outras abas */
+  body.bg-outras #app .hub-screen .hub-voltar {
+    position: fixed !important; top: 32px; left: 32px; z-index: 5;
+    width: var(--dk-btn) !important; height: var(--dk-btn) !important; min-width: var(--dk-btn) !important;
+  }
+  /* Desafio cabe inteiro na tela: altura da janela, painel do Guri encolhe junto */
+  body.bg-outras #app .hub-screen {
+    box-sizing: border-box;
+    height: calc(100dvh - 64px); min-height: 0 !important;
+    grid-template-rows: auto auto minmax(0, 1fr) auto !important;
+    align-content: stretch !important;
+  }
+  body.bg-outras #app .hub-screen > .hub-painel {
+    grid-row: 2 / -1 !important; align-self: stretch; min-height: 0; height: 100%; box-sizing: border-box;
+    grid-template-columns: clamp(96px, 7.5vw, 140px) minmax(0, 1fr) clamp(96px, 7.5vw, 140px) !important;
+    grid-template-rows: minmax(0, 1fr) auto auto !important;
+    padding: clamp(10px, 1.6vh, 16px) !important; gap: clamp(8px, 1.2vh, 12px) !important;
+  }
+  /* coluna da direita com a mesma altura do painel: o bloco das palavras estica */
+  body.bg-outras #app .hub-screen > .hub-modos,
+  body.bg-outras #app .hub-screen > .hub-rapidas,
+  body.bg-outras #app .hub-screen > .hub-modos-botoes { align-self: stretch; box-sizing: border-box; }
+  body.bg-outras #app .hub-screen > .hub-rapidas { display: flex !important; flex-direction: column; min-height: 0; }
+  body.bg-outras #app .hub-screen > .hub-rapidas .hub-grade { flex: 1 1 auto; grid-auto-rows: 1fr; align-content: stretch; min-height: 0; }
+  body.bg-outras #app .hub-screen > .hub-rapidas .hub-palavra { height: 100%; }
+  body.bg-outras #app .hub-painel .hub-coluna { min-height: 0; gap: clamp(6px, 1vh, 10px) !important; }
+  body.bg-outras #app .hub-painel .hub-slot,
+  body.bg-outras #app .hub-painel .ch-fase {
+    flex: 1 1 0; min-height: 0 !important; height: auto; aspect-ratio: auto !important;
+  }
+  body.bg-outras #app .hub-painel .hub-slot-corpo { min-height: 0; padding: 2px !important; }
+  body.bg-outras #app .hub-painel .ch-fase-img { height: 100% !important; width: auto !important; max-width: 100%; max-height: 72px; object-fit: contain; }
+  body.bg-outras #app .hub-painel .hub-slot-topo { font-size: clamp(11px, 1.6vh, 14px) !important; }
+  body.bg-outras #app .hub-painel .hub-centro { min-height: 0; }
+  body.bg-outras #app .hub-stats > span { min-height: clamp(38px, 5.5vh, 48px) !important; }
+  /* coluna da direita proporcional à altura da janela */
+  body.bg-outras #app .hub-screen .hub-faixa { min-height: 0 !important; padding-top: clamp(6px, 1.2vh, 12px) !important; padding-bottom: clamp(6px, 1.2vh, 12px) !important; }
+  body.bg-outras #app .hub-screen .hub-faixa-titulo { font-size: clamp(20px, 3.4vh, 32px) !important; }
+  body.bg-outras #app .hub-screen .ch-corpo { padding-top: clamp(8px, 1.4vh, 16px) !important; padding-bottom: clamp(8px, 1.4vh, 16px) !important; }
+  body.bg-outras #app .hub-screen .ch-frase-hub { min-height: clamp(54px, 8vh, 80px) !important; }
+  body.bg-outras #app .hub-screen .hub-grade { padding-top: clamp(8px, 1.4vh, 16px) !important; padding-bottom: clamp(8px, 1.4vh, 16px) !important; }
+  body.bg-outras #app .hub-palavra { min-height: clamp(52px, 8.5vh, 90px) !important; font-size: clamp(18px, 3vh, 26px) !important; }
+  body.bg-outras #app .hub-modo { min-height: clamp(50px, 7.5vh, 80px) !important; font-size: clamp(18px, 2.8vh, 24px) !important; }
+  body.bg-outras #app .hub-screen > .hub-modos-botoes { padding-top: clamp(8px, 1.4vh, 16px) !important; padding-bottom: clamp(8px, 1.4vh, 16px) !important; }
+  body.bg-outras #app .hub-recurso { min-height: 54px !important; font-size: 21px !important; }
+  body.bg-outras #app .hub-faixa-titulo { font-size: clamp(22px, 1.8vw, 30px) !important; }
+  body.bg-outras #app .hub-palavra { min-height: clamp(64px, 9.5vh, 100px) !important; font-size: clamp(18px, 1.35vw, 22px) !important; }
+  body.bg-outras #app .hub-modo { min-height: clamp(60px, 8.5vh, 92px) !important; font-size: clamp(19px, 1.45vw, 24px) !important; }
+  body.bg-outras #app .hub-stats > span { min-height: 48px; font-size: clamp(15px, 1.1vw, 18px) !important; }
+}
+/* Botão do Guri: aparece na hora, sem fade (13/11) */
+#mascotFloatBtn.mascot-float,
+body #mascotFloatBtn.mascot-float { transition: transform .15s ease !important; }
+/* Ícone do Desafio da Comunicação: ajuste de tamanho (13/11)
+   1 = tamanho atual | maior que 1 aumenta (ex.: 1.2) | menor que 1 diminui (ex.: 0.85) */
+#app .menu-icon[src*="icone-alvo"] { transform: scale(1.2); transform-origin: center; }
+/* Sem o balão de fala do Guri (13/11). A voz dele continua, se estiver ligada nas Configurações. */
+#mascotTip, body.guri-no-inicio #mascotTip, .mascot-tip-toast.show { display: none !important; }
+/* Sem o botão do Guri (13/11) */
+#mascotFloatBtn, body.guri-no-inicio #mascotFloatBtn, body #mascotFloatBtn.mascot-float { display: none !important; }
 </style>
 <link rel="stylesheet" href="../menu-inicial.css">
 </head>
