@@ -7270,7 +7270,7 @@ function renderSettings() {
     </div>
     <div class="screen">
       <div class="form-block settings-panel">
-        <div class="settings-row"><div><div class="settings-label">Tamanho da letra e dos botões</div><div class="settings-desc">Deixa tudo maior ou menor na tela</div></div><div class="stepper"><button id="seniorFontDown" aria-label="Diminuir tamanho da letra">−</button><span aria-live="polite">${fontLabels[(s.fontStep || 2) - 1]}</span><button id="seniorFontUp" aria-label="Aumentar tamanho da letra">+</button></div></div>
+        <a class="visual-version-link" href="../senior-nao-letrado/index.html" style="display:flex;align-items:center;gap:12px;padding:16px;color:inherit" aria-label="Acessar versão sênior não letrada"><img src="../assets/imagens/icone-nao-letrado.png" width="48" height="48" alt="">Versão sênior não letrada</a><div class="settings-row"><div><div class="settings-label">Tamanho da letra e dos botões</div><div class="settings-desc">Deixa tudo maior ou menor na tela</div></div><div class="stepper"><button id="seniorFontDown" aria-label="Diminuir tamanho da letra">−</button><span aria-live="polite">${fontLabels[(s.fontStep || 2) - 1]}</span><button id="seniorFontUp" aria-label="Aumentar tamanho da letra">+</button></div></div>
         <div class="settings-row"><div><div class="settings-label">Tema escuro</div><div class="settings-desc">Fundo escuro e menos brilho para facilitar o uso</div></div><label class="switch"><input id="seniorDarkToggle" type="checkbox" ${s.darkTheme !== false ? 'checked' : ''}><span class="switch-track"></span></label></div>
         <div class="settings-row">
           <div>

@@ -1,0 +1,24 @@
+/* Figuras sóbrias, alvos amplos e legendas curtas de apoio. */
+body #app .home-screen .menu .menu-image { width: 88px !important; height: 88px !important; object-fit: contain; }
+body #app .home-screen .menu .menu-sub,
+body #app .word-card .description,
+body #app .cat-card .count { display: none; }
+body #app .senior-figura { display: flex; align-items: center; justify-content: center; width: 88px; height: 88px; max-width: 100%; margin: 0 auto 8px; flex: 0 0 auto; pointer-events: none; }
+body #app .senior-figura > svg,
+body #app .senior-figura > img { display: block; width: 100%; height: 100%; object-fit: contain; }
+body #app .cat-card,
+body #app .word-card { min-height: 146px; gap: 6px; }
+body #app .cat-card .label,
+body #app .word-card .label { font-size: 1.1rem; line-height: 1.25; overflow-wrap: anywhere; }
+body #app .senior-action-image { width: 48px; height: 48px; max-width: 100%; object-fit: contain; pointer-events: none; }
+body #app .tecla .senior-figura { width: 34px; height: 34px; margin: 0 auto 2px; }
+body #app .tecla.senior-ilustrado { display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 11px; }
+body #app .phrase-chip .senior-figura { display: inline-flex; vertical-align: middle; width: 32px; height: 32px; margin: 0 6px 0 0; }
+body #app .visual-version-link { display: flex; align-items: center; justify-content: center; gap: 12px; min-height: 56px; padding: 12px; border: 2px solid currentColor; border-radius: 16px; color: inherit; font: inherit; text-decoration: none; }
+body #app .visual-version-link img { width: 40px; height: 40px; object-fit: contain; }
+body #app .home-screen a.menu-btn { color: inherit; text-decoration: none; order: 1; }
+body #app .senior-listen { min-width: 64px; min-height: 64px; margin-top: 12px; border: 2px solid currentColor; border-radius: 16px; background: transparent; color: inherit; cursor: pointer; }
+@media (max-width: 480px) {
+  body #app .senior-figura { width: 72px; height: 72px; }
+  body #app .home-screen .menu > .menu-btn { min-height: 148px !important; }
+}

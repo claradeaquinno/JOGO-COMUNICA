@@ -6,8 +6,8 @@ const { spawn } = require('node:child_process');
 const { test } = require('node:test');
 const root = path.resolve(__dirname, '..');
 
-test('as três versões contêm scripts válidos e recursos locais existentes', () => {
-  for (const page of ['adulto', 'infantil', 'infantil-nao-letrado']) {
+test('as quatro versões contêm scripts válidos e recursos locais existentes', () => {
+  for (const page of ['adulto', 'infantil', 'infantil-nao-letrado', 'senior-nao-letrado']) {
     const html = fs.readFileSync(path.join(root, page, 'index.html'), 'utf8');
     assert.match(html, /id="app"/);
     for (const match of html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/g)) {
@@ -34,7 +34,7 @@ test('servidor abre versões, redireciona pastas e protege arquivos internos', a
       child.stdout.once('data', () => { clearTimeout(timeout); resolve(); });
     });
     const base = `http://127.0.0.1:${port}`;
-    for (const route of ['/', '/adulto/', '/infantil/', '/infantil-nao-letrado/']) {
+    for (const route of ['/', '/adulto/', '/infantil/', '/infantil-nao-letrado/', '/senior-nao-letrado/']) {
       const response = await fetch(base + route);
       assert.equal(response.status, 200, route);
       assert.match(await response.text(), /<html/);

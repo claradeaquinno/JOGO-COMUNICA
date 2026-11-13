@@ -3,6 +3,7 @@
 Inicie com `node server.js` e abra http://127.0.0.1:4173 para abrir a versão adulta, como na entrada original.
 
 - `adulto/`: versão adulta, com seus arquivos HTML, CSS e JavaScript.
+- `senior-nao-letrado/`: versão visual do modo Sênior, acessível pelas configurações da versão adulta ou em `/senior-nao-letrado/`. Mantém o tema, os dados, os teclados e os recursos de acessibilidade do Sênior, com figuras nas categorias e nas palavras reconhecidas, ações ilustradas e leitura por foco. Termos sem figura disponível mantêm seu nome. Os ajustes ficam em `visual.css` e `visual.js`.
 - `infantil/`: versão infantil existente, com seus arquivos HTML, CSS e JavaScript.
 - `infantil-nao-letrado/`: cópia da versão infantil existente, com os mesmos recursos e a mesma interface, ocultando apenas os textos dos botões e mantendo seus ícones e nomes acessíveis. As legendas curtas do menu acompanham as ilustrações. As ilustrações locais anteriores foram preservadas como `ilustracoes/*-local.png`. Os ajustes específicos ficam em `sem-texto.css` e `sem-texto.js`.
 - `assets/` e `img/`: imagens e áudios compartilhados entre as versões.
