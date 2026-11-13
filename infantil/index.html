@@ -4218,28 +4218,109 @@ body[data-theme="dark"] .splash-screen .splash-hint-text {
   box-shadow: 0 4px 0 #8cc3e6, 0 8px 18px rgba(42, 85, 119, .18) !important;
   transition: transform .15s ease, box-shadow .15s ease;
 }
-.splash-screen:hover .splash-hint-text { transform: translateY(-2px); box-shadow: 0 6px 0 #8cc3e6, 0 12px 22px rgba(42, 85, 119, .22) !important; }
-.splash-screen:active .splash-hint-text { transform: translateY(3px); box-shadow: 0 1px 0 #8cc3e6, 0 4px 10px rgba(42, 85, 119, .18) !important; }
+/* parte de dentro (abas): mesmo degradê azul-claro no computador (13/11) */
+@media (min-width: 769px) and (min-aspect-ratio: 3001/4000) {
+body:not([data-theme="dark"]):not(.bg-outras),
+body:not([data-theme="dark"]).bg-outras {
+  background:
+    radial-gradient(ellipse 60% 45% at 50% 52%, rgba(255,255,255,.55), rgba(255,255,255,0) 70%),
+    linear-gradient(180deg, rgba(244,251,255,.75) 0%, rgba(217,238,251,.45) 55%, rgba(191,227,247,.35) 100%),
+    url('../assets/imagens/plano-inicio.png') center center / cover no-repeat !important;
+  background-attachment: scroll, scroll, fixed !important;
+}
+body:not([data-theme="dark"]) .about-link { color: #1f4d73 !important; text-shadow: 0 1px 0 rgba(255,255,255,.8) !important; }
+body:not([data-theme="dark"]) .carousel-full-screen,
+body:not([data-theme="dark"]) .circular-full-screen {
+  background:
+    radial-gradient(ellipse 60% 45% at 50% 52%, rgba(255,255,255,.55), rgba(255,255,255,0) 70%),
+    linear-gradient(180deg, rgba(244,251,255,.75) 0%, rgba(217,238,251,.45) 55%, rgba(191,227,247,.35) 100%),
+    url('../assets/imagens/plano-inicio.png') center center / cover no-repeat !important;
+}
+}
+
 /* parte de dentro (abas): quarto vertical só no celular / tela em pé (13/11) */
 @media (max-width: 768px), (max-aspect-ratio: 3/4) {
   body:not(.bg-outras),
   body.bg-outras {
     background:
-      linear-gradient(180deg, rgba(255,255,255,0.16) 0%, rgba(23,58,94,0.28) 100%),
+      radial-gradient(ellipse 60% 45% at 50% 52%, rgba(255,255,255,.55), rgba(255,255,255,0) 70%),
+      linear-gradient(180deg, rgba(244,251,255,.75) 0%, rgba(217,238,251,.45) 55%, rgba(191,227,247,.35) 100%),
       url('../assets/imagens/plano-inicio-mobile.png') center bottom / cover no-repeat !important;
-    background-attachment: scroll, fixed !important;
+    background-attachment: scroll !important;
   }
   body[data-theme="dark"]:not(.bg-outras),
   body[data-theme="dark"].bg-outras {
     background: linear-gradient(180deg, rgba(16,40,61,.82), rgba(10,25,39,.96)),
       url('../assets/imagens/plano-inicio-mobile.png') center bottom / cover no-repeat !important;
   }
+  body:not([data-theme="dark"]) .about-link { color: #1f4d73 !important; text-shadow: 0 1px 0 rgba(255,255,255,.8) !important; }
   .carousel-full-screen,
   .circular-full-screen {
-    background: linear-gradient(180deg, rgba(255,255,255,.1), rgba(23,58,94,.3)),
+    background: radial-gradient(ellipse 60% 45% at 50% 52%, rgba(255,255,255,.55), rgba(255,255,255,0) 70%),
+      linear-gradient(180deg, rgba(244,251,255,.75) 0%, rgba(217,238,251,.45) 55%, rgba(191,227,247,.35) 100%),
       url('../assets/imagens/plano-inicio-mobile.png') center bottom / cover no-repeat !important;
   }
 }
+/* abertura: sem o Guri, só o título e o botão Iniciar parado (13/11) */
+#splashScreen .splash-mascot-wrap { display: none !important; }
+#splashScreen .splash-hint,
+#splashScreen .splash-hint.show,
+#splashScreen .splash-hint-text { animation: none !important; transform: none !important; transition: none !important; opacity: 1 !important; }
+#splashScreen .splash-hint { margin-top: clamp(18px, 4vh, 36px) !important; }
+/* abertura: troca de tela com fade simples + botão Voltar (13/11) */
+.splash-screen { transition: opacity .6s ease !important; }
+.splash-screen.splash-hidden { opacity: 0 !important; transform: none !important; }
+#splashScreen .splash-hint { display: flex !important; flex-direction: column; align-items: center; gap: 12px; }
+#splashScreen .splash-voltar {
+  min-width: 150px;
+  padding: 9px 30px;
+  border-radius: 999px;
+  border: 2px solid rgba(140, 195, 230, .9);
+  background: rgba(255, 255, 255, .7);
+  color: #2a5577;
+  font-family: var(--font-title);
+  font-size: clamp(16px, 3.6vw, 19px);
+  font-weight: 700;
+  letter-spacing: .04em;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(42, 85, 119, .12);
+}
+#splashScreen .splash-voltar:hover,
+#splashScreen .splash-voltar:focus-visible { background: #fff2bf; border-color: #f3d675; outline: none; }
+@keyframes appFadeIn { from { opacity: 0; } to { opacity: 1; } }
+#app.app-fade-in { animation: appFadeIn .6s ease; }
+@media (prefers-reduced-motion: reduce) { .splash-screen { transition: none !important; } #app.app-fade-in { animation: none; } }
+/* abertura: Iniciar igual ao Voltar, logo e botões centralizados (13/11) */
+#splashScreen {
+  display: flex; flex-direction: column !important;
+  justify-content: center !important; align-items: center !important;
+  gap: clamp(18px, 3.5vh, 30px) !important; padding: 24px 16px !important;
+}
+#splashScreen .splash-title { margin: 0 !important; width: 100%; display: flex; justify-content: center; text-align: center; }
+#splashScreen .splash-hint { margin: 0 !important; width: 100%; }
+#splashScreen .splash-hint-text,
+body[data-theme="dark"] #splashScreen .splash-hint-text,
+#splashScreen .splash-voltar {
+  box-sizing: border-box;
+  width: 180px !important; min-width: 0 !important;
+  padding: 10px 0 !important;
+  border-radius: 999px !important;
+  border: 2px solid rgba(140, 195, 230, .9) !important;
+  background: rgba(255, 255, 255, .7) !important;
+  color: #2a5577 !important;
+  font-family: var(--font-title) !important;
+  font-size: clamp(17px, 3.8vw, 20px) !important;
+  font-weight: 700 !important;
+  letter-spacing: .04em !important;
+  line-height: 1.3 !important;
+  text-align: center !important;
+  text-shadow: none !important;
+  box-shadow: 0 6px 14px rgba(42, 85, 119, .12) !important;
+  cursor: pointer;
+}
+#splashScreen:hover .splash-hint-text:hover,
+#splashScreen .splash-voltar:hover,
+#splashScreen .splash-voltar:focus-visible { background: #fff2bf !important; border-color: #f3d675 !important; outline: none; }
 </style>
 <link rel="stylesheet" href="../menu-inicial.css">
 </head>
@@ -4264,6 +4345,7 @@ body[data-theme="dark"] .splash-screen .splash-hint-text {
   </div>
   <div class="splash-hint" id="splashHint">
     <span class="splash-hint-text">Iniciar</span>
+    <button type="button" class="splash-voltar" id="splashVoltarBtn">Voltar</button>
   </div>
 </div>
 
@@ -7706,11 +7788,8 @@ function initSplash() {
     mascotWrap.classList.add('pop-in');
   });
 
-  if (reduceMotion) {
-    showHint();
-  } else {
-    mascotWrap.addEventListener('animationend', showHint, { once: true });
-  }
+  /* abertura sem o Guri: o botão Iniciar aparece direto */
+  showHint();
 
   let started = false;
   let automaticStart = false;
@@ -7766,6 +7845,8 @@ function initSplash() {
 
     splash.classList.add('splash-hidden');
     app.removeAttribute('aria-hidden');
+    app.classList.add('app-fade-in');
+    app.addEventListener('animationend', () => app.classList.remove('app-fade-in'), { once: true });
 
     setTimeout(() => {
       splash.style.display = 'none';
@@ -7783,6 +7864,26 @@ function initSplash() {
 
   document.addEventListener('keydown', onKeydown);
   splash.addEventListener('click', beginApp);
+
+  /* Voltar: some com fade e volta para a escolha de perfil */
+  const voltarBtn = document.getElementById('splashVoltarBtn');
+  if (voltarBtn) {
+    voltarBtn.addEventListener('click', (event) => {
+      event.stopPropagation();
+      if (started) return;
+      started = true;
+      document.removeEventListener('keydown', onKeydown);
+      splash.removeEventListener('click', beginApp);
+      try {
+        STATE.data.profile.layout = 'neutro';
+        saveData();
+      } catch (e) {}
+      localStorage.setItem('comunica:goToProfileSelection', '1');
+      splash.classList.add('splash-hidden');
+      setTimeout(() => { window.location.href = '../adulto/index.html'; }, reduceMotion ? 0 : 600);
+    });
+    voltarBtn.addEventListener('keydown', (event) => event.stopPropagation());
+  }
 
   window.showLoadingSplash = () => {
     started = true;
