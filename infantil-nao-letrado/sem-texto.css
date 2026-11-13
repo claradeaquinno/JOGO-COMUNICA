@@ -3,6 +3,36 @@
 .sem-texto-label { position:absolute !important; width:1px !important; height:1px !important; padding:0 !important; margin:-1px !important; overflow:hidden !important; clip-path:inset(50%) !important; white-space:nowrap !important; border:0 !important; }
 .sem-texto-icone { font-size:1.8rem; }
 
+/* Figuras locais identificam os assuntos sem depender da leitura. */
+body #app .cat-card > .label {
+  margin-top: 8px;
+  max-width: 100%;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+body #app .cat-card .category-illustration {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(80px, 16vw, 120px);
+  height: auto;
+  max-height: 120px;
+  max-width: 100%;
+  aspect-ratio: 1;
+  margin: 0 auto;
+  flex: 0 0 auto;
+  padding: 0;
+  border-radius: 18px;
+  background: transparent;
+  object-fit: contain;
+  pointer-events: none;
+}
+body #app .cat-card .category-illustration svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 /* Cenas explicativas exclusivas do menu desta versão. */
 body #app:has(.home-screen) {
   max-width: 1600px;

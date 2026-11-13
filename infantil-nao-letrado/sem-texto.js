@@ -7,6 +7,10 @@
       const label = button.textContent.trim();
       if (!button.getAttribute('aria-label') && label) button.setAttribute('aria-label', label);
       button.querySelectorAll('.menu-text, .label, .description, .count').forEach(el => {
+        if (el.matches('.cat-card > .label')) {
+          el.classList.remove('sem-texto-label');
+          return;
+        }
         if (!el.classList.contains('sem-texto-label')) el.classList.add('sem-texto-label');
       });
       if (button.children.length || !/[a-zá-ú]/i.test(label)) return;
