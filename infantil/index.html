@@ -4650,6 +4650,8 @@ body #mascotFloatBtn.mascot-float { transition: transform .15s ease !important; 
 /* Ícone do Desafio da Comunicação: ajuste de tamanho (13/11)
    1 = tamanho atual | maior que 1 aumenta (ex.: 1.2) | menor que 1 diminui (ex.: 0.85) */
 #app .menu-icon[src*="icone-alvo"] { transform: scale(1.2); transform-origin: center; }
+/* Ícone de Categorias (livros): mesmo ajuste; 1 = tamanho atual, maior que 1 aumenta, menor que 1 diminui */
+#app .menu-icon[src*="icone-livros"] { transform: scale(1.15); transform-origin: center; }
 /* Sem o balão de fala do Guri (13/11). A voz dele continua, se estiver ligada nas Configurações. */
 #mascotTip, body.guri-no-inicio #mascotTip, .mascot-tip-toast.show { display: none !important; }
 /* Sem o botão do Guri (13/11) */
@@ -4668,6 +4670,297 @@ body.bg-outras #app .settings-group .form-block { padding-top: 40px !important; 
   body.bg-outras #app .settings-group-title { top: 18px; left: clamp(20px, 2vw, 30px); }
   body.bg-outras #app .settings-group .form-block { padding-top: clamp(46px, 3.6vw, 56px) !important; }
 }
+/* ===================== Desafio: escolha entre os dois jogos ===================== */
+#app .desafios-screen { max-width: 980px; margin: 0 auto; }
+.desafios-grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: clamp(16px, 3vw, 32px); }
+.desafio-card {
+  position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+  min-height: clamp(220px, 34vh, 340px); padding: 24px 20px; cursor: pointer;
+  background: var(--card, #eef6ff); border: 2px solid var(--card-border, #cfe3f5); border-radius: 26px;
+  box-shadow: 0 8px 22px rgba(23, 58, 94, .12); color: var(--navy, #173a5e); font-family: var(--font-title);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.desafio-card:hover, .desafio-card:focus-visible { transform: translateY(-3px); box-shadow: 0 12px 26px rgba(23, 58, 94, .18); }
+.desafio-card:focus-visible { outline: 4px solid #f7c948; outline-offset: 3px; }
+.desafio-card-img { width: clamp(84px, 11vw, 140px); height: clamp(84px, 11vw, 140px); object-fit: contain; }
+.desafio-card-titulo { font-size: clamp(20px, 2vw, 28px); font-weight: 800; letter-spacing: .02em; }
+.desafio-card-sub { font-family: Nunito, system-ui, sans-serif; font-size: clamp(14px, 1.2vw, 17px); font-weight: 700; opacity: .85; text-align: center; }
+.desafio-card-progresso { margin-top: 4px; padding: 4px 14px; border-radius: 999px; background: #fff6d3; font-size: 14px; font-weight: 800; }
+.desafio-card-selo { position: absolute; top: 14px; right: 14px; padding: 3px 12px; border-radius: 999px; background: #f7c948; color: #173a5e; font-size: 13px; font-weight: 900; }
+body[data-theme="dark"] .desafio-card { background: #1b344d; border-color: #4d789c; color: #f1f7ff; }
+body[data-theme="dark"] .desafio-card-progresso { background: #2a4d6c; }
+
+/* Escolha um jogo: cards menores e no centro da tela (15/11) */
+#app .desafios-screen, body.bg-outras #app > .screen.desafios-screen {
+  width: 100% !important; max-width: 760px !important; margin: 0 auto !important;
+  min-height: calc(100dvh - 190px); display: flex; flex-direction: column; justify-content: center; padding-bottom: 40px !important;
+}
+#app .desafios-screen .section-label { text-align: center; }
+#app .desafios-grade { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: clamp(14px, 2vw, 24px); }
+#app .desafio-card { min-height: clamp(150px, 22vh, 210px); padding: 18px 16px; gap: 6px; border-radius: 22px; }
+#app .desafio-card-img { width: clamp(60px, 6vw, 84px); height: clamp(60px, 6vw, 84px); }
+#app .desafio-card-titulo { font-size: clamp(18px, 1.6vw, 24px); }
+#app .desafio-card-sub { font-size: clamp(13px, 1vw, 15px); }
+/* ===================== CORRIDA DO GURI (16/11) ===================== */
+.cr-raiz {
+  --p-borda: #8cc3e6; --p-borda-forte: #5fa3d3; --p-azul: #cfe9f9; --p-azul-2: #b5ddf5; --p-fundo: #eef8ff; --p-texto: #2a5577; --p-sombra: 0 3px 0 rgba(95, 163, 211, .35);
+  position: fixed; inset: 0; z-index: 150; overflow: hidden; color: var(--p-texto);
+  font-family: Nunito, system-ui, sans-serif; background: #ffffff;
+}
+.cr-raiz button { font-family: var(--font-title); color: var(--p-texto); cursor: pointer; }
+.cr-raiz button:focus-visible { outline: 4px solid var(--p-borda-forte); outline-offset: 3px; }
+.cr-btn { min-height: 56px; padding: 10px 24px; border-radius: 18px; border: 2px solid var(--p-borda); background: #ffffff; font-size: clamp(17px, 2.2vh, 21px); font-weight: 800; box-shadow: var(--p-sombra); transition: transform .1s; }
+.cr-btn:active { transform: translateY(2px); box-shadow: none; }
+.cr-btn-principal { background: var(--p-azul-2); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* tela inicial do jogo: pista animada no fundo + cartão por cima */
+.cr-titulo { position: absolute; inset: 0; display: grid; place-items: center; padding: 20px; overflow-y: auto; }
+.cr-fundo-vivo { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.cr-titulo-veu { position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(244, 251, 255, .55), rgba(244, 251, 255, .15) 70%); }
+.cr-voltar { position: absolute; top: 18px; left: 18px; z-index: 3; width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--p-borda); background: #fff; box-shadow: var(--p-sombra); display: grid; place-items: center; font-size: 24px; }
+.cr-voltar img { width: 36px; height: 36px; object-fit: contain; }
+.cr-titulo-card { position: relative; z-index: 2; width: min(100%, 920px); border-radius: 32px; overflow: hidden; background: rgba(244, 251, 255, .94); border: 3px solid #fff; box-shadow: 0 0 0 2px var(--p-borda), 0 18px 40px rgba(23, 58, 94, .22); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); animation: crEntra .35s ease; }
+.cr-logo { display: flex; justify-content: center; align-items: baseline; gap: 12px; flex-wrap: wrap; padding: 16px 20px 12px; background: linear-gradient(180deg, #cfe9f9 0%, #b5ddf5 100%); border-bottom: 2px solid var(--p-borda); font-family: var(--font-title); line-height: 1; }
+.cr-logo-a { font-size: clamp(30px, 4.6vw, 54px); color: var(--p-texto); letter-spacing: .03em; text-shadow: 0 3px 0 #fff; }
+.cr-logo-b { font-size: clamp(26px, 3.8vw, 44px); color: #e8a317; letter-spacing: .03em; text-shadow: 0 3px 0 #fff; }
+.cr-titulo-corpo { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: clamp(14px, 2.5vw, 28px); align-items: center; padding: clamp(16px, 2.6vw, 28px); }
+.cr-titulo-arte { position: relative; display: grid; place-items: center; min-height: 280px; }
+.cr-titulo-arte::before { content: ''; position: absolute; width: 82%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, #ffffff 0%, #cfe9f9 55%, rgba(207, 233, 249, 0) 72%); }
+.cr-titulo-arte img { position: relative; max-height: 300px; max-width: 90%; object-fit: contain; animation: crPulo 1.6s ease-in-out infinite; filter: drop-shadow(0 10px 10px rgba(23, 58, 94, .2)); }
+@keyframes crPulo { 0%, 100% { transform: translateY(0); } 40%, 60% { transform: translateY(-18px); } }
+.cr-chip-voa { position: absolute; padding: 6px 14px; border-radius: 999px; background: #fff; border: 2px solid var(--p-borda); box-shadow: var(--p-sombra); font-family: var(--font-title); font-weight: 800; font-size: 18px; color: var(--p-texto); animation: crFlutua 3s ease-in-out infinite; }
+.cr-chip-voa.v0 { top: 8%; left: 2%; } .cr-chip-voa.v1 { top: 2%; right: 4%; animation-delay: -1s; } .cr-chip-voa.v2 { bottom: 12%; right: 0; animation-delay: -2s; }
+@keyframes crFlutua { 50% { transform: translateY(-10px); } }
+.cr-titulo-info { display: grid; gap: 12px; }
+.cr-titulo-sub { margin: 0; font-size: clamp(17px, 1.6vw, 21px); font-weight: 800; color: var(--p-texto); }
+.cr-progresso { padding: 10px 14px; border-radius: 18px; background: #fff; border: 2px solid var(--p-azul-2); }
+.cr-progresso-numeros { display: flex; justify-content: space-between; gap: 10px; font-weight: 800; font-size: 15px; margin-bottom: 6px; }
+.cr-progresso-numeros i { font-style: normal; color: #e8a317; }
+.cr-progresso-barra { height: 12px; border-radius: 999px; background: var(--p-fundo); border: 1.5px solid var(--p-azul-2); overflow: hidden; }
+.cr-progresso-barra span { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #a6d8f5, #7cc3ee); }
+.cr-jogar { display: flex; align-items: center; gap: 14px; width: 100%; min-height: 78px; padding: 10px 18px; border-radius: 22px; border: 3px solid #fff; background: linear-gradient(180deg, #fde9a8 0%, #f7d266 100%); box-shadow: 0 0 0 2px #e8b93a, 0 6px 0 #e3a92a, 0 12px 22px rgba(232, 163, 23, .3); text-align: left; transition: transform .1s; }
+.cr-jogar:hover { transform: translateY(-2px); }
+.cr-jogar:active { transform: translateY(3px); box-shadow: 0 0 0 2px #e8b93a, 0 2px 0 #e3a92a; }
+.cr-jogar-ico { flex: 0 0 54px; height: 54px; border-radius: 50%; display: grid; place-items: center; background: #fff; color: #e8a317; box-shadow: inset 0 -3px 0 rgba(232, 163, 23, .25); }
+.cr-jogar-ico svg { width: 28px; height: 28px; margin-left: 4px; }
+.cr-jogar-txt { display: grid; line-height: 1.1; }
+.cr-jogar-txt b { font-size: clamp(26px, 2.8vw, 34px); color: var(--p-texto); letter-spacing: .04em; }
+.cr-jogar-txt small { font-family: Nunito, system-ui, sans-serif; font-size: 15px; font-weight: 800; color: #5b84a5; }
+.cr-btn-fases { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; }
+.cr-btn-fases svg { width: 22px; height: 22px; color: #5fa3d3; }
+.cr-como { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.cr-como li { display: grid; justify-items: center; gap: 4px; padding: 10px 8px; border-radius: 16px; background: var(--p-fundo); border: 2px solid var(--p-azul-2); font-weight: 800; font-size: 13.5px; line-height: 1.2; text-align: center; color: var(--p-texto); }
+.cr-como svg { width: 30px; height: 30px; color: #4a90c8; }
+.cr-como kbd { padding: 0 6px; border-radius: 6px; border: 1.5px solid var(--p-borda); background: #fff; font-family: inherit; font-weight: 900; }
+@media (max-width: 760px) {
+  .cr-titulo { place-items: start center; padding: 84px 12px 20px; }
+  .cr-titulo-corpo { grid-template-columns: 1fr; }
+  .cr-titulo-arte { min-height: 190px; } .cr-titulo-arte img { max-height: 200px; }
+  .cr-chip-voa { font-size: 15px; padding: 4px 10px; }
+  .cr-como { grid-template-columns: 1fr; } .cr-como li { grid-template-columns: 34px 1fr; justify-items: start; text-align: left; align-items: center; }
+}
+
+/* jogo */
+.cr-jogo { position: absolute; inset: 0; }
+.cr-tela { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: manipulation; cursor: pointer; }
+.cr-hud { position: absolute; top: 0; left: 0; right: 0; display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; padding: 12px; pointer-events: none; }
+.cr-hud > * { pointer-events: auto; }
+.cr-hud-btn { flex: 0 0 auto; width: 56px; height: 56px; border-radius: 18px; border: 2px solid var(--p-borda); background: rgba(255, 255, 255, .96); box-shadow: var(--p-sombra); display: grid; place-items: center; color: var(--p-texto); }
+.cr-hud-btn svg { width: 24px; height: 24px; }
+.cr-meta { display: grid; gap: 6px; padding: 8px 12px 10px; border-radius: 22px; background: rgba(255, 255, 255, .95); border: 2px solid var(--p-borda); box-shadow: 0 6px 16px rgba(95, 163, 211, .25); max-width: min(62vw, 760px); }
+.cr-meta-topo { display: flex; align-items: center; gap: 10px; }
+.cr-meta-fase { flex: 0 0 auto; padding: 2px 12px; border-radius: 999px; background: var(--p-azul-2); font-family: var(--font-title); font-weight: 800; font-size: 14px; color: var(--p-texto); }
+.cr-meta-barra { flex: 1; height: 10px; border-radius: 999px; background: var(--p-fundo); border: 1.5px solid var(--p-azul-2); overflow: hidden; }
+.cr-meta-barra i { display: block; height: 100%; width: 0; border-radius: 999px; background: linear-gradient(90deg, #9fdcb6, #6cc28f); transition: width .4s ease; }
+.cr-frase { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+.cr-slot { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 4px 14px; border-radius: 14px; border: 2px solid var(--p-borda); background: #ffffff; color: var(--p-texto); font-family: var(--font-title); font-weight: 800; font-size: clamp(16px, 1.5vw, 21px); }
+.cr-slot img { width: 30px; height: 30px; object-fit: contain; opacity: .5; }
+.cr-slot.agora { border-style: solid; border-color: var(--p-borda-forte); background: var(--p-azul); color: var(--p-texto); animation: crAgora 1.2s ease-in-out infinite; }
+.cr-slot.agora img, .cr-slot.ok img { opacity: 1; }
+.cr-slot.ok { border-style: solid; border-color: var(--p-borda); background: var(--p-fundo); color: var(--p-texto); }
+@keyframes crAgora { 50% { box-shadow: 0 0 0 5px rgba(140, 195, 230, .45); } }
+.cr-placar { display: flex; flex-direction: column; align-items: stretch; gap: 4px; padding: 6px 10px; border-radius: 18px; background: rgba(255, 255, 255, .96); border: 2px solid var(--p-borda); box-shadow: var(--p-sombra); }
+.cr-placar-est { display: flex; align-items: center; justify-content: center; gap: 6px; font-family: var(--font-title); font-weight: 800; font-size: 21px; color: var(--p-texto); }
+.cr-placar-est i { font-style: normal; color: #e8a317; }
+.cr-coracoes { display: flex; justify-content: center; gap: 2px; font-size: 21px; line-height: 1.2; color: #f28b9b; }
+.cr-coracoes .vazio { color: #d6dee6; }
+.cr-aviso { position: absolute; left: 50%; top: 132px; transform: translate(-50%, -8px); padding: 10px 22px; border-radius: 18px; background: #fff; border: 2px solid var(--p-borda); box-shadow: 0 6px 18px rgba(95, 163, 211, .25); font-family: var(--font-title); font-weight: 800; font-size: clamp(16px, 1.6vw, 21px); color: var(--p-texto); text-align: center; max-width: 90vw; opacity: 0; transition: opacity .25s, transform .25s; pointer-events: none; }
+.cr-aviso.ve { opacity: 1; transform: translate(-50%, 0); }
+.cr-pular { position: absolute; right: 20px; bottom: calc(22px + env(safe-area-inset-bottom)); width: 124px; height: 124px; border-radius: 50%; border: 4px solid #fff; background: linear-gradient(180deg, #cfe9f9 0%, #9fd0f0 100%); display: grid; place-items: center; align-content: center; gap: 0; font-size: 21px; font-weight: 900; color: var(--p-texto); box-shadow: 0 0 0 2px var(--p-borda), 0 6px 0 var(--p-borda-forte), 0 12px 24px rgba(23, 58, 94, .2); touch-action: manipulation; user-select: none; -webkit-user-select: none; }
+.cr-pular svg { width: 40px; height: 40px; color: #ffffff; filter: drop-shadow(0 2px 0 rgba(42, 85, 119, .35)); }
+.cr-pular:active { transform: translateY(4px); box-shadow: 0 0 0 2px var(--p-borda), 0 2px 0 var(--p-borda-forte); }
+.cr-dica { position: absolute; left: 16px; bottom: 16px; padding: 6px 14px; border-radius: 999px; background: rgba(255, 255, 255, .9); border: 2px solid var(--p-azul-2); font-weight: 800; font-size: 14px; color: var(--p-texto); display: none; }
+@media (hover: hover) and (pointer: fine) { .cr-dica { display: block; } }
+@media (min-width: 1024px) {
+  .cr-hud { padding: 22px 28px; }
+  .cr-hud-btn { width: 64px; height: 64px; }
+  .cr-pular { right: 32px; bottom: 32px; width: 136px; height: 136px; font-size: 23px; }
+}
+@media (max-width: 600px) {
+  .cr-hud { padding: 8px; gap: 6px; }
+  .cr-hud-btn { width: 46px; height: 46px; border-radius: 14px; }
+  .cr-meta { padding: 6px 8px; max-width: 64vw; gap: 4px; }
+  .cr-meta-fase { font-size: 12px; padding: 1px 8px; }
+  .cr-slot { min-height: 34px; padding: 2px 8px; font-size: 14px; } .cr-slot img { width: 22px; height: 22px; }
+  .cr-placar { padding: 4px 8px; } .cr-placar-est { font-size: 16px; } .cr-coracoes { font-size: 15px; }
+  .cr-aviso { top: 140px; }
+  .cr-pular { width: 108px; height: 108px; font-size: 18px; } .cr-pular svg { width: 32px; height: 32px; }
+  .cr-dica { display: none !important; }
+}
+
+/* painéis (fases, pausa, fim) */
+.cr-camada:empty { display: none; }
+.cr-camada { position: absolute; inset: 0; z-index: 10; display: grid; place-items: center; padding: 14px; background: rgba(42, 85, 119, .28); }
+.cr-painel { width: min(100%, 760px); max-height: calc(100dvh - 28px); display: flex; flex-direction: column; border-radius: 26px; overflow: hidden; background: linear-gradient(180deg, #f4fbff 0%, #e2f3fd 100%); border: 2px solid var(--p-borda); box-shadow: 0 10px 30px rgba(23, 58, 94, .25); animation: crEntra .2s ease; }
+.cr-painel-peq { width: min(100%, 520px); }
+@keyframes crEntra { from { transform: translateY(14px); opacity: 0; } }
+.cr-painel-faixa { display: flex; align-items: center; justify-content: center; gap: 10px; position: relative; padding: 12px 60px; background: var(--p-azul-2); border-bottom: 2px solid var(--p-borda); }
+.cr-painel-faixa h2 { margin: 0; font-family: var(--font-title); font-size: clamp(20px, 2.4vw, 26px); color: var(--p-texto); text-align: center; }
+.cr-fechar { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 46px; height: 46px; border-radius: 50%; border: 2px solid var(--p-borda); background: #fff; font-size: 20px; font-weight: 900; }
+.cr-painel-corpo { padding: 18px 20px 22px; display: grid; gap: 12px; justify-items: center; text-align: center; overflow-y: auto; }
+.cr-painel-frase { margin: 0; font-size: 18px; font-weight: 800; }
+.cr-painel-info { margin: 0; font-size: 16px; font-weight: 700; }
+.cr-painel-botoes { display: grid; gap: 10px; width: min(100%, 360px); }
+.cr-frase-final { margin: 0; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.cr-frase-final span { padding: 8px 16px; border-radius: 14px; background: #e3f7ea; border: 2px solid #9fdcb6; font-family: var(--font-title); font-weight: 800; font-size: clamp(20px, 2.4vw, 26px); }
+.cr-nota { display: flex; gap: 8px; font-size: 54px; line-height: 1; }
+.cr-nota span { color: #d6dee6; } .cr-nota span.ok { color: #f7c948; text-shadow: 0 3px 0 #e8a317; }
+.cr-fases { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; padding: 16px; overflow-y: auto; }
+.cr-fase { display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; gap: 2px 10px; align-items: center; text-align: left; min-height: 78px; padding: 10px 14px; border-radius: 18px; border: 2px solid var(--p-borda); background: #fff; box-shadow: var(--p-sombra); }
+.cr-fase b { grid-row: 1 / 3; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--p-azul-2); font-size: 20px; }
+.cr-fase span { font-weight: 800; font-size: 16px; line-height: 1.2; }
+.cr-fase i { font-style: normal; letter-spacing: 2px; } .cr-fase em { font-style: normal; color: #d6dee6; } .cr-fase em.ok { color: #f7c948; }
+.cr-fase.bloq { background: #edf2f6; border-color: #d3dee7; color: #a3b6c5; box-shadow: none; cursor: default; }
+.cr-fase.bloq b { background: #dde6ed; }
+@media (prefers-reduced-motion: reduce) { .cr-titulo-arte img, .cr-slot.agora, .cr-chip-voa { animation: none; } }
+/* Corrida do Guri: ícones desenhados (no lugar de símbolos que viravam emoji) */
+.cr-raiz svg { flex-shrink: 0; }
+.cr-raiz .cr-ic-estrela { color: #f7c948; }
+.cr-progresso-numeros i svg { width: 18px; height: 18px; vertical-align: -3px; }
+.cr-placar-est i { display: grid; } .cr-placar-est i svg { width: 22px; height: 22px; }
+.cr-coracoes span { display: inline-grid; color: #f28b9b; } .cr-coracoes span.vazio { color: #d6dee6; }
+.cr-coracoes svg { width: 20px; height: 20px; }
+.cr-fase i { display: flex; gap: 2px; } .cr-fase em { display: inline-grid; } .cr-fase em svg { width: 16px; height: 16px; }
+.cr-fase em:not(.ok) .cr-ic-estrela, .cr-nota span:not(.ok) .cr-ic-estrela { color: #dfe6ec; }
+.cr-fase em:not(.ok) .cr-ic-estrela path, .cr-nota span:not(.ok) .cr-ic-estrela path { stroke: #c4cfd9; }
+.cr-nota span { display: inline-grid; text-shadow: none !important; } .cr-nota svg { width: 56px; height: 56px; }
+.cr-nota span.ok svg { filter: drop-shadow(0 3px 0 #e3a92a); }
+.cr-fechar { display: grid; place-items: center; } .cr-fechar svg { width: 20px; height: 20px; }
+@media (max-width: 600px) { .cr-placar-est i svg { width: 17px; height: 17px; } .cr-coracoes svg { width: 15px; height: 15px; } }
+/* Corrida do Guri: título com uma fonte só, abas azuis e amarelo só ao selecionar */
+.cr-logo-b { font-size: clamp(30px, 4.6vw, 54px); color: var(--p-texto); }
+.cr-chip-voa, .cr-chip-voa.v2 { background: var(--p-azul); border-color: var(--p-borda-forte); color: var(--p-texto); }
+.cr-jogar { background: linear-gradient(180deg, #e3f3fd 0%, #b5ddf5 100%); box-shadow: 0 0 0 2px var(--p-borda-forte), 0 6px 0 #4f8fbf, 0 12px 22px rgba(95, 163, 211, .3); transition: transform .1s, background .15s, box-shadow .15s; }
+.cr-jogar-ico { color: var(--p-borda-forte); box-shadow: inset 0 -3px 0 rgba(95, 163, 211, .25); }
+.cr-jogar:hover, .cr-jogar:focus-visible { background: linear-gradient(180deg, #fde9a8 0%, #f7d266 100%); box-shadow: 0 0 0 2px #e8b93a, 0 6px 0 #e3a92a, 0 12px 22px rgba(232, 163, 23, .3); outline: none; }
+.cr-jogar:hover .cr-jogar-ico, .cr-jogar:focus-visible .cr-jogar-ico { color: #e8a317; }
+.cr-jogar:active { box-shadow: 0 0 0 2px #e8b93a, 0 2px 0 #e3a92a; background: linear-gradient(180deg, #fde9a8 0%, #f7d266 100%); }
+.cr-btn-fases { background: var(--p-azul); border-color: var(--p-borda-forte); }
+.cr-btn, .cr-fase, .cr-hud-btn, .cr-fechar { transition: transform .1s, background .15s, border-color .15s; }
+.cr-btn:hover, .cr-btn:focus-visible, .cr-btn:active,
+.cr-fase:not(.bloq):hover, .cr-fase:not(.bloq):focus-visible, .cr-fase:not(.bloq):active,
+.cr-hud-btn:hover, .cr-hud-btn:focus-visible, .cr-fechar:hover, .cr-fechar:focus-visible,
+.cr-voltar:hover, .cr-voltar:focus-visible { background: #fff4cc; border-color: #e8b93a; outline: none; }
+.cr-fase:not(.bloq):hover b, .cr-fase:not(.bloq):focus-visible b { background: #fde9a8; }
+/* Corrida do Guri: o destaque amarelo geral do app (#app button:hover) troca a posição para "relative";
+   aqui os botões que ficam fixos num canto continuam no lugar ao passar o mouse ou selecionar */
+#app .cr-raiz .cr-voltar, #app .cr-raiz .cr-voltar:hover, #app .cr-raiz .cr-voltar.scan-active, #app .cr-raiz .cr-voltar.accessibility-focus { position: absolute; top: 18px; left: 18px; z-index: 5; }
+#app .cr-raiz .cr-fechar, #app .cr-raiz .cr-fechar:hover, #app .cr-raiz .cr-fechar.scan-active, #app .cr-raiz .cr-fechar.accessibility-focus { position: absolute; right: 10px; top: 50%; }
+/* Corrida do Guri: Guri parado no card (sem flutuar) */
+#app .cr-titulo-arte img { animation: none; }
+/* ===== Corrida do Guri: tela de entrada no estilo "tela do personagem" — fundo branco em degradê, detalhes azuis, com animações ===== */
+.crh { position: absolute; inset: 0; overflow: hidden; display: grid; grid-template-columns: minmax(240px, 1fr) minmax(280px, 1.3fr) minmax(300px, 1fr); grid-template-rows: auto minmax(0, 1fr) auto; gap: 12px 26px; padding: 16px 28px 22px; color: var(--p-texto); font-family: var(--font-title);
+  background: radial-gradient(ellipse 55% 50% at 50% 60%, rgba(181, 221, 245, .55) 0%, rgba(181, 221, 245, 0) 70%), linear-gradient(180deg, #ffffff 0%, #f4fbff 45%, #dceefb 100%); }
+.crh-fundo { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.crh-fundo::after { content: ''; position: absolute; left: -10%; right: -10%; bottom: 0; height: 24%; background: repeating-linear-gradient(100deg, rgba(95, 163, 211, .12) 0 2px, transparent 2px 64px), linear-gradient(0deg, rgba(181, 221, 245, .55), transparent); animation: crhChao 3.5s linear infinite; }
+@keyframes crhChao { to { transform: translateX(-64px); } }
+.crh-seta { position: absolute; left: 50%; bottom: 0; width: min(44vw, 560px); height: 88%; transform: translateX(-50%); transform-origin: 50% 100%; filter: drop-shadow(0 0 30px rgba(95, 163, 211, .45)); animation: crhSetaSobe .8s cubic-bezier(.2, .9, .3, 1.15) both, crhSetaPulsa 3s ease-in-out .8s infinite; }
+@keyframes crhSetaSobe { from { transform: translateX(-50%) scaleY(0); opacity: 0; } }
+@keyframes crhSetaPulsa { 50% { filter: drop-shadow(0 0 48px rgba(95, 163, 211, .75)); opacity: .82; } }
+.crh-flecha { position: absolute; width: calc(26px * var(--k)); height: calc(26px * var(--k)); color: #5fa3d3; opacity: 0; filter: drop-shadow(0 0 6px rgba(255, 255, 255, .9)); animation: crhFlechaSobe 3.2s ease-in infinite; }
+.crh-flecha svg { width: 100%; height: 100%; }
+@keyframes crhFlechaSobe { 0% { transform: translateY(40px); opacity: 0; } 25% { opacity: .9; } 100% { transform: translateY(-90px); opacity: 0; } }
+.crh-brilho { position: absolute; width: 10px; height: 10px; color: #f7c948; animation: crhPisca 2.2s ease-in-out infinite; }
+.crh-brilho svg { width: 100%; height: 100%; }
+@keyframes crhPisca { 0%, 100% { transform: scale(.4) rotate(0); opacity: .2; } 50% { transform: scale(1.3) rotate(30deg); opacity: 1; } }
+.crh > :not(.crh-fundo) { position: relative; z-index: 1; }
+/* topo */
+.crh-topo { grid-column: 1 / -1; display: flex; align-items: center; gap: 16px; min-height: 64px; padding-left: 78px; animation: crhDesce .5s ease-out both; }
+@keyframes crhDesce { from { transform: translateY(-24px); opacity: 0; } }
+#app .crh .cr-voltar, #app .crh .cr-voltar:hover, #app .crh .cr-voltar:focus-visible, #app .crh .cr-voltar.scan-active, #app .crh .cr-voltar.accessibility-focus { top: 2px; left: 0; }
+.crh-topo-titulo { margin: 0; font-size: clamp(22px, 2.4vw, 32px); font-weight: 800; color: var(--p-texto); text-shadow: 0 3px 0 #fff; }
+.crh-moedas { margin-left: auto; display: flex; gap: 10px; }
+.crh-moeda { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px 0 6px; border-radius: 999px; background: #fff; border: 2px solid var(--p-borda); box-shadow: var(--p-sombra); font-size: 19px; font-weight: 800; color: var(--p-texto); animation: crhPop .45s cubic-bezier(.2, .9, .3, 1.4) both; animation-delay: calc(.25s + var(--i, 0) * .1s); }
+.crh-moeda i { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: var(--p-azul); }
+.crh-moeda svg { width: 20px; height: 20px; }
+.crh-moeda .m-estrela .cr-ic-estrela { color: #f7c948; } .crh-moeda .m-bandeira { color: #3f8fd0; } .crh-moeda .m-trofeu { color: #e3a92a; }
+@keyframes crhPop { from { transform: scale(.4); opacity: 0; } }
+/* esquerda */
+.crh-esq { grid-column: 1; grid-row: 2; align-self: center; display: grid; gap: 8px; justify-items: start; }
+.crh-esq > * { animation: crhEntraEsq .55s cubic-bezier(.2, .9, .3, 1.1) both; }
+.crh-esq > :nth-child(1) { animation-delay: .1s; } .crh-esq > :nth-child(2) { animation-delay: .18s; } .crh-esq > :nth-child(3) { animation-delay: .26s; } .crh-esq > :nth-child(4) { animation-delay: .34s; } .crh-esq > :nth-child(5) { animation-delay: .42s; }
+@keyframes crhEntraEsq { from { transform: translateX(-40px); opacity: 0; } }
+.crh-nome { margin: 0; font-size: clamp(54px, 6.4vw, 92px); line-height: .9; font-weight: 800; color: #1b6fd1; text-shadow: 0 5px 0 #fff, 0 8px 18px rgba(27, 111, 209, .18); }
+.crh-cargo { margin: 0; font-size: clamp(20px, 2vw, 26px); font-weight: 800; color: #3fa2f2; }
+.crh-etiqueta { display: inline-grid; padding: 4px 14px; border-radius: 10px; background: var(--p-azul); border: 2px solid var(--p-borda); color: var(--p-texto); font-size: 18px; font-weight: 800; line-height: 1.05; }
+.crh-etiqueta small { font-size: 11px; font-weight: 700; color: #5b84a5; text-transform: uppercase; letter-spacing: .06em; }
+.crh-desc { margin: 4px 0 0; max-width: 34ch; font-family: Nunito, system-ui, sans-serif; font-size: clamp(14px, 1.15vw, 16px); font-weight: 700; line-height: 1.4; color: #4b6f8f; }
+.crh-nivel { display: flex; align-items: center; gap: 10px; width: min(100%, 320px); margin-top: 6px; }
+.crh-nivel-num { flex: 0 0 auto; width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; background: linear-gradient(180deg, #8fdcff, #3fa2f2); color: #fff; font-size: 20px; box-shadow: var(--p-sombra); }
+.crh-nivel-barra { flex: 1; display: grid; gap: 3px; }
+.crh-nivel-barra small { font-size: 14px; font-weight: 800; color: var(--p-texto); text-align: center; }
+.crh-barra { position: relative; height: 22px; border-radius: 999px; background: #fff; border: 2px solid var(--p-borda); overflow: hidden; }
+.crh-barra span { display: block; height: 100%; background: linear-gradient(90deg, #8fdcff, #3fa2f2); border-radius: 999px; animation: crhEnche 1.1s cubic-bezier(.3, .8, .3, 1) .6s both; }
+@keyframes crhEnche { from { width: 0; } }
+.crh-barra em { position: absolute; inset: 0; display: grid; place-items: center; font-style: normal; font-size: 14px; font-weight: 800; color: var(--p-texto); }
+/* centro: o Guri chega dirigindo e para */
+.crh-centro { grid-column: 2; grid-row: 2; display: grid; place-items: end center; min-height: 0; }
+.crh-centro img { max-width: 100%; max-height: min(52vh, 420px); object-fit: contain; filter: drop-shadow(0 18px 14px rgba(42, 85, 119, .22)); animation: crhCarroChega 1s cubic-bezier(.2, .8, .25, 1) .15s both; transform-origin: 50% 100%; }
+@keyframes crhCarroChega { 0% { transform: translateX(-60vw) rotate(0); opacity: 0; } 55% { opacity: 1; } 75% { transform: translateX(14px) rotate(-3deg); } 88% { transform: translateX(-4px) rotate(1deg); } 100% { transform: none; } }
+/* painel da direita */
+.crh-painel { grid-column: 3; grid-row: 2 / 4; align-self: stretch; display: flex; flex-direction: column; gap: 10px; min-height: 0; padding: 16px 18px 18px; border-radius: 24px; background: rgba(255, 255, 255, .88); border: 2px solid var(--p-borda); box-shadow: 0 6px 0 rgba(95, 163, 211, .25), 0 16px 30px rgba(42, 85, 119, .12); overflow-y: auto; animation: crhEntraDir .6s cubic-bezier(.2, .9, .3, 1.1) .2s both; }
+@keyframes crhEntraDir { from { transform: translateX(60px); opacity: 0; } }
+.crh-painel-titulo { margin: -16px -18px 4px; padding: 12px 18px; text-align: center; font-size: 28px; font-weight: 800; color: var(--p-texto); background: linear-gradient(180deg, #cfe9f9, #b5ddf5); border-bottom: 2px solid var(--p-borda); border-radius: 22px 22px 0 0; }
+.crh-info { position: relative; display: grid; gap: 2px; padding: 8px 14px; border-radius: 14px; background: var(--p-fundo); border: 2px solid var(--p-azul); }
+.crh-info small { font-family: Nunito, system-ui, sans-serif; font-size: 13px; font-weight: 800; color: #5b84a5; }
+.crh-info b { font-size: 20px; font-weight: 800; line-height: 1.15; color: var(--p-texto); }
+.crh-dica { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); width: 28px; height: 28px; color: #3fa2f2; } .crh-dica svg { width: 100%; height: 100%; }
+.crh-fases-titulo { margin: 4px 0 0; font-size: 20px; font-weight: 800; color: var(--p-texto); } .crh-fases-titulo span { color: #3fa2f2; }
+.crh-grade { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+#app .crh .crh-slot { position: relative; aspect-ratio: 1; display: grid; place-items: center; align-content: center; gap: 2px; padding: 4px; border-radius: 14px; border: 2px solid var(--p-borda); background: linear-gradient(180deg, #ffffff, #e3f3fd); color: var(--p-texto); font-family: var(--font-title); box-shadow: 0 4px 0 rgba(95, 163, 211, .35); cursor: pointer; animation: crhPop .4s cubic-bezier(.2, .9, .3, 1.4) both; animation-delay: calc(.45s + var(--i, 0) * .05s); }
+.crh-slot b { font-size: 22px; line-height: 1; }
+.crh-slot i { display: flex; gap: 1px; } .crh-slot u { display: inline-grid; text-decoration: none; } .crh-slot u svg { width: 11px; height: 11px; }
+.crh-slot u:not(.ok) .cr-ic-estrela { color: #dfe6ec; } .crh-slot u:not(.ok) .cr-ic-estrela path { stroke: #c4cfd9; }
+#app .crh .crh-slot.atual { background: linear-gradient(180deg, #8fdcff, #3fa2f2); color: #fff; border-color: #fff; box-shadow: 0 0 0 2px #3fa2f2, 0 4px 0 #2a7fc4; animation: crhPop .4s cubic-bezier(.2, .9, .3, 1.4) both, crhAtual 1.8s ease-in-out 1.2s infinite; animation-delay: calc(.45s + var(--i, 0) * .05s), 1.2s; }
+@keyframes crhAtual { 50% { box-shadow: 0 0 0 2px #3fa2f2, 0 0 0 7px rgba(63, 162, 242, .25), 0 4px 0 #2a7fc4; } }
+#app .crh .crh-slot.bloq { cursor: default; background: #eef3f7; border-color: #d3dee7; color: #a3b6c5; box-shadow: none; }
+.crh-slot.bloq svg { width: 22px; height: 22px; } .crh-slot.bloq small { font-size: 12px; font-weight: 800; }
+.crh-novo { position: absolute; top: -10px; right: -8px; padding: 1px 7px; border-radius: 8px; background: #1b6fd1; color: #fff; font-style: normal; font-size: 11px; font-weight: 800; box-shadow: 0 2px 4px rgba(0, 0, 0, .2); animation: crhNovo 1.4s ease-in-out infinite; }
+@keyframes crhNovo { 50% { transform: translateY(-3px) scale(1.06); } }
+/* botões de baixo */
+#app .crh .crh-como-btn { grid-column: 1; grid-row: 3; align-self: end; justify-self: start; display: inline-flex; align-items: center; gap: 12px; min-height: 64px; padding: 8px 26px 8px 12px; border-radius: 18px; border: 2px solid var(--p-borda); background: #fff; color: var(--p-texto); font-size: 22px; font-weight: 800; box-shadow: 0 5px 0 rgba(95, 163, 211, .35); animation: crhSobe .5s ease-out .5s both; }
+.crh-como-btn svg { width: 40px; height: 40px; color: #3fa2f2; }
+@keyframes crhSobe { from { transform: translateY(30px); opacity: 0; } }
+#app .crh .crh-jogar { grid-column: 2; grid-row: 3; justify-self: center; align-self: end; position: relative; overflow: hidden; width: min(100%, 330px); min-height: 72px; display: flex; align-items: center; justify-content: center; gap: 12px; padding: 8px 24px; border-radius: 20px; border: 3px solid #fff; background: linear-gradient(180deg, #8fdcff 0%, #3fa2f2 100%); color: #fff; font-size: 32px; font-weight: 800; letter-spacing: .05em; text-shadow: 0 2px 0 rgba(10, 50, 120, .35); box-shadow: 0 0 0 2px #3f8fd0, 0 7px 0 #2a7fc4, 0 14px 26px rgba(42, 85, 119, .25); animation: crhPop .5s cubic-bezier(.2, .9, .3, 1.5) .75s both; }
+#app .crh .crh-jogar::after { content: ''; position: absolute; top: 0; bottom: 0; left: -60%; width: 40%; background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .65), transparent); transform: skewX(-20deg); animation: crhReflexo 3.2s ease-in-out 1.6s infinite; pointer-events: none; }
+@keyframes crhReflexo { 0% { left: -60%; } 35%, 100% { left: 130%; } }
+.crh-jogar svg { width: 32px; height: 32px; }
+#app .crh .crh-jogar:hover, #app .crh .crh-jogar:focus-visible { color: #173a5e !important; text-shadow: none; }
+/* celular e telas estreitas: tudo empilhado */
+@media (max-width: 900px), (max-height: 520px) and (max-width: 1100px) {
+  .crh { overflow-y: auto; grid-template-columns: 1fr; grid-template-rows: none; grid-auto-rows: auto; gap: 12px; padding: 12px 14px 22px; align-content: start; }
+  .crh-topo { grid-column: 1; padding-left: 70px; min-height: 60px; flex-wrap: wrap; gap: 6px 12px; }
+  .crh-topo-titulo { font-size: 22px; }
+  .crh-moedas { margin-left: 0; width: 100%; gap: 6px; } .crh-moeda { height: 34px; font-size: 16px; padding-right: 12px; } .crh-moeda i { width: 26px; height: 26px; }
+  .crh-esq, .crh-centro, .crh-painel, #app .crh .crh-como-btn, #app .crh .crh-jogar { grid-column: 1; grid-row: auto; }
+  .crh-esq { justify-items: center; text-align: center; }
+  .crh-nome { font-size: 56px; } .crh-desc { max-width: none; }
+  .crh-centro { min-height: auto; } .crh-painel { min-height: auto; flex-shrink: 0; overflow: visible; } .crh-centro img { max-height: 210px; }
+  .crh-seta { width: 92vw; height: 300px; top: 150px; bottom: auto; }
+  .crh-topo { order: 0; } .crh-esq { order: 1; } .crh-centro { order: 2; } #app .crh .crh-jogar { order: 3; width: 100%; } #app .crh .crh-como-btn { order: 4; justify-self: stretch; justify-content: center; min-height: 56px; } .crh-painel { order: 5; }
+}
+@media (prefers-reduced-motion: reduce) { .crh *, .crh *::after, .crh-fundo::after { animation: none !important; } }
 </style>
 <link rel="stylesheet" href="../menu-inicial.css">
 </head>
@@ -5145,6 +5438,7 @@ const MENU_AUDIO_SRC = {
   build: '../assets/audio/começar-comunicar.mp3',
   settings: '../assets/audio/configurações.mp3',
   challenge: '../assets/audio/desafio-comunicação.mp3',
+  desafios: '../assets/audio/desafio-comunicação.mp3',
   favorites: '../assets/audio/favoritos.mp3',
   profile: '../assets/audio/meu-comunica.mp3',
   personalize: '../assets/audio/personalizar.mp3',
@@ -5656,6 +5950,7 @@ function mascotHeroHtml() {
 /* ---------- Navegação ---------- */
 function go(screen, extra = {}) {
   cancelRefreshVoice();
+  if (STATE.screen === 'corrida' && screen !== 'corrida' && typeof CR !== 'undefined') CR.desmontar();
   STATE.screen = screen;
   // Guarda a última tela de palavras para o "voltar" das Configurações.
   if (screen === 'circularMode' || screen === 'carouselMode') STATE.lastWordScreen = screen;
@@ -6102,6 +6397,8 @@ window.addEventListener('resize', posicionarMascoteNoInicio);
 function render() {
   const app = document.getElementById('app');
   if (!app) return;
+    // Corrida do Guri: o jogo cuida da própria tela enquanto está aberto
+  if (STATE.screen === 'corrida' && typeof CR !== 'undefined' && CR.raiz && CR.raiz.isConnected) return;
 
   let html = '';
   switch (STATE.screen) {
@@ -6114,6 +6411,8 @@ function render() {
     case 'favorites': html = renderFavorites(); break;
     case 'personalize': html = renderPersonalize(); break;
     case 'challenge': html = renderChallenge(); break;
+    case 'desafios': html = renderDesafios(); break;
+    case 'corrida': html = renderCorrida(); break;
     case 'profile': html = renderProfile(); break;
     case 'settings': html = renderSettings(); break;
     case 'about': html = renderAbout(); break;
@@ -6134,6 +6433,7 @@ function render() {
   }
 
   attachHandlers();
+  if (STATE.screen === 'corrida' && typeof CR !== 'undefined') CR.montar();
   scheduleScan();
   announcePhrase();
 }
@@ -6189,7 +6489,7 @@ function renderHome() {
           <div class="menu-arrow" aria-hidden="true">›</div>
         </div>
 
-        <div class="menu-btn" data-go="challenge" role="button" tabindex="0">
+        <div class="menu-btn" data-go="desafios" role="button" tabindex="0">
           <img class="menu-icon" src="../assets/imagens/icone-alvo.png" alt="" aria-hidden="true">
           <div class="menu-text">
             <div class="menu-title">DESAFIO DA COMUNICAÇÃO</div>
@@ -6806,7 +7106,7 @@ function renderChallenge() {
   return `
     <div class="hub-screen ch-hub">
       <div class="hub-topo">
-        <button class="mode-choice-back hub-voltar" data-go="home" aria-label="Voltar ao início"><img class="back-icon" src="../assets/imagens/icone-voltar.png" alt="" aria-hidden="true"></button>
+        <button class="mode-choice-back hub-voltar" data-go="desafios" aria-label="Voltar para a escolha de jogos"><img class="back-icon" src="../assets/imagens/icone-voltar.png" alt="" aria-hidden="true"></button>
         <div class="hub-recursos" aria-label="Seus números">
           <span class="hub-recurso"><b class="hub-rec-ico hub-rec-xp">XP</b><span>${info.xp}</span></span>
           <span class="hub-recurso"><b class="hub-rec-ico hub-rec-estrela" aria-hidden="true"></b><span>${perfil.stars || 0}</span><span class="sr-only">estrelas</span></span>
@@ -7384,12 +7684,15 @@ function attachHandlers() {
         categories: 'Categorias',
         personalize: 'Personalizar',
         challenge: 'Desafio da comunicação',
+        desafios: 'Desafio da comunicação',
         profile: 'Perfil',
         settings: 'Configurações',
         about: 'Sobre o Comunica'
       };
       const isMainHomeButton = element.closest('.home-screen');
-      if (menuTexts[target] && (target !== 'build' || isMainHomeButton)) {
+      if (element.closest('.desafios-screen')) {
+        speak(target === 'corrida' ? 'Corrida do Guri' : 'Monte a frase');
+      } else if (menuTexts[target] && (target !== 'build' || isMainHomeButton)) {
         playMenuVoice(target, menuTexts[target]);
       }
       if (target === 'challenge') STATE.challenge = null;
@@ -9522,6 +9825,1076 @@ function initCircularKeyboard() {
 loadData();
 initSplash();
 initGamepadControls();
+</script>
+<script>
+/* =====================================================================
+   CORRIDA DO GURI — jogo de corrida e pulo dentro do Desafio da Comunicação
+   O Guri corre sozinho; a criança faz ele pular e pega as palavras certas
+   para montar a frase da fase. Usa as palavras, os ícones, a voz (speak)
+   e o salvamento (STATE.data + saveData) que já existem no Comunica.
+   ===================================================================== */
+
+/* ---------- Tela de escolha: Monte a frase ou Corrida do Guri ---------- */
+function renderDesafios() {
+  return `
+    <div class="topbar">
+      <button class="icon-btn" data-go="home" aria-label="Voltar ao início">←</button>
+      <div class="topbar-title">Desafio da Comunicação</div>
+      <div style="width:var(--tap-min)"></div>
+    </div>
+    <div class="screen desafios-screen">
+      <h2 class="section-label">ESCOLHA UM JOGO</h2>
+      <div class="desafios-grade">
+        <button type="button" class="desafio-card" data-go="challenge" aria-label="Monte a frase: monte frases e faça o Guri evoluir">
+          <img class="desafio-card-img" src="../assets/imagens/icone-alvo.png" alt="" aria-hidden="true">
+          <span class="desafio-card-titulo">MONTE A FRASE</span>
+          <span class="desafio-card-sub">Monte frases certas e faça o Guri evoluir</span>
+        </button>
+        <button type="button" class="desafio-card desafio-card-novo" data-go="corrida" aria-label="Corrida do Guri: corra, pule e pegue as palavras da frase">
+          <span class="desafio-card-titulo">CORRIDA DO GURI</span>
+          <span class="desafio-card-sub">Corra, pule e pegue as palavras da frase</span>
+        </button>
+      </div>
+    </div>
+  `;
+}
+function renderCorrida() { return `<div class="cr-raiz" id="crRaiz"></div>`; }
+
+/* ---------- Fases: cada uma é uma frase do Comunica ---------- */
+const CR_FASES = [
+  { ids: ['eu', 'quero', 'agua'], texto: 'Eu quero água.' },
+  { ids: ['eu', 'quero', 'brincar'], texto: 'Eu quero brincar.' },
+  { ids: ['eu', 'estou', 'feliz'], texto: 'Eu estou feliz.' },
+  { ids: ['eu', 'estou', 'comFome'], texto: 'Eu estou com fome.' },
+  { ids: ['eu', 'preciso', 'deAjuda'], texto: 'Eu preciso de ajuda.' },
+  { ids: ['voce', 'quer', 'brincar'], texto: 'Você quer brincar?' },
+  { ids: ['eu', 'quero', 'irBanheiro'], texto: 'Eu quero ir ao banheiro.' },
+  { ids: ['vamos', 'passear', 'agora'], texto: 'Vamos passear agora!' },
+  { ids: ['eu', 'estou', 'cansado'], texto: 'Eu estou cansado.' },
+  { ids: ['eu', 'quero', 'comer'], texto: 'Eu quero comer.' }
+];
+const CR_DISTRATORES = ['casa', 'musica', 'escola', 'sono', 'triste', 'comida', 'mae', 'amigo', 'tchau', 'oi', 'dormir', 'jogar', 'desenhar', 'sair', 'bem', 'obrigado', 'tenho', 'gosto', 'vou', 'pode'];
+
+function crPalavra(id) {
+  const w = (typeof wordById === 'function') ? wordById(id) : null;
+  if (w && w.label) return { id: w.id, label: w.label };
+  const extra = (typeof AAC_EXTRA_WORDS !== 'undefined' ? AAC_EXTRA_WORDS : []).find(p => Array.isArray(p) ? p[0] === id : p && p.id === id);
+  if (extra) return Array.isArray(extra) ? { id: extra[0], label: extra[1] } : { id: extra.id, label: extra.label };
+  return { id, label: id };
+}
+function crDados() {
+  if (STATE.data.explorador) { delete STATE.data.explorador; } // jogo antigo, não existe mais
+  const d = STATE.data.corrida;
+  if (!d || d.v !== 1) STATE.data.corrida = { v: 1, desbloqueada: 1, melhor: {}, estrelas: 0, recorde: 0 };
+  return STATE.data.corrida;
+}
+
+/* ---------- Imagens: Guri e ícones das palavras ---------- */
+const CR_GURI = new Image();
+let crGuriPronto = false;
+CR_GURI.onload = () => { crGuriPronto = true; };
+CR_GURI.onerror = () => { if (!CR_GURI.dataset.tentou) { CR_GURI.dataset.tentou = '1'; CR_GURI.src = '../assets/imagens/mascote-inicio.png'; } };
+CR_GURI.src = '../assets/imagens/guri-explorador-transparente.png';
+/* Guri dentro do carro: quando a imagem existir, ela aparece no jogo; se não, o carrinho é desenhado em código */
+const CR_CARRO = new Image();
+let crCarroPronto = false;
+CR_CARRO.onload = () => { crCarroPronto = true; };
+CR_CARRO.src = '../assets/imagens/guri-carro.png';
+const CR_ICONES = {};
+function crIcone(id) {
+  if (typeof WORD_ICON_SRC === 'undefined' || !WORD_ICON_SRC[id]) return null;
+  let im = CR_ICONES[id];
+  if (!im) { im = new Image(); im.onload = () => { im.ok = true; }; im.src = WORD_ICON_SRC[id]; CR_ICONES[id] = im; }
+  return im.ok ? im : null;
+}
+
+/* ---------- Ajudantes de desenho ---------- */
+const CR_FONTE = '"Baloo 2", Nunito, system-ui, sans-serif';
+function crRR(c, x, y, w, h, r) { r = Math.min(r, w / 2, h / 2); c.beginPath(); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r); c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath(); }
+function crHash(n) { let h = (n * 374761393) | 0; h = (h ^ (h >>> 13)) * 1274126177 | 0; return ((h ^ (h >>> 16)) >>> 0) / 4294967295; }
+function crRng(seed) { let a = seed >>> 0; return () => { a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+function crEstrela(c, x, y, r, cor, giro) {
+  c.save(); c.translate(x, y); c.rotate(giro || 0); c.beginPath();
+  for (let i = 0; i < 10; i++) { const rr = i % 2 ? r * .45 : r; const a = i * Math.PI / 5 - Math.PI / 2; c.lineTo(Math.cos(a) * rr, Math.sin(a) * rr); }
+  c.closePath(); c.fillStyle = cor || '#fbd34d'; c.fill(); c.lineWidth = Math.max(1.5, r * .14); c.strokeStyle = '#e8a317'; c.stroke(); c.restore();
+}
+function crFlor(c, x, y, r, cor) {
+  c.fillStyle = cor;
+  for (let i = 0; i < 5; i++) { const a = i * 1.2566; c.beginPath(); c.arc(x + Math.cos(a) * r * .6, y + Math.sin(a) * r * .6, r * .5, 0, 7); c.fill(); }
+  c.fillStyle = '#f7c948'; c.beginPath(); c.arc(x, y, r * .35, 0, 7); c.fill();
+}
+
+const CR_IC = {
+  cadeado: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2.5" fill="currentColor"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>',
+  bandeira: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M6 4h12l-2.5 4L18 12H6z" fill="currentColor"/></svg>',
+  trofeu: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10v4a5 5 0 0 1-10 0z" fill="currentColor"/><path d="M7 6H4.5a3 3 0 0 0 3 4M17 6h2.5a3 3 0 0 1-3 4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M10.5 13h3v3.5h-3z M8 20h8v-2.5H8z" fill="currentColor"/></svg>',
+  info: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M12 10.5v6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="12" cy="7.4" r="1.5" fill="#fff"/></svg>',
+  estrela: '<svg viewBox="0 0 24 24" aria-hidden="true" class="cr-ic-estrela"><path d="M12 2.6l2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z" fill="currentColor" stroke="#e3a92a" stroke-width="1.4" stroke-linejoin="round"/></svg>',
+  coracao: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.2-9.3C1.6 7.8 3.8 4.5 7.2 4.5c2 0 3.6 1.1 4.8 2.8 1.2-1.7 2.8-2.8 4.8-2.8 3.4 0 5.6 3.3 4.4 6.7-1.7 4.7-9.2 9.3-9.2 9.3z" fill="currentColor"/></svg>',
+  fechar: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>',
+  voltar: '<svg viewBox="0 0 24 24" aria-hidden="true" width="30" height="30"><path d="M14.5 5l-7 7 7 7" fill="none" stroke="#2a5577" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  play: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7z" fill="currentColor"/></svg>',
+  pausa: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1.5" fill="currentColor"/><rect x="14" y="5" width="4" height="14" rx="1.5" fill="currentColor"/></svg>',
+  cima: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l7 8h-4.5v8h-5v-8H5z" fill="currentColor"/></svg>',
+  toque: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11V5.5a1.5 1.5 0 0 1 3 0V11m0-1.5a1.5 1.5 0 0 1 3 0V12m0-1a1.5 1.5 0 0 1 3 0v3.5a6.5 6.5 0 0 1-6.5 6.5H11a5 5 0 0 1-4-2l-2.6-3.6a1.4 1.4 0 0 1 2.2-1.7L9 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  balao: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v7a3 3 0 0 1-3 3h-6l-4 4v-4H7a3 3 0 0 1-3-3z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M8 9.5h8M8 12.5h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+  buraco: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 15h7m6 0h7M2 15v5m7-5v5m6-5v5m7-5v5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M6 11c2-5 10-5 12 0" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="2 3"/></svg>',
+  grade: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="2" fill="currentColor"/><rect x="13" y="4" width="7" height="7" rx="2" fill="currentColor"/><rect x="4" y="13" width="7" height="7" rx="2" fill="currentColor"/><rect x="13" y="13" width="7" height="7" rx="2" fill="currentColor"/></svg>'
+};
+/* ---------- Obstáculos e bichinhos (desenhados em código, sem emoji) ---------- */
+function crDesenharBicho(c, b, x, y, U, t) {
+  const dir = b.vx > 0 ? -1 : 1; // olham para o lado em que andam
+  c.save(); c.translate(x, y);
+  if (b.especie !== 'abelha') { c.fillStyle = 'rgba(40,70,40,.18)'; c.beginPath(); c.ellipse(0, 0, U * .38, U * .08, 0, 0, 7); c.fill(); }
+  if (b.especie === 'pedra') {
+    // cone de pista
+    c.fillStyle = '#f59e5b'; c.beginPath(); c.moveTo(-U * .1, -U * .6); c.lineTo(U * .1, -U * .6); c.lineTo(U * .27, -U * .06); c.lineTo(-U * .27, -U * .06); c.closePath(); c.fill();
+    c.fillStyle = '#ffffff'; c.beginPath(); c.moveTo(-U * .16, -U * .4); c.lineTo(U * .16, -U * .4); c.lineTo(U * .2, -U * .28); c.lineTo(-U * .2, -U * .28); c.closePath(); c.fill();
+    c.fillStyle = '#e07d3c'; crRR(c, -U * .36, -U * .08, U * .72, U * .1, U * .04); c.fill();
+  } else if (b.especie === 'pneu') {
+    // pneu rolando pela pista
+    const r = U * .3, giro = b.x * 3.4;
+    c.translate(0, -r);
+    c.fillStyle = '#2a3b4c'; c.beginPath(); c.arc(0, 0, r, 0, 7); c.fill();
+    c.strokeStyle = '#3d5166'; c.lineWidth = Math.max(2, U * .05);
+    for (let k = 0; k < 8; k++) { const a2 = giro + k * .785; c.beginPath(); c.moveTo(Math.cos(a2) * r * .78, Math.sin(a2) * r * .78); c.lineTo(Math.cos(a2) * r * .97, Math.sin(a2) * r * .97); c.stroke(); }
+    c.fillStyle = '#d6e0ea'; c.beginPath(); c.arc(0, 0, r * .5, 0, 7); c.fill();
+    c.fillStyle = '#fbd34d'; c.beginPath(); c.arc(0, 0, r * .2, 0, 7); c.fill();
+    c.strokeStyle = '#8fa3b8'; c.lineWidth = Math.max(1.5, U * .03); c.beginPath();
+    for (let k = 0; k < 5; k++) { const a2 = giro + k * 1.257; c.moveTo(Math.cos(a2) * r * .2, Math.sin(a2) * r * .2); c.lineTo(Math.cos(a2) * r * .48, Math.sin(a2) * r * .48); } c.stroke();
+  } else if (b.especie === 'joaninha') {
+    c.scale(dir, 1);
+    const pe = Math.sin(t * 16 + b.fase) * U * .04;
+    c.strokeStyle = '#2a5577'; c.lineWidth = Math.max(1.5, U * .03);
+    c.beginPath(); [-.18, 0, .18].forEach((k, i) => { c.moveTo(U * k, -U * .08); c.lineTo(U * k + (i % 2 ? pe : -pe), 0); }); c.stroke();
+    c.fillStyle = '#2a5577'; c.beginPath(); c.arc(U * .3, -U * .2, U * .13, 0, 7); c.fill();
+    c.fillStyle = '#f28b82'; c.beginPath(); c.ellipse(0, -U * .2, U * .32, U * .22, 0, Math.PI, 0); c.lineTo(U * .32, -U * .1); c.lineTo(-U * .32, -U * .1); c.fill();
+    c.strokeStyle = '#d96a6a'; c.beginPath(); c.moveTo(0, -U * .42); c.lineTo(0, -U * .1); c.stroke();
+    c.fillStyle = '#2a5577'; [[-.17, -.28], [.14, -.3], [-.08, -.17], [.2, -.16]].forEach(([a, k]) => { c.beginPath(); c.arc(U * a, U * k, U * .045, 0, 7); c.fill(); });
+    c.fillStyle = '#ffffff'; c.beginPath(); c.arc(U * .35, -U * .24, U * .035, 0, 7); c.fill();
+  } else {
+    c.scale(dir, 1);
+    const asa = Math.abs(Math.sin(t * 30 + b.fase));
+    c.fillStyle = 'rgba(255,255,255,.85)'; c.strokeStyle = '#b6e3fa'; c.lineWidth = 1.5;
+    c.beginPath(); c.ellipse(-U * .05, -U * .2 - asa * U * .05, U * .13, U * .2 * (.6 + asa * .4), -.4, 0, 7); c.fill(); c.stroke();
+    c.beginPath(); c.ellipse(U * .1, -U * .18 - asa * U * .05, U * .1, U * .17 * (.6 + asa * .4), .3, 0, 7); c.fill(); c.stroke();
+    c.fillStyle = '#fbd34d'; c.beginPath(); c.ellipse(0, 0, U * .26, U * .18, 0, 0, 7); c.fill();
+    c.save(); c.beginPath(); c.ellipse(0, 0, U * .26, U * .18, 0, 0, 7); c.clip();
+    c.fillStyle = '#2a5577'; c.fillRect(-U * .1, -U * .2, U * .07, U * .4); c.fillRect(U * .04, -U * .2, U * .07, U * .4); c.restore();
+    c.fillStyle = '#2a5577'; c.beginPath(); c.arc(U * .17, -U * .03, U * .035, 0, 7); c.fill();
+    c.beginPath(); c.moveTo(-U * .26, 0); c.lineTo(-U * .36, U * .03); c.lineTo(-U * .26, U * .06); c.fill();
+  }
+  c.restore();
+}
+
+/* Carrinho de corrida desenhado (usado até existir a imagem guri-carro.png) */
+function crDesenharCarro(c, U, t, guri) {
+  // Guri sentado (cabeça para fora do carro)
+  if (guri) {
+    const h = U * 1.15, w = h * guri.naturalWidth / guri.naturalHeight;
+    c.save(); c.beginPath(); c.rect(-U, -U * 2, U * 2, U * 1.55); c.clip();
+    c.drawImage(guri, -w / 2 - U * .05, -U * 1.62, w, h); c.restore();
+  } else {
+    c.fillStyle = '#f9cf4a'; c.beginPath(); c.arc(-U * .05, -U * .78, U * .3, 0, 7); c.fill();
+    c.beginPath(); c.moveTo(-U * .3, -U * .88); c.lineTo(-U * .24, -U * 1.22); c.lineTo(-U * .1, -U * 1.02); c.fill();
+    c.beginPath(); c.moveTo(U * .2, -U * .88); c.lineTo(U * .14, -U * 1.22); c.lineTo(0, -U * 1.02); c.fill();
+    c.fillStyle = '#173a5e'; c.beginPath(); c.arc(-U * .13, -U * .8, U * .04, 0, 7); c.arc(U * .08, -U * .8, U * .04, 0, 7); c.fill();
+  }
+  // capacete/ para-brisa
+  c.fillStyle = 'rgba(207,233,249,.85)'; c.strokeStyle = '#8cc3e6'; c.lineWidth = 2;
+  c.beginPath(); c.moveTo(U * .22, -U * .45); c.quadraticCurveTo(U * .3, -U * .78, U * .48, -U * .78); c.lineTo(U * .5, -U * .45); c.fill(); c.stroke();
+  // carroceria
+  c.fillStyle = '#5fa3d3';
+  c.beginPath(); c.moveTo(-U * .85, -U * .2); c.lineTo(-U * .85, -U * .62); c.lineTo(-U * .6, -U * .62); c.lineTo(-U * .48, -U * .45);
+  c.lineTo(U * .55, -U * .45); c.quadraticCurveTo(U * .95, -U * .4, U * .98, -U * .2); c.closePath(); c.fill();
+  c.fillStyle = '#7cb3ee'; crRR(c, -U * .5, -U * .45, U * 1.05, U * .12, U * .05); c.fill();
+  c.fillStyle = '#fbd34d'; c.beginPath(); c.arc(U * .05, -U * .3, U * .12, 0, 7); c.fill();
+  c.fillStyle = '#2a5577'; c.font = `900 ${Math.round(U * .16)}px ${CR_FONTE}`; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('1', U * .05, -U * .29); c.textAlign = 'left';
+  // aerofólio
+  c.fillStyle = '#2a5577'; c.fillRect(-U * .92, -U * .7, U * .36, U * .08);
+  // rodas
+  for (const rx of [-U * .55, U * .62]) {
+    c.fillStyle = '#2a3b4c'; c.beginPath(); c.arc(rx, -U * .17, U * .2, 0, 7); c.fill();
+    c.fillStyle = '#d6e0ea'; c.beginPath(); c.arc(rx, -U * .17, U * .09, 0, 7); c.fill();
+    c.strokeStyle = '#8fa3b8'; c.lineWidth = Math.max(1.5, U * .03); c.beginPath();
+    for (let k = 0; k < 3; k++) { const a = t * 18 + k * 2.09; c.moveTo(rx, -U * .17); c.lineTo(rx + Math.cos(a) * U * .09, -U * .17 + Math.sin(a) * U * .09); } c.stroke();
+  }
+}
+
+/* ---------- Efeitos sonoros da corrida (gerados pelo navegador, sem arquivos de áudio) ---------- */
+document.addEventListener('visibilitychange', () => { if (document.hidden && typeof CR_SOM !== 'undefined') { CR_SOM.motor(false); CR_MUSICA.parar(); } });
+const CR_SOM = {
+  ctx: null,
+  ligado() { try { return (STATE.data.corrida || {}).sons !== false; } catch (e) { return true; } },
+  abrir() {
+    if (!this.ctx) { const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return null; this.ctx = new AC(); }
+    if (this.ctx.state === 'suspended') this.ctx.resume();
+    return this.ctx;
+  },
+  // uma nota: frequência, início (s), duração (s), tipo de onda, volume, frequência final (deslizar)
+  nota(f, ini, dur, tipo, vol, fFim) {
+    const c = this.ctx, t = c.currentTime + ini;
+    const o = c.createOscillator(), g = c.createGain();
+    o.type = tipo || 'triangle'; o.frequency.setValueAtTime(f, t);
+    if (fFim) o.frequency.exponentialRampToValueAtTime(fFim, t + dur);
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol || .18, t + .012); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    o.connect(g).connect(c.destination); o.start(t); o.stop(t + dur + .03);
+  },
+  ruido(ini, dur, vol, corte) {
+    const c = this.ctx, t = c.currentTime + ini, n = Math.floor(c.sampleRate * dur);
+    const buf = c.createBuffer(1, n, c.sampleRate), d = buf.getChannelData(0);
+    for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / n);
+    const src = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain();
+    src.buffer = buf; f.type = 'lowpass'; f.frequency.value = corte || 900; g.gain.value = vol || .25;
+    src.connect(f).connect(g).connect(c.destination); src.start(t);
+  },
+  /* ronco do motor: liga quando o carro está correndo, acompanha a velocidade e sobe no pulo */
+  motorNos: null,
+  motor(ligar, j) {
+    if (!ligar || !this.ligado()) {
+      if (this.motorNos) { const m = this.motorNos, t = this.ctx.currentTime; this.motorNos = null;
+        m.vol.gain.cancelScheduledValues(t); m.vol.gain.setTargetAtTime(0.0001, t, .08);
+        setTimeout(() => { try { m.oscs.forEach(o => o.stop()); } catch (e) {} }, 400); }
+      return;
+    }
+    const c = this.abrir(); if (!c) return;
+    const alvo = 58 + (j.vel || 4.5) * 7 + (j.noChao ? 0 : 26) + (j.fim === true ? 10 : 0);
+    if (!this.motorNos) {
+      const t = c.currentTime;
+      const vol = c.createGain(); vol.gain.setValueAtTime(0.0001, t); vol.gain.setTargetAtTime(.05, t, .15);
+      const filtro = c.createBiquadFilter(); filtro.type = 'lowpass'; filtro.frequency.value = 520; filtro.Q.value = 2;
+      const trem = c.createGain(); trem.gain.value = .75;
+      const lfo = c.createOscillator(), lfoG = c.createGain(); lfo.frequency.value = 16; lfoG.gain.value = .25; lfo.connect(lfoG).connect(trem.gain);
+      const o1 = c.createOscillator(), o2 = c.createOscillator(), o3 = c.createOscillator();
+      o1.type = 'sawtooth'; o2.type = 'sawtooth'; o3.type = 'square'; o2.detune.value = 14;
+      [o1, o2].forEach(o => { o.frequency.setValueAtTime(45, t); o.frequency.exponentialRampToValueAtTime(alvo, t + .6); });
+      o3.frequency.setValueAtTime(22, t); o3.frequency.exponentialRampToValueAtTime(alvo / 2, t + .6);
+      const g3 = c.createGain(); g3.gain.value = .5;
+      o1.connect(filtro); o2.connect(filtro); o3.connect(g3).connect(filtro);
+      filtro.connect(trem).connect(vol).connect(c.destination);
+      [o1, o2, o3, lfo].forEach(o => o.start(t));
+      this.motorNos = { oscs: [o1, o2, o3, lfo], principais: [o1, o2], grave: o3, lfo, vol, alvo, inicio: t };
+      return;
+    }
+    const m = this.motorNos, t = c.currentTime;
+    if (t - m.inicio < .6 || Math.abs(m.alvo - alvo) < .5) return;
+    m.alvo = alvo;
+    m.principais.forEach(o => o.frequency.setTargetAtTime(alvo, t, .12));
+    m.grave.frequency.setTargetAtTime(alvo / 2, t, .12);
+    m.lfo.frequency.setTargetAtTime(10 + alvo / 8, t, .12);
+  },
+  tocar(nome) {
+    if (!this.ligado()) return;
+    const c = this.abrir(); if (!c) return;
+    const N = (f, i, d, t, v, ff) => this.nota(f, i, d, t, v, ff);
+    switch (nome) {
+      case 'estrela': N(1318, 0, .09, 'triangle', .14); N(1976, .06, .16, 'triangle', .12); break;
+      case 'acerto': N(523, 0, .12, 'triangle', .2); N(659, .09, .12, 'triangle', .2); N(784, .18, .22, 'triangle', .2); N(1568, .18, .22, 'sine', .06); break;
+      case 'erro': N(330, 0, .16, 'square', .07); N(247, .14, .28, 'square', .07); break;
+      case 'batida': this.ruido(0, .18, .35, 700); N(160, 0, .22, 'sine', .25, 70); break;
+      case 'queda': N(700, 0, .5, 'triangle', .16, 140); break;
+      case 'pisao': N(300, 0, .16, 'square', .08, 900); N(1318, .1, .12, 'triangle', .1); break;
+      case 'pulo': N(380, 0, .12, 'sine', .07, 760); break;
+      case 'bip': N(660, 0, .14, 'sine', .16); break;
+      case 'ja': N(990, 0, .3, 'sine', .18); N(1320, 0, .3, 'triangle', .06); break;
+      case 'vitoria': [523, 659, 784, 1047].forEach((f, i) => N(f, i * .12, .2, 'triangle', .18)); N(1047, .5, .5, 'triangle', .18); N(1319, .5, .5, 'sine', .08); break;
+      case 'derrota': [392, 349, 311, 262].forEach((f, i) => N(f, i * .18, .26, 'triangle', .15)); break;
+    }
+  }
+};
+
+/* ---------- Musiquinha da corrida (instrumental gerado pelo navegador, em loop) ---------- */
+const CR_MUSICA = {
+  tocando: false, passo: 0, proximo: 0, timer: 0, saida: null,
+  BPM: 116,
+  // melodia em 8 compassos de 8 colcheias (números = notas MIDI, null = pausa)
+  MELODIA: [
+    76, 79, 84, 79, 76, 74, 72, null,   74, 79, 83, 79, 74, 76, 74, null,
+    72, 76, 81, 76, 72, 74, 76, null,   77, 81, 84, 81, 79, 77, 76, 74,
+    76, null, 79, null, 84, 83, 84, null, 83, null, 79, null, 74, 76, 79, null,
+    81, null, 77, null, 72, 74, 77, null, 79, 77, 76, 74, 72, null, null, null
+  ],
+  // acorde de cada compasso: [baixo, terça, quinta]
+  ACORDES: [[48, 64, 67], [43, 62, 67], [45, 60, 64], [41, 60, 65], [48, 64, 67], [43, 62, 67], [41, 60, 65], [48, 64, 67]],
+  ligada() { try { return (STATE.data.corrida || {}).musica !== false; } catch (e) { return true; } },
+  hz(m) { return 440 * Math.pow(2, (m - 69) / 12); },
+  atualizar(deve) {
+    if (deve && this.ligada()) { if (!this.tocando) this.comecar(); else this.abaixarSeFalando(); }
+    else if (this.tocando) this.parar();
+  },
+  comecar() {
+    const c = CR_SOM.abrir(); if (!c) return;
+    const comp = c.createDynamicsCompressor();
+    const vol = c.createGain(); vol.gain.setValueAtTime(0.0001, c.currentTime); vol.gain.setTargetAtTime(.55, c.currentTime, .4);
+    vol.connect(comp).connect(c.destination);
+    this.saida = vol; this.tocando = true; this.passo = 0; this.proximo = c.currentTime + .08;
+    clearInterval(this.timer); this.timer = setInterval(() => this.agendar(), 25);
+  },
+  parar() {
+    this.tocando = false; clearInterval(this.timer); this.timer = 0;
+    const v = this.saida; this.saida = null;
+    if (v && CR_SOM.ctx) { const t = CR_SOM.ctx.currentTime; v.gain.cancelScheduledValues(t); v.gain.setTargetAtTime(0.0001, t, .15); setTimeout(() => { try { v.disconnect(); } catch (e) {} }, 900); }
+  },
+  // enquanto a voz fala a palavra, a música fica mais baixinha
+  abaixarSeFalando() {
+    if (!this.saida) return;
+    const falando = 'speechSynthesis' in window && window.speechSynthesis.speaking;
+    const alvo = falando ? .18 : .55;
+    if (this._alvo !== alvo) { this._alvo = alvo; this.saida.gain.setTargetAtTime(alvo, CR_SOM.ctx.currentTime, .12); }
+  },
+  agendar() {
+    const c = CR_SOM.ctx; if (!c || !this.tocando) return;
+    const dur = 60 / this.BPM / 2;
+    while (this.proximo < c.currentTime + .15) { this.tocarPasso(this.passo, this.proximo, dur); this.proximo += dur; this.passo = (this.passo + 1) % 64; }
+  },
+  som(f, t, d, tipo, v, corte) {
+    const c = CR_SOM.ctx, o = c.createOscillator(), g = c.createGain();
+    o.type = tipo; o.frequency.setValueAtTime(f, t);
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v, t + .015); g.gain.exponentialRampToValueAtTime(0.0001, t + d);
+    if (corte) { const fl = c.createBiquadFilter(); fl.type = 'lowpass'; fl.frequency.value = corte; o.connect(fl).connect(g); } else o.connect(g);
+    g.connect(this.saida); o.start(t); o.stop(t + d + .05);
+  },
+  batida(t, tipo) {
+    const c = CR_SOM.ctx;
+    if (tipo === 'bumbo') {
+      const o = c.createOscillator(), g = c.createGain();
+      o.frequency.setValueAtTime(130, t); o.frequency.exponentialRampToValueAtTime(45, t + .12);
+      g.gain.setValueAtTime(.32, t); g.gain.exponentialRampToValueAtTime(0.0001, t + .16);
+      o.connect(g).connect(this.saida); o.start(t); o.stop(t + .2); return;
+    }
+    const n = Math.floor(c.sampleRate * (tipo === 'caixa' ? .12 : .04));
+    const buf = c.createBuffer(1, n, c.sampleRate), d = buf.getChannelData(0);
+    for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / n);
+    const src = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain();
+    src.buffer = buf; f.type = tipo === 'caixa' ? 'bandpass' : 'highpass'; f.frequency.value = tipo === 'caixa' ? 1800 : 7000;
+    g.gain.value = tipo === 'caixa' ? .12 : .045;
+    src.connect(f).connect(g).connect(this.saida); src.start(t);
+  },
+  tocarPasso(p, t, dur) {
+    const comp = Math.floor(p / 8), k = p % 8, ac = this.ACORDES[comp];
+    // bateria leve
+    if (k === 0 || k === 4) this.batida(t, 'bumbo');
+    if (k === 2 || k === 6) this.batida(t, 'caixa');
+    this.batida(t, 'chimbal');
+    // baixo pulando entre a nota do acorde e a quinta
+    if (k % 2 === 0) this.som(this.hz(ac[0] + (k === 4 ? 7 : 0)), t, dur * 1.7, 'triangle', .22);
+    // acorde picadinho nos contratempos
+    if (k % 2 === 1) { this.som(this.hz(ac[1]), t, dur * .8, 'square', .025, 1600); this.som(this.hz(ac[2]), t, dur * .8, 'square', .025, 1600); }
+    // melodia
+    const m = this.MELODIA[p];
+    if (m) { const longa = this.MELODIA[(p + 1) % 64] === null; this.som(this.hz(m), t, dur * (longa ? 1.8 : .95), 'triangle', .1); this.som(this.hz(m + 12), t, dur * .6, 'sine', .02); }
+  }
+};
+
+/* ---------- O jogo ---------- */
+const CR_G = 30, CR_PULO1 = 11.2, CR_PULO2 = 9.6;
+
+const CR = {
+  raiz: null, cv: null, ctx: null, raf: 0, modo: 'titulo', j: null,
+
+  montar() {
+    this.raiz = document.getElementById('crRaiz');
+    if (!this.raiz) return;
+    crDados();
+    if (!this._tecla) {
+      this._tecla = e => this.tecla(e);
+      this._resize = () => this.ajustarTela();
+      this._oculta = () => { if (document.hidden && this.modo === 'jogo') this.pausar(); };
+    }
+    window.addEventListener('keydown', this._tecla, true);
+    window.addEventListener('resize', this._resize);
+    document.addEventListener('visibilitychange', this._oculta);
+    this.mostrarTitulo();
+  },
+  desmontar() {
+    cancelAnimationFrame(this.raf); this.raf = 0; CR_SOM.motor(false); CR_MUSICA.parar();
+    if (this._tecla) {
+      window.removeEventListener('keydown', this._tecla, true);
+      window.removeEventListener('resize', this._resize);
+      document.removeEventListener('visibilitychange', this._oculta);
+    }
+    this.raiz = null; this.cv = null; this.j = null; this.modo = 'titulo';
+  },
+
+  /* ----- Tela inicial do jogo ----- */
+  mostrarTitulo() {
+    cancelAnimationFrame(this.raf); this.raf = 0; CR_SOM.motor(false); CR_MUSICA.parar(); this.modo = 'titulo'; this.travar();
+    const d = crDados();
+    const proxima = Math.min(d.desbloqueada, CR_FASES.length);
+    const feitas = Object.keys(d.melhor).length;
+    const pct = Math.round(feitas / CR_FASES.length * 100);
+    const trofeus = Object.values(d.melhor).reduce((t, n) => t + n, 0);
+    const fase = CR_FASES[proxima - 1];
+    const slots = CR_FASES.map((f, i) => {
+      const n = i + 1, livre = n <= d.desbloqueada, est = d.melhor[n] || 0, atual = n === proxima;
+      if (!livre) return `<span class="crh-slot bloq" style="--i:${i}" role="img" aria-label="Fase ${n} bloqueada">${CR_IC.cadeado}<small>${n}</small></span>`;
+      return `<button type="button" class="crh-slot${atual ? ' atual' : ''}" style="--i:${i}" data-cr="jogar" data-fase="${n}" aria-label="Fase ${n}: ${f.texto}${est ? `, ${est} estrelas` : ''}">
+        ${atual && !est ? '<em class="crh-novo">Nova</em>' : ''}<b>${n}</b><i aria-hidden="true">${[1, 2, 3].map(k => `<u class="${k <= est ? 'ok' : ''}">${CR_IC.estrela}</u>`).join('')}</i></button>`;
+    }).join('');
+    this.raiz.innerHTML = `
+      <div class="crh">
+        <div class="crh-fundo" aria-hidden="true">
+          <svg class="crh-seta" viewBox="0 0 400 420" preserveAspectRatio="xMidYMax meet">
+            <defs><linearGradient id="crhSetaG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7fd6ff" stop-opacity=".95"/><stop offset=".7" stop-color="#3fa2f2" stop-opacity=".35"/><stop offset="1" stop-color="#3fa2f2" stop-opacity="0"/></linearGradient></defs>
+            <path d="M200 10 L392 200 L292 200 L292 420 L108 420 L108 200 L8 200 Z" fill="url(#crhSetaG)"/>
+          </svg>
+          ${[[36, 40, 1], [62, 36, .8], [31, 62, .75], [66, 60, 1], [43, 52, .6], [57, 50, .55]].map(([x, y, k], i) => `<span class="crh-flecha" style="left:${x}%;top:${y}%;--k:${k};animation-delay:${(i * .55).toFixed(2)}s">${CR_IC.cima}</span>`).join('')}
+          ${[[8, 18], [92, 22], [26, 14], [74, 12], [6, 70], [95, 78], [48, 10]].map(([x, y], i) => `<span class="crh-brilho" style="left:${x}%;top:${y}%;animation-delay:${(i * .37).toFixed(2)}s">${CR_IC.estrela}</span>`).join('')}
+        </div>
+
+        <header class="crh-topo">
+          <button class="cr-voltar" type="button" data-cr="sair" aria-label="Voltar para a escolha de jogos">${CR_IC.voltar}</button>
+          <h1 class="crh-topo-titulo">Corrida do Guri</h1>
+          <div class="crh-moedas">
+            <span class="crh-moeda" style="--i:0" aria-label="${d.estrelas} estrelas"><i class="m-estrela">${CR_IC.estrela}</i>${d.estrelas}</span>
+            <span class="crh-moeda" style="--i:1" aria-label="${feitas} de ${CR_FASES.length} fases"><i class="m-bandeira">${CR_IC.bandeira}</i>${feitas}/${CR_FASES.length}</span>
+            <span class="crh-moeda" style="--i:2" aria-label="${trofeus} troféus"><i class="m-trofeu">${CR_IC.trofeu}</i>${trofeus}</span>
+          </div>
+        </header>
+
+        <section class="crh-esq">
+          <h2 class="crh-nome">Guri</h2>
+          <p class="crh-cargo">Piloto do Comunica</p>
+          <span class="crh-etiqueta"><small>Próxima</small>Fase ${proxima}</span>
+          <p class="crh-desc">Corra pela pista, pule buracos, cones e pneus e pegue as palavras certas para montar a frase!</p>
+          <div class="crh-nivel">
+            <b class="crh-nivel-num">${feitas}</b>
+            <div class="crh-nivel-barra"><small>Fases concluídas</small>
+              <div class="crh-barra" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}" aria-label="Fases concluídas"><span style="width:${pct}%"></span><em>${feitas}/${CR_FASES.length}</em></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="crh-centro" aria-hidden="true">
+          <img src="../assets/imagens/guri-carro.png" alt="" onerror="if(!this.dataset.t){this.dataset.t=1;this.src='../assets/imagens/guri-explorador-transparente.png'}else{this.onerror=null;this.src='../assets/imagens/mascote-inicio.png'}">
+        </div>
+
+        <aside class="crh-painel" aria-label="Fases">
+          <h3 class="crh-painel-titulo">Fase ${proxima}</h3>
+          <div class="crh-info"><small>Frase para montar</small><b>${fase.texto}</b></div>
+          <div class="crh-info"><small>Palavras</small><b>${fase.ids.length} palavras</b><span class="crh-dica">${CR_IC.info}</span></div>
+          <h4 class="crh-fases-titulo">Fases: <span>(${feitas} de ${CR_FASES.length})</span></h4>
+          <div class="crh-grade">${slots}</div>
+        </aside>
+
+        <button type="button" class="crh-como-btn" data-cr="como">${CR_IC.info}<span>Como jogar</span></button>
+        <button type="button" class="crh-jogar cr-jogar" data-cr="jogar" data-fase="${proxima}">${CR_IC.play}<span>JOGAR</span></button>
+      </div>
+      <div class="cr-camada" id="crCamada"></div>`;
+    this.ligar(this.raiz);
+    this.cv = null; this.ctx = null; // a tela de entrada não tem pista animada atrás
+    setTimeout(() => this.raiz?.querySelector('.crh-jogar')?.focus({ preventScroll: true }), 60);
+  },
+  mostrarComo() {
+    const camada = document.getElementById('crCamada'); if (!camada) return;
+    camada.innerHTML = `
+      <div class="cr-painel cr-painel-peq" role="dialog" aria-modal="true" aria-label="Como jogar">
+        <div class="cr-painel-faixa"><h2>Como jogar</h2><button type="button" class="cr-fechar" data-cr="fechar" aria-label="Fechar">${CR_IC.fechar}</button></div>
+        <ul class="cr-como crh-como-lista">
+          <li>${CR_IC.toque}<span>Toque na tela ou aperte <kbd>espaço</kbd> para pular</span></li>
+          <li>${CR_IC.balao}<span>Pegue as palavras da frase, na ordem</span></li>
+          <li>${CR_IC.buraco}<span>Pule buracos, cones e pneus</span></li>
+        </ul>
+      </div>`;
+    this.ligar(camada); this.travar(300);
+    setTimeout(() => camada.querySelector('.cr-fechar')?.focus({ preventScroll: true }), 40);
+  },
+  /* evita que a mesma tecla ou toque que abriu a tela aperte um botão novo sem querer */
+  travar(ms) { this.travaAte = performance.now() + (ms || 550); },
+  mostrarFases() {
+    const d = crDados(); const camada = document.getElementById('crCamada'); if (!camada) return;
+    camada.innerHTML = `
+      <div class="cr-painel" role="dialog" aria-modal="true" aria-label="Escolher fase">
+        <div class="cr-painel-faixa"><h2>Escolher fase</h2><button type="button" class="cr-fechar" data-cr="fechar" aria-label="Fechar">${CR_IC.fechar}</button></div>
+        <div class="cr-fases">
+          ${CR_FASES.map((f, i) => {
+            const n = i + 1, livre = n <= d.desbloqueada, est = d.melhor[n] || 0;
+            return `<button type="button" class="cr-fase${livre ? '' : ' bloq'}" ${livre ? `data-cr="jogar" data-fase="${n}"` : 'disabled aria-disabled="true"'} aria-label="Fase ${n}: ${f.texto}${livre ? '' : ' (bloqueada)'}">
+              <b>${n}</b><span>${livre ? f.texto : 'Bloqueada'}</span><i aria-hidden="true">${[1, 2, 3].map(k => `<em class="${k <= est ? 'ok' : ''}">${CR_IC.estrela}</em>`).join('')}</i></button>`;
+          }).join('')}
+        </div>
+      </div>`;
+    this.ligar(camada); this.travar(300);
+    camada.querySelector('.cr-fase:not(.bloq)')?.focus();
+  },
+  fecharCamada() { const c = document.getElementById('crCamada'); if (c) c.innerHTML = ''; },
+  ligar(el) { el.querySelectorAll('[data-cr]').forEach(b => b.addEventListener('click', e => { e.stopPropagation(); this.acao(b.getAttribute('data-cr'), b); })); },
+  acao(a, b) {
+    if (performance.now() < (this.travaAte || 0)) return;
+    if (a === 'sair') { go('desafios'); return; }
+    if (a === 'fases') { this.mostrarFases(); return; }
+    if (a === 'como') { this.mostrarComo(); return; }
+    if (a === 'fechar') { this.fecharCamada(); this.raiz?.querySelector('[data-cr="como"], [data-cr="fases"]')?.focus(); return; }
+    if (a === 'jogar') { this.comecar(Number(b.getAttribute('data-fase')) || 1); return; }
+    if (a === 'menu') { this.mostrarTitulo(); return; }
+    if (a === 'pausar') { this.pausar(); return; }
+    if (a === 'musica') {
+      const d = crDados(); d.musica = !CR_MUSICA.ligada(); saveData();
+      b.textContent = `Música: ${d.musica ? 'ligada' : 'desligada'}`; b.setAttribute('aria-pressed', String(d.musica));
+      return;
+    }
+    if (a === 'sons') {
+      const d = crDados(); d.sons = !CR_SOM.ligado(); saveData();
+      b.textContent = `Sons: ${d.sons ? 'ligados' : 'desligados'}`; b.setAttribute('aria-pressed', String(d.sons));
+      if (d.sons) CR_SOM.tocar('estrela'); else CR_SOM.motor(false);
+      return;
+    }
+    if (a === 'continuar') { this.continuar(); return; }
+    if (a === 'repetir') { this.comecar(this.j ? this.j.fase : 1); return; }
+    if (a === 'proxima') { this.comecar(Math.min(CR_FASES.length, (this.j ? this.j.fase : 0) + 1)); return; }
+  },
+
+  /* ----- Começar uma fase ----- */
+  novoEstado(fase, demo) {
+    const f = CR_FASES[fase - 1];
+    const dif = (fase - 1) / (CR_FASES.length - 1);
+    const j = {
+      fase, frase: f.ids.map(crPalavra), texto: f.texto, idx: 0, demo: !!demo,
+      vel: demo ? 3.6 : 4.3 + dif * 2.0, dif, x: 1.5, y: 0, vy: 0, noChao: true, pulos: 0, coyote: 0,
+      coracoes: 3, estrelas: 0, erros: 0, quedas: 0, invul: 0, t: 0, contagem: demo ? 0 : 3.2,
+      plats: [], itens: [], parts: [], geradoAte: 0, ultimaVaga: 6, seguro: { x: 1.5 },
+      ajuda: false, bandeira: null, fim: false, rng: crRng(demo ? 4242 : fase * 9973 + 17), pares: 0, msg: null
+    };
+    this.j = j; this.gerar(14, 'inicio');
+    return j;
+  },
+  comecar(fase) {
+    cancelAnimationFrame(this.raf);
+    const f = CR_FASES[fase - 1];
+    this.novoEstado(fase, false);
+    this.modo = 'jogo'; this.travar();
+    this.raiz.innerHTML = `
+      <div class="cr-jogo">
+        <canvas class="cr-tela" id="crTela" role="img" aria-label="Corrida do Guri. Toque na tela ou aperte espaço para pular."></canvas>
+        <div class="cr-hud">
+          <button type="button" class="cr-hud-btn" data-cr="pausar" aria-label="Pausar o jogo">${CR_IC.pausa}</button>
+          <div class="cr-meta">
+            <div class="cr-meta-topo"><span class="cr-meta-fase">Fase ${fase}</span><span class="cr-meta-barra" aria-hidden="true"><i id="crBarra"></i></span></div>
+            <div class="cr-frase" id="crFrase" aria-live="polite"></div>
+          </div>
+          <div class="cr-placar">
+            <span class="cr-placar-est" aria-label="Estrelas"><i aria-hidden="true">${CR_IC.estrela}</i><b id="crEstrelas">0</b></span>
+            <span class="cr-coracoes" id="crCoracoes" aria-label="Vidas"></span>
+          </div>
+        </div>
+        <div class="cr-aviso" id="crAviso" aria-live="polite"></div>
+      </div>
+      <div class="cr-camada" id="crCamada"></div>`;
+    this.cv = document.getElementById('crTela'); this.ctx = this.cv.getContext('2d');
+    this.ligar(this.raiz);
+    const pular = e => { e.preventDefault(); this.pular(); };
+    this.cv.addEventListener('pointerdown', pular);
+    this.ajustarTela(); this.atualizarHud();
+    try { speak('Monte a frase: ' + f.texto); } catch (e) {}
+    this.ultimo = performance.now();
+    const loop = t => { this.raf = requestAnimationFrame(loop); this.quadro(t); };
+    this.raf = requestAnimationFrame(loop);
+    setTimeout(() => document.getElementById('crPular')?.focus({ preventScroll: true }), 40);
+  },
+  ajustarTela() {
+    if (!this.cv) return;
+    const r = this.cv.getBoundingClientRect();
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    this.cv.width = Math.round(r.width * dpr); this.cv.height = Math.round(r.height * dpr);
+    this.dpr = dpr; this.vw = r.width; this.vh = r.height;
+    this.U = Math.max(32, Math.min(this.vh / 8.6, this.vw / 9));
+    this.frente = this.vw < 700 ? .2 : .3; // no celular o Guri fica mais à esquerda para ver as palavras chegando
+    this.chaoY = this.vh * (this.vh > this.vw ? .7 : .8);
+  },
+
+  /* ----- Mundo: chão, buracos, plataformas, vagas de palavras e estrelas ----- */
+  gerar(ate, tipoInicio) {
+    const j = this.j; const R = j.rng;
+    if (tipoInicio === 'inicio') { j.plats.push({ x: -6, w: 6 + 12, y: 0 }); j.geradoAte = 12; }
+    while (j.geradoAte < ate) {
+      const x = j.geradoAte;
+      if (j.fim && !j.bandeira) { // chão longo com a bandeira de chegada
+        j.plats.push({ x, w: 14, y: 0 }); j.bandeira = { x: x + 5 }; j.geradoAte = x + 14; continue;
+      }
+      if (j.bandeira) { j.plats.push({ x, w: 10, y: 0 }); j.geradoAte = x + 10; continue; }
+      const r = R();
+      const gapMin = 1.1 + j.dif * .5, gapMax = 1.7 + j.dif * .9;
+      if (r < .4) { // buraco
+        const g = gapMin + R() * (gapMax - gapMin), L = 5 + R() * 3.5;
+        for (let i = 0; i < 3; i++) j.itens.push({ tipo: 'estrela', x: x + g * (i + 1) / 4, y: 1.7 + Math.sin((i + 1) / 4 * Math.PI) * 1.2 });
+        j.plats.push({ x: x + g, w: L, y: 0 }); j.geradoAte = x + g + L;
+        this.vaga(x + g + L * .55, .75, 3.1);
+        this.bicho(x + g, L);
+      } else if (r < .7) { // plataforma no alto
+        const L = 8 + R() * 2.5;
+        j.plats.push({ x, w: L, y: 0 });
+        const py = 2.1 + R() * .5, px = x + 2 + R() * 1.5, pw = 3 + R();
+        j.plats.push({ x: px, w: pw, y: py, alto: true });
+        for (let i = 0; i < 3; i++) j.itens.push({ tipo: 'estrela', x: px + .6 + i * (pw - 1.2) / 2, y: py + .9 });
+        j.geradoAte = x + L;
+        this.vaga(px + pw * .5, .75, py + 1.1);
+      } else { // chão reto com estrelinhas
+        const L = 6 + R() * 3;
+        j.plats.push({ x, w: L, y: 0 });
+        this.bicho(x, L);
+        if (R() < .6) for (let i = 0; i < 4; i++) j.itens.push({ tipo: 'estrela', x: x + 1.5 + i * .8, y: 1.0 });
+        j.geradoAte = x + L;
+        this.vaga(x + L * .6, .75, 3.1);
+      }
+    }
+  },
+  /* coloca um obstáculo ou bichinho no começo do trecho de chão (as palavras ficam mais para o fim) */
+  bicho(x0, L) {
+    const j = this.j; if (j.demo && j.rng() < .5) return;
+    if (x0 < 14 || L < 5.5) return;
+    const chance = .35 + j.dif * .45;
+    if (j.rng() > chance) return;
+    const r = j.rng();
+    const x = x0 + 1.4 + j.rng() * (L * .25);
+    let especie;
+    especie = r < .5 ? 'pedra' : 'pneu'; // só cone e pneu (sem bichinhos)
+    const vel = { pedra: 0, pneu: -.9, joaninha: -1.3, abelha: -1.7 }[especie];
+    j.itens.push({ tipo: 'bicho', especie, x, y: especie === 'abelha' ? 1.5 : 0, y0: 1.5, vx: vel, min: x0 + .4, max: x0 + L - .4, fase: j.rng() * 6 });
+  },
+  vaga(x, yBaixo, yAlto) {
+    const j = this.j; if (j.fim) return;
+    if (x - j.ultimaVaga < 8.5) return;
+    j.ultimaVaga = x;
+    j.itens.push({ tipo: 'vaga', x, yBaixo, yAlto });
+  },
+  /* quando a vaga chega perto, decide as palavras: a próxima da frase e uma que não serve */
+  preencherVaga(v) {
+    const j = this.j; v.tipo = 'feita';
+    if (j.idx >= j.frase.length) { for (let i = 0; i < 3; i++) j.itens.push({ tipo: 'estrela', x: v.x - .8 + i * .8, y: v.yBaixo }); return; }
+    const certa = j.frase[j.idx];
+    const pool = CR_DISTRATORES.filter(id => !j.frase.some(w => w.id === id));
+    const errada = crPalavra(pool[Math.floor(j.rng() * pool.length)]);
+    const certaEmCima = j.rng() < .5; const par = ++j.pares;
+    j.itens.push({ tipo: 'palavra', w: certa, certa: true, par, x: v.x, y: certaEmCima ? v.yAlto : v.yBaixo });
+    j.itens.push({ tipo: 'palavra', w: errada, certa: false, par, x: v.x + (certaEmCima ? 0 : 0), y: certaEmCima ? v.yBaixo : v.yAlto });
+  },
+
+  /* ----- Controles ----- */
+  pular(demo) {
+    const j = this.j; if (!j || (!demo && this.modo !== 'jogo') || j.fim === 'ganhou' || j.contagem > 0) return;
+    if (j.noChao || j.coyote > 0) { j.vy = CR_PULO1; j.noChao = false; j.coyote = 0; j.pulos = 1; this.poeira(j.x, j.y, 6); if (!demo) CR_SOM.tocar('pulo'); }
+    else if (j.pulos < 2) { j.vy = CR_PULO2; j.pulos = 2; this.poeira(j.x, j.y + .4, 5, '#ffffff'); if (!demo) CR_SOM.tocar('pulo'); }
+  },
+  tecla(e) {
+    if (!this.raiz || document.querySelector('.confirm-dialog')) return;
+    const k = e.key;
+    const camada = document.getElementById('crCamada');
+    const aberta = camada && camada.childElementCount;
+    if (k === 'Escape') {
+      e.preventDefault(); e.stopPropagation();
+      if (aberta && this.modo === 'pausa') this.continuar();
+      else if (aberta) { this.fecharCamada(); if (this.modo === 'fim') this.mostrarTitulo(); }
+      else if (this.modo === 'jogo') this.pausar();
+      else go('desafios');
+      return;
+    }
+    if (this.modo !== 'jogo' || aberta) return;
+    if (k === ' ' || k === 'ArrowUp' || k === 'w' || k === 'W' || k === 'Enter') {
+      const alvo = e.target && e.target.closest && e.target.closest('.cr-hud');
+      if (alvo) return;
+      e.preventDefault(); e.stopPropagation();
+      if (!e.repeat) this.pular();
+    }
+  },
+  pausar() {
+    if (this.modo !== 'jogo') return;
+    this.modo = 'pausa';
+    const camada = document.getElementById('crCamada');
+    camada.innerHTML = `
+      <div class="cr-painel cr-painel-peq" role="dialog" aria-modal="true" aria-label="Jogo pausado">
+        <div class="cr-painel-faixa"><h2>Pausado</h2></div>
+        <div class="cr-painel-corpo">
+          <p class="cr-painel-frase">Frase: <b>${this.j.texto}</b></p>
+          <div class="cr-painel-botoes">
+            <button type="button" class="cr-btn cr-btn-principal" data-cr="continuar">Continuar</button>
+            <button type="button" class="cr-btn" data-cr="repetir">Recomeçar fase</button>
+            <button type="button" class="cr-btn" data-cr="menu">Sair da fase</button>
+            <button type="button" class="cr-btn" data-cr="sons" aria-pressed="${CR_SOM.ligado()}">Sons: ${CR_SOM.ligado() ? 'ligados' : 'desligados'}</button>
+            <button type="button" class="cr-btn" data-cr="musica" aria-pressed="${CR_MUSICA.ligada()}">Música: ${CR_MUSICA.ligada() ? 'ligada' : 'desligada'}</button>
+          </div>
+        </div>
+      </div>`;
+    this.ligar(camada); this.travar(); camada.querySelector('[data-cr="continuar"]').focus();
+  },
+  continuar() { if (this.modo !== 'pausa') return; this.fecharCamada(); this.modo = 'jogo'; this.ultimo = performance.now(); document.getElementById('crPular')?.focus({ preventScroll: true }); },
+
+  /* ----- A cada quadro ----- */
+  quadro(t) {
+    const dt = Math.min(.033, (t - this.ultimo) / 1000); this.ultimo = t;
+    if (this.modo === 'jogo' || (this.modo === 'titulo' && this.j && this.j.demo)) this.atualizar(dt);
+    const j = this.j;
+    const correndo = this.modo === 'jogo' && j && !j.demo && j.contagem <= 0 && j.fim !== 'ganhou' && !document.hidden;
+    CR_SOM.motor(correndo, j);
+    CR_MUSICA.atualizar(correndo);
+    this.desenhar(t);
+  },
+  atualizar(dt) {
+    const j = this.j; j.t += dt;
+    // 3, 2, 1, já!
+    if (j.contagem > 0) {
+      const antes = Math.ceil(j.contagem - .7); j.contagem -= dt; const depois = Math.ceil(j.contagem - .7);
+      if (!j.demo && (antes !== depois || !j.bipou)) { j.bipou = true; CR_SOM.tocar(depois >= 1 ? 'bip' : 'ja'); }
+      if (antes >= 1 && depois < 1) this.avisar(`Monte a frase: ${j.texto}`, 2400);
+      if (j.contagem > 0) return;
+    }
+    // na prévia do fundo, o Guri pula sozinho
+    if (j.demo) {
+      const chao = x => j.plats.some(p => !p.alto && x >= p.x && x <= p.x + p.w);
+      if (j.noChao && !chao(j.x + .8)) this.pular(true);
+      const certa = j.itens.find(it => it.tipo === 'palavra' && !it.pego && it.certa && it.x > j.x && it.x - j.x < 1.6);
+      if (certa && certa.y > 2 && j.noChao) this.pular(true);
+      const perigo = j.itens.find(it => it.tipo === 'bicho' && !it.morto && it.x > j.x && it.x - j.x < 1.8 && it.especie !== 'abelha');
+      if (perigo && j.noChao) this.pular(true);
+    }
+    if (j.invul > 0) j.invul -= dt;
+    if (j.fim !== 'ganhou') j.x += j.vel * dt;
+    const yAntes = j.y;
+    j.vy -= CR_G * dt; j.y += j.vy * dt;
+    // pousar em cima do chão e das plataformas (dá para passar por baixo das plataformas do alto)
+    let apoio = null;
+    if (j.vy <= 0) for (const p of j.plats) {
+      if (j.x < p.x - .25 || j.x > p.x + p.w + .25) continue;
+      if (yAntes >= p.y - .02 && j.y <= p.y) { apoio = p; break; }
+    }
+    if (apoio) {
+      if (!j.noChao && j.vy < -6) this.poeira(j.x, apoio.y, 5);
+      j.y = apoio.y; j.vy = 0; j.noChao = true; j.pulos = 0; j.coyote = .1;
+      if (!apoio.alto && j.x > apoio.x + .5 && j.x < apoio.x + apoio.w - .5) j.seguro = { x: j.x };
+    } else {
+      if (j.noChao) { j.coyote = .1; j.pulos = Math.max(j.pulos, 1); }
+      j.noChao = false; j.coyote -= dt;
+    }
+    // caiu no buraco
+    if (j.y < -4.5) this.cair();
+    // gerar mundo à frente e limpar o que ficou para trás
+    const verAte = j.x + this.vw / this.U + 4;
+    this.gerar(verAte + 6);
+    for (const it of j.itens) if (it.tipo === 'vaga' && it.x < j.x + this.vw / this.U * (1 - this.frente) + 1.5) this.preencherVaga(it);
+    const atras = j.x - this.vw / this.U * this.frente - 4;
+    j.plats = j.plats.filter(p => p.x + p.w > atras);
+    // palavra certa que passou sem ser pega: ganha outra chance mais à frente
+    for (const it of j.itens) if (it.tipo === 'palavra' && !it.pego && it.certa && it.x < j.x - 1.2 && !it.perdida) { it.perdida = true; j.ultimaVaga = Math.min(j.ultimaVaga, j.x - 2); }
+    j.itens = j.itens.filter(it => it.x > atras || (it.tipo === 'palavra' && it.voando));
+    // bichinhos andando e obstáculos
+    for (const b of j.itens) {
+      if (b.tipo !== 'bicho' || b.morto) continue;
+      if (b.vx) {
+        b.x += b.vx * dt;
+        if (b.especie === 'abelha') b.y = b.y0 + Math.sin(j.t * 2.6 + b.fase) * .55;
+        else if (b.x < b.min || b.x > b.max) { b.vx = -b.vx; b.x = Math.max(b.min, Math.min(b.max, b.x)); }
+      }
+      const larg = b.especie === 'abelha' ? .32 : b.especie === 'pedra' ? .38 : .36;
+      const alt = b.especie === 'abelha' ? .4 : b.especie === 'pedra' ? .55 : .5;
+      const base = b.especie === 'abelha' ? b.y - alt / 2 : b.y;
+      if (Math.abs(b.x - j.x) > larg + .6) continue;
+      if (j.y > base + alt || j.y + 1.35 < base) continue;
+      if (j.demo) { if (j.noChao) this.pular(true); continue; }
+      if (b.especie !== 'pedra' && j.vy < -1 && j.y > base + alt * .4) {
+        // pulou em cima: o bichinho some e o Guri quica
+        b.morto = true; j.vy = 9; j.pulos = 1; j.estrelas++; CR_SOM.tocar('pisao');
+        this.brilho(b.x, base + alt / 2, '#fbd34d', 10); this.brilho(b.x, base + alt / 2, '#ffffff', 6);
+        this.avisar('Boa! Pulou em cima!', 1000); this.atualizarHud();
+      } else if (j.invul <= 0) this.machucar(b);
+    }
+    j.itens = j.itens.filter(b => !(b.tipo === 'bicho' && b.morto));
+    // pegar estrelas e palavras
+    for (const it of j.itens) {
+      if (it.pego) continue;
+      if (it.tipo === 'estrela' && Math.abs(it.x - j.x) < .55 && it.y > j.y - .2 && it.y < j.y + 1.7) {
+        it.pego = true; j.estrelas++; this.brilho(it.x, it.y, '#fbd34d', 8); this.atualizarHud(); if (!j.demo) CR_SOM.tocar('estrela');
+      }
+      // a palavra certa tem uma área de toque um pouco maior (mais fácil de pegar que a errada)
+      if (it.tipo === 'palavra' && Math.abs(it.x - j.x) < (it.certa ? .8 : .5) && it.y > j.y - (it.certa ? .45 : .3) && it.y < j.y + (it.certa ? 1.95 : 1.7)) this.pegarPalavra(it);
+    }
+    j.itens = j.itens.filter(it => !(it.pego && it.tipo === 'estrela'));
+    // partículas
+    for (const p of j.parts) { p.x += p.vx * dt; p.y += p.vy * dt; p.vy -= 9 * dt; p.vida -= dt; }
+    j.parts = j.parts.filter(p => p.vida > 0);
+    // chegada
+    if (j.bandeira && j.x >= j.bandeira.x && j.fim !== 'ganhou') this.ganhar();
+  },
+  pegarPalavra(it) {
+    const j = this.j;
+    it.pego = true;
+    j.itens.forEach(o => { if (o.par === it.par && o !== it) o.pego = 'sumiu'; });
+    if (j.demo) { this.brilho(it.x, it.y, '#9fdcb6', 10); if (it.certa) j.idx = (j.idx + 1) % j.frase.length; return; }
+    if (it.certa && j.frase[j.idx] && it.w.id === j.frase[j.idx].id) {
+      j.idx++; this.brilho(it.x, it.y, '#9fdcb6', 14); this.brilho(it.x, it.y, '#fbd34d', 8); CR_SOM.tocar('acerto');
+      try { speak(it.w.label); } catch (e) {}
+      if (j.idx >= j.frase.length) {
+        j.fim = true; this.avisar('Frase completa! Corra até a bandeira!', 2400);
+        j.itens = j.itens.filter(o => o.tipo !== 'vaga' && !(o.tipo === 'palavra' && !o.pego));
+      } else this.avisar(`Muito bem! Agora: ${j.frase[j.idx].label}`, 1600);
+    } else {
+      j.erros++; j.ajuda = true; this.brilho(it.x, it.y, '#f6a5c0', 10); CR_SOM.tocar('erro');
+      const prox = j.frase[j.idx];
+      this.avisar(`Ops! Essa não. Procure: ${prox.label}`, 2000);
+      try { speak('Procure ' + prox.label); } catch (e) {}
+    }
+    this.atualizarHud();
+  },
+  machucar(b) {
+    const j = this.j;
+    j.coracoes--; j.quedas++; j.invul = 1.6; j.vy = 6; j.noChao = false; j.pulos = 1;
+    this.brilho(j.x, j.y + .8, '#f6a5c0', 8); CR_SOM.tocar('batida');
+    const nomes = { pedra: 'o cone', caracol: 'o caracol', joaninha: 'a joaninha', abelha: 'a abelha' };
+    this.atualizarHud();
+    if (j.coracoes <= 0) { this.perder(); return; }
+    this.avisar(`Ai! Cuidado com ${nomes[b.especie]}!`, 1500);
+  },
+  cair() {
+    const j = this.j;
+    if (j.demo) { j.x = j.seguro.x; j.y = 4; j.vy = 0; return; }
+    j.coracoes--; j.quedas++; CR_SOM.tocar('queda');
+    this.atualizarHud();
+    if (j.coracoes <= 0) { this.perder(); return; }
+    // volta para o último chão seguro e ganha um tempinho piscando
+    j.x = j.seguro.x; j.y = 4; j.vy = 0; j.invul = 1.6; j.noChao = false; j.pulos = 1;
+    this.avisar('Ops, caiu! Tente de novo.', 1500);
+  },
+  ganhar() {
+    const j = this.j; j.fim = 'ganhou'; this.modo = 'fim'; CR_SOM.tocar('vitoria');
+    const nota = j.erros === 0 && j.quedas === 0 ? 3 : (j.erros + j.quedas <= 2 ? 2 : 1);
+    const d = crDados();
+    const antes = d.melhor[j.fase] || 0;
+    const ganhoNota = Math.max(0, nota - antes);
+    d.melhor[j.fase] = Math.max(antes, nota);
+    d.estrelas += j.estrelas + ganhoNota;
+    d.desbloqueada = Math.max(d.desbloqueada, Math.min(CR_FASES.length, j.fase + 1));
+    if (STATE.data.profile) {
+      STATE.data.profile.stars = (STATE.data.profile.stars || 0) + ganhoNota;
+      STATE.data.profile.phrasesSpoken = (STATE.data.profile.phrasesSpoken || 0) + 1;
+    }
+    saveData();
+    try { speak(j.texto); } catch (e) {}
+    for (let i = 0; i < 40; i++) this.brilho(j.x + (Math.random() - .5) * 6, 2 + Math.random() * 3, ['#f6a5c0', '#fbe38c', '#9cc3ef', '#b9a7f2', '#9fd8a8'][i % 5], 1);
+    const ultima = j.fase >= CR_FASES.length;
+    setTimeout(() => {
+      const camada = document.getElementById('crCamada'); if (!camada || this.modo !== 'fim') return;
+      camada.innerHTML = `
+        <div class="cr-painel cr-painel-peq" role="dialog" aria-modal="true" aria-label="Fase concluída">
+          <div class="cr-painel-faixa"><h2>Fase ${j.fase} concluída!</h2></div>
+          <div class="cr-painel-corpo">
+            <div class="cr-nota" aria-label="${nota} de 3 estrelas">${[1, 2, 3].map(k => `<span class="${k <= nota ? 'ok' : ''}">${CR_IC.estrela}</span>`).join('')}</div>
+            <p class="cr-painel-frase">Você montou:</p>
+            <p class="cr-frase-final">${j.frase.map(w => `<span>${w.label}</span>`).join('')}</p>
+            <p class="cr-painel-info">Estrelinhas pegas: <b>${j.estrelas}</b></p>
+            <div class="cr-painel-botoes">
+              ${ultima ? '' : `<button type="button" class="cr-btn cr-btn-principal" data-cr="proxima">Próxima fase</button>`}
+              <button type="button" class="cr-btn${ultima ? ' cr-btn-principal' : ''}" data-cr="repetir">Jogar de novo</button>
+              <button type="button" class="cr-btn" data-cr="menu">Menu do jogo</button>
+            </div>
+          </div>
+        </div>`;
+      this.ligar(camada); this.travar(); camada.querySelector('.cr-btn-principal')?.focus();
+    }, 1100);
+  },
+  perder() {
+    const j = this.j; this.modo = 'fim'; CR_SOM.tocar('derrota');
+    const camada = document.getElementById('crCamada');
+    camada.innerHTML = `
+      <div class="cr-painel cr-painel-peq" role="dialog" aria-modal="true" aria-label="Fim de jogo">
+        <div class="cr-painel-faixa"><h2>Ops! Acabaram os corações</h2></div>
+        <div class="cr-painel-corpo">
+          <p class="cr-painel-frase">Você chegou até: <b>${j.frase.slice(0, j.idx).map(w => w.label).join(' ') || '...'}</b></p>
+          <p class="cr-painel-info">Vamos tentar de novo?</p>
+          <div class="cr-painel-botoes">
+            <button type="button" class="cr-btn cr-btn-principal" data-cr="repetir">Tentar de novo</button>
+            <button type="button" class="cr-btn" data-cr="menu">Menu do jogo</button>
+          </div>
+        </div>
+      </div>`;
+    this.ligar(camada); this.travar(); camada.querySelector('.cr-btn-principal').focus();
+  },
+
+  /* ----- Efeitos e HUD ----- */
+  brilho(x, y, cor, n) { const j = this.j; for (let i = 0; i < n; i++) { const a = Math.random() * 7, v = 2 + Math.random() * 4; j.parts.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v + 2, vida: .5 + Math.random() * .5, cor, r: .06 + Math.random() * .08 }); } },
+  poeira(x, y, n, cor) { const j = this.j; for (let i = 0; i < n; i++) j.parts.push({ x: x - .2 + Math.random() * .4, y: y + .05, vx: -1.5 - Math.random() * 2, vy: .5 + Math.random() * 1.5, vida: .35 + Math.random() * .25, cor: cor || '#f3e1c0', r: .07 + Math.random() * .07 }); },
+  avisar(txt, ms) {
+    const el = document.getElementById('crAviso'); if (!el) return;
+    el.textContent = txt; el.classList.add('ve');
+    clearTimeout(this._aviso); this._aviso = setTimeout(() => el.classList.remove('ve'), ms || 1800);
+  },
+  atualizarHud() {
+    const j = this.j; if (!j) return;
+    const fr = document.getElementById('crFrase');
+    if (fr) fr.innerHTML = j.frase.map((w, i) => {
+      return `<span class="cr-slot ${i < j.idx ? 'ok' : i === j.idx ? 'agora' : ''}">${w.label}</span>`;
+    }).join('') + `<span class="sr-only">Próxima palavra: ${j.frase[j.idx] ? j.frase[j.idx].label : 'chegada'}</span>`;
+    const es = document.getElementById('crEstrelas'); if (es) es.textContent = j.estrelas;
+    const ba = document.getElementById('crBarra'); if (ba) ba.style.width = Math.round(j.idx / j.frase.length * 100) + '%';
+    const co = document.getElementById('crCoracoes');
+    if (co) { co.innerHTML = [0, 1, 2].map(i => `<span class="${i < j.coracoes ? '' : 'vazio'}">${CR_IC.coracao}</span>`).join(''); co.setAttribute('aria-label', `${j.coracoes} corações`); }
+  },
+
+  /* ----- Desenho ----- */
+  desenhar(t) {
+    const c = this.ctx, j = this.j; if (!c || !j) return;
+    const U = this.U, vw = this.vw, vh = this.vh, cy = this.chaoY;
+    c.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
+    const camX = j.x - (vw * this.frente) / U;
+    const sx = x => (x - camX) * U, sy = y => cy - y * U;
+    // céu
+    const ceu = c.createLinearGradient(0, 0, 0, vh); ceu.addColorStop(0, '#9fdcfb'); ceu.addColorStop(.6, '#dff3ff'); ceu.addColorStop(1, '#eaf8ff');
+    c.fillStyle = ceu; c.fillRect(0, 0, vw, vh);
+    c.fillStyle = 'rgba(255,248,214,.9)'; c.beginPath(); c.arc(vw * .82, vh * .14, U * .75, 0, 7); c.fill();
+    // nuvens
+    for (let i = -1; i < 6; i++) {
+      const base = Math.floor(camX * .08 / 6) + i, h = crHash(base * 7 + 3);
+      const nx = (base * 6 - camX * .08) * U + h * U * 2, ny = vh * (.08 + h * .18);
+      c.fillStyle = 'rgba(255,255,255,.95)';
+      c.beginPath(); c.ellipse(nx, ny, U * .9, U * .3, 0, 0, 7); c.arc(nx - U * .35, ny - U * .12, U * .32, 0, 7); c.arc(nx + U * .25, ny - U * .2, U * .4, 0, 7); c.fill();
+    }
+    // morros ao longe
+    c.fillStyle = '#cdeec2'; c.beginPath(); c.moveTo(0, cy);
+    for (let x = 0; x <= vw + 10; x += 10) { const wx = x / U + camX * .12; c.lineTo(x, cy - U * (3.2 + Math.sin(wx * .35) * .5 + Math.sin(wx * .13) * .4)); }
+    c.lineTo(vw, vh); c.lineTo(0, vh); c.closePath(); c.fill();
+    // arquibancada com torcida e bandeirinhas
+    const camA = camX * .4, topoA = cy - U * 2.75, baseA = cy - U * .55;
+    c.fillStyle = '#b9d4e8'; c.fillRect(0, topoA, vw, baseA - topoA);
+    c.fillStyle = '#8cb6d6'; c.fillRect(0, topoA - U * .22, vw, U * .22);
+    const coresT = ['#f28b82', '#fbd34d', '#7cb3ee', '#9edb7f', '#c9b3f0', '#f6a5c0', '#ffffff'];
+    for (let fila = 0; fila < 4; fila++) {
+      const fy = topoA + U * (.35 + fila * .5);
+      c.fillStyle = 'rgba(255,255,255,.35)'; c.fillRect(0, fy + U * .2, vw, U * .06);
+      const passo = .42, ini = Math.floor(camA / passo) - 1;
+      for (let i = ini; i < ini + vw / U / passo + 3; i++) {
+        const h = crHash(i * 31 + fila * 7); if (h < .12) continue;
+        const px = (i * passo - camA) * U + (fila % 2) * U * .21;
+        const pula = Math.max(0, Math.sin(j.t * 5 + h * 20)) * U * .07 * (h > .6 ? 1 : 0);
+        c.fillStyle = coresT[Math.floor(h * 97) % coresT.length];
+        c.beginPath(); c.arc(px, fy - pula, U * .13, 0, 7); c.fill();
+        crRR(c, px - U * .14, fy + U * .08 - pula, U * .28, U * .14, U * .06); c.fill();
+      }
+    }
+    // cobertura listrada
+    for (let i = Math.floor(camA / .9) - 1; i < camA / .9 + vw / U / .9 + 2; i++) {
+      const x0 = (i * .9 - camA) * U; c.fillStyle = i % 2 ? '#ffffff' : '#f28b82';
+      c.beginPath(); c.moveTo(x0, topoA - U * .5); c.lineTo(x0 + U * .9, topoA - U * .5); c.lineTo(x0 + U * .9, topoA - U * .22); c.quadraticCurveTo(x0 + U * .45, topoA - U * .05, x0, topoA - U * .22); c.fill();
+    }
+    // bandeirinhas em cordão
+    c.strokeStyle = 'rgba(42,85,119,.35)'; c.lineWidth = 1.5;
+    const camB = camX * .6;
+    for (let i = Math.floor(camB / 4) - 1; i < camB / 4 + vw / U / 4 + 2; i++) {
+      const x0 = (i * 4 - camB) * U, x1 = x0 + U * 4, yb = topoA - U * .9;
+      c.beginPath(); c.moveTo(x0, yb); c.quadraticCurveTo((x0 + x1) / 2, yb + U * .5, x1, yb); c.stroke();
+      for (let k = 1; k < 8; k++) {
+        const t2 = k / 8, bx = x0 + (x1 - x0) * t2, by = yb + U * .5 * 2 * t2 * (1 - t2) * 1;
+        c.fillStyle = coresT[(k + i * 3 & 7) % 6]; c.beginPath(); c.moveTo(bx - U * .12, by); c.lineTo(bx + U * .12, by); c.lineTo(bx, by + U * .3); c.fill();
+      }
+    }
+    // muro com placas antes da pista
+    c.fillStyle = '#e8f1f8'; c.fillRect(0, baseA, vw, cy - baseA);
+    const camM = camX * .7;
+    for (let i = Math.floor(camM / 3) - 1; i < camM / 3 + vw / U / 3 + 2; i++) {
+      const h = crHash(i * 17 + 2), px = (i * 3 - camM) * U + U * .3;
+      c.fillStyle = ['#cfe9f9', '#fff3c4', '#ffd9d6', '#dff5d6'][Math.floor(h * 4)];
+      crRR(c, px, baseA + U * .08, U * 2.3, cy - baseA - U * .2, U * .08); c.fill();
+    }
+    c.fillStyle = 'rgba(234,248,255,.4)'; c.fillRect(0, 0, vw, cy); // fundo mais claro que a pista, para as palavras aparecerem bem
+    // pista (trechos de asfalto) e plataformas altas (pontes)
+    for (const p of j.plats) {
+      const x0 = sx(p.x), x1 = sx(p.x + p.w), top = sy(p.y);
+      if (x1 < -20 || x0 > vw + 20) continue;
+      const zh = U * .2; // altura da zebra
+      if (p.alto) {
+        c.fillStyle = 'rgba(40,60,80,.14)'; c.beginPath(); c.ellipse((x0 + x1) / 2, sy(0) + U * .05, (x1 - x0) * .45, U * .12, 0, 0, 7); c.fill();
+        c.fillStyle = '#8fa3b8'; c.fillRect(x0 + U * .25, top + U * .5, U * .14, sy(0) - top - U * .5); c.fillRect(x1 - U * .39, top + U * .5, U * .14, sy(0) - top - U * .5);
+        c.fillStyle = '#6b7c8f'; crRR(c, x0, top, x1 - x0, U * .55, U * .14); c.fill();
+      } else {
+        // terra embaixo da pista
+        c.fillStyle = '#9ed98a'; crRR(c, x0, top + U * .9, x1 - x0, vh - top, U * .2); c.fill();
+        c.fillStyle = '#8fcf7e'; for (let gy = top + U * 1.45; gy < vh; gy += U * .7) c.fillRect(x0, gy, x1 - x0, U * .35); // grama aparada em listras
+        c.fillStyle = '#6b7c8f'; crRR(c, x0, top, x1 - x0, U * 1.05, U * .2); c.fill();
+        // faixa tracejada do meio
+        c.fillStyle = 'rgba(255,255,255,.85)';
+        const ini = Math.ceil(p.x / 1.2) * 1.2;
+        for (let k = ini; k < p.x + p.w - .7; k += 1.2) c.fillRect(sx(k + .2), top + U * .58, U * .55, U * .09);
+        c.fillStyle = 'rgba(255,255,255,.08)'; c.fillRect(x0 + U * .1, top + U * .25, x1 - x0 - U * .2, U * .12);
+      }
+      // zebra vermelha e branca na borda
+      c.save(); crRR(c, x0 - U * .04, top - zh * .6, x1 - x0 + U * .08, zh, zh * .4); c.clip();
+      for (let k = Math.floor(p.x * 2.5); k < (p.x + p.w) * 2.5 + 1; k++) { c.fillStyle = k % 2 ? '#ffffff' : '#f28b82'; c.fillRect(sx(k / 2.5), top - zh, U / 2.5 + 1, zh * 1.5); }
+      c.restore();
+      // linha de largada no começo do jogo
+      if (p.x <= 0 && p.x + p.w > 2 && !p.alto) {
+        const lx = sx(2.2);
+        for (let r = 0; r < 4; r++) for (let q = 0; q < 2; q++) { c.fillStyle = (r + q) % 2 ? '#ffffff' : '#2a5577'; c.fillRect(lx + q * U * .18, top + U * .05 + r * U * .24, U * .18, U * .24); }
+      }
+    }
+    // estrelas
+    for (const it of j.itens) if (it.tipo === 'estrela') {
+      const x = sx(it.x), y = sy(it.y) + Math.sin(j.t * 4 + it.x) * U * .05;
+      if (x < -30 || x > vw + 30) continue;
+      crEstrela(c, x, y, U * .2, '#fbd34d', Math.sin(j.t * 2 + it.x) * .3);
+    }
+    // chegada: pórtico quadriculado
+    if (j.bandeira) {
+      const fx = sx(j.bandeira.x), fy = sy(0), alt = U * 3.1, larg = U * 2.2;
+      c.fillStyle = '#5b84a5'; c.fillRect(fx - larg / 2, fy - alt, U * .16, alt); c.fillRect(fx + larg / 2 - U * .16, fy - alt, U * .16, alt);
+      const q = U * .2, bx = fx - larg / 2, by = fy - alt;
+      for (let r = 0; r < 3; r++) for (let k = 0; k < Math.round(larg / q); k++) { c.fillStyle = (r + k) % 2 ? '#ffffff' : '#2a5577'; c.fillRect(bx + k * q, by + r * q, q + .5, q + .5); }
+      c.fillStyle = '#fbd34d'; crRR(c, fx - U * .75, by - U * .55, U * 1.5, U * .5, U * .2); c.fill();
+      c.fillStyle = '#2a5577'; c.font = `900 ${Math.round(U * .28)}px ${CR_FONTE}`; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('CHEGADA', fx, by - U * .3); c.textAlign = 'left';
+      for (let r = 0; r < 5; r++) for (let k = 0; k < 2; k++) { c.fillStyle = (r + k) % 2 ? '#ffffff' : '#2a5577'; c.fillRect(fx - U * .18 + k * U * .18, fy + U * .05 + r * U * .19, U * .18, U * .19); }
+    }
+    // palavras
+    c.textAlign = 'left'; c.textBaseline = 'middle';
+    for (const it of j.itens) if (it.tipo === 'palavra' && !it.pego) {
+      const bob = Math.sin(j.t * 3 + it.x) * U * .06;
+      const x = sx(it.x), y = sy(it.y) + bob;
+      if (x < -200 || x > vw + 200) continue;
+      const brilha = j.ajuda && it.certa;
+      c.font = `800 ${Math.round(U * .34)}px ${CR_FONTE}`;
+      const tw = c.measureText(it.w.label).width, w = tw + U * .7, h = U * .82;
+      if (brilha) { c.fillStyle = 'rgba(140,195,230,.5)'; crRR(c, x - w / 2 - U * .12, y - h / 2 - U * .12, w + U * .24, h + U * .24, h); c.fill(); }
+      c.fillStyle = 'rgba(23,58,94,.15)'; crRR(c, x - w / 2, y - h / 2 + U * .06, w, h, h / 2); c.fill();
+      c.fillStyle = '#ffffff'; crRR(c, x - w / 2, y - h / 2, w, h, h / 2); c.fill();
+      c.lineWidth = Math.max(2, U * .045); c.strokeStyle = brilha ? '#5fa3d3' : '#8cc3e6'; c.stroke();
+      c.fillStyle = '#2a5577'; c.textAlign = 'center'; c.fillText(it.w.label, x, y + 1); c.textAlign = 'left';
+    }
+    // obstáculos e bichinhos
+    for (const b of j.itens) if (b.tipo === 'bicho') {
+      const x = sx(b.x), y = sy(b.y); if (x < -60 || x > vw + 60) continue;
+      crDesenharBicho(c, b, x, y, U, j.t);
+    }
+    // Guri no carro
+    const gx = sx(j.x), gy = sy(j.y);
+    const pisca = j.invul > 0 && Math.floor(j.t * 12) % 2 === 0;
+    if (j.y > -1) { c.fillStyle = 'rgba(30,50,70,.22)'; c.beginPath(); c.ellipse(gx, sy(Math.max(0, this.chaoAbaixo(j.x))) + U * .03, U * .8, U * .1, 0, 0, 7); c.fill(); }
+    if (!pisca) {
+      const anda = j.noChao && j.fim !== 'ganhou' && j.contagem <= 0;
+      const treme = anda ? Math.sin(j.t * 30) * U * .015 : 0;
+      const giro = j.noChao ? 0 : Math.max(-.18, Math.min(.18, -j.vy * .015));
+      c.save(); c.translate(gx, gy - treme); c.rotate(giro);
+      if (crCarroPronto && CR_CARRO.naturalWidth) {
+        const h = U * 1.6, w = h * CR_CARRO.naturalWidth / CR_CARRO.naturalHeight;
+        c.drawImage(CR_CARRO, -w / 2, -h, w, h);
+      } else crDesenharCarro(c, U, j.t * (anda || !j.noChao ? 1 : 0), crGuriPronto && CR_GURI.naturalWidth ? CR_GURI : null);
+      c.restore();
+      // fumacinha atrás do carro
+      if (anda && Math.random() < .25) j.parts.push({ x: j.x - 1.15, y: j.y + .3, vx: -1.5, vy: .6, vida: .5, r: .1, cor: 'rgba(200,214,226,.9)' });
+    }
+    // contagem antes de começar: só o número (ou "Já!"), azul, no meio da tela
+    if (j.contagem > 0) {
+      const n = Math.ceil(j.contagem - .7), txt = n >= 1 ? String(n) : 'Já!';
+      const fr = j.contagem - .7 - Math.floor(j.contagem - .7), k = n >= 1 ? 1 + fr * .25 : 1.15;
+      const tam = Math.round(Math.min(vw, vh) * .16 * k * (n >= 1 ? 1 : .75));
+      c.save();
+      c.font = `900 ${tam}px ${CR_FONTE}`; c.textAlign = 'center'; c.textBaseline = 'alphabetic';
+      const m = c.measureText(txt);
+      const alto = (m.actualBoundingBoxAscent || tam * .72) - (m.actualBoundingBoxDescent || 0);
+      const yb = vh / 2 + alto / 2; // centro exato do desenho do número
+      c.fillStyle = '#2a5577'; c.fillText(txt, vw / 2, yb);
+      c.restore();
+    }
+    // partículas (desenho)
+    for (const p of j.parts) { c.globalAlpha = Math.max(0, Math.min(1, p.vida * 2)); c.fillStyle = p.cor; c.beginPath(); c.arc(sx(p.x), sy(p.y), p.r * U, 0, 7); c.fill(); }
+    c.globalAlpha = 1;
+  },
+  chaoAbaixo(x) { const j = this.j; let m = -10; for (const p of j.plats) if (x >= p.x && x <= p.x + p.w && p.y <= j.y + .01) m = Math.max(m, p.y); return m; }
+};
+
 </script>
 </body>
 </html>
