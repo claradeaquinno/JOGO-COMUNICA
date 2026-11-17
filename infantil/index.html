@@ -4961,6 +4961,33 @@ body[data-theme="dark"] .desafio-card-progresso { background: #2a4d6c; }
   .crh-topo { order: 0; } .crh-esq { order: 1; } .crh-centro { order: 2; } #app .crh .crh-jogar { order: 3; width: 100%; } #app .crh .crh-como-btn { order: 4; justify-self: stretch; justify-content: center; min-height: 56px; } .crh-painel { order: 5; }
 }
 @media (prefers-reduced-motion: reduce) { .crh *, .crh *::after, .crh-fundo::after { animation: none !important; } }
+/* Desafios: o ícone da corrida é comprido (carro), então ocupa a mesma caixa mas um pouco maior para ter o mesmo peso visual do alvo */
+#app .desafio-card-novo .desafio-card-img { transform: scale(1.3); }
+/* Títulos e textos soltos em cima do fundo claro: azul padrão para aparecer (só no tema claro) */
+body:not([data-theme="dark"]) #app .topbar-title,
+body:not([data-theme="dark"]) #app .about-link,
+body:not([data-theme="dark"]) #app .layer-label,
+body:not([data-theme="dark"]) #app .hint,
+body:not([data-theme="dark"]) #app .back-link,
+body:not([data-theme="dark"]) #app .empty-state,
+body:not([data-theme="dark"]) #app .mode-choice-content h1,
+body:not([data-theme="dark"]) #app .carousel-full-content .section-label,
+body:not([data-theme="dark"]) #app .circular-full-content .section-label,
+body:not([data-theme="dark"]) #app .input-mode-placeholder {
+  color: #173a5e !important; text-shadow: 0 1px 0 rgba(255, 255, 255, .8) !important;
+}
+/* Desafio da Comunicação no celular: os dois jogos lado a lado */
+@media (max-width: 700px) {
+  #app .desafios-grade { grid-template-columns: 1fr 1fr; gap: 10px; }
+  #app .desafio-card { min-height: 190px; padding: 18px 8px 20px; gap: 8px; border-radius: 18px; }
+  #app .desafio-card-img { width: 66px; height: 66px; }
+  #app .desafio-card-titulo { font-size: clamp(14px, 4.2vw, 17px); line-height: 1.15; text-align: center; }
+  #app .desafio-card-sub { font-size: clamp(11px, 3.2vw, 13px); line-height: 1.3; }
+}
+/* Corrida do Guri: vídeo do Guri no kart na tela de entrada */
+.crh-centro video { max-width: 100%; max-height: min(52vh, 420px); object-fit: contain; filter: drop-shadow(0 18px 14px rgba(42, 85, 119, .22)); animation: crhCarroChega 1s cubic-bezier(.2, .8, .25, 1) .15s both; transform-origin: 50% 100%; background: transparent; pointer-events: none; }
+.crh-centro img[hidden] { display: none; }
+@media (max-width: 900px), (max-height: 520px) and (max-width: 1100px) { .crh-centro video { max-height: 210px; } }
 </style>
 <link rel="stylesheet" href="../menu-inicial.css">
 </head>
@@ -9851,6 +9878,7 @@ function renderDesafios() {
           <span class="desafio-card-sub">Monte frases certas e faça o Guri evoluir</span>
         </button>
         <button type="button" class="desafio-card desafio-card-novo" data-go="corrida" aria-label="Corrida do Guri: corra, pule e pegue as palavras da frase">
+          <img class="desafio-card-img" src="../assets/imagens/icone-corrida.png" alt="" aria-hidden="true">
           <span class="desafio-card-titulo">CORRIDA DO GURI</span>
           <span class="desafio-card-sub">Corra, pule e pegue as palavras da frase</span>
         </button>
@@ -9896,6 +9924,23 @@ CR_GURI.onload = () => { crGuriPronto = true; };
 CR_GURI.onerror = () => { if (!CR_GURI.dataset.tentou) { CR_GURI.dataset.tentou = '1'; CR_GURI.src = '../assets/imagens/mascote-inicio.png'; } };
 CR_GURI.src = '../assets/imagens/guri-explorador-transparente.png';
 /* Guri dentro do carro: quando a imagem existir, ela aparece no jogo; se não, o carrinho é desenhado em código */
+/* Vídeo do Guri no kart (webm com fundo transparente). Safari/iPhone não mostram a transparência do webm,
+   então lá (ou se o vídeo não carregar) fica a imagem parada guri-carro.png */
+const CR_VIDEO_SRC = '../assets/videos/guri-kart.webm';
+function crVideoOk() {
+  if (/Apple/i.test(navigator.vendor || '')) return false;
+  const v = document.createElement('video');
+  return !!(v.canPlayType && v.canPlayType('video/webm; codecs="vp9"'));
+}
+const CR_VIDEO = (() => {
+  if (!crVideoOk()) return null;
+  const v = document.createElement('video');
+  v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'auto'; v.setAttribute('playsinline', ''); v.setAttribute('muted', '');
+  v.onerror = () => { v._falhou = true; };
+  v.src = CR_VIDEO_SRC;
+  return v;
+})();
+function crVideoPronto() { return CR_VIDEO && !CR_VIDEO._falhou && CR_VIDEO.readyState >= 2 && CR_VIDEO.videoWidth; }
 const CR_CARRO = new Image();
 let crCarroPronto = false;
 CR_CARRO.onload = () => { crCarroPronto = true; };
@@ -10208,6 +10253,7 @@ const CR = {
   },
   desmontar() {
     cancelAnimationFrame(this.raf); this.raf = 0; CR_SOM.motor(false); CR_MUSICA.parar();
+    if (CR_VIDEO) CR_VIDEO.pause();
     if (this._tecla) {
       window.removeEventListener('keydown', this._tecla, true);
       window.removeEventListener('resize', this._resize);
@@ -10266,7 +10312,8 @@ const CR = {
         </section>
 
         <div class="crh-centro" aria-hidden="true">
-          <img src="../assets/imagens/guri-carro.png" alt="" onerror="if(!this.dataset.t){this.dataset.t=1;this.src='../assets/imagens/guri-explorador-transparente.png'}else{this.onerror=null;this.src='../assets/imagens/mascote-inicio.png'}">
+          ${crVideoOk() ? `<video class="crh-video" src="${CR_VIDEO_SRC}" autoplay muted loop playsinline disablepictureinpicture onerror="const i = this.nextElementSibling; if (i) i.hidden = false; this.remove();"></video>` : ''}
+          <img ${crVideoOk() ? 'hidden' : ''} src="../assets/imagens/guri-carro.png" alt="" onerror="if(!this.dataset.t){this.dataset.t=1;this.src='../assets/imagens/guri-explorador-transparente.png'}else{this.onerror=null;this.src='../assets/imagens/mascote-inicio.png'}">
         </div>
 
         <aside class="crh-painel" aria-label="Fases">
@@ -10360,6 +10407,7 @@ const CR = {
   },
   comecar(fase) {
     cancelAnimationFrame(this.raf);
+    if (CR_VIDEO && !CR_VIDEO._falhou) CR_VIDEO.play().catch(() => {});
     const f = CR_FASES[fase - 1];
     this.novoEstado(fase, false);
     this.modo = 'jogo'; this.travar();
@@ -10794,7 +10842,8 @@ const CR = {
     c.fillStyle = 'rgba(234,248,255,.4)'; c.fillRect(0, 0, vw, cy); // fundo mais claro que a pista, para as palavras aparecerem bem
     // pista (trechos de asfalto) e plataformas altas (pontes)
     for (const p of j.plats) {
-      const x0 = sx(p.x), x1 = sx(p.x + p.w), top = sy(p.y);
+      // a pista do chão começa meia unidade acima de onde o carro roda, para ele ficar no meio do asfalto
+      const x0 = sx(p.x), x1 = sx(p.x + p.w), top = sy(p.y) - (p.alto ? 0 : U * .55);
       if (x1 < -20 || x0 > vw + 20) continue;
       const zh = U * .2; // altura da zebra
       if (p.alto) {
@@ -10861,15 +10910,22 @@ const CR = {
     // Guri no carro
     const gx = sx(j.x), gy = sy(j.y);
     const pisca = j.invul > 0 && Math.floor(j.t * 12) % 2 === 0;
-    if (j.y > -1) { c.fillStyle = 'rgba(30,50,70,.22)'; c.beginPath(); c.ellipse(gx, sy(Math.max(0, this.chaoAbaixo(j.x))) + U * .03, U * .8, U * .1, 0, 0, 7); c.fill(); }
+    // sombra colada nas rodas; quando o carro pula ela diminui e clareia
+    if (j.y > -1) {
+      const chao = Math.max(0, this.chaoAbaixo(j.x)), alt = Math.max(0, j.y - chao), k = Math.max(.35, 1 - alt * .18);
+      c.fillStyle = `rgba(20,40,60,${(.32 * k).toFixed(3)})`; c.beginPath(); c.ellipse(gx + U * .05, sy(chao) + U * .02, U * .78 * k, U * .07 * k, 0, 0, 7); c.fill();
+    }
     if (!pisca) {
       const anda = j.noChao && j.fim !== 'ganhou' && j.contagem <= 0;
       const treme = anda ? Math.sin(j.t * 30) * U * .015 : 0;
       const giro = j.noChao ? 0 : Math.max(-.18, Math.min(.18, -j.vy * .015));
       c.save(); c.translate(gx, gy - treme); c.rotate(giro);
-      if (crCarroPronto && CR_CARRO.naturalWidth) {
+      if (crVideoPronto()) {
+        const h = U * 1.6, w = h * CR_VIDEO.videoWidth / CR_VIDEO.videoHeight;
+        c.drawImage(CR_VIDEO, -w / 2, -h + U * .05, w, h); // rodas encostando no asfalto
+      } else if (crCarroPronto && CR_CARRO.naturalWidth) {
         const h = U * 1.6, w = h * CR_CARRO.naturalWidth / CR_CARRO.naturalHeight;
-        c.drawImage(CR_CARRO, -w / 2, -h, w, h);
+        c.drawImage(CR_CARRO, -w / 2, -h + U * .05, w, h);
       } else crDesenharCarro(c, U, j.t * (anda || !j.noChao ? 1 : 0), crGuriPronto && CR_GURI.naturalWidth ? CR_GURI : null);
       c.restore();
       // fumacinha atrás do carro

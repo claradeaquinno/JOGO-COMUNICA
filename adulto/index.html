@@ -5140,6 +5140,342 @@ html body:not([data-color-vision="on"]) #app .profile-choice-arrow {
 }
 html body #app .profile-choice-card:focus-visible { outline: 3px solid #f7c94d !important; outline-offset: 3px !important; }
 html body #app .onboard-hint { font-size: 0.8rem !important; margin-top: 14px !important; }
+
+/* Tela "Quem vai usar o Comunica?": fundo branco em degradê e logo do Comunica */
+html:has(body.profile-selection:not([data-theme="dark"])),
+html body.profile-selection:not([data-theme="dark"]):not([data-color-vision="on"]),
+html body.profile-selection:not([data-theme="dark"]) {
+  background-color: #eef7ff !important;
+  background-image: linear-gradient(180deg, #ffffff 0%, #f5fbff 45%, #e2f0fc 100%) !important;
+}
+html body.profile-selection:not([data-theme="dark"])::before { background-image: none !important; }
+html body #app .onboard-title.onboard-logo { margin: 0 auto 6px !important; line-height: 0 !important; font-size: 0 !important; }
+.onboard-logo img { display: block; width: min(440px, 82vw); height: auto; margin: 0 auto; filter: drop-shadow(0 6px 14px rgba(16, 61, 93, .12)); }
+@media (max-width: 600px) { .onboard-logo img { width: min(320px, 84vw); } }
+
+/* Escolha de perfil: sem a etiqueta pequena dentro dos cartões e os dois no mesmo azul */
+html body:not([data-color-vision="on"]) #app .profile-choice-card.kids,
+html body:not([data-color-vision="on"]) #app .profile-choice-card.adult {
+  background: #dfeeff !important;
+  border-color: #8aaebe !important;
+}
+html body[data-theme="dark"]:not([data-color-vision="on"]) #app .profile-choice-card.kids,
+html body[data-theme="dark"]:not([data-color-vision="on"]) #app .profile-choice-card.adult {
+  background: #1e3d5c !important;
+  border-color: #4d789c !important;
+}
+html body[data-theme="dark"]:not([data-color-vision="on"]) #app .profile-choice-card .title { color: #f1f7ff !important; }
+
+/* Escolha de perfil: sem o painel branco grande atrás dos cartões */
+html body.profile-selection #app .onboard-panel,
+html body.profile-selection[data-theme] #app .onboard-panel {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* Escolha de perfil: cartões mais estreitos (mesma altura, bem menos largos) */
+html body.profile-selection #app .profile-choice-grid { width: min(100%, 270px) !important; margin: 0 auto !important; }
+
+/* ===== Perfil Sênior: fundo branco em degradê em todas as telas (tema claro) ===== */
+body.layout-neutro:not([data-theme="dark"]) { --c-bg-top: #ffffff; --c-bg-bottom: #e3f0fb; }
+html:has(body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"])) { background: linear-gradient(180deg, #ffffff 0%, #f5fbff 45%, #e3f0fb 100%) fixed !important; }
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) {
+  background-color: #eef7ff !important;
+  background-image: linear-gradient(180deg, #ffffff 0%, #f5fbff 45%, #e3f0fb 100%) !important;
+  background-attachment: fixed !important;
+}
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"])::before { background-image: none !important; }
+html body.layout-neutro:not([data-theme="dark"]) #app .mode-screen,
+html body.layout-neutro:not([data-theme="dark"]) #app .carousel-full-screen,
+html body.layout-neutro:not([data-theme="dark"]) #app .mode-choice-screen { background: transparent !important; }
+
+/* Ícones da escolha "Como você quer se comunicar?" (estavam saindo pretos e cheios) */
+.keyboard-choice-icon { width: clamp(64px, 9vw, 96px); height: clamp(64px, 9vw, 96px); fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; display: block; margin: 0 auto 6px; }
+
+/* ===== Sênior no computador ===== */
+@media (min-width: 900px) {
+  html body.layout-neutro:not(.profile-selection) #app { width: min(100% - 64px, 1080px) !important; }
+  /* início: título no centro e os 6 botões em 3 colunas */
+  html body.layout-neutro #app .home-screen { width: 100% !important; max-width: none !important; min-height: calc(100svh - 40px); display: flex; flex-direction: column; justify-content: center; padding: 24px 0 !important; }
+  html body.layout-neutro #app .home-screen .topbar { position: relative; width: 100% !important; max-width: none !important; justify-content: center; text-align: center; min-height: 0 !important; margin: 0 0 28px !important; }
+  html body.layout-neutro #app .home-screen .brand-intro { width: 100%; text-align: center !important; align-items: center; margin: 0 auto !important; }
+  html body.layout-neutro #app .home-screen .brand-intro h1 { font-size: clamp(44px, 4.4vw, 60px) !important; }
+  html body.layout-neutro #app .home-screen .topbar .icon-btn { top: -6px !important; }
+  html body.layout-neutro #app .home-screen .menu { width: 100% !important; max-width: none !important; display: grid !important; grid-template-columns: repeat(3, 1fr); gap: 16px !important; }
+  html body.layout-neutro #app .home-screen .menu-btn { width: auto !important; margin: 0 !important; min-height: 92px !important; }
+  html body.layout-neutro #app .home-screen .about-link { margin-top: 22px !important; align-self: center; }
+  /* como você quer se comunicar: as duas opções lado a lado */
+  html body.layout-neutro #app .mode-choice-screen { width: 100% !important; max-width: none !important; min-height: calc(100svh - 40px); display: flex; align-items: center; justify-content: center; padding: 70px 0 30px !important; }
+  html body.layout-neutro #app .mode-choice-content { width: min(100%, 760px) !important; display: grid !important; grid-template-columns: 1fr 1fr; gap: 22px !important; align-items: stretch; }
+  html body.layout-neutro #app .mode-choice-content h1 { grid-column: 1 / -1; width: 100% !important; margin: 0 0 6px !important; }
+  html body.layout-neutro #app .mode-choice-button { width: 100% !important; min-height: 0 !important; height: auto !important; padding: 34px 20px 28px !important; display: flex !important; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
+  html body.layout-neutro #app .mode-choice-back { position: absolute !important; top: 18px; left: 0; }
+  /* telas internas: conteúdo mais largo e centralizado */
+  html body.layout-neutro.bg-outras #app > .topbar { width: 100% !important; max-width: none !important; }
+  html body.layout-neutro.bg-outras #app > .screen { width: min(100%, 880px) !important; max-width: none !important; margin-left: auto !important; margin-right: auto !important; }
+  html body.layout-neutro #app .cat-grid { grid-template-columns: repeat(4, 1fr) !important; gap: 16px !important; }
+  html body.layout-neutro #app .cat-card { min-height: 100px; }
+  /* Meu Comunica: resumo à esquerda, feedback e conta à direita */
+  html body.layout-neutro.bg-outras #app > .screen:has(> .info-block + .info-block + .form-block) { display: grid !important; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+  html body.layout-neutro.bg-outras #app > .screen:has(> .info-block + .info-block + .form-block) > .info-block:first-child { grid-row: span 2; margin: 0 !important; }
+  html body.layout-neutro.bg-outras #app > .screen:has(> .info-block + .info-block + .form-block) > * { margin: 0 !important; }
+  /* configurações: opções em duas colunas */
+  html body.layout-neutro #app .word-grid { grid-template-columns: repeat(4, 1fr) !important; }
+  html body.layout-neutro.bg-outras #app > .screen:has(> .settings-panel) { width: min(100%, 1000px) !important; }
+  html body.layout-neutro #app .settings-panel { display: grid !important; grid-template-columns: 1fr 1fr; column-gap: 28px; align-items: start; }
+  html body.layout-neutro #app .settings-panel > .visual-version-link,
+  html body.layout-neutro #app .settings-panel > .color-vision-preview { grid-column: 1 / -1; }
+}
+
+/* ===== Sênior no celular ===== */
+@media (max-width: 600px) {
+  html body.layout-neutro #app .mode-choice-screen { padding-top: 64px !important; padding-bottom: 12px !important; min-height: 0 !important; }
+  html body.layout-neutro #app .mode-choice-content { gap: 12px !important; }
+  html body.layout-neutro #app .mode-choice-content h1 { font-size: 1.45rem !important; margin-bottom: 4px !important; }
+  html body.layout-neutro #app .mode-choice-button { min-height: 0 !important; height: auto !important; padding: 18px 14px 16px !important; display: flex !important; flex-direction: column; align-items: center; gap: 6px; }
+  html body.layout-neutro #app .keyboard-choice-icon { width: 72px; height: 72px; }
+}
+
+/* ===== Sênior no computador: início com cartões grandes (ícone em cima), centralizado e sem rolar ===== */
+@media (min-width: 900px) {
+  html body.layout-neutro:not(.bg-outras) #app { padding-top: 0 !important; padding-bottom: 0 !important; margin-top: 0 !important; margin-bottom: 0 !important; }
+  html body.layout-neutro #app .home-screen { min-height: 100svh !important; padding: 28px 0 !important; margin: 0 auto !important; justify-content: center !important; gap: 0; }
+  html body.layout-neutro #app .home-screen .topbar { position: static !important; margin: 0 0 clamp(20px, 4vh, 40px) !important; padding: 0 !important; }
+  html body.layout-neutro #app .home-screen .topbar .icon-btn { position: fixed !important; top: 24px !important; width: 56px !important; height: 56px !important; z-index: 5; }
+  html body.layout-neutro #app .home-screen .topbar .icon-btn[data-go="settings"] { left: 28px !important; right: auto !important; }
+  html body.layout-neutro #app .home-screen .topbar .icon-btn[data-go="profile"] { right: 28px !important; left: auto !important; }
+  html body.layout-neutro #app .home-screen .brand-intro h1 { font-size: clamp(52px, 5vw, 76px) !important; line-height: 1 !important; margin: 0 0 8px !important; }
+  html body.layout-neutro #app .home-screen .brand-intro p { font-size: clamp(16px, 1.3vw, 20px) !important; margin: 0 !important; }
+  html body.layout-neutro #app .home-screen .menu { width: min(100%, 1040px) !important; margin: 0 auto !important; grid-template-columns: repeat(3, 1fr) !important; gap: clamp(14px, 1.8vw, 24px) !important; }
+  html body.layout-neutro #app .home-screen .menu-btn {
+    flex-direction: column !important; justify-content: center !important; text-align: center !important;
+    min-height: clamp(150px, 24vh, 210px) !important; padding: clamp(16px, 2.4vh, 26px) 18px !important; gap: 12px !important; border-radius: 22px !important;
+  }
+  html body.layout-neutro #app .home-screen .menu-btn .menu-image { width: clamp(56px, 7vh, 76px) !important; height: clamp(56px, 7vh, 76px) !important; padding: 10px !important; border-radius: 18px !important; }
+  html body.layout-neutro #app .home-screen .menu-text { display: grid !important; gap: 4px !important; justify-items: center; flex: 0 0 auto !important; height: auto !important; min-height: 0 !important; }
+  html body.layout-neutro #app .home-screen .menu-sub { margin-top: 0 !important; }
+  html body.layout-neutro #app .home-screen .menu-title { font-size: clamp(1rem, 1.15vw, 1.25rem) !important; line-height: 1.2 !important; }
+  html body.layout-neutro #app .home-screen .menu-sub { font-size: clamp(.85rem, .95vw, 1rem) !important; }
+  html body.layout-neutro #app .home-screen .menu-arrow { display: none !important; }
+  html body.layout-neutro #app .home-screen .menu-btn:hover { transform: translateY(-3px); }
+  html body.layout-neutro #app .home-screen .about-link { margin: clamp(16px, 3vh, 30px) auto 0 !important; }
+}
+
+/* Início do Sênior: os 6 botões em azul (tema claro) */
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .home-screen .menu-btn,
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .home-screen .menu-btn.primary {
+  background: #dfeeff !important; border: 1.5px solid #8aaebe !important; box-shadow: 0 4px 0 rgba(95, 140, 170, .18), 0 10px 22px rgba(16, 61, 93, .08) !important;
+}
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .home-screen .menu-btn:hover { background: #d2e6fb !important; }
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .home-screen .menu-btn .menu-image { background: #ffffff !important; }
+
+/* Início do Sênior: botões redondos de configurações e perfil em azul */
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .home-screen .topbar .icon-btn {
+  background: #dfeeff !important; border: 1.5px solid #8aaebe !important; box-shadow: 0 4px 0 rgba(95, 140, 170, .18), 0 8px 18px rgba(16, 61, 93, .08) !important;
+}
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .home-screen .topbar .icon-btn:hover { background: #d2e6fb !important; }
+
+/* ===== Configurações do Sênior no mesmo estilo do infantil: grupos Tela, Voz, Acessibilidade e Versões ===== */
+#app .settings-screen-sr { width: 100%; }
+#app .cfg-grade { display: grid; grid-template-columns: 1fr; gap: 16px; width: 100%; }
+#app .cfg-coluna { display: grid; gap: 16px; align-content: start; }
+#app .cfg-grupo { position: relative; margin: 0; }
+#app .cfg-titulo { position: absolute; top: 16px; left: 20px; z-index: 1; margin: 0; font-size: 13px !important; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: #3f6a8c !important; }
+html body #app .cfg-grupo .settings-panel { display: block !important; margin: 0 !important; padding: 44px 18px 8px !important; border-radius: 20px !important; background: #eef7ff !important; border: 2px solid #cfe6f8 !important; box-shadow: none !important; }
+html body #app .cfg-grupo .settings-row { display: flex !important; align-items: center !important; justify-content: space-between !important; gap: 14px !important; padding: 14px 4px !important; border-bottom: 1px solid #d6e8f6 !important; min-height: 0 !important; }
+html body #app .cfg-grupo .settings-row:last-child { border-bottom: 0 !important; }
+html body #app .cfg-grupo .settings-label { font-size: 1.05rem !important; font-weight: 800 !important; color: #103d5d !important; }
+html body #app .cfg-grupo .settings-desc { font-size: .85rem !important; font-weight: 600 !important; color: #3f6a8c !important; margin-top: 2px; }
+html body #app .cfg-grupo .stepper { display: flex !important; align-items: center !important; gap: 10px !important; flex: 0 0 auto; }
+html body #app .cfg-grupo .stepper button { width: 42px !important; height: 42px !important; min-width: 42px !important; border-radius: 50% !important; background: #fff !important; border: 2px solid #cfe6f8 !important; color: #103d5d !important; font-size: 1.2rem !important; font-weight: 800 !important; box-shadow: none !important; }
+html body #app .cfg-grupo .stepper span { min-width: 64px; text-align: center; font-weight: 800 !important; color: #103d5d !important; }
+html body #app .cfg-grupo .switch { flex: 0 0 auto; }
+html body:not([data-color-vision="on"]) #app .cfg-grupo .switch input:checked + .switch-track { background: #4caf7d !important; border-color: #4caf7d !important; }
+html body #app .cfg-botao { flex: 0 0 auto; display: inline-flex !important; align-items: center; justify-content: center; min-width: 76px; min-height: 38px; padding: 0 18px !important; border-radius: 999px !important; background: #173a5e !important; color: #fff !important; font-weight: 800 !important; font-size: .95rem !important; text-decoration: none !important; border: 0 !important; cursor: pointer; }
+html body #app .cfg-botao:hover { background: #22507e !important; }
+body[data-theme="dark"] #app .cfg-titulo { color: #a9c8e4 !important; }
+html body[data-theme="dark"] #app .cfg-grupo .settings-panel { background: #183653 !important; border-color: #2b5578 !important; }
+html body[data-theme="dark"] #app .cfg-grupo .settings-row { border-color: #2b5578 !important; }
+html body[data-theme="dark"] #app .cfg-grupo .settings-label { color: #eef6ff !important; }
+html body[data-theme="dark"] #app .cfg-grupo .settings-desc { color: #a9c4dc !important; }
+html body[data-theme="dark"] #app .cfg-grupo .stepper button { background: #1e4060 !important; border-color: #2b5578 !important; color: #eef6ff !important; }
+html body[data-theme="dark"] #app .cfg-grupo .stepper span { color: #eef6ff !important; }
+@media (min-width: 900px) {
+  html body.layout-neutro.bg-outras #app > .screen.settings-screen-sr { width: min(100%, 1080px) !important; }
+  #app .cfg-grade { grid-template-columns: 1fr 1fr; gap: 20px; }
+  #app .cfg-coluna { gap: 20px; }
+  #app .cfg-titulo { top: 20px; left: 26px; font-size: 14px !important; }
+  html body #app .cfg-grupo .settings-panel { padding: 52px 26px 12px !important; border-radius: 24px !important; }
+}
+@media (max-width: 600px) {
+  html body #app .cfg-grupo .settings-panel { padding: 42px 14px 6px !important; }
+  html body #app .cfg-grupo .stepper { gap: 6px !important; }
+  html body #app .cfg-grupo .stepper button { width: 36px !important; height: 36px !important; min-width: 36px !important; }
+  html body #app .cfg-grupo .stepper span { min-width: 52px; font-size: .85rem; }
+}
+
+/* Configurações do Sênior: cada linha com o controle do lado (sem quebrar para baixo) e grupos na mesma ordem do infantil no celular */
+html body #app .cfg-grupo .settings-row { flex-wrap: nowrap !important; flex-direction: row !important; }
+html body #app .cfg-grupo .settings-row > div:first-child { flex: 1 1 auto; min-width: 0; }
+@media (max-width: 899px) {
+  #app .cfg-coluna { display: contents; }
+  #app .cfg-grupo[aria-labelledby="cfgTela"] { order: 1; }
+  #app .cfg-grupo[aria-labelledby="cfgAcess"] { order: 2; }
+  #app .cfg-grupo[aria-labelledby="cfgVoz"] { order: 3; }
+  #app .cfg-grupo[aria-labelledby="cfgVersoes"] { order: 4; }
+  html body #app .cfg-grupo .settings-label { font-size: .98rem !important; }
+  html body #app .cfg-grupo .settings-desc { font-size: .8rem !important; }
+}
+
+/* Início do Sênior: título e frase em outra fonte (Nunito, arredondada) e sempre centralizados */
+html body #app .home-screen .brand-intro { width: 100% !important; text-align: center !important; align-items: center !important; justify-content: center !important; margin-left: auto !important; margin-right: auto !important; }
+html body #app .home-screen .brand-intro h1 { font-family: 'Nunito', system-ui, sans-serif !important; font-weight: 900 !important; letter-spacing: -.01em !important; text-align: center !important; width: 100%; }
+html body #app .home-screen .brand-intro p { font-family: 'Nunito', system-ui, sans-serif !important; font-weight: 700 !important; text-align: center !important; width: 100%; margin-left: auto !important; margin-right: auto !important; }
+@media (max-width: 899px) {
+  html body #app .home-screen .topbar { justify-content: center !important; text-align: center !important; }
+  html body #app .home-screen .brand-intro { padding-top: 56px !important; }
+}
+
+/* Início do Sênior: sem o quadradinho branco atrás dos ícones, só o ícone */
+html body:not([data-color-vision="on"]) #app .home-screen .menu-btn .menu-image,
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .home-screen .menu-btn .menu-image {
+  background: transparent !important; padding: 0 !important; border-radius: 0 !important; box-shadow: none !important; border: 0 !important;
+}
+
+/* ===== Sênior no celular: telas sem precisar rolar ===== */
+.sr-abas { display: none; }
+@media (max-width: 600px) {
+  /* abas (Configurações e Meu Comunica) */
+  html body #app .sr-abas { display: flex; gap: 6px; width: 100%; margin: 0 0 12px; padding: 4px; border-radius: 999px; background: #e3f0fb; border: 1.5px solid #cfe6f8; }
+  html body #app .sr-aba { flex: 1 1 auto; min-height: 40px; padding: 0 10px; border: 0; border-radius: 999px; background: transparent; color: #3f6a8c; font: 800 13px/1 'Plus Jakarta Sans', 'Manrope', system-ui, sans-serif; cursor: pointer; white-space: nowrap; }
+  html body #app .sr-aba[aria-selected="true"] { background: #ffffff; color: #103d5d; box-shadow: 0 2px 6px rgba(16, 61, 93, .12); }
+  html body[data-theme="dark"] #app .sr-abas { background: #13304a; border-color: #2b5578; }
+  html body[data-theme="dark"] #app .sr-aba { color: #a9c4dc; }
+  html body[data-theme="dark"] #app .sr-aba[aria-selected="true"] { background: #1e4060; color: #eef6ff; }
+  html body #app .sr-oculto { display: none !important; }
+  html body #app .screen[data-sr-abas] .info-block, html body #app .screen[data-sr-abas] > .form-block { margin-top: 0 !important; }
+
+  /* início */
+  html body #app .home-screen { padding-top: 4px !important; padding-bottom: 4px !important; gap: 0 !important; }
+  html body.layout-neutro:not(.bg-outras) #app { padding-top: 4px !important; padding-bottom: 4px !important; }
+  html body #app .home-screen .menu { margin-top: 0 !important; }
+  html body #app .home-screen .brand-intro { padding-bottom: 0 !important; margin-bottom: 0 !important; }
+  html body #app .home-screen .brand-intro { padding-top: clamp(44px, 7svh, 56px) !important; }
+  html body #app .home-screen .brand-intro h1 { font-size: clamp(30px, 5.4svh, 44px) !important; margin-bottom: 2px !important; }
+  html body #app .home-screen .brand-intro p { font-size: clamp(13px, 2.1svh, 16px) !important; }
+  html body #app .home-screen .topbar { margin-bottom: clamp(10px, 2.6svh, 28px) !important; min-height: 0 !important; padding-bottom: 0 !important; padding-top: 0 !important; }
+  html body #app .home-screen .menu { gap: clamp(6px, 1.3svh, 12px) !important; }
+  html body #app .home-screen .menu-btn { min-height: clamp(50px, 8.3svh, 76px) !important; padding-top: clamp(6px, 1.2svh, 14px) !important; padding-bottom: clamp(6px, 1.2svh, 14px) !important; }
+  html body #app .home-screen .menu-btn .menu-image { width: clamp(32px, 5.4svh, 44px) !important; height: clamp(32px, 5.4svh, 44px) !important; }
+  html body #app .home-screen .about-link { margin-top: clamp(4px, 1.5svh, 14px) !important; min-height: 36px !important; }
+
+  /* comunicar (carrossel) */
+  html body #app .carousel-full-content { gap: 0 !important; margin-top: 4px !important; }
+  html body #app .carousel-full-content .section-label { margin: 6px 0 6px !important; }
+  html body #app .carousel-full-content .phrase-bar { min-height: 50px !important; margin-bottom: 10px !important; }
+  html body #app .carousel-full-content .layer-label { margin-bottom: 6px !important; }
+  html body #app .carousel-full-content .carousel-wrap { height: auto !important; min-height: 0 !important; padding: clamp(4px, 2svh, 40px) 0 !important; margin-bottom: 10px !important; }
+  html body #app .carousel-full-content .confirm-btn { min-height: 44px !important; margin-bottom: 8px !important; }
+  html body #app .carousel-full-content .action-row { display: grid !important; grid-template-columns: repeat(6, 1fr); gap: 8px !important; margin-bottom: 6px !important; }
+  html body #app .carousel-full-content .action-row > * { min-height: 42px !important; grid-column: span 2; padding: 6px 4px !important; font-size: 12px !important; }
+  html body #app .carousel-full-content .action-row > .btn-fav, html body #app .carousel-full-content .action-row > .btn-fav-word { grid-column: span 3; }
+  html body #app .carousel-full-content .back-link { margin-top: 0 !important; }
+
+  /* personalizar */
+  html body.bg-outras #app > .topbar { padding-top: 4px !important; padding-bottom: 6px !important; min-height: 0 !important; }
+  html body #app .personalize-builder { padding: 14px !important; }
+  html body #app .personalize-builder h3 { margin-bottom: 6px !important; }
+  html body #app .personalize-keyboard-layout { gap: 10px !important; }
+  html body #app .personalize-keyboard-stage { width: min(100%, 44svh, 440px) !important; margin-top: 2px !important; }
+
+  /* desafio */
+  html body #app .stars { margin-bottom: 6px !important; }
+  html body #app .challenge-card { padding: 12px 14px !important; margin-bottom: 8px !important; }
+  html body #app .screen > .section-label { margin: 8px 0 6px !important; }
+  html body #app .screen > .phrase-bar { min-height: 50px !important; margin-bottom: 8px !important; }
+  html body #app .screen > .action-row { margin-bottom: 4px !important; }
+  html body #app .screen > .action-row > * { min-height: 42px !important; }
+  html body #app .word-grid { grid-template-columns: repeat(4, 1fr) !important; gap: 6px !important; margin-bottom: 8px !important; }
+  html body #app .word-grid .word-card { min-height: 0 !important; padding: 20px 4px 8px !important; gap: 2px !important; }
+  html body #app .word-grid .word-card .label, html body #app .word-grid .word-card .word-label { font-size: clamp(12px, 3.6vw, 15px) !important; }
+  html body #app .word-grid .word-card .desc, html body #app .word-grid .word-card .word-desc, html body #app .word-grid .word-card small { font-size: 10px !important; line-height: 1.2 !important; }
+  html body #app .screen > .speak-btn { min-height: 44px !important; margin-bottom: 4px !important; }
+  html body #app .screen > .back-link { margin-top: 2px !important; }
+}
+
+@media (max-width: 600px) and (max-height: 720px) {
+  html body #app .carousel-full-content .carousel-wrap { padding: 0 !important; }
+  html body #app .carousel-full-content .phrase-bar { min-height: 46px !important; }
+  html body #app .carousel-full-content .section-label { margin-top: 0 !important; }
+  html body #app .carousel-full-screen { padding-top: 10px !important; }
+  html body #app .carousel-full-content .action-row > *, html body #app .carousel-full-content .confirm-btn { min-height: 40px !important; }
+  html body #app .personalize-keyboard-stage { width: min(100%, 40svh, 440px) !important; }
+  html body #app .personalize-builder { padding: 12px !important; }
+}
+
+@media (max-width: 600px) {
+  html body #app .personalize-keyboard-menu { grid-template-columns: repeat(4, 1fr) !important; gap: 6px !important; width: 100% !important; }
+  html body #app .personalize-keyboard-menu .personalize-action { min-height: 44px !important; padding: 6px 4px !important; font-size: 13px !important; }
+}
+
+/* Sênior: abas e cartões de dentro das telas no mesmo azul do início */
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .cat-card,
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .word-card,
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .info-block,
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .form-block,
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .challenge-card,
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .carousel-card:not(.active):not(.is-center),
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .mode-choice-button,
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .phrase-bar,
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .empty-state,
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .btn-erase,
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .btn-clear,
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .btn-fav,
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .btn-fav-word,
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .personalize-action-clear,
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .personalize-action-back,
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .mode-choice-back,
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .mode-screen-back,
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .icon-btn {
+  background: #dfeeff !important; border: 1.5px solid #8aaebe !important; box-shadow: 0 3px 0 rgba(95, 140, 170, .16) !important; color: #103d5d !important;
+}
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .cfg-grupo .settings-panel { background: #dfeeff !important; border-color: #8aaebe !important; }
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .cat-card:hover,
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .word-card:hover,
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .mode-choice-button:hover,
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .icon-btn:hover,
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .btn-erase:hover,
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .btn-clear:hover { background: #d2e6fb !important; }
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .phrase-bar input,
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .phrase-bar textarea,
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app #feedbackText { background: #ffffff !important; }
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .info-block h3,
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .info-block span,
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .form-block h3,
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .form-block p { color: #103d5d !important; }
+html body.layout-neutro:not([data-theme="dark"]):not([data-color-vision="on"]) #app .profile-stat { border-color: #b8d3e6 !important; }
+
+/* Como você quer se comunicar: só o texto, tudo centralizado no meio da tela */
+html body.layout-neutro #app .mode-choice-screen { min-height: calc(100svh - 24px) !important; display: flex !important; align-items: center !important; justify-content: center !important; padding: 64px 0 24px !important; }
+html body.layout-neutro #app .mode-choice-content { display: grid !important; grid-template-columns: 1fr 1fr; gap: 16px !important; width: min(100%, 640px) !important; margin: 0 auto !important; justify-items: stretch; text-align: center; }
+html body.layout-neutro #app .mode-choice-content h1 { grid-column: 1 / -1; text-align: center !important; margin: 0 0 8px !important; width: 100% !important; }
+html body.layout-neutro #app .mode-choice-button { width: 100% !important; min-height: 120px !important; height: auto !important; padding: 18px 12px !important; display: flex !important; align-items: center !important; justify-content: center !important; border-radius: 22px !important; }
+html body.layout-neutro #app .mode-choice-button .label { font-size: clamp(1.1rem, 2.2vw, 1.5rem) !important; font-weight: 800 !important; margin: 0 !important; }
+@media (max-width: 600px) {
+  html body.layout-neutro #app .mode-choice-content { gap: 10px !important; }
+  html body.layout-neutro #app .mode-choice-button { min-height: 96px !important; padding: 12px 8px !important; }
+  html body.layout-neutro #app .mode-choice-button .label { font-size: 1.05rem !important; }
+}
+
+/* Como você quer se comunicar: Voltar fixo no canto e o resto exatamente no meio */
+html body.layout-neutro #app .mode-choice-screen { position: relative !important; width: 100% !important; max-width: none !important; flex-direction: column !important; }
+html body.layout-neutro #app .mode-choice-screen > .mode-choice-back { position: absolute !important; top: 8px !important; left: 0 !important; margin: 0 !important; }
+html body.layout-neutro #app .mode-choice-content { align-self: center !important; }
 </style>
 <link rel="stylesheet" href="../menu-inicial.css">
 </head>
@@ -6248,13 +6584,7 @@ function renderChooseProfile() {
 
     <div class="onboard-wrap">
 
-      <div class="onboard-title">
-        Comunica
-      </div>
 
-      <div class="onboard-subtitle">
-        Comunicação simples, clara e no seu ritmo.
-      </div>
 
       <div class="onboard-panel">
 
@@ -6272,7 +6602,6 @@ function renderChooseProfile() {
             aria-label="Perfil Júnior, para a criança"
           >
             <div class="profile-choice-text">
-              <div class="tag">Para a criança</div>
               <div class="title">Perfil Júnior</div>
             </div>
             <span class="profile-choice-arrow" aria-hidden="true">›</span>
@@ -6286,7 +6615,6 @@ function renderChooseProfile() {
             aria-label="Perfil Sênior, para você"
           >
             <div class="profile-choice-text">
-              <div class="tag">Para você</div>
               <div class="title">Perfil Sênior</div>
             </div>
             <span class="profile-choice-arrow" aria-hidden="true">›</span>
@@ -6294,9 +6622,6 @@ function renderChooseProfile() {
 
         </div>
 
-        <div class="onboard-hint">
-          Você poderá ajustar essa escolha depois.
-        </div>
 
       </div>
 
@@ -6497,8 +6822,8 @@ function renderBuild() {
       <button class="mode-choice-back" data-go="home" aria-label="Voltar ao início">← Voltar</button>
       <div class="mode-choice-content">
         <h1>Como você quer se comunicar?</h1>
-        <button class="mode-choice-button" type="button" data-mode-screen="circularMode" aria-label="Teclado circular"><svg class="keyboard-choice-icon" viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="23"/><circle cx="28" cy="28" r="12"/><path d="M28 5v11m0 24v11M5 28h11m24 0h11M12 12l8 8m16 16 8 8m0-32-8 8M20 36l-8 8"/></svg><span class="label">Teclado circular</span></button>
-        <button class="mode-choice-button" type="button" data-mode-screen="carouselMode" aria-label="Carrossel"><svg class="keyboard-choice-icon" viewBox="0 0 56 56" aria-hidden="true"><rect x="17" y="10" width="22" height="36" rx="5"/><path d="M11 16H6v24h5m34-24h5v24h-5M24 23l8 5-8 5"/></svg><span class="label">Carrossel</span></button>
+        <button class="mode-choice-button" type="button" data-mode-screen="circularMode" aria-label="Teclado circular"><span class="label">Teclado circular</span></button>
+        <button class="mode-choice-button" type="button" data-mode-screen="carouselMode" aria-label="Carrossel"><span class="label">Carrossel</span></button>
       </div>
     </div>
   `;
@@ -7185,7 +7510,7 @@ function renderProfile() {
     Number(profile.wordsUsed || 0);
 
   const summaryHtml = `
-    <div class="info-block">
+    <div class="info-block${srAbaClasse('perfil', 'resumo', 'resumo')}" data-sr-grupo="resumo">
       <h3 style="margin:0 0 12px; color:#ffffff; font-weight:900; letter-spacing:0.02em;">Resumo</h3>
       <div class="profile-stat"><span style="color:#ffffff;">Estrelas conquistadas</span><span style="color:#ffffff;">${profile.stars}</span></div>
       <div class="profile-stat"><span style="color:#ffffff;">Frases favoritas</span><span style="color:#ffffff;">${STATE.data.favPhrases.length}</span></div>
@@ -7196,7 +7521,7 @@ function renderProfile() {
   `;
 
   const feedbackHtml = `
-    <div class="info-block">
+    <div class="info-block${srAbaClasse('perfil', 'feedback', 'resumo')}" data-sr-grupo="feedback">
       <h3 style="margin:0 0 12px; color:#ffffff; font-weight:900; letter-spacing:0.02em;">Feedback</h3>
       <div style="display:grid; gap:10px;">
         <textarea id="feedbackText" rows="4" placeholder="Como podemos melhorar?" style="width:100%; border-radius:12px; border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.08); color:#ffffff; padding:12px; resize:vertical; font-weight:600; opacity:0.92;">${profile.feedback && profile.feedback.trim().toLowerCase() !== 'fe' ? profile.feedback : ''}</textarea>
@@ -7224,12 +7549,13 @@ function renderProfile() {
 
     </div>
 
-    <div class="screen">
+    <div class="screen" data-sr-abas>
+      ${srAbas('perfil', [['resumo', 'Resumo'], ['feedback', 'Feedback'], ['conta', 'Conta']])}
 
       ${summaryHtml}
       ${feedbackHtml}
 
-      <div class="form-block">
+      <div class="form-block${srAbaClasse('perfil', 'conta', 'resumo')}" data-sr-grupo="conta">
 
         <h3>
           Conta
@@ -7265,48 +7591,80 @@ function renderProfile() {
 
 
 
+/* Abas para o celular: mostra uma seção por vez para a tela não precisar rolar */
+window.__srAbas = window.__srAbas || {};
+function srAbas(chave, itens) {
+  const atual = window.__srAbas[chave] || itens[0][0];
+  return `<div class="sr-abas" role="tablist" aria-label="Seções">${itens.map(([id, nome]) => `<button type="button" role="tab" class="sr-aba" data-sr-aba="${id}" aria-selected="${id === atual}" onclick="srTrocarAba(this, '${chave}')">${nome}</button>`).join('')}</div>`;
+}
+function srAbaClasse(chave, id, primeira) {
+  const atual = window.__srAbas[chave] || primeira;
+  return id === atual ? '' : ' sr-oculto';
+}
+function srTrocarAba(botao, chave) {
+  const caixa = botao.closest('[data-sr-abas]'); if (!caixa) return;
+  const id = botao.dataset.srAba; window.__srAbas[chave] = id;
+  caixa.querySelectorAll('.sr-aba').forEach(b => b.setAttribute('aria-selected', String(b === botao)));
+  caixa.querySelectorAll('[data-sr-grupo]').forEach(g => g.classList.toggle('sr-oculto', g.dataset.srGrupo !== id));
+}
+
 function renderSettings() {
   const s = getSettings();
   const fontLabels = ['Pequena', 'Média', 'Grande', 'Extra grande'];
   const speed = s.scanSpeed || 1800;
   const voiceRate = Math.min(1.2, Math.max(0.5, Number(s.voiceRate) || 0.8));
   const voiceLabel = voiceRate <= 0.6 ? 'Muito lenta' : voiceRate <= 0.8 ? 'Lenta' : voiceRate <= 1 ? 'Normal' : 'Rápida';
+  const row = (label, desc, control, descId = '') => `
+        <div class="settings-row">
+          <div>
+            <div class="settings-label">${label}</div>
+            <div class="settings-desc"${descId ? ` id="${descId}"` : ''}>${desc}</div>
+          </div>
+          ${control}
+        </div>`;
+  const toggle = (id, checked, aria = '') => `<label class="switch"><input id="${id}" type="checkbox" ${aria} ${checked ? 'checked' : ''}><span class="switch-track"></span></label>`;
+  const stepper = (downId, downLabel, value, upId, upLabel) => `<div class="stepper"><button id="${downId}" aria-label="${downLabel}">−</button><span aria-live="polite">${value}</span><button id="${upId}" aria-label="${upLabel}">+</button></div>`;
   return `
     <div class="topbar settings-topbar">
       <button class="icon-btn" data-go="home" aria-label="Voltar para o início">←</button>
       <div class="topbar-title">Configurações</div>
       <div style="width:var(--tap-min)"></div>
     </div>
-    <div class="screen">
-      <div class="form-block settings-panel">
-        <a class="visual-version-link" href="../senior-nao-letrado/index.html" style="display:flex;align-items:center;gap:12px;padding:16px;color:inherit" aria-label="Acessar versão sênior não letrada"><img src="../assets/imagens/icone-nao-letrado.png" width="48" height="48" alt="">Versão sênior não letrada</a><div class="settings-row"><div><div class="settings-label">Tamanho da letra e dos botões</div><div class="settings-desc">Deixa tudo maior ou menor na tela</div></div><div class="stepper"><button id="seniorFontDown" aria-label="Diminuir tamanho da letra">−</button><span aria-live="polite">${fontLabels[(s.fontStep || 2) - 1]}</span><button id="seniorFontUp" aria-label="Aumentar tamanho da letra">+</button></div></div>
-        <div class="settings-row"><div><div class="settings-label">Tema escuro</div><div class="settings-desc">Fundo escuro e menos brilho para facilitar o uso</div></div><label class="switch"><input id="seniorDarkToggle" type="checkbox" ${s.darkTheme !== false ? 'checked' : ''}><span class="switch-track"></span></label></div>
-        <div class="settings-row">
-          <div>
-            <div class="settings-label">Modo para daltonismo</div>
-            <div class="settings-desc" id="colorVisionDescription">Reforça o contraste e diferencia opções pela cor e pelo contorno.</div>
-          </div>
-          <label class="switch">
-            <input id="seniorColorVisionToggle" type="checkbox" aria-label="Ativar modo para daltonismo" aria-describedby="colorVisionDescription" ${s.colorVision ? 'checked' : ''}>
-            <span class="switch-track"></span>
-          </label>
+    <div class="screen settings-screen-sr" data-sr-abas>
+      ${srAbas('cfg', [['tela', 'Tela'], ['acess', 'Acessibilidade'], ['voz', 'Voz'], ['versoes', 'Versões']])}
+      <div class="cfg-grade">
+        <div class="cfg-coluna">
+          <section class="cfg-grupo${srAbaClasse('cfg', 'tela', 'tela')}" data-sr-grupo="tela" aria-labelledby="cfgTela">
+            <h2 class="cfg-titulo" id="cfgTela">Tela</h2>
+            <div class="form-block settings-panel">
+              ${row('Tamanho da letra e dos botões', 'Deixa tudo maior ou menor na tela', stepper('seniorFontDown', 'Diminuir tamanho da letra', fontLabels[(s.fontStep || 2) - 1], 'seniorFontUp', 'Aumentar tamanho da letra'))}
+              ${row('Tema escuro', 'Fundo escuro e menos brilho', toggle('seniorDarkToggle', s.darkTheme !== false))}
+            </div>
+          </section>
+          <section class="cfg-grupo${srAbaClasse('cfg', 'voz', 'tela')}" data-sr-grupo="voz" aria-labelledby="cfgVoz">
+            <h2 class="cfg-titulo" id="cfgVoz">Voz</h2>
+            <div class="form-block settings-panel">
+              ${row('Velocidade da voz', voiceLabel, stepper('seniorVoiceSlow', 'Deixar a voz mais lenta', voiceLabel, 'seniorVoiceFast', 'Deixar a voz mais rápida'))}
+              ${row('Testar a voz', 'Ouça como a voz está agora', `<button type="button" class="cfg-botao" id="seniorTestVoice" onclick="speak('Olá! Esta é a voz do Comunica.')">Ouvir</button>`)}
+            </div>
+          </section>
         </div>
-
-<div class="color-vision-preview" role="group" aria-label="Prévia da paleta do modo para daltonismo">
-  <div class="color-vision-preview-head">
-    <span class="color-vision-preview-title">Prévia da paleta</span>
-    <span class="color-vision-preview-badge">Alto contraste</span>
-  </div>
-  <div class="color-vision-preview-items">
-    <span class="color-vision-swatch color-vision-swatch--option"><span aria-hidden="true">◆</span> Opção</span>
-    <span class="color-vision-swatch color-vision-swatch--selected">Selecionada</span>
-    <span class="color-vision-swatch color-vision-swatch--focus"><span aria-hidden="true">▣</span> Foco</span>
-  </div>
-  <p class="color-vision-preview-note">A seleção também usa contorno. As figuras e imagens do jogo são mantidas.</p>
-</div>
-        <div class="settings-row"><div><div class="settings-label">Modo de varredura</div><div class="settings-desc">O foco amarelo passa pelos controles. Pressione Enter, Espaço ou o centro do analógico para escolher o controle destacado.</div></div><label class="switch"><input id="seniorScanToggle" type="checkbox" ${s.scanEnabled ? 'checked' : ''}><span class="switch-track"></span></label></div>
-        <div class="settings-row"><div><div class="settings-label">Velocidade da varredura</div><div class="settings-desc">Tempo em cada botão: ${(speed / 1000).toFixed(1)}s</div></div><div class="stepper"><button id="seniorScanSlow" aria-label="Deixar a varredura mais lenta">−</button><span aria-live="polite">${(speed / 1000).toFixed(1)}s</span><button id="seniorScanFast" aria-label="Deixar a varredura mais rápida">+</button></div></div>
-        <div class="settings-row"><div><div class="settings-label">Velocidade da voz</div><div class="settings-desc">A voz lê a frase mais devagar ou mais depressa.</div></div><div class="stepper"><button id="seniorVoiceSlow" aria-label="Deixar a voz mais lenta">−</button><span aria-live="polite">${voiceLabel}</span><button id="seniorVoiceFast" aria-label="Deixar a voz mais rápida">+</button></div></div>
+        <div class="cfg-coluna">
+          <section class="cfg-grupo${srAbaClasse('cfg', 'acess', 'tela')}" data-sr-grupo="acess" aria-labelledby="cfgAcess">
+            <h2 class="cfg-titulo" id="cfgAcess">Acessibilidade</h2>
+            <div class="form-block settings-panel">
+              ${row('Modo para daltonismo', 'Ajusta cores e contraste da interface', toggle('seniorColorVisionToggle', s.colorVision, 'aria-label="Ativar modo para daltonismo" aria-describedby="colorVisionDescription"'), 'colorVisionDescription')}
+              ${row('Modo de varredura', 'O destaque passa pelos botões; pressione Enter, Espaço ou o centro do analógico para escolher', toggle('seniorScanToggle', s.scanEnabled))}
+              ${row('Velocidade da varredura', `Tempo em cada botão: ${(speed / 1000).toFixed(1)}s`, stepper('seniorScanSlow', 'Deixar a varredura mais lenta', `${(speed / 1000).toFixed(1)}s`, 'seniorScanFast', 'Deixar a varredura mais rápida'))}
+            </div>
+          </section>
+          <section class="cfg-grupo${srAbaClasse('cfg', 'versoes', 'tela')}" data-sr-grupo="versoes" aria-labelledby="cfgVersoes">
+            <h2 class="cfg-titulo" id="cfgVersoes">Versões</h2>
+            <div class="form-block settings-panel">
+              ${row('Versão sênior não letrada', 'Comunicação só com imagens', `<a class="cfg-botao visual-version-link" href="../senior-nao-letrado/index.html" aria-label="Abrir a versão sênior não letrada">Abrir</a>`)}
+            </div>
+          </section>
+        </div>
       </div>
     </div>`;
 }
