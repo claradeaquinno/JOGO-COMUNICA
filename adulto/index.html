@@ -5709,6 +5709,96 @@ html body.layout-neutro #app .mode-choice-screen > .mode-choice-back.so-seta, ht
 
 /* Início: sem a setinha do lado das 6 abas */
 html body #app .home-screen .menu-btn .menu-arrow { display: none !important; }
+
+/* "Quem vai usar o Comunica?": fundo no azul padrão (igual abertura, formulário e "Olá") */
+html:has(body.profile-selection), html body.profile-selection, html body.profile-selection[data-theme], html body.profile-selection:not([data-theme="dark"]):not([data-color-vision="on"]) {
+  background: #dfeeff !important; background-image: none !important;
+}
+html body.profile-selection::before { background-image: none !important; }
+html body.profile-selection #app .onboard-question, html body.profile-selection #app .onboard-panel h2, html body.profile-selection #app .profile-choice-card .title { color: #103d5d !important; }
+html body.profile-selection #app .profile-choice-card.kids, html body.profile-selection #app .profile-choice-card.adult { background: #ffffff !important; border: 1.5px solid #8aaebe !important; box-shadow: 0 3px 0 rgba(95, 140, 170, .16) !important; }
+html body.profile-selection #app .profile-choice-arrow { background: #dfeeff !important; }
+
+html body.profile-selection::before, html body.profile-selection::after, html:has(body.profile-selection)::before, html:has(body.profile-selection)::after { display: none !important; background: none !important; }
+html body.profile-selection[data-theme] #app .profile-choice-card.kids, html body.profile-selection[data-theme] #app .profile-choice-card.adult,
+html body.profile-selection[data-theme="dark"]:not([data-color-vision="on"]) #app .profile-choice-card.kids, html body.profile-selection[data-theme="dark"]:not([data-color-vision="on"]) #app .profile-choice-card.adult { background: #ffffff !important; border: 1.5px solid #8aaebe !important; }
+html body.profile-selection[data-theme] #app .profile-choice-card .title, html body.profile-selection[data-theme="dark"]:not([data-color-vision="on"]) #app .profile-choice-card .title { color: #103d5d !important; }
+html body.profile-selection[data-theme] #app .profile-choice-arrow { background: #dfeeff !important; color: #103d5d !important; border-color: #8aaebe !important; }
+html body.profile-selection[data-theme] #app .onboard-question { color: #103d5d !important; }
+
+/* ===== Sênior: fundo azul padrão em todas as telas, cartões e botões brancos com borda azul ===== */
+html:has(body.layout-neutro:not(.profile-selection):not([data-color-vision="on"])),
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]), html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"])[data-theme] { background: #dfeeff !important; background-image: none !important; }
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"])::before, html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"])::after { display: none !important; }
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .home-screen .menu-btn,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .home-screen .menu-btn.primary,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .home-screen .topbar .icon-btn,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .icon-btn,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .cat-card,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .word-card,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .info-block,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .form-block,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .challenge-card,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .carousel-card,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .mode-choice-button,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .phrase-bar,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .btn-erase,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .btn-clear,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .btn-fav,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .btn-fav-word,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .pz .personalize-action,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .personalize-action,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .so-seta,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .cfg-grupo .settings-panel,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .pz .custom-chip,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .mode-choice-back,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .mode-screen-back,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .sr-abas,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .empty-state,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"])[data-theme] #app .home-screen .menu-btn,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"])[data-theme] #app .home-screen .menu-btn.primary,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"])[data-theme] #app .home-screen .topbar .icon-btn,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"])[data-theme] #app .icon-btn,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"])[data-theme] #app .cat-card,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"])[data-theme] #app .word-card,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"])[data-theme] #app .info-block,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"])[data-theme] #app .form-block,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"])[data-theme] #app .challenge-card,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"])[data-theme] #app .carousel-card,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"])[data-theme] #app .mode-choice-button,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"])[data-theme] #app .phrase-bar,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"])[data-theme] #app .btn-erase,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"])[data-theme] #app .btn-clear,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"])[data-theme] #app .btn-fav,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"])[data-theme] #app .btn-fav-word,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"])[data-theme] #app .pz .personalize-action,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"])[data-theme] #app .personalize-action,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"])[data-theme] #app .so-seta,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"])[data-theme] #app .cfg-grupo .settings-panel,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"])[data-theme] #app .pz .custom-chip,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"])[data-theme] #app .mode-choice-back,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"])[data-theme] #app .mode-screen-back,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"])[data-theme] #app .sr-abas,
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"])[data-theme] #app .empty-state { background: #ffffff !important; border-color: #8aaebe !important; }
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .menu-btn:hover, html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .cat-card:hover, html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .word-card:hover, html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .mode-choice-button:hover, html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .icon-btn:hover, html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .personalize-action:hover { background: #f2f8ff !important; }
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .cfg-grupo .settings-row { border-color: #dbe8f3 !important; }
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .cfg-grupo .stepper button, html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .pz .custom-chip .x { background: #dfeeff !important; }
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .sr-aba[aria-selected="true"] { background: #dfeeff !important; }
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .phrase-bar input, html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .pz-lado #newWordLabel { background: #f7fbff !important; }
+html body.layout-neutro:not(.profile-selection):not([data-theme="dark"]):not([data-color-vision="on"]) #app .home-screen .menu-btn .menu-image { background: transparent !important; }
+
+/* ===== Ícones do início do Sênior: desenhados em código, mesmo estilo e mesmo azul-marinho ===== */
+html body #app .home-screen .menu-btn .menu-image.menu-ico-box { display: grid !important; place-items: center !important; background: transparent !important; padding: 0 !important; border: 0 !important; box-shadow: none !important; color: #103d5d; --ico-recorte: #ffffff; }
+html body #app .home-screen .menu-btn .menu-ico { width: 78%; height: 78%; display: block; overflow: visible; }
+html body[data-theme="dark"] #app .home-screen .menu-btn .menu-image.menu-ico-box { color: #eef6ff; --ico-recorte: rgb(24, 54, 83); filter: none !important; }
+html body #app .home-screen .menu-btn .menu-image.menu-ico-box { filter: none !important; }
+html body[data-color-vision="on"] #app .home-screen .menu-btn .menu-image.menu-ico-box { --ico-recorte: #ffffff; }
+
+@media (min-width: 900px) {
+  html body.layout-neutro #app .home-screen .menu-btn .menu-image.menu-ico-box { width: clamp(56px, 9vh, 72px) !important; height: clamp(56px, 9vh, 72px) !important; }
+  html body #app .home-screen .menu-btn .menu-ico { width: 100%; height: 100%; }
+}
+@media (max-width: 899px) { html body #app .home-screen .menu-btn .menu-ico { width: 90%; height: 90%; } }
 </style>
 </head>
 
@@ -7146,7 +7236,10 @@ function renderHome() {
         data-go="build"
       >
 
-        <img class="menu-image" src="../img/comunica-icon-comecar.png" alt="" aria-hidden="true">
+        <span class="menu-image menu-ico-box" aria-hidden="true"><svg class="menu-ico" viewBox="0 0 24 24"><path d="M10.5 3h8A2.5 2.5 0 0 1 21 5.5v5a2.5 2.5 0 0 1-2.5 2.5h-.3v2.6L15.1 13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M10.5 3A2.5 2.5 0 0 0 8 5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+<path d="M5.5 8h8A2.5 2.5 0 0 1 16 10.5v5.5a2.5 2.5 0 0 1-2.5 2.5H9.4L5.8 21.3v-2.8h-.3A2.5 2.5 0 0 1 3 16v-5.5A2.5 2.5 0 0 1 5.5 8z" fill="currentColor" style="stroke:var(--ico-recorte,#fff)" stroke-width="1.6" paint-order="stroke"/>
+<circle cx="6.6" cy="13.3" r="1.15" style="fill:var(--ico-recorte,#fff)"/><circle cx="9.5" cy="13.3" r="1.15" style="fill:var(--ico-recorte,#fff)"/><circle cx="12.4" cy="13.3" r="1.15" style="fill:var(--ico-recorte,#fff)"/></svg></span>
 
         <div class="menu-text">
 
@@ -7171,7 +7264,8 @@ function renderHome() {
         data-go="favorites"
       >
 
-        <img class="menu-image" src="../img/comunica-icon-favoritos.png" alt="" aria-hidden="true">
+        <span class="menu-image menu-ico-box" aria-hidden="true"><svg class="menu-ico" viewBox="0 0 24 24"><path d="M12 2.9c.4 0 .75.22.92.58l2.27 4.6 5.08.74c.84.12 1.18 1.15.57 1.74l-3.68 3.58.87 5.06c.14.83-.73 1.47-1.48 1.08L12 17.9l-4.55 2.39c-.75.39-1.62-.25-1.48-1.08l.87-5.06L3.16 10.57c-.61-.6-.27-1.62.57-1.74l5.08-.74 2.27-4.6c.17-.36.52-.58.92-.58z" fill="currentColor"/>
+</svg></span>
 
         <div class="menu-text">
 
@@ -7196,7 +7290,8 @@ function renderHome() {
         data-go="categories"
       >
 
-        <img class="menu-image" src="../img/comunica-icon-categorias.png" alt="" aria-hidden="true">
+        <span class="menu-image menu-ico-box" aria-hidden="true"><svg class="menu-ico" viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2.4" fill="currentColor"/><rect x="13" y="3" width="8" height="8" rx="2.4" fill="none" stroke="currentColor" stroke-width="2"/>
+<rect x="3" y="13" width="8" height="8" rx="2.4" fill="none" stroke="currentColor" stroke-width="2"/><rect x="13" y="13" width="8" height="8" rx="2.4" fill="currentColor"/></svg></span>
 
         <div class="menu-text">
 
@@ -7221,7 +7316,8 @@ function renderHome() {
         data-go="personalize"
       >
 
-        <img class="menu-image" src="../img/comunica-icon-personalizar.png" alt="" aria-hidden="true">
+        <span class="menu-image menu-ico-box" aria-hidden="true"><svg class="menu-ico" viewBox="0 0 24 24"><path d="M11 4H6.5A2.5 2.5 0 0 0 4 6.5v11A2.5 2.5 0 0 0 6.5 20h11a2.5 2.5 0 0 0 2.5-2.5V13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+<path d="M17.6 3.4a2.1 2.1 0 0 1 3 3l-8.1 8.1-3.9 1 1-3.9z" fill="currentColor"/><path d="M15.9 5.1l3 3" style="stroke:var(--ico-recorte,#fff)" stroke-width="1.4" stroke-linecap="round"/></svg></span>
 
         <div class="menu-text">
 
@@ -7246,7 +7342,8 @@ function renderHome() {
         data-go="challenge"
       >
 
-        <img class="menu-image" src="../img/comunica-icon-desafio.png" alt="" aria-hidden="true">
+        <span class="menu-image menu-ico-box" aria-hidden="true"><svg class="menu-ico" viewBox="0 0 24 24"><circle cx="11" cy="13" r="8" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="11" cy="13" r="4.3" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="11" cy="13" r="1.6" fill="currentColor"/>
+<path d="M11 13l7.5-7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M17 3.2l.4 3.4 3.4.4 1.4-1.4-2.6-.8-.8-2.6z" fill="currentColor"/></svg></span>
 
         <div class="menu-text">
 
@@ -7267,7 +7364,9 @@ function renderHome() {
       </div>
 
       <div class="menu-btn" data-go="seniorVisual" role="button" tabindex="0" aria-label="Acessar versão sênior não letrada">
-        <img class="menu-image" src="../assets/imagens/icone-senior-nao-letrado.png" alt="" aria-hidden="true">
+        <span class="menu-image menu-ico-box" aria-hidden="true"><svg class="menu-ico" viewBox="0 0 24 24"><path d="M7 3.5h11.5A2.5 2.5 0 0 1 21 6v9.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+<rect x="3" y="7" width="14.5" height="13.5" rx="2.6" fill="currentColor"/>
+<circle cx="7.6" cy="11.4" r="1.7" style="fill:var(--ico-recorte,#fff)"/><path d="M5.2 18.1l3.6-3.7 2.4 2.4 2.1-2 2.3 3.3z" style="fill:var(--ico-recorte,#fff)"/></svg></span>
         <div class="menu-text">
           <div class="menu-title">SÊNIOR NÃO LETRADO</div>
           <div class="menu-sub">Comunicação com figuras</div>

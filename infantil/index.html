@@ -4996,6 +4996,40 @@ html.entrada-circulo #splashScreen { display: none !important; }
 .cf-circulo.cobre { clip-path: circle(75% at 50% 50%); }
 .cf-circulo.revela { clip-path: circle(0% at 50% 50%); transition-duration: .65s; }
 @media (prefers-reduced-motion: reduce) { .cf-circulo { transition: none; } }
+
+/* ===== Comunicar (carrossel) no Júnior: nada escuro, tudo nas cores padrão (azul claro + branco + azul-marinho) ===== */
+html body:not([data-color-vision="on"]) #app .carousel-full-screen .section-label, html body:not([data-color-vision="on"]) #app .carousel-full-screen .layer-label { background: #dfeeff !important; color: #103d5d !important; border: 1.5px solid #8aaebe !important; text-shadow: none !important; box-shadow: none !important; backdrop-filter: none !important; }
+html body:not([data-color-vision="on"]) #app .carousel-full-screen .layer-label { display: inline-block; padding: 6px 16px !important; border-radius: 999px !important; }
+html body:not([data-color-vision="on"]) #app .carousel-full-screen .section-label { background: transparent !important; border: 0 !important; color: #103d5d !important; }
+html body:not([data-color-vision="on"]) #app .carousel-full-screen .topbar-title { color: #103d5d !important; text-shadow: 0 2px 0 rgba(255,255,255,.8) !important; }
+html body:not([data-color-vision="on"]) #app .carousel-full-screen .phrase-bar { background: #ffffff !important; border: 1.5px solid #8aaebe !important; color: #103d5d !important; }
+html body:not([data-color-vision="on"]) #app .carousel-full-screen .phrase-placeholder { color: #3f6a8c !important; }
+html body:not([data-color-vision="on"]) #app .carousel-full-screen .carousel-card { background: #ffffff !important; border: 1.5px solid #8aaebe !important; color: #103d5d !important; opacity: 1 !important; }
+html body:not([data-color-vision="on"]) #app .carousel-full-screen .carousel-card .label { color: #103d5d !important; }
+html body:not([data-color-vision="on"]) #app .carousel-full-screen .carousel-card.active, html body:not([data-color-vision="on"]) #app .carousel-full-screen .carousel-card.is-center, html body:not([data-color-vision="on"]) #app .carousel-full-screen .carousel-card.center, html body:not([data-color-vision="on"]) #app .carousel-full-screen .carousel-card.current { background: #dfeeff !important; border: 3px solid #2a72c8 !important; box-shadow: 0 6px 16px rgba(42,114,200,.2) !important; }
+html body:not([data-color-vision="on"]) #app .carousel-full-screen .carousel-counter { color: #103d5d !important; background: rgba(255,255,255,.85); padding: 2px 10px; border-radius: 999px; text-shadow: none !important; }
+html body:not([data-color-vision="on"]) #app .carousel-full-screen .carousel-arrow { background: #ffffff !important; border: 1.5px solid #8aaebe !important; color: #103d5d !important; }
+html body:not([data-color-vision="on"]) #app .carousel-full-screen .confirm-btn { background: #2a72c8 !important; color: #ffffff !important; border: 0 !important; box-shadow: 0 5px 0 #1f5aa3 !important; text-shadow: none !important; }
+html body:not([data-color-vision="on"]) #app .carousel-full-screen .action-row > button, html body:not([data-color-vision="on"]) #app .carousel-full-screen .btn-erase, html body:not([data-color-vision="on"]) #app .carousel-full-screen .btn-clear, html body:not([data-color-vision="on"]) #app .carousel-full-screen .btn-speak, html body:not([data-color-vision="on"]) #app .carousel-full-screen .btn-fav, html body:not([data-color-vision="on"]) #app .carousel-full-screen .btn-fav-word {
+  background: #ffffff !important; border: 1.5px solid #8aaebe !important; color: #103d5d !important; opacity: 1 !important; box-shadow: 0 3px 0 rgba(95,140,170,.16) !important; text-shadow: none !important; backdrop-filter: none !important; }
+html body:not([data-color-vision="on"]) #app .carousel-full-screen .action-row > button:disabled, html body:not([data-color-vision="on"]) #app .carousel-full-screen .action-row > button[disabled], html body:not([data-color-vision="on"]) #app .carousel-full-screen .action-row > button[aria-disabled="true"] { background: #eef5fb !important; color: #6d8aa3 !important; border-color: #b8cfe0 !important; }
+html body:not([data-color-vision="on"]) #app .carousel-full-screen .back-link.carousel-all-cats { background: #ffffff !important; border: 1.5px solid #8aaebe !important; color: #103d5d !important; text-shadow: none !important; backdrop-filter: none !important; box-shadow: 0 3px 0 rgba(95,140,170,.16) !important; }
+html body:not([data-color-vision="on"]) #app .carousel-full-screen .icon-btn { background: #ffffff !important; border: 1.5px solid #8aaebe !important; color: #103d5d !important; }
+
+html body:not([data-color-vision="on"]) #app .carousel-full-screen .layer-label { display: table !important; margin-left: auto !important; margin-right: auto !important; width: auto !important; }
+html body:not([data-color-vision="on"]) #app .carousel-full-screen .carousel-counter { display: table !important; margin: 6px auto 10px !important; width: auto !important; background: transparent !important; padding: 0 !important; font-weight: 800; }
+
+/* palavra do meio (escolhida) em amarelo */
+html body:not([data-color-vision="on"]) #app .carousel-full-screen .carousel-card.center { background: #fff2bf !important; border: 3px solid #f3c84a !important; box-shadow: 0 6px 16px rgba(224,165,39,.25) !important; }
+
+/* palavra do meio no mesmo azul do botão Selecionar */
+html body:not([data-color-vision="on"]) #app .carousel-full-screen .carousel-card.center { background: #2a72c8 !important; border: 3px solid #1f5aa3 !important; box-shadow: 0 6px 16px rgba(42,114,200,.3) !important; }
+html body:not([data-color-vision="on"]) #app .carousel-full-screen .carousel-card.center .label, html body:not([data-color-vision="on"]) #app .carousel-full-screen .carousel-card.center { color: #ffffff !important; }
+
+/* palavra escolhida e botão Selecionar no amarelo padrão */
+html body:not([data-color-vision="on"]) #app .carousel-full-screen .carousel-card.center { background: #fff2bf !important; border: 3px solid #f3c84a !important; box-shadow: 0 6px 16px rgba(224,165,39,.25) !important; }
+html body:not([data-color-vision="on"]) #app .carousel-full-screen .carousel-card.center .label, html body:not([data-color-vision="on"]) #app .carousel-full-screen .carousel-card.center { color: #103d5d !important; }
+html body:not([data-color-vision="on"]) #app .carousel-full-screen .confirm-btn { background: #f7c94d !important; color: #103d5d !important; box-shadow: 0 5px 0 #e0a527 !important; }
 </style>
 <link rel="stylesheet" href="../menu-inicial.css">
 </head>
