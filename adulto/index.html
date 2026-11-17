@@ -5691,6 +5691,24 @@ html body #app .home-screen .menu-btn .menu-text { min-width: 0 !important; max-
 html body #app .home-screen .menu-btn .menu-title { letter-spacing: .01em !important; font-size: clamp(12.5px, 3.7vw, 1.15rem) !important; line-height: 1.15 !important; }
 html body #app .home-screen .menu-btn .menu-sub { font-size: clamp(12px, 3.4vw, 1rem) !important; line-height: 1.25 !important; }
 html body #app .home-screen .menu-btn { min-width: 0 !important; padding-left: 10px !important; padding-right: 10px !important; }
+
+/* ===== Setas grossas e arredondadas no app inteiro ===== */
+html body #app .app-line-icon.seta-grossa { stroke-width: 3 !important; width: 24px !important; height: 24px !important; }
+.seta-svg { width: 1.25em; height: 1.25em; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; display: block; flex: 0 0 auto; }
+html body #app .menu-arrow, html body #app .profile-choice-arrow, html body #app .carousel-arrow { display: grid !important; place-items: center !important; font-size: 1rem !important; line-height: 1 !important; }
+html body #app .menu-arrow .seta-svg, html body #app .profile-choice-arrow .seta-svg { width: 20px; height: 20px; }
+html body #app .carousel-arrow .seta-svg { width: 24px; height: 24px; }
+html body #app .mode-choice-back, html body #app .mode-screen-back, html body #app .back-link { display: inline-flex !important; align-items: center !important; gap: 6px !important; }
+html body #app .mode-choice-back .seta-svg, html body #app .mode-screen-back .seta-svg, html body #app .back-link .seta-svg { width: 18px; height: 18px; }
+
+/* Começar a comunicar: voltar só com a seta, redondo igual aos outros botões de voltar */
+html body #app .so-seta { width: 48px !important; height: 48px !important; min-width: 48px !important; min-height: 48px !important; padding: 0 !important; border-radius: 50% !important; display: grid !important; place-items: center !important; gap: 0 !important; background: #dfeeff !important; border: 1.5px solid #8aaebe !important; color: #103d5d !important; box-shadow: 0 3px 0 rgba(95, 140, 170, .16) !important; }
+html body #app .so-seta .seta-svg { width: 24px !important; height: 24px !important; }
+
+html body.layout-neutro #app .mode-choice-screen > .mode-choice-back.so-seta, html body #app button.so-seta.mode-screen-back { border-radius: 50% !important; width: 48px !important; height: 48px !important; padding: 0 !important; }
+
+/* Início: sem a setinha do lado das 6 abas */
+html body #app .home-screen .menu-btn .menu-arrow { display: none !important; }
 </style>
 </head>
 
@@ -6105,6 +6123,16 @@ function loadData() {
     localStorage.getItem('comunica:logoutLoading') === '1';
 
   localStorage.removeItem('comunica:logoutLoading');
+
+  // saiu da conta (pelo Sênior ou pelo Júnior): começa tudo de novo, com a abertura e o formulário
+  if (isLogoutLoading) {
+    STATE.data.profile.formDone = false;
+    STATE.data.profile.name = '';
+    STATE.data.profile.onboarded = false;
+    localStorage.removeItem('comunica:goToProfileSelection');
+    window.__cfCarregou = false;
+    saveData();
+  }
 
   window.autoDismissSplash =
     isLogoutLoading ||
@@ -6766,7 +6794,7 @@ function toggleLayout() {
 function renderLineIcons() {
 
   const icons = {
-    back: '<svg class="app-line-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>',
+    back: '<svg class="app-line-icon seta-grossa" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5.5L8 12l6.5 6.5"/></svg>',
     profile: '<svg class="app-line-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.25"/><path d="M5.5 20c.7-3.4 3.1-5.25 6.5-5.25s5.8 1.85 6.5 5.25"/></svg>',
     settings: '<svg class="app-line-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>'
   };
@@ -6791,6 +6819,18 @@ function renderLineIcons() {
             : 'Voltar'
       );
     }
+  });
+
+  // setas de texto (›, ‹, ←) viram setas desenhadas, grossas e arredondadas
+  const chevron = dir => `<svg class="seta-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="${dir === 'esq' ? 'M14.5 5.5L8 12l6.5 6.5' : 'M9.5 5.5L16 12l-6.5 6.5'}"/></svg>`;
+  document.querySelectorAll('#app .menu-arrow, #app .profile-choice-arrow, #app .carousel-arrow, #app .mode-choice-back, #app .mode-screen-back, #app .back-link').forEach(el => {
+    if (el.dataset.setaOk) return;
+    const txt = el.textContent.trim();
+    if (txt === '›') el.innerHTML = chevron('dir');
+    else if (txt === '‹') el.innerHTML = chevron('esq');
+    else if (txt.startsWith('←')) el.innerHTML = chevron('esq') + (txt.slice(1).trim() ? '<span>' + txt.slice(1).trim() + '</span>' : '');
+    else if (txt.startsWith('‹')) el.innerHTML = chevron('esq') + '<span>' + txt.slice(1).trim() + '</span>';
+    el.dataset.setaOk = '1';
   });
 }
 
@@ -7011,7 +7051,10 @@ function renderBoasVindas() {
 
 function renderChooseProfile() {
 
-  if (!STATE.data.profile.formDone && !STATE.data.profile.name) return renderBoasVindas();
+  // "Voltar para o menu" (do Sênior ou do Júnior) vai direto para os cartões de perfil, sem formulário
+  const voltouProMenu = localStorage.getItem('comunica:goToProfileSelection') === '1';
+  if (!voltouProMenu && !STATE.data.profile.formDone && !STATE.data.profile.name) return renderBoasVindas();
+  const antiga = document.getElementById('splashScreen'); if (antiga) antiga.style.display = 'none';
 
   return `
 
@@ -7252,7 +7295,7 @@ function renderHome() {
 function renderBuild() {
   return `
     <div class="mode-choice-screen">
-      <button class="mode-choice-back" data-go="home" aria-label="Voltar ao início">← Voltar</button>
+      <button class="mode-choice-back so-seta" data-go="home" aria-label="Voltar ao início">←</button>
       <div class="mode-choice-content">
         <h1>Como você quer se comunicar?</h1>
         <button class="mode-choice-button" type="button" data-mode-screen="circularMode" aria-label="Teclado circular"><span class="label">Teclado circular</span></button>
@@ -7294,7 +7337,7 @@ function renderCarouselMode() {
 }
 
 function renderCircularKeyboard() {
-  return `<div class="mode-screen circular-mode-screen"><button class="mode-screen-back" data-go="build" aria-label="Voltar para escolha do modo">← Voltar</button><div class="circular-keyboard-reserved"><div class="phrase-stack"><div class="campo" aria-label="Frase formada"><span id="valor"></span></div><div class="frases-prontas" id="frasesProntas" data-rotulo="Palavras salvas" aria-label="Palavras salvas pelo usuário" aria-live="polite"></div></div><div class="teclado-area"><section class="teclado" id="teclado" aria-label="Teclado circular"><div class="anel anel-externo" id="anelExterno"></div><div class="anel anel-meio" id="anelMeio"></div></section><div class="satelites" id="menuOrbital" aria-label="Menu de ações"><button class="satelite" id="limpar" type="button" aria-label="Limpar">limpar</button><button class="satelite" id="excluir" type="button" aria-label="Excluir">excluir</button><button class="satelite" id="recarregar" type="button" aria-label="Recarregar sugestões ou conectar o Gemini" title="Recarregar sugestões ou conectar o Gemini">recarregar</button><button class="satelite" id="voltarInicio" type="button" aria-label="Voltar ao início">voltar</button><button class="satelite" id="falar" type="button" aria-label="Falar">falar</button><button class="satelite satelite-destaque" id="concluir" type="button" aria-label="Concluir">concluir</button></div></div></div></div>`;
+  return `<div class="mode-screen circular-mode-screen"><button class="mode-screen-back so-seta" data-go="build" aria-label="Voltar para escolha do modo">←</button><div class="circular-keyboard-reserved"><div class="phrase-stack"><div class="campo" aria-label="Frase formada"><span id="valor"></span></div><div class="frases-prontas" id="frasesProntas" data-rotulo="Palavras salvas" aria-label="Palavras salvas pelo usuário" aria-live="polite"></div></div><div class="teclado-area"><section class="teclado" id="teclado" aria-label="Teclado circular"><div class="anel anel-externo" id="anelExterno"></div><div class="anel anel-meio" id="anelMeio"></div></section><div class="satelites" id="menuOrbital" aria-label="Menu de ações"><button class="satelite" id="limpar" type="button" aria-label="Limpar">limpar</button><button class="satelite" id="excluir" type="button" aria-label="Excluir">excluir</button><button class="satelite" id="recarregar" type="button" aria-label="Recarregar sugestões ou conectar o Gemini" title="Recarregar sugestões ou conectar o Gemini">recarregar</button><button class="satelite" id="voltarInicio" type="button" aria-label="Voltar ao início">voltar</button><button class="satelite" id="falar" type="button" aria-label="Falar">falar</button><button class="satelite satelite-destaque" id="concluir" type="button" aria-label="Concluir">concluir</button></div></div></div></div>`;
 }
 
 function renderCategories() {

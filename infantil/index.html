@@ -4988,12 +4988,29 @@ body:not([data-theme="dark"]) #app .input-mode-placeholder {
 .crh-centro video { max-width: 100%; max-height: min(52vh, 420px); object-fit: contain; filter: drop-shadow(0 18px 14px rgba(42, 85, 119, .22)); animation: crhCarroChega 1s cubic-bezier(.2, .8, .25, 1) .15s both; transform-origin: 50% 100%; background: transparent; pointer-events: none; }
 .crh-centro img[hidden] { display: none; }
 @media (max-width: 900px), (max-height: 520px) and (max-width: 1100px) { .crh-centro video { max-height: 210px; } }
+
+/* ===== Entrada vindo da escolha de perfil: círculo azul revelando as abas ===== */
+html.entrada-circulo #splashScreen { display: none !important; }
+.cf-circulo { position: fixed; inset: 0; z-index: 10050; pointer-events: none; background: #dfeeff; clip-path: circle(0% at 50% 50%); transition: clip-path .7s cubic-bezier(.65, 0, .35, 1); }
+.cf-circulo::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(42, 114, 200, .22) 0, rgba(42, 114, 200, 0) 60%); }
+.cf-circulo.cobre { clip-path: circle(75% at 50% 50%); }
+.cf-circulo.revela { clip-path: circle(0% at 50% 50%); transition-duration: .65s; }
+@media (prefers-reduced-motion: reduce) { .cf-circulo { transition: none; } }
 </style>
 <link rel="stylesheet" href="../menu-inicial.css">
 </head>
 
 <body>
 
+<script>
+  /* Vindo da escolha de perfil (formulário ou cartão Júnior): pula a tela "Iniciar/Voltar" e entra direto nas abas com a transição de círculo */
+  try {
+    if (localStorage.getItem('comunica:juniorEntryMode') === '1') {
+      document.documentElement.classList.add('entrada-circulo');
+      document.write('<div class="cf-circulo cobre" id="entradaCirculo" aria-hidden="true"></div>');
+    }
+  } catch (e) {}
+</script>
 <a href="#app" class="skip-link">Pular para o conteúdo</a>
 
 <div id="splashScreen" class="splash-screen" role="dialog" aria-modal="true" aria-label="Tela de abertura do Comunica" tabindex="-1">
@@ -8579,9 +8596,11 @@ function initSplash() {
     }, 300);
   };
 
+  const veioDoPerfil = document.documentElement.classList.contains('entrada-circulo');
   const manualSplash =
+    !veioDoPerfil && (
     localStorage.getItem('comunica:juniorEntryMode') === '1' ||
-    sessionStorage.getItem('comunica:manualJuniorSplash') === '1';
+    sessionStorage.getItem('comunica:manualJuniorSplash') === '1');
 
   localStorage.removeItem('comunica:juniorEntryMode');
   sessionStorage.removeItem('comunica:manualJuniorSplash');
@@ -8590,6 +8609,21 @@ function initSplash() {
     !manualSplash &&
     (STATE.data.profile.onboarded ||
       localStorage.getItem('comunica:goToProfileSelection') === '1');
+
+  if (veioDoPerfil) {
+    automaticStart = true;
+    beginApp();
+    // o círculo encolhe para o meio e revela as abas
+    const c = document.getElementById('entradaCirculo');
+    if (c) {
+      setTimeout(() => {
+        c.classList.remove('cobre'); c.classList.add('revela');
+        document.documentElement.classList.remove('entrada-circulo');
+        setTimeout(() => c.remove(), 750);
+      }, 250);
+    }
+    return;
+  }
 
   if (shouldAutoStart) {
     automaticStart = true;
