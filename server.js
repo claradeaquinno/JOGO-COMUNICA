@@ -38,7 +38,8 @@ const mimeTypes = {
   '.mp3': 'audio/mpeg',
   '.png': 'image/png',
   '.svg': 'image/svg+xml',
-  '.webp': 'image/webp'
+  '.webp': 'image/webp',
+  '.webm': 'video/webm'
 };
 
 function sendJson(response, status, value) {
